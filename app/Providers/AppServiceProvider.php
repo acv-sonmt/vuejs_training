@@ -3,9 +3,15 @@
 namespace App\Providers;
 
 use Illuminate\Support\ServiceProvider;
+use App\Services\Interfaces;
+use App\Services\Production;
 
 class AppServiceProvider extends ServiceProvider
 {
+    protected $services = [
+        Interfaces\UserInterface::class => Production\UserService::class
+    ];
+
     /**
      * Bootstrap any application services.
      *
@@ -23,6 +29,9 @@ class AppServiceProvider extends ServiceProvider
      */
     public function register()
     {
-        //
+        // Register services
+        foreach ($this->services as $inteface => $service) {
+            $this->app->singleton($inteface, $service);
+        }
     }
 }
