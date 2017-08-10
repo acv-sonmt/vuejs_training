@@ -9,3 +9,8 @@ body {
 .pd-16 {
     padding: 16px;
 }
+
+.book-cover {
+    width: 200px;
+    height: 248px;
+}

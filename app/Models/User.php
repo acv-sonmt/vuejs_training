@@ -42,4 +42,12 @@ class User extends AppModel
             $this->attributes['password'] = \Hash::make($value);
         }
     }
+
+    /**
+     * The books that belong to the user.
+     */
+    public function books()
+    {
+        return $this->belongsToMany('App\Models\Book');
+    }
 }

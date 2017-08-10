@@ -4,8 +4,10 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Frontend\Controller as FrontendController;
 use App\Http\Requests\Frontend;
+use App\Models\Book;
 use App\Services\Interfaces\UserInterface;
 use App\Models\User;
+use Illuminate\Http\Request;
 
 class UsersController extends FrontendController
 {
@@ -29,7 +31,7 @@ class UsersController extends FrontendController
      */
     public function index()
     {
-        $users = \App\Models\User::paginate();
+        $users = User::paginate();
         return view('frontend.users.index', compact('users'));
     }
 
@@ -57,7 +59,7 @@ class UsersController extends FrontendController
             return redirect(route('users.index'));
         }
 
-        abort(500, __('Create user failed. Please try later.'));
+        abort(500, trans('Create user failed. Please try later.'));
     }
 
     /**
@@ -98,7 +100,7 @@ class UsersController extends FrontendController
             return redirect(route('users.index'));
         }
 
-        abort(500, __('Create user failed. Please try later.'));
+        abort(500, trans('Create user failed. Please try later.'));
     }
 
     /**
@@ -115,6 +117,24 @@ class UsersController extends FrontendController
             return redirect(route('users.index'));
         }
 
-        abort(500, __('Delete user failed. Please try later.'));
+        abort(500, trans('Delete user failed. Please try later.'));
+    }
+
+    public function listBook()
+    {
+        $books = Book::all();
+        $users = User::all()->pluck('name', 'id');
+
+        return view('frontend.users.borrow', compact('users', 'books'));
+    }
+
+    public function borrowBook(Frontend\BorrowBookRequest $request)
+    {
+        if ($this->userService->borrowBook($request->except(['_token']))) {
+            $request->session()->flash('message-success', trans('Borrow book succesfully.'));
+            return redirect(route('users.index'));
+        }
+
+        abort(500, trans('Borrow book failed. Please try later.'));
     }
 }

@@ -43,4 +43,17 @@ class UserService extends BaseService implements UserInterface
     {
         return $user->delete();
     }
+
+    /**
+     * Borrow book
+     *
+     * @param array $inputs
+     * @return bool
+     * @throws \Exception
+     */
+    public function borrowBook(array $inputs) {
+        $user = User::findOrFail($inputs['user_id']);
+
+        return $user->books()->syncWithoutDetaching($inputs['book_id']);
+    }
 }

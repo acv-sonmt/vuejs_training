@@ -14,7 +14,7 @@
     </div>
 </h1>
 
-@empty ($users)
+@if ($users->isEmpty())
     <p class="bg-info pd-16 mt-16">{{ trans('Have no users.') }}</p>
 @else
 <div class="table-responsive mt-16">
@@ -39,7 +39,7 @@
                     <a class="btn btn-warning btn-sm" href="{{ route('users.edit', $user->id) }}">{{ trans('Edit') }}</a>
                     {{ Form::open(['route' => ['users.destroy', $user->id], 'method' => 'delete', 'class' => 'form-delete', 'style' => 'display:inline-block;']) }}
                         {{ method_field('delete') }}
-                        <button type="submit" class="btn btn-danger btn-sm">{{ __('Delete') }}</button>
+                        <button type="submit" class="btn btn-danger btn-sm">{{ trans('Delete') }}</button>
                     {{ Form::close() }}
                 </td>
             </tr>
@@ -48,7 +48,7 @@
     </table>
 </div>
 {{ $users->links() }}
-@endempty
+@endif
 
 
 @endsection()
