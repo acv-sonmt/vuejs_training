@@ -9,8 +9,8 @@ use App\Services\Production;
 class AppServiceProvider extends ServiceProvider
 {
     protected $services = [
-        Interfaces\UserInterface::class => Production\UserService::class,
-        Interfaces\BookInterface::class => Production\BookService::class
+        Interfaces\UserServiceInterface::class => Production\UserService::class,
+        Interfaces\BookServiceInterface::class => Production\BookService::class
     ];
 
     /**

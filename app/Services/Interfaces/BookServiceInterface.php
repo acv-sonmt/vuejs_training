@@ -4,7 +4,7 @@ namespace App\Services\Interfaces;
 
 use App\Models\Book;
 
-interface BookInterface
+interface BookServiceInterface
 {
     public function create(array $inputs);
     public function update(Book $book, array $inputs);

@@ -2,11 +2,11 @@
 
 namespace App\Services\Production;
 
-use App\Services\Interfaces\BookInterface;
+use App\Services\Interfaces\BookServiceInterface;
 use App\Models\Book;
 use Image;
 
-class BookService extends BaseService implements BookInterface
+class BookService extends BaseService implements BookServiceInterface
 {
     /**
      * Create new book
@@ -38,7 +38,8 @@ class BookService extends BaseService implements BookInterface
             $inputs['image'] = self::uploadImage($inputs['image']);
         }
 
-        return $book->update($inputs);
+        $book->update($inputs);
+        return $book;
     }
 
     /**

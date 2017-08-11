@@ -4,21 +4,21 @@ namespace App\Http\Controllers\Frontend;
 
 use App\Http\Controllers\Frontend\Controller as FrontendController;
 use App\Http\Requests\Frontend;
-use App\Services\Interfaces\BookInterface;
+use App\Services\Interfaces\BookServiceInterface;
 use App\Models\Book;
 use App\Models\User;
 
 class BooksController extends FrontendController
 {
     /**
-     * @var BookInterface
+     * @var BookServiceInterface
      */
     protected $bookService;
 
     /**
      * Constructor
      */
-    public function __construct(BookInterface $bookService)
+    public function __construct(BookServiceInterface $bookService)
     {
         $this->bookService = $bookService;
     }

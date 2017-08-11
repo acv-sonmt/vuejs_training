@@ -9,21 +9,38 @@
          processIsolation="false"
          stopOnFailure="false">
     <testsuites>
-        <testsuite name="Feature Tests">
-            <directory suffix="Test.php">./tests/Feature</directory>
+        <testsuite name="Service Tests">
+            <directory suffix="Test.php">./tests/Services</directory>
         </testsuite>
-
-        <testsuite name="Unit Tests">
-            <directory suffix="Test.php">./tests/Unit</directory>
+        <testsuite name="Controller Tests">
+            <directory suffix="Test.php">./tests/Http/Controllers</directory>
         </testsuite>
     </testsuites>
     <filter>
         <whitelist processUncoveredFilesFromWhitelist="true">
-            <directory suffix=".php">./app</directory>
+            <directory suffix=".php">./app/Services/Production</directory>
+            <exclude>
+                <file>./app/Services/Production/BaseService.php</file>
+            </exclude>
+        </whitelist>
+        <whitelist processUncoveredFilesFromWhitelist="true">
+            <directory suffix=".php">./app/Http/Controllers</directory>
+            <exclude>
+                <file>./app/Http/Controllers/Controller.php</file>
+                <file>./app/Http/Controllers/Frontend/Controller.php</file>
+            </exclude>
         </whitelist>
     </filter>
+    <logging>
+        <log type="coverage-html" target="./public/testing" charset="UTF-8"
+            yui="true" highlight="true"
+            lowUpperBound="50" highLowerBound="80" />
+
+        <log type="junit" target="./public/testing/log/junit.xml" logIncompleteSkipped="false"/>
+    </logging>
     <php>
         <env name="APP_ENV" value="testing"/>
+        <env name="DB_CONNECTION" value="mysql_test"/>
         <env name="CACHE_DRIVER" value="array"/>
         <env name="SESSION_DRIVER" value="array"/>
         <env name="QUEUE_DRIVER" value="sync"/>
