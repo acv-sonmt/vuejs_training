@@ -12,6 +12,8 @@
         <div id="navbar" class="collapse navbar-collapse">
             <ul class="nav navbar-nav">
                 <li class="@yield('user_menu')"><a href="{{ route('users.index') }}">User</a></li>
+                <li class="@yield('book_menu')"><a href="{{ route('books.index') }}">Book</a></li>
+                <li class="@yield('borrow_menu')"><a href="{{ route('users.list_book') }}">Borrow Book</a></li>
             </ul>
         </div><!--/.nav-collapse -->
     </div>
