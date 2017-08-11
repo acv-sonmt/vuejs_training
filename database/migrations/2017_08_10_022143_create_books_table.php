@@ -19,6 +19,7 @@ class CreateBooksTable extends Migration
             $table->text('description')->nullable();
             $table->string('image')->nullable();
             $table->integer('owner_id');
+            $table->timestamps();
         });
     }
 
