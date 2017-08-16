@@ -4,6 +4,10 @@ Route::get('/', function () {
     return view('welcome');
 });
 
+Route::get('/ip', function() {
+    return view('welcome');
+})->middleware('ip');
+
 /**  Route::resource('users', 'UsersController'); **/
 Route::get('/users', 'UsersController@index')->name('users.index');
 Route::get('/users/create', 'UsersController@create')->name('users.create');
