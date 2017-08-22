@@ -2,10 +2,10 @@
 
 namespace App\Services\Production;
 
-use App\Services\Interfaces\UserInterface;
+use App\Services\Interfaces\UserServiceInterface;
 use App\Models\User;
 
-class UserService extends BaseService implements UserInterface
+class UserService extends BaseService implements UserServiceInterface
 {
     /**
      * Create new user
@@ -29,7 +29,8 @@ class UserService extends BaseService implements UserInterface
      */
     public function update(User $user, array $inputs)
     {
-        return $user->update($inputs);
+        $user->update($inputs);
+        return $user;
     }
 
     /**

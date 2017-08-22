@@ -5,21 +5,21 @@ namespace App\Http\Controllers\Frontend;
 use App\Http\Controllers\Frontend\Controller as FrontendController;
 use App\Http\Requests\Frontend;
 use App\Models\Book;
-use App\Services\Interfaces\UserInterface;
+use App\Services\Interfaces\UserServiceInterface;
 use App\Models\User;
 use Illuminate\Http\Request;
 
 class UsersController extends FrontendController
 {
     /**
-     * @var UserInterface
+     * @var UserServiceInterface
      */
     protected $userService;
 
     /**
      * Constructor
      */
-    public function __construct(UserInterface $userService)
+    public function __construct(UserServiceInterface $userService)
     {
         $this->userService = $userService;
     }

@@ -4,7 +4,7 @@ namespace App\Services\Interfaces;
 
 use App\Models\User;
 
-interface UserInterface
+interface UserServiceInterface
 {
     public function create(array $inputs);
     public function update(User $user, array $inputs);

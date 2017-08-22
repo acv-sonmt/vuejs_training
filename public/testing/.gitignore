@@ -1,0 +1,7 @@
+*
+!.gitignore
+!.htaccess
+!*/
+!/log/index.html
+!/log/template.xslt
+!/log/.htaccess
