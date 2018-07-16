@@ -145,13 +145,13 @@ class DevService extends BaseService implements DevServiceInterface
     public function generationTranslateScript($translateType, $fileName)
     {
         $validateArray = $this->getTranslateMessageArray($translateType);
-        $folderLangPath = base_path() . '/public/js/' . $fileName . '.js';
+        $dir = base_path() . '/public/js/lang/';
+        $folderLangPath = $dir. $fileName . '.js';
         //Create file validate if not existed
-        if (file_exists($folderLangPath)) {
-            $fh = fopen($folderLangPath, 'w');
-        } else {
-            $fh = fopen($folderLangPath, 'w');
+        if (!is_dir($dir)) {
+            mkdir($dir);
         }
+        $fh = fopen($folderLangPath, 'w');
         $contentFile = "//This is dev automatic generate \n ";
         $contentFile .= "var _validateMessage = \n";
         $txt = json_encode($validateArray);

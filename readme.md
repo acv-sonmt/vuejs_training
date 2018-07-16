@@ -15,7 +15,8 @@
 <p>&nbsp; &nbsp; &nbsp;+ All of event logs still perform as default of Laravel.</p>
 <p><strong>6. Helper</strong></p>
 <p><strong>&nbsp; -</strong> Provide some helper for developer.</p>
-<p>&nbsp;</p>
+<p>&nbsp;<strong>7. Console: Generate access token key</strong></p>
+<p><strong>&nbsp;&nbsp;</strong>- Ex: php artisan access-token:generate <a href="mailto:your_email@mail.com">your_email@mail.com</a>&nbsp; &nbsp;&nbsp;<br />&nbsp; =&gt; generate a access token key with specific roles, which use to help client access api.</p>
 <p>--------------------------------------------------------------------------------------------------------------------------</p>
 <h2><span style="color: #000000;"><strong>DETAIL</strong></span></h2>
 <p><strong>DEV Module.</strong></p>
