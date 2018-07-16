@@ -1,7 +1,10 @@
 <?php
 
 return [
-
+    /**
+     * Developer config
+     */
+    'DEV_MODE'=>env('DEV_MODE', false),//DEV_MODE allow active Module Dev
     /*
     |--------------------------------------------------------------------------
     | Application Name
@@ -10,6 +13,7 @@ return [
     | This value is the name of your application. This value is used when the
     | framework needs to place the application's name in a notification or
     | any other location as required by the application or its packages.
+    |
     */
 
     'name' => env('APP_NAME', 'Laravel'),
@@ -109,24 +113,7 @@ return [
 
     /*
     |--------------------------------------------------------------------------
-    | Logging Configuration
-    |--------------------------------------------------------------------------
-    |
-    | Here you may configure the log settings for your application. Out of
-    | the box, Laravel uses the Monolog PHP logging library. This gives
-    | you a variety of powerful log handlers / formatters to utilize.
-    |
-    | Available Settings: "single", "daily", "syslog", "errorlog"
-    |
-    */
-
-    'log' => env('APP_LOG', 'single'),
-
-    'log_level' => env('APP_LOG_LEVEL', 'debug'),
-
-    /*
-    |--------------------------------------------------------------------------
-    | Autoloaded Service Providers
+    | Autoloaded Services Providers
     |--------------------------------------------------------------------------
     |
     | The service providers listed here will be automatically loaded on the
@@ -138,7 +125,7 @@ return [
     'providers' => [
 
         /*
-         * Laravel Framework Service Providers...
+         * Laravel Framework Services Providers...
          */
         Illuminate\Auth\AuthServiceProvider::class,
         Illuminate\Broadcasting\BroadcastServiceProvider::class,
@@ -164,20 +151,46 @@ return [
         Illuminate\View\ViewServiceProvider::class,
 
         /*
-         * Package Service Providers...
+         * Application Services Providers...
          */
-        Laravel\Tinker\TinkerServiceProvider::class,
-        Collective\Html\HtmlServiceProvider::class,
-        Barryvdh\Debugbar\ServiceProvider::class,
-
-        /*
-         * Application Service Providers...
-         */
-        App\Providers\AppServiceProvider::class,
-        App\Providers\AuthServiceProvider::class,
+        App\Core\Providers\AppServiceProvider::class,
         // App\Providers\BroadcastServiceProvider::class,
-        App\Providers\EventServiceProvider::class,
-        App\Providers\RouteServiceProvider::class,
+        App\Core\Providers\EventServiceProvider::class,
+        App\Core\Providers\RouteServiceProvider::class,
+
+        /**
+         * custom Provider
+         */
+        /**
+         * DEV module
+         */
+        App\Dev\Providers\DevServiceProvider::class,
+        App\Dev\Providers\RouteServiceProvider::class,
+
+        /**
+         * Auth
+         */
+        App\Auth\Providers\AuthServiceProvider::class,
+        App\Auth\Providers\RouteServiceProvider::class,
+        /**
+         * Acl
+         */
+        App\Acl\Providers\AclServiceProvider::class,
+        App\Acl\Providers\RouteServiceProvider::class,
+
+        /**
+         * API
+         */
+        App\Api\Providers\RouteServiceProvider::class,
+        Laravel\Passport\PassportServiceProvider::class,
+         /**
+          * Backend
+          */
+        App\Backend\Providers\RouteServiceProvider::class,
+        /**
+         * FrontEnd
+         */
+        App\Frontend\Providers\RouteServiceProvider::class
 
     ],
 
@@ -193,7 +206,6 @@ return [
     */
 
     'aliases' => [
-
         'App' => Illuminate\Support\Facades\App::class,
         'Artisan' => Illuminate\Support\Facades\Artisan::class,
         'Auth' => Illuminate\Support\Facades\Auth::class,
@@ -227,10 +239,6 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
-        'Form' => Collective\Html\FormFacade::class,
-        'Html' => Collective\Html\HtmlFacade::class,
-        'Debugbar' => Barryvdh\Debugbar\Facade::class,
 
     ],
 
