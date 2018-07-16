@@ -22,6 +22,6 @@ class TemplateController extends Controller
      */
     public function index(Request $request)
     {
-        return view('index');
+        return view('backend.index');
     }
 }

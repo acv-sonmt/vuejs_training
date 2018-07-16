@@ -18,5 +18,5 @@
     Route::get('/home', 'HomeController@index')->name('home');
     Route::get('/some', 'SomeController@index')->name('some');
     Route::get('/blog', 'BlogController@index')->name('blog');
-
+    Route::get('/backend/template', 'TemplateController@index')->name('backend_template');
 
