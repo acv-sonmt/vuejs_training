@@ -49,6 +49,7 @@ class DevController extends Controller
             $dataResult->status = \SDBStatusCode::WebError;
             $dataResult->data = $error;
             return ResponseHelper::JsonDataResult($dataResult);
+            
         } else {
             $transType = $request->input('trans_type');
             $transInputType = $request->input('trans_input_type');

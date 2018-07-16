@@ -53,28 +53,37 @@
                         for($i = 0;$i < $count ; $i++){
                         if($dataCategory[$i]->level_value == $prevLevel){?>
 
-                        <li id="parent" style="margin-top: 1% ;background-color: lightgrey; width: 95%" class="menu-item" data-level="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a>
-                            <span class="plus">+</span>
-                            <span class="minus">-</span>
+                        <li  style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>"><a href="#0" ><?php echo $dataCategory[$i]->name; ?></a>
+                            @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
+                                <span class="plus">+</span>
+                                <span class="minus">-</span>
+                            @endif
+                            
                         </li>
 
 
                         <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
-                            <ul class="group-menu-item" id="sub1">
-                                <li style="margin-top: 1% ;background-color: lightgrey;width: 95%" class="menu-item" data-level="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a></li>
+                            <ul class="group-menu-item">
+                                <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a></li>
                                 <?php }else{?>
                                 <?php for($j = $dataCategory[$i]->level_value;$j<$prevLevel;$j++){ ?>
                             </ul>
                         <?php } ?>
 
-                        <li style="margin-top: 1% ;background-color: lightgrey;width: 95%" class="menu-item" data-level="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a></li>
+                        <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a>
+                            @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
+
+                                <span class="plus">+</span>
+                                <span class="minus">-</span>
+                            @endif
+                        </li>
 
                         <?php }?>
                             <div class="CUD"> 
                                 <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span>
                                 </a>
                                 <a class="pull-right btn btn-warning btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-edit"></span>
-                                    <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newItem()"><span
+                                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newItem()"><span
                                     class="glyphicon glyphicon-plus"></span></a>
                                 </a>
                             </div>
@@ -82,6 +91,7 @@
 
                         $prevLevel = $dataCategory[$i]->level_value;
                         }
+
                         ?>
                     </ul>
                 </div>
@@ -97,22 +107,25 @@
 @endsection
 @section('scripts')
     <script type="text/javascript">
-         $('#sub1').hide();
+         $('ul.group-menu-item').hide();
          $('.minus').hide();
 
+
          $('.plus').on('click', function(event) {
-             $('#sub1').show();
-             $('.minus').show();
-             $('.plus').hide();
+
+            $(this).parent('.menu-item').nextAll('ul.group-menu-item').first().show();  //Lấy ra thằng ul gần nhất
+             $(this).next('.minus').show();
+             $(this).hide();
          });
 
          $('.minus').on('click', function(event) {
-             $('#sub1').hide();
-             $('.plus').show();
-             $('.minus').hide();
+             $(this).parent('.menu-item').nextAll('ul.group-menu-item').hide();
+             $(this).prev('.plus').show();
+             $(this).hide();
          });
 
     </script>
+
     <script type="text/javascript">
         $(document).ready(function () {
 

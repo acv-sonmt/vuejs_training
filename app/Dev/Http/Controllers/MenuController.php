@@ -30,4 +30,10 @@ class MenuController extends Controller
         $dataCategory = ($dataCategoryCollection->status == \SDBStatusCode::OK)?$dataCategoryCollection->data:array();
         return view("dev/menu", compact('dataCategory'));
     }
+
+    public function create(Request $request){
+
+        $data = $request->all();
+        dd($data);
+    }
  }
