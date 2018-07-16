@@ -34,6 +34,6 @@ class MenuController extends Controller
     public function create(Request $request){
 
         $data = $request->all();
-        dd($data);
+        return $data;
     }
  }

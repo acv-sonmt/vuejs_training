@@ -55,8 +55,8 @@
 
                         <li  style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>"><a href="#0" ><?php echo $dataCategory[$i]->name; ?></a>
                             @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
-                                <span class="plus">+</span>
-                                <span class="minus">-</span>
+                                <span class="plus"><button style="background-color: lightgreen">+</button></span>
+                                <span class="minus"><button style="background-color: lightgreen">-</button></span>
                             @endif
                             
                         </li>
@@ -73,8 +73,8 @@
                         <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a>
                             @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
 
-                                <span class="plus">+</span>
-                                <span class="minus">-</span>
+                                <span class="plus"><button style="background-color: lightgreen">+</button></span>
+                                <span class="minus"><button style="background-color: lightgreen">-</button></span>
                             @endif
                         </li>
 
@@ -83,7 +83,7 @@
                                 <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span>
                                 </a>
                                 <a class="pull-right btn btn-warning btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-edit"></span>
-                                <a class="pull-right btn btn-primary btn-xs" data-nodrag ng-click="newItem()"><span
+                                <a class="pull-right btn btn-primary create btn-xs" data-nodrag ng-click="newItem()"><span
                                     class="glyphicon glyphicon-plus"></span></a>
                                 </a>
                             </div>
@@ -99,6 +99,32 @@
                 <div class="ref">
                     <b>Refer: </b><a href="http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/"
                                      target="_blank">http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <div class="col-md-12">
+        <div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
+            <div class="modal-dialog" role="document">
+                <div class="modal-content">
+                    <div class="modal-header">
+                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
+                        <h4 class="modal-title" id="myModalLabel">Thêm Mới</h4>
+                    </div>
+                    <div class="modal-body">
+                        
+                        <form method="POST" enctype="multipart/form-data" action="{{-- {{ route('create.menu') }}  --}}">
+                            <div class="form-group">
+                                <label for="name">Name:</label>
+                                <input type="text" name="name" class="form-control" />
+                            </div>
+
+                            <div class="form-group">
+                                <button type="submit" style="margin-left: 43%" class="btn btn-success">Tạo</button>
+                            </div>
+                        </form>
+                    </div>
                 </div>
             </div>
         </div>
@@ -124,10 +150,33 @@
              $(this).hide();
          });
 
+         
     </script>
 
     <script type="text/javascript">
+
+        
         $(document).ready(function () {
+            $('.create').on('click', function(event) {
+                 $('#create-item').modal().show();
+             });
+
+            $.ajaxSetup({
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                }
+            });
+
+            $.ajaxSetup({
+                url: '',
+                type: 'POST',
+                dataType: 'json',
+                data: {name: 'name'},
+                success: function(data){
+                    var new = '<li id="new">' + data.name + '</li>'
+                }
+            })
+   
 
         });
 
