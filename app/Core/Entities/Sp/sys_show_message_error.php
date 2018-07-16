@@ -2,12 +2,9 @@
 //This is dev automatic generate 
  namespace App\Core\Entities; 
 use App\Core\Entities\Entity; 
-class GET_CATEGORY_WITH_LEVEL_LIST extends Entity{
-	public $id;
-	public $name;
-	public $level_value;
-	public $lft;
-	public $rgt;
+class sys_show_message_error extends Entity{
+	public $code;
+	public $data_error;
 	public  function __construct($object){
 		 parent::__construct($object);
 	}
