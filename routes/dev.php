@@ -18,7 +18,8 @@ Route::post('/dev/initProject', 'DevController@initProject')->name('initProject'
 
 Route::get('/dev/translation', 'DevController@translationManagement')->name('translationManagement');
 Route::get('/dev/acl', 'DevController@aclManangement')->name('aclManangement');
-Route::get('/dev/menu', 'DevController@menu')->name('menu');
+
+Route::get('/dev/menu', 'MenuController@menu')->name('menu');
 
 Route::post('/dev/updateAclActive', 'DevController@updateAclActive')->name('updateAclActive');
 Route::post('/dev/updateAclActiveAll', 'DevController@updateAclActiveAll')->name('updateAclActiveAll');

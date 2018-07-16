@@ -60,14 +60,6 @@ class DevController extends Controller
 
     }
 
-    public function menu()
-    {
-        //form CRUD translate text
-        $dataCategoryCollection = $this->devService->getCategoryWithLevelList();
-        $dataCategory = ($dataCategoryCollection->status == \SDBStatusCode::OK)?$dataCategoryCollection->data:array();
-        return view("dev/menu", compact('dataCategory'));
-    }
-
     public function generationLanguageFiles()
     {
         $this->devService->generationTranslateFileAndScript();
