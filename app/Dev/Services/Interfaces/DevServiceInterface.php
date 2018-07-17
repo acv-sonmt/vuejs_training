@@ -15,6 +15,9 @@ interface DevServiceInterface
     public function getTranslateMessageArray( $translateType);
     public function getTranslateList($translateType,$lang):DataResultCollection;
     public function getCategoryWithLevelList():DataResultCollection;
+
+    public function CategoryAddChildInLeft($parentNodeId, $newNodeName):DataResultCollection;
+
     public function getAllSPList():DataResultCollection;
     public function getRoleInfoFromDB();
     public function generationTranslateFileAndScript();

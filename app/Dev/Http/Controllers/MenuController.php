@@ -12,6 +12,7 @@ use App\Dev\Helpers\CommonHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\Log;
 use Validator;
+use App\Dev\Catelory;
 
 class MenuController extends Controller
 {
@@ -31,9 +32,19 @@ class MenuController extends Controller
         return view("dev/menu", compact('dataCategory'));
     }
 
-    public function create(Request $request){
+    public function createMenu(Request $request){
+        $data= $request->all();
+        
+        $dataMenuCollection = $this->devService->CategoryAddChildInLeft(13,$data['name']);
+        $dataMenu = ($dataMenuCollection->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
+        // $catalories = new Catelory();
+        // $catalories->name = $data->name;
+        // $catalories->save();
 
-        $data = $request->all();
-        return $data;
+        // $dataMenu = Catelory::create($data);
+        return response()->json([
+            'message' => 'success',
+            'data' => $dataMenu,
+        ]);
     }
  }

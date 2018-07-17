@@ -80,7 +80,6 @@ class DEVDB extends DB
             //Logging
             CommonHelper::CommonLog($exception->getMessage());
         }
-
         return $dataResult;
     }
 

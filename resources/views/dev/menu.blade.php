@@ -113,15 +113,14 @@
                         <h4 class="modal-title" id="myModalLabel">Thêm Mới</h4>
                     </div>
                     <div class="modal-body">
-                        
-                        <form method="POST" enctype="multipart/form-data" action="{{-- {{ route('create.menu') }}  --}}">
+                            <form action="" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data" id="formCreate">
                             <div class="form-group">
                                 <label for="name">Name:</label>
-                                <input type="text" name="name" class="form-control" />
+                                <input type="text" name="name" id="name" class="form-control" />
                             </div>
 
                             <div class="form-group">
-                                <button type="submit" style="margin-left: 43%" class="btn btn-success">Tạo</button>
+                                <button type="submit" style="margin-left: 43%" id="btnSubmit" class="btn btn-success">Tạo</button>
                             </div>
                         </form>
                     </div>
@@ -154,12 +153,9 @@
     </script>
 
     <script type="text/javascript">
-
+         
         
         $(document).ready(function () {
-            $('.create').on('click', function(event) {
-                 $('#create-item').modal().show();
-             });
 
             $.ajaxSetup({
                 headers: {
@@ -167,17 +163,26 @@
                 }
             });
 
-            $.ajaxSetup({
-                url: '',
-                type: 'POST',
-                dataType: 'json',
-                data: {name: 'name'},
-                success: function(data){
-                    var new = '<li id="new">' + data.name + '</li>'
-                }
-            })
-   
+            $('.create').on('click', function(event) {
+                 $('#create-item').modal().show();
+             });
 
+            $("#formCreate").submit(function(e){
+                e.preventDefault();
+                var name = $('#name').val();
+                console.log(name);
+                $.ajax({
+                    url: '{{ route('createMenu') }}',
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: {name: 'name'},
+                    success : function(res){
+                      var html= '<li>'+data.name+'</li>';
+                      toastr.success('Thêm mới thành công !');
+                    }
+                })
+   
+            });
         });
 
     </script>
