@@ -1261,7 +1261,7 @@
     <!-- /page content -->
 
 @endsection
-@section('scripts')
+@section('form_scripts')
     <script>
         $('#myDatepicker').datetimepicker();
 

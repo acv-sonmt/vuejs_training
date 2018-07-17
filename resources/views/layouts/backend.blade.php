@@ -20,6 +20,8 @@
 
     <link href="{{ asset('backend/template1/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/bootstrap-colorpicker.min.css')}}" rel="stylesheet">
+
+    @yield('lib_style')
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -72,14 +74,9 @@
                             <li><a><i class="fa fa-desktop"></i> UI Elements <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('generalElement_template')}}">General Elements</a></li>
-                                    <li><a href="media_gallery.html">Media Gallery</a></li>
-                                    <li><a href="typography.html">Typography</a></li>
-                                    <li><a href="icons.html">Icons</a></li>
-                                    <li><a href="glyphicons.html">Glyphicons</a></li>
-                                    <li><a href="widgets.html">Widgets</a></li>
-                                    <li><a href="invoice.html">Invoice</a></li>
-                                    <li><a href="inbox.html">Inbox</a></li>
-                                    <li><a href="calendar.html">Calendar</a></li>
+                                    <li><a href="{{route('icons_template')}}">Icons</a></li>
+                                    <li><a href="{{route('glyphicons_template')}}">Glyphicons</a></li>
+                                    <li><a href="{{route('calendar_template')}}">Calendar</a></li>
                                 </ul>
                             </li>
                             <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
@@ -299,7 +296,8 @@
 
 <script src="{{ asset('backend/template1/js/bootstrap-colorpicker.min.js')}}"></script>
 <!-- Custom Theme Scripts -->
+@yield('lib_scripts')
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>
-@yield('scripts')
+@yield('form_scripts')
 </html>
 

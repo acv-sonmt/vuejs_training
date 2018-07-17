@@ -21,8 +21,11 @@
 
     //Template Controller
     Route::get('/backend/template', 'TemplateController@index')->name('backend_template');
-    Route::get('/backend/form', 'TemplateController@form')->name('form_template');
-    Route::get('/backend/components', 'TemplateController@components')->name('component_template');
-    Route::get('/backend/buttons', 'TemplateController@buttons')->name('button_template');
-    Route::get('/backend/upload', 'TemplateController@upload')->name('upload_template');
-    Route::get('/backend/general-element', 'TemplateController@generalElement')->name('generalElement_template');
+    Route::get('/backend/template/form', 'TemplateController@form')->name('form_template');
+    Route::get('/backend/template/components', 'TemplateController@components')->name('component_template');
+    Route::get('/backend/template/buttons', 'TemplateController@buttons')->name('button_template');
+    Route::get('/backend/template/upload', 'TemplateController@upload')->name('upload_template');
+    Route::get('/backend/template/general-element', 'TemplateController@generalElement')->name('generalElement_template');
+    Route::get('/backend/template/icons', 'TemplateController@icons')->name('icons_template');
+    Route::get('/backend/template/glyphicons', 'TemplateController@glyphicons')->name('glyphicons_template');
+    Route::get('/backend/template/calendar', 'TemplateController@calendar')->name('calendar_template');

@@ -478,7 +478,7 @@
 
 
 @endsection
-@section('scripts')
+@section('form_scripts')
 
 @endsection
 

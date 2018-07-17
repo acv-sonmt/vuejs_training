@@ -39,4 +39,13 @@ class TemplateController extends Controller
     public function generalElement(){
         return view('backend.template.generalElement');
     }
+    public function icons(){
+        return view('backend.template.icons');
+    }
+    public function glyphicons(){
+        return view('backend.template.glyphicons');
+    }
+    public function calendar(){
+        return view('backend.template.calendar');
+    }
 }
