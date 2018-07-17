@@ -11,19 +11,15 @@
     <link rel="icon" href="images/favicon.ico" type="image/ico" />
 
     <title>Gentelella Alela! | </title>
-    <!-- jQuery -->
-    <script src="{{ asset('backend/template1/js/jquery.min.js')}}"></script>
-    <!-- Bootstrap -->
-    <script src="{{ asset('backend/template1/js/bootstrap.min.js')}}"></script>
-
 
     <!-- Bootstrap -->
     <link href="{{ asset('backend/template1/css/bootstrap.min.css') }}" rel="stylesheet">
     <!-- Font Awesome -->
     <link href="{{ asset('backend/template1/css/font-awesome.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('backend/template1/css/daterangepicker.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
-
+    <title>{{ config('app.name', 'Laravel') }}</title>
 
 </head>
 
@@ -33,7 +29,7 @@
         <div class="col-md-3 left_col">
             <div class="left_col scroll-view">
                 <div class="navbar nav_title" style="border: 0;">
-                    <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>Gentelella Alela!</span></a>
+                    <a href="index.html" class="site_title"><i class="fa fa-paw"></i> <span>{{ config('app.name', 'Laravel') }}</span></a>
                 </div>
 
                 <div class="clearfix"></div>
@@ -222,7 +218,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="{{ asset('backend/template1/images/avatar.jpg') }}" alt="Profile Image" /></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -234,7 +230,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="{{ asset('backend/template1/images/avatar.jpg') }}" alt="Profile Image" /></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -246,7 +242,7 @@
                                 </li>
                                 <li>
                                     <a>
-                                        <span class="image"><img src="images/img.jpg" alt="Profile Image" /></span>
+                                        <span class="image"><img src="{{ asset('backend/template1/images/avatar.jpg') }}" alt="Profile Image" /></span>
                                         <span>
                           <span>John Smith</span>
                           <span class="time">3 mins ago</span>
@@ -293,7 +289,14 @@
 
 
 </body>
+<!-- jQuery -->
+<script src="{{ asset('backend/template1/js/jquery.min.js')}}"></script>
+<!-- Bootstrap -->
+<script src="{{ asset('backend/template1/js/bootstrap.min.js')}}"></script>
+<script src="{{ asset('backend/template1/js/jquery.autocomplete.min.js')}}"></script>
+<script src="{{ asset('backend/template1/js/moment.min.js')}}"></script>
+<script src="{{ asset('backend/template1/js/jquery.datetimepicker.js')}}"></script>
 <!-- Custom Theme Scripts -->
-<script src="{{ asset('backend/template1/js/custom.min.js')}}"></script>
+<script src="{{ asset('backend/template1/js/custom.js')}}"></script>
 </html>
 

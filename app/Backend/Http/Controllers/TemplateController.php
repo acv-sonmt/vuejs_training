@@ -20,8 +20,14 @@ class TemplateController extends Controller
      *
      * @return \Illuminate\Http\Response
      */
-    public function index(Request $request)
+    public function index()
     {
-        return view('backend.index');
+        return view('backend.template.index');
+    }
+    public function form(){
+        return view('backend.template.form');
+    }
+    public function components(){
+        return view('backend.template.component');
     }
 }
