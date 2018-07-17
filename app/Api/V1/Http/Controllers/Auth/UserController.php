@@ -1,9 +1,9 @@
 <?php
 
-namespace App\Api\Http\Controllers\Auth;
+namespace App\Api\V1\Http\Controllers\Auth;
 
-use App\Api\Models\User;
-use App\Api\Http\Controllers\Controller;
+use App\Api\V1\Models\User;
+use App\Api\V1\Http\Controllers\Controller;
 use App\Core\Dao\SDB;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\ResponseHelper;

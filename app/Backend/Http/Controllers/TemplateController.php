@@ -30,4 +30,13 @@ class TemplateController extends Controller
     public function components(){
         return view('backend.template.component');
     }
+    public function buttons(){
+        return view('backend.template.button');
+    }
+    public function upload(){
+        return view('backend.template.upload');
+    }
+    public function generalElement(){
+        return view('backend.template.generalElement');
+    }
 }

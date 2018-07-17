@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Api\Http\Controllers;
+namespace App\Api\V1\Http\Controllers;
 use App\Core\Dao\SDB;
 use App\Core\Helpers\ResponseHelper;
 class CateloryController extends Controller
