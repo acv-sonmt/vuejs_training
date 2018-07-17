@@ -1,7 +1,7 @@
 @extends('layouts.backend')
 @section('lib_style')
     <link href="{{ asset('backend/template1/fullcalendar/fullcalendar.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('backend/template1/fullcalendar/fullcalendar.print.css')}}" rel="stylesheet">
+    <link href="{{ asset('backend/template1/fullcalendar/fullcalendar.print.css')}}" rel="stylesheet" media="print">
 @endsection
 @section('content')
     <div class="">
