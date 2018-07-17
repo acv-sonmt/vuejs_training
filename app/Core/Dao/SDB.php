@@ -62,7 +62,11 @@ class SDB extends DB
             }
             else {
                 //new class
-                $dataResult->data = new $procName();
+                if(class_exists($procName)){
+                    $dataResult->data = new $procName();
+                }else{
+                    $dataResult->data = null;
+                }
                 $dataResult->status = \SDBStatusCode::DataNull;
             }
         } catch (\Exception $exception) {

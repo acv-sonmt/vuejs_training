@@ -17,6 +17,9 @@
     <!-- Font Awesome -->
     <link href="{{ asset('backend/template1/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/daterangepicker.css')}}" rel="stylesheet">
+
+    <link href="{{ asset('backend/template1/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
+    <link href="{{ asset('backend/template1/css/bootstrap-colorpicker.min.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -286,17 +289,21 @@
     </div>
 </div>
 
-
-
 </body>
 <!-- jQuery -->
 <script src="{{ asset('backend/template1/js/jquery.min.js')}}"></script>
 <!-- Bootstrap -->
 <script src="{{ asset('backend/template1/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('backend/template1/js/jquery.autocomplete.min.js')}}"></script>
-<script src="{{ asset('backend/template1/js/moment.min.js')}}"></script>
-<script src="{{ asset('backend/template1/js/jquery.datetimepicker.js')}}"></script>
+<script src="{{ asset('backend/template1/js/moment-with-locales.js')}}"></script>
+
+<!-- bootstrap-datetimepicker -->
+<script src="{{ asset('backend/template1/js/daterangepicker.js')}}"></script>
+<script src="{{ asset('backend/template1/js/bootstrap-datetimepicker.min.js')}}"></script>
+
+<script src="{{ asset('backend/template1/js/bootstrap-colorpicker.min.js')}}"></script>
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>
+@yield('scripts')
 </html>
 

@@ -184,68 +184,6 @@
                     </div>
                 </div>
                 <!-- /form color picker -->
-
-                <!-- form input knob -->
-                <div class="col-md-12">
-                    <div class="x_panel">
-                        <div class="x_title">
-                            <h2>Input knob</h2>
-                            <ul class="nav navbar-right panel_toolbox">
-                                <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
-                                </li>
-                                <li class="dropdown">
-                                    <a href="#" class="dropdown-toggle" data-toggle="dropdown" role="button"
-                                       aria-expanded="false"><i class="fa fa-wrench"></i></a>
-                                    <ul class="dropdown-menu" role="menu">
-                                        <li><a href="#">Settings 1</a>
-                                        </li>
-                                        <li><a href="#">Settings 2</a>
-                                        </li>
-                                    </ul>
-                                </li>
-                                <li><a class="close-link"><i class="fa fa-close"></i></a>
-                                </li>
-                            </ul>
-                            <div class="clearfix"></div>
-                        </div>
-                        <div class="x_content">
-                            <div class="col-md-2">
-                                <p>Display value</p>
-                                <input class="knob" data-width="100" data-height="120" data-min="-100"
-                                       data-displayPrevious=true data-fgColor="#26B99A" value="44">
-                            </div>
-                            <div class="col-md-2">
-                                <p>&#215; 'cursor' mode</p>
-                                <input class="knob" data-width="100" data-height="120" data-cursor=true
-                                       data-fgColor="#34495E" value="29">
-                            </div>
-                            <div class="col-md-2">
-                                <p>Step 0.1</p>
-                                <input class="knob" data-width="100" data-height="120" data-min="-10000"
-                                       data-displayPrevious=true data-fgColor="#26B99A" data-max="10000" data-step=".1"
-                                       value="0">
-                            </div>
-                            <div class="col-md-2">
-                                <p>Angle arc</p>
-                                <input class="knob" data-width="100" data-height="120" data-angleOffset=-125
-                                       data-angleArc=250 data-fgColor="#34495E" data-rotation="anticlockwise"
-                                       value="35">
-                            </div>
-                            <div class="col-md-2">
-                                <p>Alternate design</p>
-                                <input class="knob" data-width="110" data-height="120" data-displayPrevious=true
-                                       data-fgColor="#26B99A" data-skin="tron" data-thickness=".2" value="75">
-                            </div>
-                            <div class="col-md-2">
-                                <p>Angle offset</p>
-                                <input class="knob" data-width="100" data-height="120" data-angleOffset=90
-                                       data-linecap=round data-fgColor="#26B99A" value="35">
-                            </div>
-                        </div>
-                    </div>
-                </div>
-                <!-- /form input knob -->
-
             </div>
 
 
@@ -256,7 +194,7 @@
                     <div class="x_panel" style="">
                         <div class="x_title">
                             <h2>Date Pickers
-                                <small> Available with multiple designs</small>
+                                <small> Required:daterangepicker.js</small>
                             </h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -535,7 +473,6 @@
                                             </div>
                                         </div>
                                     </div>
-
 
                                     <fieldset>
                                         <div class="control-group">
@@ -1202,7 +1139,7 @@
                     <div class="x_panel" style="">
                         <div class="x_title">
                             <h2>Date Pickers
-                                <small> Available with multiple designs</small>
+                                <small> Required: moment-with-locales.js , bootstrap-datetimepicker.min.js </small>
                             </h2>
                             <ul class="nav navbar-right panel_toolbox">
                                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -1299,6 +1236,18 @@
                                         </div>
                                     </div>
 
+                                    <div class='col-sm-4'>
+                                        Language
+                                        <div class="form-group">
+                                            <div class='input-group date' id='datetimepicker8'>
+                                                <input type='text' class="form-control"/>
+                                                <span class="input-group-addon">
+                                    <span class="glyphicon glyphicon-calendar"></span>
+                            </span>
+                                            </div>
+                                        </div>
+                                    </div>
+
                                 </div>
                             </div>
                         </div>
@@ -1311,6 +1260,42 @@
     </div>
     <!-- /page content -->
 
+@endsection
+@section('scripts')
+    <script>
+        $('#myDatepicker').datetimepicker();
+
+        $('#myDatepicker2').datetimepicker({
+            format: 'DD.MM.YYYY'
+        });
+
+        $('#myDatepicker3').datetimepicker({
+            format: 'hh:mm A'
+        });
+
+        $('#myDatepicker4').datetimepicker({
+            ignoreReadonly: true,
+            allowInputToggle: true
+        });
+
+        $('#datetimepicker6').datetimepicker();
+
+        $('#datetimepicker7').datetimepicker({
+            useCurrent: false
+        });
+
+        $("#datetimepicker6").on("dp.change", function (e) {
+            $('#datetimepicker7').data("DateTimePicker").minDate(e.date);
+        });
+
+        $("#datetimepicker7").on("dp.change", function (e) {
+            $('#datetimepicker6').data("DateTimePicker").maxDate(e.date);
+        });
+        $('#datetimepicker8').datetimepicker({
+            locale:'ja',
+            format:'LL'
+        });
+    </script>
 @endsection
 
 
