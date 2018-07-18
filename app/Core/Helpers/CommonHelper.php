@@ -33,7 +33,7 @@ class CommonHelper
             $_namespaces_chunks =isset($_action[0])? explode('\\', $_action[0]):array();
             $controllers = strtolower(end($_namespaces_chunks));
             $action = strtolower(end($_action));
-            $screenCode = $module.'\\'.$controllers.'\\'.$action;
+            $screenCode = $curentActionInfo['namespace']."\\".$controllers."\\".$action;
 
             $result->module = $module;
             $result->controller = $controllers;

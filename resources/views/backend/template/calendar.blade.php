@@ -137,6 +137,9 @@
                 </div>
             </div>
         </div>
+        <div id="fc_create" data-toggle="modal" data-target="#CalenderModalNew"></div>
+        <div id="fc_edit" data-toggle="modal" data-target="#CalenderModalEdit"></div>
+        <!-- /calendar modal -->
 @endsection
 @section('lib_scripts')
     <script src="{{ asset('backend/template1/fullcalendar/fullcalendar.min.js')}}"></script>

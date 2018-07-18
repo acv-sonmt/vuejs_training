@@ -7,6 +7,7 @@ class sys_screens extends Entity{
 	public $module;
 	public $controller;
 	public $action;
+	public $screen_code;
 	public $description;
 	public  function __construct($object){
 		 parent::__construct($object);

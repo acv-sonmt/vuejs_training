@@ -466,10 +466,13 @@ class DevService extends BaseService implements DevServiceInterface
                 $_action = explode('@', $action['controller']);
 
                 $_namespaces_chunks = explode('\\', $_action[0]);
+
                 $controllers[$i]['id'] = $id;
                 $controllers[$i]['module'] = $_module;
                 $controllers[$i]['controller'] = strtolower(end($_namespaces_chunks));
                 $controllers[$i]['action'] = strtolower(end($_action));
+                $controllers[$i]['screen_code']=$action['namespace']."\\".$controllers[$i]['controller']."\\".$controllers[$i]['action'];
+                $controllers[$i]['description']=$action['namespace'];
             }
             $i++;
         }
