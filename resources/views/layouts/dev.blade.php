@@ -46,6 +46,9 @@
             margin-bottom: 10px;
             font-weight: bold;
         }
+        .container{
+            min-width: 1400px !important;
+        }
     </style>
 </head>
 <body>
