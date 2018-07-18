@@ -137,7 +137,7 @@
 
                         </div>
                         <div class="function text-right col-md-6">
-                            <label>Active for all of screen ( both screen filtered and not filtered ): </label>
+                            <label style="color: red">Active for all of screen ( both screen filtered and not filtered ): </label>
                             <label class="switch">
                                 <input type="checkbox" class="change-active-all">
                             <span class="slider round">
@@ -154,6 +154,7 @@
                             <th>Module</th>
                             <th>Controller</th>
                             <th>Action</th>
+                            <th>Namespace</th>
                             <th>Active</th>
                         </tr>
                         </thead>
@@ -169,6 +170,7 @@
                             <td><?php echo $item->module; ?></td>
                             <td><?php echo $item->controller; ?></td>
                             <td><?php echo $item->action; ?></td>
+                            <td><?php echo $item->screen_code; ?></td>
                             <td class="text-center">
                                 <?php
                                 $selected = '';
