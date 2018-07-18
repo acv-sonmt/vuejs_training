@@ -8,7 +8,7 @@
 
 namespace App\Dev\Helpers;
 
-
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
 
 class CommonHelper

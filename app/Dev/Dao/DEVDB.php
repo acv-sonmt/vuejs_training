@@ -9,6 +9,7 @@ use App\Core\Entities\Entity;
 use App\Dev\Entities\DataResultCollection;
 use Illuminate\Support\Facades\DB;
 use App\Dev\Helpers\CommonHelper;
+use Illuminate\Support\Facades\Log;
 
 /**
  * Class SDB
@@ -19,9 +20,19 @@ class DEVDB extends DB
 {
     public const _defaultValue = [
         'varchar' => '',
+        'longtext'=>'',
         'int' => 0,
+        'SMALLINT'=>0,
+        'MEDIUMINT'=>0,
+        'BIGINT'=>0,
+        'FLOAT'=>0.0,
+        'DOUBLE'=>0.0,
+        'DECIMAL'=>0.0,
+        'numeric'=>0.0,
+        'DATE'=> '2018-01-01',
         'datetime' => '2018-01-01 00:00',
         'tinyint' => 0,
+        'bit'=>0,
         'json' => '{}'
     ];
 
@@ -79,11 +90,14 @@ class DEVDB extends DB
                 }
                 $dataResult->status = \SDBStatusCode::DataNull;
             }
+            Log::notice(__CLASS__."::".__FUNCTION__."(".$procName.") : Passed");
         } catch (\Exception $exception) {
             $dataResult->status = \SDBStatusCode::Excep;
             $dataResult->message = $exception->getMessage();
             //Logging
-            CommonHelper::CommonLog($exception->getMessage());
+            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.")    Error: {");
+            Log::error($exception->getMessage());
+            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.")    Error: }");
         }
         return $dataResult;
     }
@@ -133,12 +147,13 @@ class DEVDB extends DB
                     $meta[] = $stmt->getColumnMeta($column_index);
                 }
             }
-
+            Log::notice(__CLASS__."::".__FUNCTION__."(".$procName.",".$module.") : Passed");
             if (!$exec) return $pdo->errorInfo();
         } catch (\Exception $exception) {
             //Logging
-            die($exception->getMessage());
-            CommonHelper::CommonLog($exception->getMessage());
+            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.",".$module.")    Error: {");
+            Log::error($exception->getMessage());
+            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.",".$module.")    Error: }");
         }
         DEVDB::rollBack();
         self::createFile($meta,$procName,$module);
@@ -165,10 +180,12 @@ class DEVDB extends DB
 
                 }
             }
+            Log::notice(__CLASS__."::".__FUNCTION__."(".$tableName.",".$module.") : Passed");
             if (!$exec) return $pdo->errorInfo();
         } catch (\Exception $exception) {
-            //Logging
-            CommonHelper::CommonLog($exception->getMessage());
+            Log::error(__CLASS__."::".__FUNCTION__."(".$tableName.",".$module.")    Error: {");
+            Log::error($exception->getMessage());
+            Log::error(__CLASS__."::".__FUNCTION__."(".$tableName.",".$module.")    Error: }");
         }
         self::createFile($meta,$tableName,$module);
         return $meta;

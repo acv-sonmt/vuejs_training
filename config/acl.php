@@ -17,7 +17,7 @@
 		'\Laravel\Passport\Http\Controllers\personalaccesstokencontroller\foruser'=>'1',
 		'\Laravel\Passport\Http\Controllers\personalaccesstokencontroller\store'=>'1',
 		'\Laravel\Passport\Http\Controllers\personalaccesstokencontroller\destroy'=>'1',
-		'App\Auth\Http\Controllers\logincontroller\showloginform'=>'1',
+		'App\Auth\Http\Controllers\logincontroller\showloginform'=>'0',
 		'App\Auth\Http\Controllers\logincontroller\login'=>'1',
 		'App\Auth\Http\Controllers\logincontroller\logout'=>'1',
 		'App\Auth\Http\Controllers\forgotpasswordcontroller\showlinkrequestform'=>'1',

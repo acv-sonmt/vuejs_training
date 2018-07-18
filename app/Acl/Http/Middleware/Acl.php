@@ -36,7 +36,8 @@ class Acl
         $result = new DataResultCollection();
         $result->status = \SDBStatusCode::ACLNotPass;
         $result->data=array('error'=> trans('acl_not_access'));
-        return ResponseHelper::JsonDataResult($result);
+        return redirect('/');
+        //return ResponseHelper::JsonDataResult($result);
 
 
     }
