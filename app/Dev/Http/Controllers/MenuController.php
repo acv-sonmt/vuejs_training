@@ -34,8 +34,10 @@ class MenuController extends Controller
 
     public function createMenu(Request $request){
         $data= $request->all();
+        if ($data['name'] !='') {
         $dataMenuCollection = $this->devService->CategoryAddChildInLeft( $data['parent_id'],$data['name']);
         $dataMenu = ($dataMenuCollection->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
+        }
         return response()->json([
             'message' => 'success',
             'data' => $dataMenu,
@@ -57,9 +59,7 @@ class MenuController extends Controller
     public function deleteMenu(Request $request){
         $id = $request->id;
         $menuDelete = $this->devService->categoryDeleteNodeAndChild($id);
-
         $dataMenuDelete = ($menuDelete->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
-
         return response()->json([
             'message' => 'success',
             'data' => $dataMenuDelete,
