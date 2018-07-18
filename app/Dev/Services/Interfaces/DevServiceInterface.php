@@ -18,6 +18,10 @@ interface DevServiceInterface
 
     public function CategoryAddChildInLeft($parentNodeId, $newNodeName):DataResultCollection;
 
+    public function categoryDeleteNodeAndChild($nodeId):DataResultCollection;
+
+    public function categoryUpdateMenu($nodeId, $pName):DataResultCollection;
+
     public function getAllSPList():DataResultCollection;
     public function getRoleInfoFromDB();
     public function generationTranslateFileAndScript();

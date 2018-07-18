@@ -86,6 +86,17 @@ class DevService extends BaseService implements DevServiceInterface
         return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_ADD_CHILD_IN_LEFT',array($parentNodeId, $newNodeName));
     }
 
+    public function categoryDeleteNodeAndChild($nodeId):DataResultCollection
+    {
+        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_DELETE_NODE_AND_CHILD',array($nodeId));
+    }
+
+    public function categoryUpdateMenu($nodeId, $pName):DataResultCollection {
+        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_UPDATE',array($nodeId, $pName));
+    }
+
+
+
     public function getRoleInfoFromDB()
     {
         return DEVDB::execSPs('DEV_GET_ROLES_MAP_ACTION_LST');

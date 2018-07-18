@@ -21,6 +21,8 @@ Route::get('/dev/acl', 'DevController@aclManangement')->name('aclManangement');
 
 Route::get('/dev/menu', 'MenuController@menu')->name('menu');
 Route::post('/dev/menu/createMenu','MenuController@createMenu')->name('createMenu');
+Route::post('/dev/menu/updateMenu','MenuController@updateMenu')->name('updateMenu');
+Route::delete('/dev/menu/delete','MenuController@deleteMenu')->name('deleteMenu');
 
 Route::post('/dev/updateAclActive', 'DevController@updateAclActive')->name('updateAclActive');
 Route::post('/dev/updateAclActiveAll', 'DevController@updateAclActiveAll')->name('updateAclActiveAll');

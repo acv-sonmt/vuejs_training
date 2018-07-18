@@ -34,17 +34,35 @@ class MenuController extends Controller
 
     public function createMenu(Request $request){
         $data= $request->all();
-        
-        $dataMenuCollection = $this->devService->CategoryAddChildInLeft(13,$data['name']);
+        $dataMenuCollection = $this->devService->CategoryAddChildInLeft( $data['parent_id'],$data['name']);
         $dataMenu = ($dataMenuCollection->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
-        // $catalories = new Catelory();
-        // $catalories->name = $data->name;
-        // $catalories->save();
-
-        // $dataMenu = Catelory::create($data);
         return response()->json([
             'message' => 'success',
             'data' => $dataMenu,
+        ]);
+    }
+
+    public function updateMenu(Request $request){
+        $data = $request->all();
+        $dataUpdateCollection = $this->devService->categoryUpdateMenu($data['id'], $data['name']);
+        $dataUpdate = ($dataUpdateCollection->status == \SDBStatusCode::OK)?$dataUpdateCollection->data:array();
+        return response()->json([
+            'message' => 'success',
+            'data' => $dataUpdate,
+        ]);
+
+    }
+
+
+    public function deleteMenu(Request $request){
+        $id = $request->id;
+        $menuDelete = $this->devService->categoryDeleteNodeAndChild($id);
+
+        $dataMenuDelete = ($menuDelete->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
+
+        return response()->json([
+            'message' => 'success',
+            'data' => $dataMenuDelete,
         ]);
     }
  }

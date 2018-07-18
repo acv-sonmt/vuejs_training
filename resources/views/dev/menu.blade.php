@@ -1,5 +1,7 @@
 @extends('layouts.dev')
-
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
 @section('content')
     <style>
         .treeview .list-group-item {
@@ -37,8 +39,12 @@
         }
         .CUD{
             float:right !important;
-            margin-top: -2.1% !important;
+            /*margin-top: -2.1% !important;*/
         }
+        .display-none{
+            display: none;
+        }
+
     </style>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -53,40 +59,47 @@
                         for($i = 0;$i < $count ; $i++){
                         if($dataCategory[$i]->level_value == $prevLevel){?>
 
-                        <li  style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>"><a href="#0" ><?php echo $dataCategory[$i]->name; ?></a>
+                        <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>" ><input type="" name="" class="uname" style="width:70%" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
                                 <span class="plus"><button style="background-color: lightgreen">+</button></span>
                                 <span class="minus"><button style="background-color: lightgreen">-</button></span>
                             @endif
-                            
-                        </li>
+                            <div class="CUD"> 
+                                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
+                                </a>
+                                <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
 
+                                <a class="pull-right btn btn-info update btn-xs"><span class="glyphicon glyphicon-save"></span></a>
 
-                        <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
-                            <ul class="group-menu-item">
-                                <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a></li>
+                                <a class="pull-right btn btn-primary create btn-xs" ><span
+                                    class="glyphicon glyphicon-plus"></span></a>
+                                
+                            </div>
+
+                            <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
+                            <ul class="group-menu-item display-none">
+                                <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>"><input type="" name="" class="uname" style="width:70% " disabled value="<?php echo $dataCategory[$i]->name; ?>">
+
+                                    <div class="CUD"> 
+                                        <a class="pull-right btn btn-danger delete btn-xs" ><span class="glyphicon glyphicon-remove"></span></a>
+                                        <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
+                                        <a class="pull-right btn btn-info update btn-xs"><span class="glyphicon glyphicon-save"></span></a> 
+                                        <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                                    </div>
+                                </li>
                                 <?php }else{?>
                                 <?php for($j = $dataCategory[$i]->level_value;$j<$prevLevel;$j++){ ?>
                             </ul>
-                        <?php } ?>
+                            <?php } ?>
 
-                        <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->level_value; ?>"><a href="#0"><?php echo $dataCategory[$i]->name; ?></a>
-                            @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
-
-                                <span class="plus"><button style="background-color: lightgreen">+</button></span>
-                                <span class="minus"><button style="background-color: lightgreen">-</button></span>
-                            @endif
                         </li>
 
+                        
+
+                        
+
                         <?php }?>
-                            <div class="CUD"> 
-                                <a class="pull-right btn btn-danger btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-remove"></span>
-                                </a>
-                                <a class="pull-right btn btn-warning btn-xs" data-nodrag ng-click="remove(this)"><span class="glyphicon glyphicon-edit"></span>
-                                <a class="pull-right btn btn-primary create btn-xs" data-nodrag ng-click="newItem()"><span
-                                    class="glyphicon glyphicon-plus"></span></a>
-                                </a>
-                            </div>
+                            
                         <?php
 
                         $prevLevel = $dataCategory[$i]->level_value;
@@ -104,53 +117,61 @@
         </div>
     </div>
 
-    <div class="col-md-12">
-        <div class="modal fade" id="create-item" tabindex="-1" role="dialog" aria-labelledby="myModalLabel">
-            <div class="modal-dialog" role="document">
-                <div class="modal-content">
-                    <div class="modal-header">
-                        <button type="button" class="close" data-dismiss="modal" aria-label="Close"><span aria-hidden="true">×</span></button>
-                        <h4 class="modal-title" id="myModalLabel">Thêm Mới</h4>
-                    </div>
-                    <div class="modal-body">
-                            <form action="" method="POST" class="form-horizontal" role="form" enctype="multipart/form-data" id="formCreate">
-                            <div class="form-group">
-                                <label for="name">Name:</label>
-                                <input type="text" name="name" id="name" class="form-control" />
-                            </div>
 
-                            <div class="form-group">
-                                <button type="submit" style="margin-left: 43%" id="btnSubmit" class="btn btn-success">Tạo</button>
-                            </div>
-                        </form>
-                    </div>
-                </div>
-            </div>
+<div id="new-node-temp" hidden="true">
+    <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="">
+            <input type="text" style="width:90%;" class="newNodeName form-control"/>
+        <div class="CUD" style="margin-top: -2.5%"> 
+            <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
+            </a>
+            <a class="pull-right btn btn-warning save btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
+            <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
         </div>
-    </div>
+    </li>
+</div>
+
+<div id="new-node-group-temp" hidden="true">
+    <ul class="group-menu-item">
+        <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="">
+                <input style="width:90%;"  type="text" class="newNodeName form-control"/>
+            <div class="CUD" style="margin-top: -2.5%">
+                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
+                </a>
+                <a class="pull-right btn btn-warning save btn-xs"><span class="glyphicon glyphicon-save"></span></a> 
+                <a class="pull-right btn btn-primary create btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+            </div>
+        </li>
+    </ul>
+</div>
+    
 
 @endsection
 @section('scripts')
     <script type="text/javascript">
-         $('ul.group-menu-item').hide();
-         $('.minus').hide();
-
+         
+         $('.minus').addClass('display-none');
 
          $('.plus').on('click', function(event) {
 
-            $(this).parent('.menu-item').nextAll('ul.group-menu-item').first().show();  //Lấy ra thằng ul gần nhất
-             $(this).next('.minus').show();
-             $(this).hide();
+            $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
+             $(this).next('.minus').removeClass('display-none');
+             $(this).addClass('display-none');
          });
 
          $('.minus').on('click', function(event) {
-             $(this).parent('.menu-item').nextAll('ul.group-menu-item').hide();
-             $(this).prev('.plus').show();
-             $(this).hide();
+             $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
+             $(this).prev('.plus').removeClass('display-none');
+             $(this).addClass('display-none');
+         });   
+
+
+         $(document).on('click', '.edit' ,function(event) {
+            $(this).parents('li.menu-item').find('input').prop('disabled', false);
          });
 
-         
     </script>
+
+
 
     <script type="text/javascript">
          
@@ -163,28 +184,100 @@
                 }
             });
 
-            $('.create').on('click', function(event) {
-                 $('#create-item').modal().show();
-             });
+            $('.create').on('click', function(e) {
+                
+                 var parentNodeId =  $(this).parents('li.menu-item').data('id');
+                 var addNode = $('#new-node-temp').clone().contents(); //gán html vừa viết ở trên
+                 var addNodeGroup = $('#new-node-group-temp').clone().contents();
 
-            $("#formCreate").submit(function(e){
-                e.preventDefault();
-                var name = $('#name').val();
-                console.log(name);
-                $.ajax({
-                    url: '{{ route('createMenu') }}',
+                 var childBag = $(this).parent('.CUD').nextAll('ul.group-menu-item').first(); 
+
+                 if(childBag.length>0){
+                    $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
+                    $(addNode).removeClass('display-none');
+                    $(this).parents('li.menu-item').first().find('ul.group-menu-item').first().append(addNode);
+                    
+                }else{
+                    $(addNodeGroup).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
+                    $(addNodeGroup).removeClass('display-none');                   
+                    $(this).parents('li.menu-item').first().append(addNodeGroup);
+                }
+            });
+
+            $(document).on('click','.update', function(event) {
+                $(this).parents('li.menu-item').find('input').prop('disabled', true);
+                var id = $(this).parents('li.menu-item').data('id');
+                var input = $(this).parents('li.menu-item').find('input.uname');
+                var name = $(input).val();
+
+                var data = {
+                    id:id,
+                    name:name
+                 };
+
+                 $.ajax({
+                    url: '{{ route('updateMenu') }}', 
                     type: 'POST',
                     dataType: 'JSON',
-                    data: {name: 'name'},
+                    data: data,
                     success : function(res){
-                      var html= '<li>'+data.name+'</li>';
-                      toastr.success('Thêm mới thành công !');
+                      // toastr.success('Thêm mới thành công !');
                     }
                 })
-   
-            });
-        });
 
+            });
+
+            $(document).on('click','.save', function(event) {
+
+                var input = $(this).parents('li.menu-item').find('input.newNodeName');
+                var name = $(input).val();
+                var parentId = $(input).attr('parentNodeId');
+
+                var data = {
+                    name:name,
+                    parent_id:parentId
+                };
+
+                $.ajax({
+                    url: '{{ route('createMenu') }}', 
+                    type: 'POST',
+                    dataType: 'JSON',
+                    data: data,
+                success : function(res){
+                      // toastr.success('Thêm mới thành công !');
+                    }
+                })
+                
+            });
+
+            $(document).on('click','.delete', function(event) {
+                var id = $(this).parents('li.menu-item').data('id');
+            //     swal({
+            //     title: "Bạn có chắc muốn xóa?",
+            //     text: "Bạn sẽ không thể khôi phục lại bản ghi này !",
+            //     type: "warning",
+            //     showCancelButton: true,
+            //     confirmButtonColor: "#DD6B55",
+            //     cancelButtonText: "Không",
+            //     confirmButtonText: "Có",
+            //     closeOnConfirm: true,
+            // }),
+            var buttonDelete =  $(this);
+                $.ajax({
+                    url: '{{ route('deleteMenu') }}',
+                    type: 'DELETE',
+                    data: {id: id},
+                    success : function(res) {
+                            // toastr.success('Xoá thành công!', '',{timeOut: 1000});
+                            $(buttonDelete).parents('li.menu-item').first().remove();
+
+                    }
+                });
+
+
+            });
+
+        });
     </script>
 
 @endsection
