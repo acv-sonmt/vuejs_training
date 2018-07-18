@@ -1,6 +1,7 @@
 @extends('layouts.backend')
 @section('content')
     <button id="export" class="btn btn-primary">Export</button>
+    Reference : <a href="https://laravel-excel.maatwebsite.nl/docs/2.1/getting-started/installation">https://laravel-excel.maatwebsite.nl/docs/2.1/getting-started/installation</a>
 @endsection
 @section('form_scripts')
     <script>

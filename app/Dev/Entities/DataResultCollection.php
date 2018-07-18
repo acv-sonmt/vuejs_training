@@ -24,5 +24,10 @@ class DataResultCollection
            return array();
        }
     }
-
+    /**
+     * @return mixed
+     */
+    public function dataToArray(){
+        return json_decode( json_encode($this->data), true);
+    }
 }
