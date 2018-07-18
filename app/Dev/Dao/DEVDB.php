@@ -241,6 +241,11 @@ class DEVDB extends DB
         return $results;
     }
 
+    /**
+     * @param $metaField
+     * @param $procedureName
+     * @param $module
+     */
     protected static function createFile($metaField, $procedureName, $module)
     {
         $entitiesFolderName = "\\" . $module . "\\Entities";

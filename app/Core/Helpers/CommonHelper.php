@@ -44,5 +44,8 @@ class CommonHelper
         }
         return $result;
     }
+    public static function getExcelTemplatePath(){
+        return base_path().'/resources/export_templates/';
+    }
 
 }

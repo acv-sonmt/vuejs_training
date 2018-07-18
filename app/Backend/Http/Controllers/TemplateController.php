@@ -3,8 +3,10 @@
 namespace App\Backend\Http\Controllers;
 use App\Auth\Models\User;
 use App\Core\Dao\SDB;
+use App\Core\Helpers\CommonHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Maatwebsite\Excel\Collections\SheetCollection;
 
 class TemplateController extends Controller
 {
@@ -63,17 +65,25 @@ class TemplateController extends Controller
         $data = SDB::execSPsToDataResultCollection('ACL_GET_MODULES_LST',array());
         $dataArr =  $data->dataToArray();
         $excelObject = App::make('excel');
-        $template =  $excelObject->load('file.xls', function($reader) {
+        $excelTemplatePath =CommonHelper::getExcelTemplatePath()."/backend/template1.xlsx";
+        $fileTemplate =  $excelObject->load($excelTemplatePath, function($reader) {
 
-            // reader methods
+        })->get();
+            return $excelObject->create('users', function($excel) use($dataArr,$fileTemplate) {
 
-        });
+                $excel->sheet('Sheet1', function($sheet) use($dataArr,$fileTemplate) {
+                    $sheet =  new SheetCollection();// $fileTemplate;
+                    //$sheet->all()
+                    $i = 10;
+                    foreach ($dataArr as $row){
+                        $sheet->row($i,$row);
+                        $i++;
+                    }
+                });
+            })->export('xls');
 
-        return $excelObject->create('users', function($excel) use($dataArr) {
-            $excel->sheet('Sheet 1', function($sheet) use($dataArr) {
-                $sheet->fromArray($dataArr);
-            });
-        })->export('xls');
+
+       // print_r($template);
 
     }
 }
