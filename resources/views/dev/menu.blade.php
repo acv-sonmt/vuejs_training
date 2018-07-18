@@ -42,7 +42,7 @@
             /*margin-top: -2.1% !important;*/
         }
         .display-none{
-            display: none;
+            /*display: none;*/
         }
 
     </style>
@@ -59,47 +59,49 @@
                         for($i = 0;$i < $count ; $i++){
                         if($dataCategory[$i]->level_value == $prevLevel){?>
 
-                        <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>" ><input type="" name="" class="uname" style="width:70%" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                            @if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value)
+                        <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>" >
+                            <input type="" name="" class="uname" style="width:70%" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                            <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
                                 <span class="plus"><button style="background-color: lightgreen">+</button></span>
                                 <span class="minus"><button style="background-color: lightgreen">-</button></span>
-                            @endif
-                            <div class="CUD"> 
-                                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
-                                </a>
+                            <?php } ?>
+                            <div class="CUD">
+                                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
-
                                 <a class="pull-right btn btn-info update btn-xs"><span class="glyphicon glyphicon-save"></span></a>
-
-                                <a class="pull-right btn btn-primary create btn-xs" ><span
-                                    class="glyphicon glyphicon-plus"></span></a>
-                                
+                                <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
                             </div>
+                            <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
 
-                            <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
+                            <?php }else{ ?>
+                                </li>
+                            <?php } ?>
+                        <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
                             <ul class="group-menu-item display-none">
-                                <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>"><input type="" name="" class="uname" style="width:70% " disabled value="<?php echo $dataCategory[$i]->name; ?>">
-
-                                    <div class="CUD"> 
+                                <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>">
+                                    <input type="" name="" class="uname" style="width:70% " disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                    <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
+                                    <span class="plus"><button style="background-color: lightgreen">+</button></span>
+                                    <span class="minus"><button style="background-color: lightgreen">-</button></span>
+                                    <?php } ?>
+                                    <div class="CUD">
                                         <a class="pull-right btn btn-danger delete btn-xs" ><span class="glyphicon glyphicon-remove"></span></a>
                                         <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
-                                        <a class="pull-right btn btn-info update btn-xs"><span class="glyphicon glyphicon-save"></span></a> 
+                                        <a class="pull-right btn btn-info update btn-xs"><span class="glyphicon glyphicon-save"></span></a>
                                         <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
                                     </div>
-                                </li>
+                                    <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
+
+                                <?php }else{ ?>
+                                    </li>
+                                <?php } ?>
                                 <?php }else{?>
                                 <?php for($j = $dataCategory[$i]->level_value;$j<$prevLevel;$j++){ ?>
                             </ul>
                             <?php } ?>
 
-                        </li>
-
-                        
-
-                        
-
                         <?php }?>
-                            
+
                         <?php
 
                         $prevLevel = $dataCategory[$i]->level_value;
@@ -121,7 +123,7 @@
 <div id="new-node-temp" hidden="true">
     <li style="margin-top: 1% ;background-color: lightgrey" class="menu-item" data-id="">
             <input type="text" style="width:90%;" class="newNodeName form-control"/>
-        <div class="CUD" style="margin-top: -2.5%"> 
+        <div class="CUD" style="margin-top: -2.5%">
             <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
             </a>
             <a class="pull-right btn btn-warning save btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
@@ -137,18 +139,18 @@
             <div class="CUD" style="margin-top: -2.5%">
                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
                 </a>
-                <a class="pull-right btn btn-warning save btn-xs"><span class="glyphicon glyphicon-save"></span></a> 
+                <a class="pull-right btn btn-warning save btn-xs"><span class="glyphicon glyphicon-save"></span></a>
                 <a class="pull-right btn btn-primary create btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
             </div>
         </li>
     </ul>
 </div>
-    
+
 
 @endsection
 @section('scripts')
     <script type="text/javascript">
-         
+
          $('.minus').addClass('display-none');
 
          $('.plus').on('click', function(event) {
@@ -162,7 +164,7 @@
              $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
              $(this).prev('.plus').removeClass('display-none');
              $(this).addClass('display-none');
-         });   
+         });
 
 
          $(document).on('click', '.edit' ,function(event) {
@@ -174,8 +176,8 @@
 
 
     <script type="text/javascript">
-         
-        
+
+
         $(document).ready(function () {
 
             $.ajaxSetup({
@@ -185,21 +187,21 @@
             });
 
             $('.create').on('click', function(e) {
-                
+
                  var parentNodeId =  $(this).parents('li.menu-item').data('id');
                  var addNode = $('#new-node-temp').clone().contents(); //gán html vừa viết ở trên
                  var addNodeGroup = $('#new-node-group-temp').clone().contents();
 
-                 var childBag = $(this).parent('.CUD').nextAll('ul.group-menu-item').first(); 
+                 var childBag = $(this).parent('.CUD').nextAll('ul.group-menu-item').first();
 
                  if(childBag.length>0){
                     $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
                     $(addNode).removeClass('display-none');
                     $(this).parents('li.menu-item').first().find('ul.group-menu-item').first().append(addNode);
-                    
+
                 }else{
                     $(addNodeGroup).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
-                    $(addNodeGroup).removeClass('display-none');                   
+                    $(addNodeGroup).removeClass('display-none');
                     $(this).parents('li.menu-item').first().append(addNodeGroup);
                 }
             });
@@ -216,7 +218,7 @@
                  };
 
                  $.ajax({
-                    url: '{{ route('updateMenu') }}', 
+                    url: '{{ route('updateMenu') }}',
                     type: 'POST',
                     dataType: 'JSON',
                     data: data,
@@ -239,7 +241,7 @@
                 };
 
                 $.ajax({
-                    url: '{{ route('createMenu') }}', 
+                    url: '{{ route('createMenu') }}',
                     type: 'POST',
                     dataType: 'JSON',
                     data: data,
@@ -247,7 +249,7 @@
                       // toastr.success('Thêm mới thành công !');
                     }
                 })
-                
+
             });
 
             $(document).on('click','.delete', function(event) {

@@ -157,7 +157,8 @@ return [
         // App\Providers\BroadcastServiceProvider::class,
         App\Core\Providers\EventServiceProvider::class,
         App\Core\Providers\RouteServiceProvider::class,
-
+        //Excecl : add at 20180718
+        Maatwebsite\Excel\ExcelServiceProvider::class,
         /**
          * custom Provider
          */
@@ -239,7 +240,7 @@ return [
         'URL' => Illuminate\Support\Facades\URL::class,
         'Validator' => Illuminate\Support\Facades\Validator::class,
         'View' => Illuminate\Support\Facades\View::class,
-
+        'Excel' => Maatwebsite\Excel\Facades\Excel::class
     ],
 
 ];

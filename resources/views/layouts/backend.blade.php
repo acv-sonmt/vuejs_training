@@ -79,6 +79,11 @@
                                     <li><a href="{{route('calendar_template')}}">Calendar</a></li>
                                 </ul>
                             </li>
+                            <li><a><i class="fa fa-download"></i> Export/Import <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{route('export_template')}}">Export Excel/Csv</a></li>
+                                </ul>
+                            </li>
                             <li><a><i class="fa fa-table"></i> Tables <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="tables.html">Tables</a></li>
@@ -88,8 +93,6 @@
 
                         </ul>
                     </div>
-
-
                 </div>
                 <!-- /sidebar menu -->
 
@@ -172,7 +175,6 @@
             </div>
         </div>
         <!-- /top navigation -->
-
         <!-- page content -->
         <div class="right_col contents" role="main">
             <div id="content">

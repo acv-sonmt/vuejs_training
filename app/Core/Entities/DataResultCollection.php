@@ -15,7 +15,7 @@ class DataResultCollection
     public $status;
     public $message;
     public $errorCode = [];
-    
+
 
     public function first()
     {
@@ -24,6 +24,13 @@ class DataResultCollection
        }else{
            return array();
        }
+    }
+
+    /**
+     * @return mixed
+     */
+    public function dataToArray(){
+        return json_decode( json_encode($this->data), true);
     }
 
 }

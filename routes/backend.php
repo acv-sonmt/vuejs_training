@@ -29,3 +29,5 @@
     Route::get('/backend/template/icons', 'TemplateController@icons')->name('icons_template');
     Route::get('/backend/template/glyphicons', 'TemplateController@glyphicons')->name('glyphicons_template');
     Route::get('/backend/template/calendar', 'TemplateController@calendar')->name('calendar_template');
+    Route::get('/backend/template/exports', 'TemplateController@exports')->name('export_template');
+    Route::get('/backend/template/doExports', 'TemplateController@doExports')->name('doExports_template');
