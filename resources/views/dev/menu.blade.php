@@ -41,19 +41,22 @@
         .CUD{
             float :right !important;
             background-color: lightgrey;
-            
+            margin-right:-6%;
+            margin-top:-1.8%;
         }
         
-        .dad{
-            margin-top:5px;
-            background-color: lightgrey;
+        /*.CUDdad{
+           background-color: lightgrey;
+            margin-right:-6%;
+            margin-top:-1.8%;;
 
         }
-        .chid{
-            margin-top: -2.1%;
-            background-color: lightgrey;
+        .CUDchid{
+           background-color: lightgrey;
+            margin-right:-6%;
+            margin-top:-1.8%;
 
-        }
+        }*/
         .display-none{
             /*display: none;*/
         }
@@ -62,18 +65,39 @@
             margin-top: 1% ;
             background-color:white;
         }
+
         .plusButton{
-            background-color: lightgreen;
+            background-color:#98ff544d;
+
+            margin-left:-2.5%;
         }
         .minusButton{
-            background-color: lightgreen;
+            background-color:#ef4e224d;
+
+            margin-left:-2.5%;
         }
         .uname{
-            width:90%;
-            background-color: lightgrey;
+            width:100%;
+            /*margin-top: -4%;*/
+            background-color: #e7f3a44d;
         }
         .newNodeName{
+            margin-left:5%;
             width:90%;
+            background-color: #f3e6a49e;
+
+            /*margin-top: -1.5%;*/
+        }
+        .fa-arrow-down{
+            font-size: 12px;
+        }
+        .fa-arrow-right{
+            font-size: 12px;
+        }
+        .note{
+            color: red;
+            margin-left:5%;
+
         }
 
     </style>
@@ -92,8 +116,8 @@
 
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>" >
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
-                                <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
+                                    <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
+                                    <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
                             <?php } ?>
                             <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             
@@ -106,19 +130,19 @@
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
 
                             <?php }else{ ?>
-                        </li>
+                            </li>
                             <?php } ?>
                         <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
 
                         <ul class="group-menu-item display-none">
                             <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                                 <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
-                                <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
+                                    <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
+                                    <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
                                 <?php } ?>
                                 <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                                 
-                                <div class="CUD dad">
+                                <div class="CUD CUDdad">
                                     <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                     <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
                                     <a class="pull-right btn btn-info update btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
@@ -156,12 +180,12 @@
 
 <div id="new-node-temp" hidden="true">
     <li class="menu-item menu" data-id="">
-            <input type="text" class="newNodeName form-control"/>
-        <div class="CUD chid" {{-- style="margin-top: -2.5%" --}} >
+            <label class="note">* không được bỏ trống</label>
+            <input type="text" class="newNodeName form-control" placeholder="Thêm Mới" />
+        <div class="CUD CUDchid" >
             <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
             </a>
             <a class="pull-right btn btn-info save btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
-            <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
         </div>
     </li>
 </div>
@@ -169,12 +193,12 @@
 <div id="new-node-group-temp" hidden="true">
     <ul class="group-menu-item">
         <li class="menu-item menu" data-id="">
-                <input  type="text" class="newNodeName form-control"/>
-            <div class="CUD chid" {{--  style="margin-top: -2.5%" --}}>
+            <label class="note">* không được bỏ trống</label>
+                <input  type="text" class="newNodeName form-control" placeholder="Thêm Mới"/>
+            <div class="CUD CUDchid">
                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
                 </a>
-                <a class="pull-right btn btn-info save btn-xs"><span class="glyphicon glyphicon-save"></span></a>
-                <a class="pull-right btn btn-primary create btn-xs"><span class="glyphicon glyphicon-plus"></span></a>
+                <a class="pull-right btn btn-info save btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
             </div>
         </li>
     </ul>
@@ -185,28 +209,30 @@
 @section('scripts')
     <script type="text/javascript">
         $('.update').addClass('display-none');
-         $('.minus').addClass('display-none');
+        $('.minus').addClass('display-none');
 
-         $('.plus').on('click', function(event) {
-
+        $('.plus').on('click', function(event) {
             $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
-             $(this).next('.minus').removeClass('display-none');
-             $(this).addClass('display-none');
-         });
+            $(this).next('.minus').removeClass('display-none');
+            $(this).addClass('display-none');
+        });
 
-         $('.minus').on('click', function(event) {
-             $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
-             $(this).prev('.plus').removeClass('display-none');
-             $(this).addClass('display-none');
-         });
+        $('.minus').on('click', function(event) {
+            $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
+            $(this).prev('.plus').removeClass('display-none');
+            $(this).addClass('display-none');
+        });
 
-         $(document).on('click', '.edit' ,function(event) {
+        $(document).on('click', '.newNodeName' ,function(event) {
+ 
+                    $(this).parents('li.menu-item').first().find('label.note').first().addClass('display-none');
+        });
+
+        $(document).on('click', '.edit' ,function(event) {
             $(this).parents('li.menu-item').first().find('input.uname').first().prop('disabled', false);
             $(this).parents('li.menu-item').first().find('.edit').first().addClass('display-none');
             $(this).parents('li.menu-item').first().find('.update').first().removeClass('display-none');
-         });
-
-
+        });
         $(document).ready(function () {
             $.ajaxSetup({
                 headers: {
@@ -277,7 +303,7 @@
                     type: 'POST',
                     dataType: 'JSON',
                     data: data,
-                success : function(res){
+                    success : function(res){
                       // toastr.success('Thêm mới thành công !');
                     }
                 })
