@@ -6,7 +6,11 @@ use App\Core\Dao\SDB;
 use App\Core\Helpers\CommonHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Maatwebsite\Excel\Collections\RowCollection;
 use Maatwebsite\Excel\Collections\SheetCollection;
+use Maatwebsite\Excel\Facades\Excel;
+use Maatwebsite\Excel\Readers\LaravelExcelReader;
+use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 
 class TemplateController extends Controller
 {
@@ -64,26 +68,19 @@ class TemplateController extends Controller
     public function doExports(){
         $data = SDB::execSPsToDataResultCollection('ACL_GET_MODULES_LST',array());
         $dataArr =  $data->dataToArray();
-        $excelObject = App::make('excel');
-        $excelTemplatePath =CommonHelper::getExcelTemplatePath()."/backend/template1.xlsx";
-        $fileTemplate =  $excelObject->load($excelTemplatePath, function($reader) {
+        $excelTemplatePath =CommonHelper::getExcelTemplatePath()."\\backend\\template1.xlsx";
+        $reader = Excel::load($excelTemplatePath);
+       // dd($reader);
+      /*  $a =  new LaravelExcelReader();
+        $a->sheet(0);*/
 
-        })->get();
-            return $excelObject->create('users', function($excel) use($dataArr,$fileTemplate) {
+        dd($reader->sheet(0));
+        Excel::create('Filename', function(LaravelExcelWriter $excel)use ($dataArr,$reader) {
+            $excel->sheet('New sheet', function(\PHPExcel_Worksheet $sheet) use ($dataArr){
+                $sheet->fromArray($dataArr);
+            });
+        })->export('xlsx');
 
-                $excel->sheet('Sheet1', function($sheet) use($dataArr,$fileTemplate) {
-                    $sheet =  new SheetCollection();// $fileTemplate;
-                    //$sheet->all()
-                    $i = 10;
-                    foreach ($dataArr as $row){
-                        $sheet->row($i,$row);
-                        $i++;
-                    }
-                });
-            })->export('xls');
-
-
-       // print_r($template);
-
+return 'dsds';
     }
 }
