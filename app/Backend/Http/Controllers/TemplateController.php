@@ -3,9 +3,13 @@
 namespace App\Backend\Http\Controllers;
 use App\Auth\Models\User;
 use App\Core\Dao\SDB;
+use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;
+use App\Core\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\App;
+use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Storage;
 use Maatwebsite\Excel\Collections\RowCollection;
 use Maatwebsite\Excel\Collections\SheetCollection;
 use Maatwebsite\Excel\Facades\Excel;
@@ -45,6 +49,23 @@ class TemplateController extends Controller
     public function upload(){
         return view('backend.template.upload');
     }
+    public function doUpload(Request $request){
+        $files = $request->allFiles();
+        $subFolder = "upload/template";
+        $fileSystemDisk =  "public";
+        $result =  new DataResultCollection();
+        $result->status = \SDBStatusCode::OK;
+        $result->data=  array();
+        //NOTE : This will store file to path with: root path has config in config/filesystems.php, sub folder is $subFolder
+        if(is_array($files) && ! empty($files)){
+            foreach ($files as $item){
+                $item->store($subFolder,$fileSystemDisk);
+                $result->data[] = $item->getClientOriginalName();
+               // $result->data[] = $item->get
+            }
+        }
+        return ResponseHelper::JsonDataResult($result);
+    }
     public function generalElement(){
         return view('backend.template.generalElement');
     }
@@ -56,6 +77,9 @@ class TemplateController extends Controller
     }
     public function calendar(){
         return view('backend.template.calendar');
+    }
+    public function tables(){
+        return view('backend.template.table');
     }
     public function exports(){
         return view('backend.template.export');
@@ -70,11 +94,6 @@ class TemplateController extends Controller
         $dataArr =  $data->dataToArray();
         $excelTemplatePath =CommonHelper::getExcelTemplatePath()."\\backend\\template1.xlsx";
         $reader = Excel::load($excelTemplatePath);
-       // dd($reader);
-      /*  $a =  new LaravelExcelReader();
-        $a->sheet(0);*/
-
-        dd($reader->sheet(0));
         Excel::create('Filename', function(LaravelExcelWriter $excel)use ($dataArr,$reader) {
             $excel->sheet('New sheet', function(\PHPExcel_Worksheet $sheet) use ($dataArr){
                 $sheet->fromArray($dataArr);

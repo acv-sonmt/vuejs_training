@@ -25,9 +25,12 @@
     Route::get('/backend/template/components', 'TemplateController@components')->name('component_template');
     Route::get('/backend/template/buttons', 'TemplateController@buttons')->name('button_template');
     Route::get('/backend/template/upload', 'TemplateController@upload')->name('upload_template');
+    Route::post('/backend/template/doUpload', 'TemplateController@doUpload')->name('doUpload_template');
+
     Route::get('/backend/template/general-element', 'TemplateController@generalElement')->name('generalElement_template');
     Route::get('/backend/template/icons', 'TemplateController@icons')->name('icons_template');
     Route::get('/backend/template/glyphicons', 'TemplateController@glyphicons')->name('glyphicons_template');
     Route::get('/backend/template/calendar', 'TemplateController@calendar')->name('calendar_template');
+    Route::get('/backend/template/tables', 'TemplateController@tables')->name('table_template');
     Route::get('/backend/template/exports', 'TemplateController@exports')->name('export_template');
     Route::get('/backend/template/doExports', 'TemplateController@doExports')->name('doExports_template');
