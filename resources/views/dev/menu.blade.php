@@ -44,7 +44,7 @@
             margin-right:-6%;
             margin-top:-1.8%;
         }
-        
+
         /*.CUDdad{
            background-color: lightgrey;
             margin-right:-6%;
@@ -120,7 +120,7 @@
                                     <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
                             <?php } ?>
                             <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                            
+
                             <div class="CUD dad">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -141,7 +141,7 @@
                                     <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
                                 <?php } ?>
                                 <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                                
+
                                 <div class="CUD CUDdad">
                                     <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                     <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -157,7 +157,24 @@
                             <?php for($j = $dataCategory[$i]->level_value;$j<$prevLevel;$j++){ ?>
                         </ul>
                             <?php } ?>
+                            <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
+                                <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
+                                <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
+                                <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
+                                <?php } ?>
+                                <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
 
+                                <div class="CUD CUDdad">
+                                    <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                                    <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="pull-right btn btn-info update btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
+                                    <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                                </div>
+                                <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
+
+                            <?php }else{ ?>
+                            </li>
+                            <?php } ?>
                         <?php }?>
 
                         <?php
@@ -224,7 +241,7 @@
         });
 
         $(document).on('click', '.newNodeName' ,function(event) {
- 
+
                     $(this).parents('li.menu-item').first().find('label.note').first().addClass('display-none');
         });
 
