@@ -17,9 +17,9 @@ use App\Dev\Catelory;
 class MenuController extends Controller
 {
 
-	protected $devService;
+    protected $devService;
 
-	public function __construct(DevServiceInterface $devService)
+    public function __construct(DevServiceInterface $devService)
     {
         $this->devService = $devService;
     }
@@ -34,14 +34,12 @@ class MenuController extends Controller
 
     public function createMenu(Request $request){
         $data= $request->all();
+        $dataMenuCollection =  new DataResultCollection();
+        $dataMenuCollection->status = \SDBStatusCode::OK;
         if ($data['name'] !='') {
-        $dataMenuCollection = $this->devService->CategoryAddChildInLeft( $data['parent_id'],$data['name']);
-        $dataMenu = ($dataMenuCollection->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
+            $dataMenuCollection = $this->devService->categoryAddChildInLeft( $data['parent_id'],$data['name']);   
         }
-        return response()->json([
-            'message' => 'success',
-            'data' => $dataMenu,
-        ]);
+        return ResponseHelper::JsonDataResult($dataMenuCollection);
     }
 
     public function updateMenu(Request $request){
