@@ -44,15 +44,16 @@ class MenuController extends Controller
 
     public function updateMenu(Request $request){
         $data = $request->all();
-        $dataUpdateCollection = $this->devService->categoryUpdateMenu($data['id'], $data['name']);
+        if ($data['name'] !='') {
+            $dataUpdateCollection = $this->devService->categoryUpdateMenu($data['id'], $data['name']);
+        }
+
         $dataUpdate = ($dataUpdateCollection->status == \SDBStatusCode::OK)?$dataUpdateCollection->data:array();
         return response()->json([
             'status' => 'true',
             'data' => $dataUpdate,
         ]);
-
     }
-
 
     public function deleteMenu(Request $request){
         $id = $request->id;

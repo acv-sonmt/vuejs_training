@@ -4,6 +4,12 @@
 <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 <script src="//code.jquery.com/jquery.js"></script>
 <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
+
+    <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
+  {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
+  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
+
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
@@ -50,7 +56,7 @@
             float :right !important;
             background-color: lightgrey;
             margin-right:-80px;
-            margin-top:-30px;
+            margin-top:-23px;
         }
 
         .display-none{
@@ -66,14 +72,11 @@
         }
         .uname{
             width:100%;
-            background-color: #e7f3a44d;
+            background-color: #e7f3a44d !important;
             margin-top:15px;
-            height: 35px;
+            height: 30px !important;
         }
-        .newNodeName{
-            background-color: #e7f3a44d;
-            margin-top:15px;
-        }
+
         .fa-plus{
             font-size: 12px;
         }
@@ -85,9 +88,6 @@
             margin-left:50px;
         }
 
-        .inputNew{
-            background-color: #e7f3a44d;
-        }
         
     </style>
     <div class="row justify-content-center">
@@ -105,11 +105,11 @@
 
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>" >
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                    <span class="glyphicon plus glyphicon-plus"></span>
+                                    <span class="glyphicon plus showplus glyphicon-plus"></span>
                                     <span class="glyphicon minus glyphicon-minus"></span>
                             <?php } ?>
                             <div class="cssIput">
-                                <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                <input type="text" name="" class="uname form-control" data-toggle="tooltip" title="Cannot Empty" required disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             </div>
                             <div class="CUD dad">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -127,12 +127,12 @@
                         <ul class="group-menu-item display-none">
                             <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                                 <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                   <span class="glyphicon plus glyphicon-plus"></span>
+                                   <span class="glyphicon plus showplus glyphicon-plus"></span>
                                    <span class="glyphicon minus glyphicon-minus"></span>
                                 <?php } ?>
 
                                 <div class="cssIput">
-                                    <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                    <input type="text" name="" class="uname form-control" required data-toggle="tooltip" title="Cannot Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                                 </div> 
                                 
                                 <div class="CUD chid">
@@ -152,11 +152,11 @@
                             <?php } ?>
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                <span class="glyphicon plus glyphicon-plus"></span>
+                                <span class="glyphicon plus showplus glyphicon-plus"></span>
                                 <span class="glyphicon minus glyphicon-minus"></span>
                             <?php } ?>
                             <div class="cssIput">
-                                <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                <input type="text" name="" class="uname form-control" required data-toggle="tooltip" title="Cannot Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             </div>
                             <div class="CUD chid2">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -192,7 +192,7 @@
     <div id="new-node-temp" class=".divchid" hidden="true">
         <li class="menu-item menu menuchid">
                 <div class="cssIput">
-                    <input type="text" class="newNodeName inputNew form-control" placeholder="Thêm Mới" />
+                    <input type="text" class="newNodeName uname form-control" required data-toggle="tooltip" title="Cannot Empty" placeholder="" />
                 </div>
             <div class="CUD CUDchid" >
                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
@@ -209,7 +209,7 @@
         <ul class="group-menu-item">
             <li class="menu-item menu menuchid">
                     <div class="cssIput">
-                        <input  type="text" class="newNodeName inputNew form-control" placeholder="Thêm Mới"/>
+                        <input  type="text" class="newNodeName uname form-control" required data-toggle="tooltip" title="Cannot Empty" placeholder=""/>
                     </div>
                 <div class="CUD CUDchid">
                     <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
@@ -226,6 +226,7 @@
 
 @endsection
 @section('scripts')
+
 
     <script type="text/javascript">
         $('.update').addClass('display-none');
@@ -272,7 +273,7 @@
 
 //Thêm mới menu
             $(document).on('click', '.create' ,function(event) {
-
+                $(this).parents('li.menu-item').first().find('.showplus').first().trigger('click');
                 $(this).removeClass('display-none');
                 // $(this).next('.minus').removeClass('display-none');
                 // $(this).next('.plus').removeClass('display-none');
@@ -301,10 +302,7 @@
 
 // Lưu lại Sau Khi Sửa
             $(document).on('click','.update', function(event) {
-                $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
-                $(this).parents('li.menu-item').first().find('.update').first().addClass('display-none');
-                $(this).parents('li.menu-item').first().find('.edit').first().removeClass('display-none');
-                $(this).parents('li.menu-item').first().find('.create').first().removeClass('display-none');
+                
 
                 var id = $(this).parents('li.menu-item').data('id');
                 var input = $(this).parents('li.menu-item').first().find('input.uname').first();
@@ -313,26 +311,36 @@
                     id:id,
                     name:name,
                  };
-                 $.ajax({
-                    url: '{{ route('updateMenu') }}',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: data,
-                    success : function(res){
 
-                      if (res.status) {
+                if (name != ''){
+                    $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
+                    $(this).parents('li.menu-item').first().find('.update').first().addClass('display-none');
+                    $(this).parents('li.menu-item').first().find('.edit').first().removeClass('display-none');
+                    $(this).parents('li.menu-item').first().find('.create').first().removeClass('display-none');
+                     $.ajax({
+                        url: '{{ route('updateMenu') }}',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: data,
+                        success : function(res){
+
+                          if (res.status) {
                                 toastr.success('Update thành công!', '',{timeOut: 1000});
                             }
-                    }
-                })
+                        }
+                    })
+                }
+
+                else{
+
+                    $(this).parents('li.menuchid').find('input.uname').tooltip('show');
+                }
+
             });
 // Lưu lại Sau Khi Sửa thằng đang tạo ra
 
             $(document).on('click','.updatechid', function(event) {
-                $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
-                $(this).parents('li.menu-item').first().find('.updatechid').first().addClass('display-none');
-                $(this).parents('li.menu-item').first().find('.edit').first().removeClass('display-none');
-                $(this).parents('li.menu-item').first().find('.create').first().removeClass('display-none');
+                
 
                 var id = $(this).parents('li.menu-item').data('id');
                 var inputchid = $(this).parents('li.menu-item').first().find('input.newNodeName').first();
@@ -342,27 +350,33 @@
                     name:name,
                  };
 
-                 $.ajax({
-                    url: '{{ route('updateMenu') }}',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: data,
-                    success : function(res){
-                      if (res.status) {
+                if (name != ''){
+                    $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
+                    $(this).parents('li.menu-item').first().find('.updatechid').first().addClass('display-none');
+                    $(this).parents('li.menu-item').first().find('.edit').first().removeClass('display-none');
+                    $(this).parents('li.menu-item').first().find('.create').first().removeClass('display-none');
+                     $.ajax({
+                        url: '{{ route('updateMenu') }}',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: data,
+                        success : function(res){
+                            if (res.status) {
                                 toastr.success('Update thành công!', '',{timeOut: 1000});
                             }
-                    }
-                })
+                        }
+                    })
+                 }
+                 else{
+                    $(this).parents('li.menuchid').find('input.uname').tooltip('show');
+                 }
             });
+
+
 //Lưu Lại khi Thêm Mới
-
-
             $(document).on('click','.save', function(event) {
+
                 var parentAddId =  $(this).parents('li.menu-item').first().data('id');
-                $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
-                $(this).parents('li.menu-item').first().find('.save').first().addClass('display-none');
-                $(this).parents('li.menu-item').first().find('.createChid').first().removeClass('display-none');
-                $(this).parents('li.menu-item').first().find('.editchid').first().removeClass('display-none');
 
                 var insert = $(this);
                 var input = $(this).parents('li.menuchid').first().find('input.newNodeName').first();
@@ -372,28 +386,31 @@
                     name:name,
                     parent_id:parentId
                 };
-                if (name != '')
 
-                $.ajax({
-                    url: '{{ route('createMenu') }}',
-                    type: 'POST',
-                    dataType: 'JSON',
-                    data: datas,
-                    success : function(res){
-                        var dataFromSP = JSON.parse(res.data[0].data);
-                        var newId = dataFromSP.newid;
-                         $(insert).parents('ul.group-menu-item').first().find('li.menuchid').first().attr('data-id',newId);
-
-                        if (res.status) {
-                            toastr.success('Thêm Mới thành công !');
+                if (name != ''){
+                    $(this).parents('li.menu-item').first().find('.editchid').first().removeClass('display-none');
+                    $(this).parents('li.menu-item').first().find('.save').first().addClass('display-none');
+                    $(this).parents('li.menu-item').first().find('.createChid').first().removeClass('display-none');
+                    $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
+                    $.ajax({
+                        url: '{{ route('createMenu') }}',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: datas,
+                        success : function(res){
+                            var dataFromSP = JSON.parse(res.data[0].data);
+                            var newId = dataFromSP.newid;
+                            $(insert).parents('ul.group-menu-item').first().find('li.menuchid').first().attr('data-id',newId);
+                            if (res.status) {
+                                toastr.success('Thêm Mới thành công !');
+                            }
                         }
-                        console.log(parentId);
+                    });
+                }
+                else{
+                    $(this).parents('li.menuchid').find('input.uname').tooltip('show');
 
-                    }
-                });
-            else{
-                toastr.error('ko đc bỏ trống!');
-            }
+                }
             });
 
 //Xóa Menu
