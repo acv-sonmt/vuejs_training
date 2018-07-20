@@ -59,9 +59,9 @@
             margin-top:-23px;
         }
 
-        .display-none{
+        /*.display-none{
             display: none;
-        }
+        }*/
         .plus{
             margin-left:-20px;
             top:35px;
@@ -70,25 +70,13 @@
             top:35px;
             margin-left:-20px;
         }
-        .uname{
+        .oldName{
             width:100%;
             background-color: #e7f3a44d !important;
             margin-top:15px;
             height: 30px !important;
         }
 
-        .fa-plus{
-            font-size: 12px;
-        }
-        .fa-minus{
-            font-size: 12px;
-        }
-        .note{
-            color: red;
-            margin-left:50px;
-        }
-
-        
     </style>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -105,13 +93,13 @@
 
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>" >
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                    <span class="glyphicon plus showplus glyphicon-plus"></span>
-                                    <span class="glyphicon minus glyphicon-minus"></span>
+                                    <span class="glyphicon plus plusButton showplus glyphicon-plus"></span>
+                                    <span class="glyphicon minus minusButton glyphicon-minus"></span>
                             <?php } ?>
                             <div class="cssIput">
-                                <input type="text" name="" class="uname form-control" data-toggle="tooltip" title="Cannot Empty" required disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                <input type="text" name="" class="uname oldName tooltipName form-control" data-toggle="tooltip" title="You don't Empty" required disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             </div>
-                            <div class="CUD dad">
+                            <div class="CUD ButtonCUD dad">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
                                 <a class="pull-right btn btn-info update btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
@@ -127,12 +115,12 @@
                         <ul class="group-menu-item display-none">
                             <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                                 <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                   <span class="glyphicon plus showplus glyphicon-plus"></span>
-                                   <span class="glyphicon minus glyphicon-minus"></span>
+                                   <span class="glyphicon plus plusButton showplus glyphicon-plus"></span>
+                                   <span class="glyphicon minus minusButton glyphicon-minus"></span>
                                 <?php } ?>
 
                                 <div class="cssIput">
-                                    <input type="text" name="" class="uname form-control" required data-toggle="tooltip" title="Cannot Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                    <input type="text" name="" class="uname tooltipName oldName form-control" required data-toggle="tooltip" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                                 </div> 
                                 
                                 <div class="CUD chid">
@@ -152,11 +140,11 @@
                             <?php } ?>
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                <span class="glyphicon plus showplus glyphicon-plus"></span>
-                                <span class="glyphicon minus glyphicon-minus"></span>
+                                <span class="glyphicon plus plusButton showplus glyphicon-plus"></span>
+                                <span class="glyphicon minus minusButton glyphicon-minus"></span>
                             <?php } ?>
                             <div class="cssIput">
-                                <input type="text" name="" class="uname form-control" required data-toggle="tooltip" title="Cannot Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                <input type="text" name="" class="uname tooltipName oldName form-control" required data-toggle="tooltip" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             </div>
                             <div class="CUD chid2">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -192,7 +180,7 @@
     <div id="new-node-temp" class=".divchid" hidden="true">
         <li class="menu-item menu menuchid">
                 <div class="cssIput">
-                    <input type="text" class="newNodeName uname form-control" required data-toggle="tooltip" title="Cannot Empty" placeholder="" />
+                    <input type="text" class="newNodeName oldName tooltipName form-control" required data-toggle="tooltip" title="You don't Empty" placeholder="" />
                 </div>
             <div class="CUD CUDchid" >
                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
@@ -209,7 +197,7 @@
         <ul class="group-menu-item">
             <li class="menu-item menu menuchid">
                     <div class="cssIput">
-                        <input  type="text" class="newNodeName uname form-control" required data-toggle="tooltip" title="Cannot Empty" placeholder=""/>
+                        <input  type="text" class="newNodeName oldName tooltipName form-control" required data-toggle="tooltip" title="You don't Empty" placeholder=""/>
                     </div>
                 <div class="CUD CUDchid">
                     <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
@@ -236,16 +224,16 @@
         $('.editchid').addClass('display-none');
 
 // show ra menu
-        $('.plus').on('click', function(event) {
+        $('.plusButton').on('click', function(event) {
             $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
-            $(this).next('.minus').removeClass('display-none');
+            $(this).next('.minusButton').removeClass('display-none');
             $(this).addClass('display-none');
         });
 
 // ẩn menu đi
-        $('.minus').on('click', function(event) {
+        $('.minusButton').on('click', function(event) {
             $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
-            $(this).prev('.plus').removeClass('display-none');
+            $(this).prev('.plusButton').removeClass('display-none');
             $(this).addClass('display-none');
         });
 
@@ -268,24 +256,26 @@
                 $(this).parents('li.menu-item').first().find('.edit').first().addClass('display-none');
                 $(this).parents('li.menu-item').first().find('.create').first().addClass('display-none');
                 $(this).parents('li.menu-item').first().find('.update').first().removeClass('display-none');
-                $(this).parents('li.menu-item').first().find('.updatechid').first().removeClass('display-none');
+                // $(this).parents('li.menu-item').first().find('.updatechid').first().removeClass('display-none');
             });
+
+            $(document).on('click', '.editchid' ,function(event) {
+                $(this).parents('li.menu-item').first().find('.updatechid').first().removeClass('display-none');
+
+            });
+
 
 //Thêm mới menu
             $(document).on('click', '.create' ,function(event) {
                 $(this).parents('li.menu-item').first().find('.showplus').first().trigger('click');
                 $(this).removeClass('display-none');
-                // $(this).next('.minus').removeClass('display-none');
-                // $(this).next('.plus').removeClass('display-none');
-
                 $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');
-
                 $('.menu-item').removeClass('display-none');
 
                  var parentNodeId =  $(this).parents('li.menu-item').data('id');
                  var addNode = $('#new-node-temp').clone().contents(); //gán html vừa viết ở trên
                  var addNodeGroup = $('#new-node-group-temp').clone().contents();
-                 var childBag = $(this).parent('.CUD').nextAll('ul.group-menu-item').first();
+                 var childBag = $(this).parent('.ButtonCUD').nextAll('ul.group-menu-item').first();
 
                  if(childBag.length>0){ 
                     $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
@@ -325,23 +315,20 @@
                         success : function(res){
 
                           if (res.status) {
-                                toastr.success('Update thành công!', '',{timeOut: 1000});
+                                toastr.success('Yeah! update success!', '',{timeOut: 3000});
                             }
                         }
-                    })
+                    });
                 }
 
                 else{
-
-                    $(this).parents('li.menuchid').find('input.uname').tooltip('show');
+                    $(this).parents('li.menuchid').find('input.tooltipName').tooltip('show');
                 }
 
             });
+
 // Lưu lại Sau Khi Sửa thằng đang tạo ra
-
             $(document).on('click','.updatechid', function(event) {
-                
-
                 var id = $(this).parents('li.menu-item').data('id');
                 var inputchid = $(this).parents('li.menu-item').first().find('input.newNodeName').first();
                 var name = $(inputchid).val();
@@ -362,13 +349,13 @@
                         data: data,
                         success : function(res){
                             if (res.status) {
-                                toastr.success('Update thành công!', '',{timeOut: 1000});
+                                toastr.success('Yeah! update success!', '',{timeOut: 3000});
                             }
                         }
-                    })
+                    });
                  }
                  else{
-                    $(this).parents('li.menuchid').find('input.uname').tooltip('show');
+                    $(this).parents('li.menuchid').find('input.tooltipName').tooltip('show');
                  }
             });
 
@@ -402,14 +389,13 @@
                             var newId = dataFromSP.newid;
                             $(insert).parents('ul.group-menu-item').first().find('li.menuchid').first().attr('data-id',newId);
                             if (res.status) {
-                                toastr.success('Thêm Mới thành công !');
+                                toastr.success('Yeah! add new success !');
                             }
                         }
                     });
                 }
                 else{
-                    $(this).parents('li.menuchid').find('input.uname').tooltip('show');
-
+                    $(this).parents('li.menuchid').find('input.tooltipName').tooltip('show');
                 }
             });
 
@@ -419,13 +405,13 @@
                 var buttonDelete =  $(this);
 
                 swal({
-                    title: "Bạn có chắc muốn xóa?",
-                    text: "Bạn sẽ không thể khôi phục lại bản ghi này !",
+                    title: "YOU WANT DELETE?",
+                    text: "You cannot restore it !",
                     type: "warning",
                     showCancelButton: true,
                     confirmButtonColor: "#DD6B55",
-                    cancelButtonText: "Không",
-                    confirmButtonText: "Có",
+                    cancelButtonText: "Cancel",
+                    confirmButtonText: "Yes",
                     closeOnConfirm: true,
                 },
                     function(isConfirm){
@@ -436,14 +422,14 @@
                             data: {id: id},
                             success : function(res) {
                                 if (res.status) {
-                                    toastr.success('Đã Xóa!', '',{timeOut: 1000});
+                                    toastr.success('deleted success!', '',{timeOut: 3000});
                                 }
                                 $(buttonDelete).parents('li.menu-item').first().remove();
                             }
                         });
                         }
                         else{
-                        toastr.error('Thao tác bị huỷ!', '',{timeOut: 1000});
+                        toastr.error('discarded operation!', '',{timeOut: 3000});
                     }
                 }); 
             });
