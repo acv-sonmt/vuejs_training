@@ -26,6 +26,8 @@
     Route::get('/backend/template/buttons', 'TemplateController@buttons')->name('button_template');
     Route::get('/backend/template/upload', 'TemplateController@upload')->name('upload_template');
     Route::post('/backend/template/doUpload', 'TemplateController@doUpload')->name('doUpload_template');
+    Route::post('/backend/template/doDeleteFile', 'TemplateController@doDeleteFile')->name('doDeleteFile_template');
+
 
     Route::get('/backend/template/general-element', 'TemplateController@generalElement')->name('generalElement_template');
     Route::get('/backend/template/icons', 'TemplateController@icons')->name('icons_template');

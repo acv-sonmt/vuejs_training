@@ -15,31 +15,37 @@ use Illuminate\Support\Facades\Storage;
 class UploadService extends BaseService implements UploadServiceInterface
 {
     /**
-     * @param $files : file list from request
-     * upload file to storage and to do something as insert information to DB, delete.....
+     * @param $fileList
+     * @param $diskName   //Disk name in config/filesystem
+     * @param $subFolder  //Subfolder
+     * @param $option //option for cloud upload
+     * @return DataResultCollection
      */
-    public function uploadLocal($files):DataResultCollection
-    {
-        $subFolder = "upload/template";
-        $fileSystemDisk = "public";
+    public function uploadFile($fileList,$diskName,$subFolder,$option):DataResultCollection{
         $result = new DataResultCollection();
         $result->status = \SDBStatusCode::OK;
         $result->data = array();
         //NOTE : This will store file to path with: root path has config in config/filesystems.php, sub folder is $subFolder
-        if (is_array($files) && !empty($files)) {
-            foreach ($files as $item) {
-                $path = $item->store($subFolder, $fileSystemDisk);
+        if (is_array($fileList) && !empty($fileList)) {
+            foreach ($fileList as $item) {
+                $path = Storage::disk($diskName)->put($subFolder, $item, $option);
                 $fileInfor = array(
                     'client_file_name' => $item->getClientOriginalName(),
                     'uri' => $path,
-                    'url' => Storage::disk($fileSystemDisk)->url($path)
+                    'url' => Storage::disk($diskName)->url($path)
                 );
                 $result->data[] = $fileInfor;
             }
         }
         return $result;
     }
-
+    public function deleteFile($diskName,$filePath):DataResultCollection{
+        $result = new DataResultCollection();
+        $result->status = \SDBStatusCode::OK;
+        $result->data = array();
+        Storage::disk($diskName)->delete($filePath);
+        return $result;
+    }
     public function test()
     {
         echo 'upload.test';

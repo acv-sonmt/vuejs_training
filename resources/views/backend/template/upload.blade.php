@@ -11,9 +11,22 @@
         float: left;
         margin: 10px;
         border: 1px solid;
+        position: relative;
     }
     #upload{
         margin-top: 15px;
+    }
+    .delete-btn{
+        position: absolute;
+        right: 1px;
+        bottom: 0px;
+        color: red;
+        font-size: 17px;
+        display: none;
+        cursor: pointer;
+    }
+    .image-item:hover .delete-btn{
+        display: block !important;
     }
 </style>
     <div class="">
@@ -25,7 +38,14 @@
         </div>
         <div class="row">
             <div id="img-upload-area" class="img-uploaded">
-
+                <?php if(!empty($urlList)){?>
+                <?php foreach ($urlList as $url){ ?>
+                    <div class="image-item form-row">
+                        <img class='img-item' src='{{$url['url']}}' path="{{$url['path']}}" image-name="" />
+                        <span class="fa fa-trash delete-btn"></span>
+                    </div>
+                    <?php } ?>
+                <?php } ?>
             </div>
         </div>
         <div class="clearfix"></div>
@@ -35,7 +55,8 @@
 
 <div id="image-item-template" class="display-none">
     <div class="image-item form-row">
-        <img class='img-item' src='{{asset("common_images/no-image.png")}}' image-name="" />
+        <img class='img-item' src='{{asset("common_images/no-image.png")}}' path="" image-name="" />
+        <span class="fa fa-trash delete-btn"></span>
     </div>
 </div>
 @endsection
@@ -69,9 +90,29 @@
                                 var itemImage = $('#image-item-template').find('.image-item').clone();
                                 var img = $(itemImage).find('.img-item');
                                 $(img).attr('src',item.url);
+                                $(img).attr('path',item.uri);
                                 $(img).attr('image-name',item.client_file_name);
                                 $('#img-upload-area').append(itemImage);
                             });
+                        }
+
+                    }
+                });
+            });
+            $(document).on('click','.delete-btn',function(){
+                var parentBlock = $(this).parent('.image-item');
+                var path = $(parentBlock).find('.img-item').attr('path');
+                $.ajax({
+                    type: 'Post',
+                    headers: {
+                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                    },
+                    dataType:'JSON',
+                    data:{path:path},
+                    url: "<?php echo @route('doDeleteFile_template')?>",
+                    success: function (result) {
+                        if(result.status == '{{SDBStatusCode::OK}}') {
+                            $(parentBlock).remove();
                         }
 
                     }

@@ -8,6 +8,7 @@ use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;
 use App\Core\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
@@ -53,7 +54,19 @@ class TemplateController extends Controller
 
     public function upload()
     {
-        return view('backend.template.upload');
+        $diskName = 'public';
+        $fileList = Storage::disk($diskName)->allFiles('uploads/templates');
+        $urlList = array();
+        if(!empty($fileList)){
+            foreach ($fileList as $path){
+                $urlList[] = array(
+                    'url'=>Storage::disk($diskName)->url($path),
+                    'path'=>$path
+                );
+            }
+        }
+
+        return view('backend.template.upload',compact('urlList'));
     }
 
     public function doUpload(Request $request)
@@ -68,7 +81,7 @@ class TemplateController extends Controller
         ];
         $validator = Validator::make($request->allFiles(), $rule,$message_rule);
         if (!$validator->fails()) {
-            $result = $this->uploadService->uploadLocal($files);
+            $result = $this->uploadService->uploadFile($files,'public','uploads/templates','');
         } else {
             $error = array($validator->errors());
             $result->status = \SDBStatusCode::ValidateError;
@@ -76,6 +89,11 @@ class TemplateController extends Controller
             $result->data =$error;
         }
 
+        return ResponseHelper::JsonDataResult($result);
+    }
+    public function doDeleteFile(Request $request){
+        $fileUrl =  $request->input('path');
+        $result = $this->uploadService->deleteFile('public',$fileUrl);
         return ResponseHelper::JsonDataResult($result);
     }
 

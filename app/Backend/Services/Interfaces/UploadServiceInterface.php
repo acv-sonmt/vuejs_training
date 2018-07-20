@@ -11,6 +11,7 @@ use App\Core\Entities\DataResultCollection;
 
 interface UploadServiceInterface
 {
-    public function uploadLocal($files):DataResultCollection;
+    public function uploadFile($fileList,$diskName,$subFolder,$option):DataResultCollection;
+    public function deleteFile($diskName,$filePath):DataResultCollection;
     public function test();
 }
