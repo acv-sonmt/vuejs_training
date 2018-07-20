@@ -314,8 +314,8 @@
                         data: data,
                         success : function(res){
 
-                          if (res.status) {
-                                toastr.success('Yeah! update success!', '',{timeOut: 3000});
+                            if (res.status) {
+                                    toastr.success('Yeah! update success!', '',{timeOut: 3000});
                             }
                         }
                     });
@@ -323,6 +323,7 @@
 
                 else{
                     $(this).parents('li.menuchid').find('input.tooltipName').tooltip('show');
+                        toastr.error('Not Empty!', '',{timeOut: 3000});
                 }
 
             });
@@ -350,6 +351,10 @@
                         success : function(res){
                             if (res.status) {
                                 toastr.success('Yeah! update success!', '',{timeOut: 3000});
+                            }
+                            else{
+                                toastr.error('Not Empty!', '',{timeOut: 3000});
+
                             }
                         }
                     });
