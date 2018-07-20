@@ -54,19 +54,31 @@ class TemplateController extends Controller
 
     public function upload()
     {
-        $diskName = 'public';
-        $fileList = Storage::disk($diskName)->allFiles('uploads/templates');
-        $urlList = array();
+        $diskLocalName = 'public';
+        $fileList = Storage::disk($diskLocalName)->allFiles('uploads/templates');
+        $fileLocalInforList = array();
         if(!empty($fileList)){
             foreach ($fileList as $path){
-                $urlList[] = array(
-                    'url'=>Storage::disk($diskName)->url($path),
+                $fileLocalInforList[] = array(
+                    'url'=>Storage::disk($diskLocalName)->url($path),
                     'path'=>$path
                 );
             }
         }
 
-        return view('backend.template.upload',compact('urlList'));
+        $diskS3Name = 's3';
+        $fileList = Storage::disk($diskS3Name)->allFiles('uploads/templates');
+        $fileS3InforList = array();
+        if(!empty($fileList)){
+            foreach ($fileList as $path){
+                $fileS3InforList[] = array(
+                    'url'=>Storage::disk($diskS3Name)->url($path),
+                    'path'=>$path
+                );
+            }
+        }
+
+        return view('backend.template.upload',compact('fileLocalInforList','fileS3InforList'));
     }
 
     public function doUpload(Request $request)
@@ -91,9 +103,36 @@ class TemplateController extends Controller
 
         return ResponseHelper::JsonDataResult($result);
     }
+    public function doUploadS3(Request $request)
+    {
+        $files = $request->allFiles();
+        $result =  new DataResultCollection();
+        $rule = [
+            "*"=>$this->getImageRules(),
+        ];
+        $message_rule = [
+            '*.mimes' => 'Mime not Allowed'
+        ];
+        $validator = Validator::make($request->allFiles(), $rule,$message_rule);
+        if (!$validator->fails()) {
+            $result = $this->uploadService->uploadFile($files,'s3','uploads/templates','public');
+        } else {
+            $error = array($validator->errors());
+            $result->status = \SDBStatusCode::ValidateError;
+            $result->message = 'An error occured while uploading the file.';
+            $result->data =$error;
+        }
+
+        return ResponseHelper::JsonDataResult($result);
+    }
     public function doDeleteFile(Request $request){
         $fileUrl =  $request->input('path');
         $result = $this->uploadService->deleteFile('public',$fileUrl);
+        return ResponseHelper::JsonDataResult($result);
+    }
+    public function doDeleteFileS3(Request $request){
+        $fileUrl =  $request->input('path');
+        $result = $this->uploadService->deleteFile('s3',$fileUrl);
         return ResponseHelper::JsonDataResult($result);
     }
 
