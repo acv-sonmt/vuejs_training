@@ -59,9 +59,13 @@ class TemplateController extends Controller
         //NOTE : This will store file to path with: root path has config in config/filesystems.php, sub folder is $subFolder
         if(is_array($files) && ! empty($files)){
             foreach ($files as $item){
-                $item->store($subFolder,$fileSystemDisk);
-                $result->data[] = $item->getClientOriginalName();
-               // $result->data[] = $item->get
+                $path = $item->store($subFolder,$fileSystemDisk);
+                $fileInfor = array(
+                    'client_file_name'=>$item->getClientOriginalName(),
+                    'uri'=>$path,
+                    'url'=>Storage::disk($fileSystemDisk)->url($path)
+                );
+                $result->data[] = $fileInfor;
             }
         }
         return ResponseHelper::JsonDataResult($result);
@@ -100,6 +104,6 @@ class TemplateController extends Controller
             });
         })->export('xlsx');
 
-return 'dsds';
+        return 'dsds';
     }
 }
