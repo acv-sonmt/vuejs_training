@@ -47,7 +47,7 @@ class MenuController extends Controller
         $dataUpdateCollection = $this->devService->categoryUpdateMenu($data['id'], $data['name']);
         $dataUpdate = ($dataUpdateCollection->status == \SDBStatusCode::OK)?$dataUpdateCollection->data:array();
         return response()->json([
-            'message' => 'success',
+            'status' => 'true',
             'data' => $dataUpdate,
         ]);
 
@@ -59,7 +59,7 @@ class MenuController extends Controller
         $menuDelete = $this->devService->categoryDeleteNodeAndChild($id);
         $dataMenuDelete = ($menuDelete->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
         return response()->json([
-            'message' => 'success',
+            'status' => 'true',
             'data' => $dataMenuDelete,
         ]);
     }

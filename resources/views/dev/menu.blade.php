@@ -1,8 +1,14 @@
 @extends('layouts.dev')
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/css/toastr.css">
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/latest/toastr.min.js"></script>
-    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/2.1.0/sweetalert.min.js"></script>
+
+<!-- Latest compiled and minified CSS & JS -->
+<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+<script src="//code.jquery.com/jquery.js"></script>
+<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
+    <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @section('content')
     <style>
         .treeview .list-group-item {
@@ -39,27 +45,6 @@
         .width-200{
             width: 200px;
         }
-        
-      /*  .dad{
-           float :right !important;
-            background-color: lightgrey;
-            margin-right:-10%;
-            margin-top:-1.8%;
-        }
-
-        .chid{
-          float :right !important;
-            background-color: lightgrey;
-            margin-right:-10%;
-            margin-top:-1.8%;
-
-        }
-        .chid2{
-            float :right !important;
-            background-color: lightgrey;
-            margin-right:-10%;
-            margin-top:-1.8%;
-        }*/
         
         .CUD{
             float :right !important;
@@ -322,7 +307,10 @@
                     dataType: 'JSON',
                     data: data,
                     success : function(res){
-                      // toastr.success('Thêm mới thành công !');
+
+                      if (res.status) {
+                                toastr.success('Update thành công!', '',{timeOut: 1000});
+                            }
                     }
                 })
             });
@@ -348,7 +336,9 @@
                     dataType: 'JSON',
                     data: data,
                     success : function(res){
-                      // toastr.success('Thêm mới thành công !');
+                      if (res.status) {
+                                toastr.success('Update thành công!', '',{timeOut: 1000});
+                            }
                     }
                 })
             });
@@ -377,7 +367,10 @@
                         var dataFromSP = JSON.parse(res.data[0].data);
                         var newId = dataFromSP.newid;
                          $(insert).parents('ul.group-menu-item').first().find('li.menuchid').first().attr('data-id',newId);
-                      // toastr.success('Thêm mới thành công !');
+
+                        if (res.status) {
+                            toastr.success('Thêm Mới thành công !');
+                        }
                         console.log(parentId);
 
                     }
@@ -388,17 +381,40 @@
             $(document).on('click','.delete', function(event) {
                 var id = $(this).parents('li.menu-item').data('id');
                 var buttonDelete =  $(this);
-                $.ajax({
-                    url: '{{ route('deleteMenu') }}',
-                    type: 'DELETE',
-                    data: {id: id},
-                    success : function(res) {
-                            // toastr.success('Xoá thành công!', '',{timeOut: 1000});
-                        $(buttonDelete).parents('li.menu-item').first().remove();
+
+                swal({
+                    title: "Bạn có chắc muốn xóa?",
+                    text: "Bạn sẽ không thể khôi phục lại bản ghi này !",
+                    type: "warning",
+                    showCancelButton: true,
+                    confirmButtonColor: "#DD6B55",
+                    cancelButtonText: "Không",
+                    confirmButtonText: "Có",
+                    closeOnConfirm: true,
+                },
+                    function(isConfirm){
+                        if (isConfirm) {
+                        $.ajax({
+                            url: '{{ route('deleteMenu') }}',
+                            type: 'DELETE',
+                            data: {id: id},
+                            success : function(res) {
+                                if (res.status) {
+                                    toastr.success('Đã Xóa!', '',{timeOut: 1000});
+                                }
+                                $(buttonDelete).parents('li.menu-item').first().remove();
+                            }
+                        });
+                        }else{
+                        toastr.error('Thao tác bị huỷ!', '',{timeOut: 1000});
                     }
-                });
+                }); 
             });
-        });  
+        }); 
+
     </script>
+
+
+
 
 @endsection
