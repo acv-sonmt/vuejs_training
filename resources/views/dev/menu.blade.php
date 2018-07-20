@@ -49,50 +49,46 @@
         .CUD{
             float :right !important;
             background-color: lightgrey;
-            margin-right:-6.5%;
-            margin-top:-1.5%;
+            margin-right:-80px;
+            margin-top:-30px;
         }
 
         .display-none{
             display: none;
         }
-
-        .menu{
-            /*margin-top: 1% ;*/
-            background-color:white;
+        .plus{
+            margin-left:-20px;
+            top:35px;
         }
-
-        .plusButton{
-            background-color:#98ff544d;
-            margin-left:-2.5%;
-            /*margin-top: -2.5%;*/
-        }
-        .minusButton{
-            background-color:#ef4e224d;
-            margin-left:-2.5%;
+        .minus{
+            top:35px;
+            margin-left:-20px;
         }
         .uname{
             width:100%;
             background-color: #e7f3a44d;
+            margin-top:15px;
+            height: 35px;
         }
         .newNodeName{
-            /*margin-left:5%;*/
-            /*width:90%;*/
-            background-color: #f3e6a49e;
-
-            /*margin-top: -1.5%;*/
+            background-color: #e7f3a44d;
+            margin-top:15px;
         }
-        .fa-arrow-down{
+        .fa-plus{
             font-size: 12px;
         }
-        .fa-arrow-right{
+        .fa-minus{
             font-size: 12px;
         }
         .note{
             color: red;
-            margin-left:5%;
+            margin-left:50px;
         }
 
+        .inputNew{
+            background-color: #e7f3a44d;
+        }
+        
     </style>
     <div class="row justify-content-center">
         <div class="col-md-12">
@@ -109,11 +105,12 @@
 
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>" >
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                    <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
-                                    <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
+                                    <span class="glyphicon plus glyphicon-plus"></span>
+                                    <span class="glyphicon minus glyphicon-minus"></span>
                             <?php } ?>
-                            <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                            
+                            <div class="cssIput">
+                                <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                            </div>
                             <div class="CUD dad">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -130,10 +127,13 @@
                         <ul class="group-menu-item display-none">
                             <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                                 <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                    <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
-                                    <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
+                                   <span class="glyphicon plus glyphicon-plus"></span>
+                                   <span class="glyphicon minus glyphicon-minus"></span>
                                 <?php } ?>
-                                <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+
+                                <div class="cssIput">
+                                    <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                                </div> 
                                 
                                 <div class="CUD chid">
                                     <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -152,11 +152,12 @@
                             <?php } ?>
                         <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                            <span class="plus"><button class="plusButton"><i class="fa fa-arrow-down"></i></button></span>
-                            <span class="minus"><button class="minusButton"><i class="fa fa-arrow-right"></i></button></span>
+                                <span class="glyphicon plus glyphicon-plus"></span>
+                                <span class="glyphicon minus glyphicon-minus"></span>
                             <?php } ?>
-                            <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-
+                            <div class="cssIput">
+                                <input type="" name="" class="uname" disabled value="<?php echo $dataCategory[$i]->name; ?>">
+                            </div>
                             <div class="CUD chid2">
                                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -190,8 +191,9 @@
 
     <div id="new-node-temp" class=".divchid" hidden="true">
         <li class="menu-item menu menuchid">
-                <label class="note">* không được bỏ trống</label>
-                <input type="text" class="newNodeName form-control" placeholder="Thêm Mới" />
+                <div class="cssIput">
+                    <input type="text" class="newNodeName inputNew form-control" placeholder="Thêm Mới" />
+                </div>
             <div class="CUD CUDchid" >
                 <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
                 </a>
@@ -206,8 +208,9 @@
     <div id="new-node-group-temp" class=".divchid" hidden="true">
         <ul class="group-menu-item">
             <li class="menu-item menu menuchid">
-                <label class="note">* không được bỏ trống</label>
-                    <input  type="text" class="newNodeName form-control" placeholder="Thêm Mới"/>
+                    <div class="cssIput">
+                        <input  type="text" class="newNodeName inputNew form-control" placeholder="Thêm Mới"/>
+                    </div>
                 <div class="CUD CUDchid">
                     <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
                     </a>
@@ -269,6 +272,15 @@
 
 //Thêm mới menu
             $(document).on('click', '.create' ,function(event) {
+
+                $(this).removeClass('display-none');
+                // $(this).next('.minus').removeClass('display-none');
+                // $(this).next('.plus').removeClass('display-none');
+
+                $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');
+
+                $('.menu-item').removeClass('display-none');
+
                  var parentNodeId =  $(this).parents('li.menu-item').data('id');
                  var addNode = $('#new-node-temp').clone().contents(); //gán html vừa viết ở trên
                  var addNodeGroup = $('#new-node-group-temp').clone().contents();
@@ -343,6 +355,8 @@
                 })
             });
 //Lưu Lại khi Thêm Mới
+
+
             $(document).on('click','.save', function(event) {
                 var parentAddId =  $(this).parents('li.menu-item').first().data('id');
                 $(this).parents('li.menu-item').first().find('input').first().prop('disabled', true);
@@ -358,6 +372,8 @@
                     name:name,
                     parent_id:parentId
                 };
+                if (name != '')
+
                 $.ajax({
                     url: '{{ route('createMenu') }}',
                     type: 'POST',
@@ -374,7 +390,10 @@
                         console.log(parentId);
 
                     }
-                })
+                });
+            else{
+                toastr.error('ko đc bỏ trống!');
+            }
             });
 
 //Xóa Menu
@@ -405,7 +424,8 @@
                                 $(buttonDelete).parents('li.menu-item').first().remove();
                             }
                         });
-                        }else{
+                        }
+                        else{
                         toastr.error('Thao tác bị huỷ!', '',{timeOut: 1000});
                     }
                 }); 
