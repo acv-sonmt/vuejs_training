@@ -3,7 +3,12 @@
 
 @endsection
 @section('content')
-
+<style>
+    .img-item{
+        width: 100px;
+        height: 100px;
+    }
+</style>
     <div class="">
         <div class="page-title">
             <div class="title_left">
@@ -11,9 +16,12 @@
             </div>
 
         </div>
+        <div class="row">
+            <div id="img-upload-area" class="img-uploaded">
 
+            </div>
+        </div>
         <div class="clearfix"></div>
-
         <input type="file"  id="fileupload" multiple="true">
         <button id="upload">UPLOAD</button>
     </div>
@@ -38,14 +46,17 @@
                     headers: {
                         'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
                     },
-                    dataType: 'script',
+                    dataType:'JSON',
                     cache: false,
                     contentType: false,
                     processData: false,
                     data:formData,
                     url: "<?php echo @route('doUpload_template')?>",
                     success: function (result) {
-
+                        $.each(result.data,function(key,item){
+                            var img = "<img class='img-item' src='"+item.url+"' image-name='"+item.client_file_name+"'/>";
+                            $('#img-upload-area').append(img);
+                        });
                     }
                 });
             });
