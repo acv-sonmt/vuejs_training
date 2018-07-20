@@ -1,19 +1,15 @@
 <?php
 
 namespace App\Backend\Http\Controllers;
-use App\Auth\Models\User;
+
+use App\Backend\Services\Interfaces\UploadServiceInterface;
 use App\Core\Dao\SDB;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;
 use App\Core\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\App;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Storage;
-use Maatwebsite\Excel\Collections\RowCollection;
-use Maatwebsite\Excel\Collections\SheetCollection;
+use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
-use Maatwebsite\Excel\Readers\LaravelExcelReader;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 
 class TemplateController extends Controller
@@ -23,9 +19,11 @@ class TemplateController extends Controller
      *
      * @return void
      */
-    public function __construct()
-    {
+    protected $uploadService;
 
+    public function __construct(UploadServiceInterface $uploadService)
+    {
+        $this->uploadService = $uploadService;
     }
 
     /**
@@ -37,55 +35,77 @@ class TemplateController extends Controller
     {
         return view('backend.template.index');
     }
-    public function form(){
+
+    public function form()
+    {
         return view('backend.template.form');
     }
-    public function components(){
+
+    public function components()
+    {
         return view('backend.template.component');
     }
-    public function buttons(){
+
+    public function buttons()
+    {
         return view('backend.template.button');
     }
-    public function upload(){
+
+    public function upload()
+    {
         return view('backend.template.upload');
     }
-    public function doUpload(Request $request){
+
+    public function doUpload(Request $request)
+    {
         $files = $request->allFiles();
-        $subFolder = "upload/template";
-        $fileSystemDisk =  "public";
         $result =  new DataResultCollection();
-        $result->status = \SDBStatusCode::OK;
-        $result->data=  array();
-        //NOTE : This will store file to path with: root path has config in config/filesystems.php, sub folder is $subFolder
-        if(is_array($files) && ! empty($files)){
-            foreach ($files as $item){
-                $path = $item->store($subFolder,$fileSystemDisk);
-                $fileInfor = array(
-                    'client_file_name'=>$item->getClientOriginalName(),
-                    'uri'=>$path,
-                    'url'=>Storage::disk($fileSystemDisk)->url($path)
-                );
-                $result->data[] = $fileInfor;
-            }
+        $rule = [
+            "*"=>$this->getImageRules(),
+        ];
+        $message_rule = [
+            '*.mimes' => 'Mime not Allowed'
+        ];
+        $validator = Validator::make($request->allFiles(), $rule,$message_rule);
+        if (!$validator->fails()) {
+            $result = $this->uploadService->uploadLocal($files);
+        } else {
+            $error = array($validator->errors());
+            $result->status = \SDBStatusCode::ValidateError;
+            $result->message = 'An error occured while uploading the file.';
+            $result->data =$error;
         }
+
         return ResponseHelper::JsonDataResult($result);
     }
-    public function generalElement(){
+
+    public function generalElement()
+    {
         return view('backend.template.generalElement');
     }
-    public function icons(){
+
+    public function icons()
+    {
         return view('backend.template.icons');
     }
-    public function glyphicons(){
+
+    public function glyphicons()
+    {
         return view('backend.template.glyphicons');
     }
-    public function calendar(){
+
+    public function calendar()
+    {
         return view('backend.template.calendar');
     }
-    public function tables(){
+
+    public function tables()
+    {
         return view('backend.template.table');
     }
-    public function exports(){
+
+    public function exports()
+    {
         return view('backend.template.export');
     }
 
@@ -93,17 +113,33 @@ class TemplateController extends Controller
      * @return mixed
      * use Maatwebsite\Excel\Excel v2.0
      */
-    public function doExports(){
-        $data = SDB::execSPsToDataResultCollection('ACL_GET_MODULES_LST',array());
-        $dataArr =  $data->dataToArray();
-        $excelTemplatePath =CommonHelper::getExcelTemplatePath()."\\backend\\template1.xlsx";
+    public function doExports()
+    {
+        $data = SDB::execSPsToDataResultCollection('ACL_GET_MODULES_LST', array());
+        $dataArr = $data->dataToArray();
+        $excelTemplatePath = CommonHelper::getExcelTemplatePath() . "\\backend\\template1.xlsx";
         $reader = Excel::load($excelTemplatePath);
-        Excel::create('Filename', function(LaravelExcelWriter $excel)use ($dataArr,$reader) {
-            $excel->sheet('New sheet', function(\PHPExcel_Worksheet $sheet) use ($dataArr){
+        Excel::create('Filename', function (LaravelExcelWriter $excel) use ($dataArr, $reader) {
+            $excel->sheet('New sheet', function (\PHPExcel_Worksheet $sheet) use ($dataArr) {
                 $sheet->fromArray($dataArr);
             });
         })->export('xlsx');
 
         return 'dsds';
+    }
+
+    /**
+     * Rules for image
+     *
+     * @return array
+     */
+    protected function getImageRules()
+    {
+        return [
+            'required',
+            'mimes:' . \UploadConst::FILE_IMAGE_UPLOAD_ACCESSED,
+            'image',
+            'max:' . \UploadConst::BACKEND_UPLOAD_IMAGE_MAX
+        ];
     }
 }

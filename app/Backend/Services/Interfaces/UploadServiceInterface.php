@@ -7,7 +7,10 @@
  */
 namespace App\Backend\Services\Interfaces;
 
+use App\Core\Entities\DataResultCollection;
+
 interface UploadServiceInterface
 {
+    public function uploadLocal($files):DataResultCollection;
     public function test();
 }

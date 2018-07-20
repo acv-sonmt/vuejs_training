@@ -5,8 +5,15 @@
 @section('content')
 <style>
     .img-item{
-        width: 100px;
         height: 100px;
+    }
+    .image-item{
+        float: left;
+        margin: 10px;
+        border: 1px solid;
+    }
+    #upload{
+        margin-top: 15px;
     }
 </style>
     <div class="">
@@ -26,7 +33,11 @@
         <button id="upload">UPLOAD</button>
     </div>
 
-
+<div id="image-item-template" class="display-none">
+    <div class="image-item form-row">
+        <img class='img-item' src='{{asset("common_images/no-image.png")}}' image-name="" />
+    </div>
+</div>
 @endsection
 @section('lib_scripts')
 
@@ -53,10 +64,16 @@
                     data:formData,
                     url: "<?php echo @route('doUpload_template')?>",
                     success: function (result) {
-                        $.each(result.data,function(key,item){
-                            var img = "<img class='img-item' src='"+item.url+"' image-name='"+item.client_file_name+"'/>";
-                            $('#img-upload-area').append(img);
-                        });
+                        if(result.status == '{{SDBStatusCode::OK}}') {
+                            $.each(result.data,function(key,item){
+                                var itemImage = $('#image-item-template').find('.image-item').clone();
+                                var img = $(itemImage).find('.img-item');
+                                $(img).attr('src',item.url);
+                                $(img).attr('image-name',item.client_file_name);
+                                $('#img-upload-area').append(itemImage);
+                            });
+                        }
+
                     }
                 });
             });

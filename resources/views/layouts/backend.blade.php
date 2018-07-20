@@ -24,6 +24,7 @@
     @yield('lib_style')
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
+    <link href="{{ asset('backend/template1/css/backend_common.css')}}" rel="stylesheet">
     <title>{{ config('app.name', 'Laravel') }}</title>
 
 </head>
