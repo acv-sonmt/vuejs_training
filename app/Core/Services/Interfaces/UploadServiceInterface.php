@@ -5,7 +5,7 @@
  * Date: 6/14/2018
  * Time: 10:23 AM
  */
-namespace App\Backend\Services\Interfaces;
+namespace App\Core\Services\Interfaces;
 
 use App\Core\Entities\DataResultCollection;
 

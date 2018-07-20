@@ -6,9 +6,9 @@
  * Time: 10:28 AM
  */
 
-namespace App\Backend\Services\Production;
+namespace App\Core\Services\Production;
 
-use App\Backend\Services\Interfaces\UploadServiceInterface;
+use App\Core\Services\Interfaces\UploadServiceInterface;
 use App\Core\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Storage;
 

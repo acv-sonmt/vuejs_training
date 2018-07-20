@@ -5,8 +5,8 @@
 namespace App\Backend\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Backend\Services\Interfaces;
-use App\Backend\Services\Production;
+use App\Core\Services\Interfaces;
+use App\Core\Services\Production;
 class BackendServiceProvider extends ServiceProvider
 {
     protected $services = [

@@ -2,7 +2,7 @@
 
 namespace App\Backend\Http\Controllers;
 
-use App\Backend\Services\Interfaces\UploadServiceInterface;
+use App\Core\Services\Interfaces\UploadServiceInterface;
 use App\Core\Dao\SDB;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;

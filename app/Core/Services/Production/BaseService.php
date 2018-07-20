@@ -5,7 +5,7 @@
  * Date: 6/14/2018
  * Time: 10:29 AM
  */
-namespace App\Backend\Services\Production;
+namespace App\Core\Services\Production;
 
 
 class BaseService
