@@ -203,7 +203,7 @@
     </div>
 
 
-    <div id="new-node-temp" hidden="true">
+    <div id="new-node-temp" class=".divchid" hidden="true">
         <li class="menu-item menu menuchid">
                 <label class="note">* không được bỏ trống</label>
                 <input type="text" class="newNodeName form-control" placeholder="Thêm Mới" />
@@ -218,7 +218,7 @@
         </li>
     </div>
 
-    <div id="new-node-group-temp" hidden="true">
+    <div id="new-node-group-temp" class=".divchid" hidden="true">
         <ul class="group-menu-item">
             <li class="menu-item menu menuchid">
                 <label class="note">* không được bỏ trống</label>
@@ -361,12 +361,9 @@
                 $(this).parents('li.menu-item').first().find('.editchid').first().removeClass('display-none');
 
                 var insert = $(this);
-                var input = $(this).parents('ul.group-menu-item').first().find('li.menuchid').first();  //.find('input.newNodeName').first()
+                var input = $(this).parents('li.menuchid').first().find('input.newNodeName').first();
                 var name = $(input).val();
                 var parentId = $(input).attr('parentNodeId');
-
-                // alert(parentAddId);
-
                 var datas = {
                     name:name,
                     parent_id:parentId
@@ -381,6 +378,7 @@
                         var newId = dataFromSP.newid;
                          $(insert).parents('ul.group-menu-item').first().find('li.menuchid').first().attr('data-id',newId);
                       // toastr.success('Thêm mới thành công !');
+                        console.log(parentId);
 
                     }
                 })
