@@ -24,7 +24,11 @@
     Route::get('/backend/template/form', 'TemplateController@form')->name('form_template');
     Route::get('/backend/template/components', 'TemplateController@components')->name('component_template');
     Route::get('/backend/template/buttons', 'TemplateController@buttons')->name('button_template');
+
     Route::get('/backend/template/upload', 'TemplateController@upload')->name('upload_template');
+    Route::get('/backend/template/images/s3', 'TemplateController@getImageFromS3')->name('getimage_s3_template');
+    Route::get('/backend/template/images/local', 'TemplateController@getImageFromLocal')->name('getimage_local_template');
+
     Route::post('/backend/template/doUpload', 'TemplateController@doUpload')->name('doUpload_template');
     Route::post('/backend/template/doUploadS3', 'TemplateController@doUploadS3')->name('doUploadS3_template');
     Route::post('/backend/template/doDeleteFile', 'TemplateController@doDeleteFile')->name('doDeleteFile_template');

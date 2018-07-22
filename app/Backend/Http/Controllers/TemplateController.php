@@ -66,6 +66,11 @@ class TemplateController extends Controller
             }
         }
 
+        return view('backend.template.upload',compact('fileLocalInforList'));
+    }
+    public function getImageFromS3(){
+        $result = new DataResultCollection();
+        $result->status = \SDBStatusCode::OK;
         $diskS3Name = 's3';
         $fileList = Storage::disk($diskS3Name)->allFiles('uploads/templates');
         $fileS3InforList = array();
@@ -77,10 +82,9 @@ class TemplateController extends Controller
                 );
             }
         }
-
-        return view('backend.template.upload',compact('fileLocalInforList','fileS3InforList'));
+        $result->data = $fileS3InforList;
+        return ResponseHelper::JsonDataResult($result);
     }
-
     public function doUpload(Request $request)
     {
         $files = $request->allFiles();

@@ -96,7 +96,9 @@
 @section('form_scripts')
     <script>
         $(document).ready(function () {
-            $('#upload').click(function () {
+            loadImageFromS3();
+
+            $(document).on('click','#upload',function () {
                 var formData = new FormData();
                 var fileList = $('#fileupload').prop('files');
                 var countFile = fileList.length;
@@ -129,7 +131,7 @@
                     }
                 });
             });
-            $('#uploadS3').click(function () {
+            $(document).on('click','#uploadS3',function () {
                 var formData = new FormData();
                 var fileList = $('#fileuploads3').prop('files');
                 var countFile = fileList.length;
@@ -201,6 +203,28 @@
                 });
             });
         });
+        function loadImageFromS3(){
+            var parentBlock = $(this).parent('.image-item');
+            $.ajax({
+                type: 'Get',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'JSON',
+                url: "<?php echo @route('getimage_s3_template')?>",
+                success: function (result) {
+                    if (result.status == '{{SDBStatusCode::OK}}') {
+                        $.each(result.data, function (key, item) {
+                            var itemImage = $('#image-item-template').find('.image-item').clone();
+                            var img = $(itemImage).find('.img-item');
+                            $(img).attr('src', item.url);
+                            $(img).attr('path', item.path);
+                            $('#img-upload-area-s3').append(itemImage);
+                        });
+                    }
+                }
+            });
+        }
     </script>
 @endsection
 
