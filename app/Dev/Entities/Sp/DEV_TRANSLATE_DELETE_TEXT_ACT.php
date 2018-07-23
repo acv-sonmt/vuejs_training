@@ -4,7 +4,7 @@
 use App\Core\Entities\Entity; 
 class DEV_TRANSLATE_DELETE_TEXT_ACT extends Entity{
 	public $code;
-	public $data_error;
+	public $data;
 	public  function __construct($object){
 		 parent::__construct($object);
 	}

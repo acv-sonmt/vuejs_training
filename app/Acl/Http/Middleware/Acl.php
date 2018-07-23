@@ -50,7 +50,9 @@ class Acl
      */
     protected function hasAcl($roleId,$screenCode){
         $configAcl = Config::get('acl');
-        if(isset($configAcl[$roleId])&& isset($configAcl[$roleId][$screenCode]) && $configAcl[$roleId][$screenCode]==1){
+        //Allow user has active access or system admin role
+        if((isset($configAcl[$roleId])&& isset($configAcl[$roleId][$screenCode]) && $configAcl[$roleId][$screenCode]==1)
+            ||($roleId==\RoleConst::SysAdminRole)){
             return true;
         }
         return false;

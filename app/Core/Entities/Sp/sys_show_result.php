@@ -4,7 +4,7 @@
 use App\Core\Entities\Entity; 
 class sys_show_result extends Entity{
 	public $code;
-	public $data_error;
+	public $data;
 	public  function __construct($object){
 		 parent::__construct($object);
 	}

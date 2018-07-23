@@ -10,7 +10,7 @@ use App\Acl\Services\Production;
 class AclServiceProvider extends ServiceProvider
 {
     protected $services = [
-        Interfaces\AclServiceInterface::class => Production\UploadService::class,
+        Interfaces\AclServiceInterface::class => Production\AclService::class,
     ];
     /**
      * Bootstrap services.

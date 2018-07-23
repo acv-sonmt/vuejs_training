@@ -155,7 +155,8 @@ class AclService extends BaseService implements AclServiceInterface
                 $controllers[$i]['module'] = $_module;
                 $controllers[$i]['controller'] = strtolower(end($_namespaces_chunks));
                 $controllers[$i]['action'] = strtolower(end($_action));
-
+                $controllers[$i]['screen_code']=$action['namespace']."\\".$controllers[$i]['controller']."\\".$controllers[$i]['action'];
+                $controllers[$i]['description']=$action['namespace'];
 
             }
             $i++;

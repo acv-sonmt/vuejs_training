@@ -11,6 +11,7 @@ namespace App\Dev\Services\Production;
 use App\Dev\Dao\DEVDB;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Route;
 use App\Dev\Services\Interfaces\DevServiceInterface;
 use App\Dev\Entities\DataResultCollection;
