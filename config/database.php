@@ -2,6 +2,7 @@
 
 return [
 
+    'logs'=> env('DB_LOG', false),
     /*
     |--------------------------------------------------------------------------
     | Default Database Connection Name

@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core\Logging;
+namespace App\Core\Logging\DatabaseLogs;
 
 use Monolog\Handler\LogEntriesHandler;
 use Monolog\Logger;
 
-class CreateCustomLogger
+class CreateDatabaseLogger
 {
     /**
      * Create a custom Monolog instance.
@@ -15,8 +15,8 @@ class CreateCustomLogger
      */
     public function __invoke(array $config)
     {
-        $logger = new Logger('Log');
-        $logger->pushHandler(new CustomLoggerHandler($config));
+        $logger = new Logger('log');
+        $logger->pushHandler(new DatabaseLoggerHandler($config));
 
         return $logger;
     }

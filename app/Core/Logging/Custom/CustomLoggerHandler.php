@@ -1,11 +1,11 @@
 <?php
 
-namespace App\Core\Logging;
+namespace App\Core\Logging\Custom;
 
 use App\Core\Helpers\CommonHelper;
 use Monolog\Handler\AbstractProcessingHandler;
 
-class CustomLoggerHandler extends AbstractProcessingHandler
+class CustomerLoggerHandler extends AbstractProcessingHandler
 {
 
     public function __construct($config = null)

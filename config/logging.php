@@ -35,7 +35,7 @@ return [
     'channels' => [
         'stack' => [
             'driver' => 'stack',
-            'channels' => ['single'],
+            'channels' => ['my_custom'],
         ],
 
         'single' => [
@@ -76,10 +76,14 @@ return [
             'driver' => 'errorlog',
             'level' => 'debug',
         ],
-        'custom' => [
+        'my_custom' => [
             'driver' => 'custom',
-            'via' => App\Core\Logging\CreateCustomLogger::class
+            'via' => App\Core\Logging\Custom\CreateCustomLogger::class
         ],
+        'sql_query' => [
+            'driver' => 'custom',
+            'via' => App\Core\Logging\DatabaseLogs\CreateDatabaseLogger::class
+        ]
     ],
 
 ];

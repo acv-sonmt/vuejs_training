@@ -4,12 +4,14 @@
  */
 
 namespace App\Dev\Http\Controllers;
+use App\Core\Dao\SDB;
 use App\Dev\Entities\DataResultCollection;
 use App\Dev\Rules\UpperCaseRule;
 use App\Dev\Services\Interfaces\DevServiceInterface;
 use App\Dev\Helpers\ResponseHelper;
 use App\Dev\Helpers\CommonHelper;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
 use Validator;
 
@@ -49,7 +51,7 @@ class DevController extends Controller
             $dataResult->status = \SDBStatusCode::WebError;
             $dataResult->data = $error;
             return ResponseHelper::JsonDataResult($dataResult);
-            
+
         } else {
             $transType = $request->input('trans_type');
             $transInputType = $request->input('trans_input_type');
@@ -192,9 +194,10 @@ class DevController extends Controller
     }
     public function test()
     {
-        $this->devService->test();
-        Log::error('sasa');
         echo '<pre>';
+        $data=DB::table('sys_translation')->simplePaginate(15,null,'page',3);
+        $this->devService->test();
+        print_r($data);
        // $this->devService->generationTranslateScript('validation','validation');
     }
 
