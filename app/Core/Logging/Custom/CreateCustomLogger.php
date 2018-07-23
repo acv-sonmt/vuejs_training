@@ -16,7 +16,7 @@ class CreateCustomLogger
     public function __invoke(array $config)
     {
         $logger = new Logger('Log');
-        $logger->pushHandler(new CustomerLoggerHandler($config));
+        $logger->pushHandler(new CustomLoggerHandler($config));
 
         return $logger;
     }

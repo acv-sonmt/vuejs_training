@@ -196,6 +196,7 @@ class DevController extends Controller
     {
         echo '<pre>';
         $data=DB::table('sys_translation')->simplePaginate(15,null,'page',3);
+        $data=DB::table('sys_translation')->simplePaginate(15,null,'page',4);
         $this->devService->test();
         print_r($data);
        // $this->devService->generationTranslateScript('validation','validation');

@@ -5,7 +5,7 @@ namespace App\Core\Logging\Custom;
 use App\Core\Helpers\CommonHelper;
 use Monolog\Handler\AbstractProcessingHandler;
 
-class CustomerLoggerHandler extends AbstractProcessingHandler
+class CustomLoggerHandler extends AbstractProcessingHandler
 {
 
     public function __construct($config = null)
