@@ -54,20 +54,16 @@
         
         .CUD{
             float :right !important;
-            background-color: lightgrey;
-            margin-right:-80px;
-            margin-top:-23px;
+            margin-right:-130px;
+            margin-top:-30px;
         }
 
-        /*.display-none{
-            display: none;
-        }*/
         .plus{
             margin-left:-20px;
-            top:35px;
+            top:40px;
         }
         .minus{
-            top:35px;
+            top:40px;
             margin-left:-20px;
         }
         .oldName{
@@ -76,6 +72,42 @@
             margin-top:15px;
             height: 30px !important;
         }
+        .itemDelete{
+            margin-left: 10px;
+
+        }
+        .itemEdit{
+            margin-left: 10px;
+
+        }
+        .itemUpdate{
+            margin-left: 10px;
+
+        }
+        .iteamCreate{
+            margin-left: 10px;
+
+        }
+        .itemSave{
+            margin-left: 10px;
+        }
+        .glyphicon-remove{
+            width: 20px;
+            line-height: 25px;
+        }
+        .glyphicon-edit{
+            width: 20px;
+            line-height: 25px;
+        }
+        .glyphicon-update{
+           width: 20px;
+           line-height: 25px;
+        }
+        .glyphicon-plus{
+            width: 20px;
+            line-height: 25px;
+        }
+
 
     </style>
     <div class="row justify-content-center">
@@ -100,10 +132,10 @@
                                 <input type="text" name="" class="uname oldName tooltipName form-control" data-toggle="tooltip" title="You don't Empty" required disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             </div>
                             <div class="CUD ButtonCUD dad">
-                                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
-                                <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
-                                <a class="pull-right btn btn-info update btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
-                                <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                                <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                                <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="pull-right btn btn-info update itemUpdate btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
+                                <a class="pull-right btn btn-primary iteamCreate create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
                             </div>
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
 
@@ -124,10 +156,10 @@
                                 </div> 
                                 
                                 <div class="CUD chid">
-                                    <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
-                                    <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
-                                    <a class="pull-right btn btn-info update btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
-                                    <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                                    <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                                    <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
+                                    <a class="pull-right btn btn-info update itemUpdate btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
+                                    <a class="pull-right btn btn-primary iteamCreate create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
                                 </div>
                                 <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
 
@@ -147,10 +179,10 @@
                                 <input type="text" name="" class="uname tooltipName oldName form-control" required data-toggle="tooltip" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
                             </div>
                             <div class="CUD chid2">
-                                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
-                                <a class="pull-right btn btn-warning edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
-                                <a class="pull-right btn btn-info update btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
-                                <a class="pull-right btn btn-primary create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                                <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
+                                <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
+                                <a class="pull-right btn btn-info update itemUpdate btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
+                                <a class="pull-right btn btn-primary iteamCreate create btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
                             </div>
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
 
@@ -183,12 +215,12 @@
                     <input type="text" class="newNodeName oldName tooltipName form-control" required data-toggle="tooltip" title="You don't Empty" placeholder="" />
                 </div>
             <div class="CUD CUDchid" >
-                <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
+                <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span>
                 </a>
-                <a class="pull-right btn btn-info save btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
-                <a class="pull-right btn btn-warning edit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
-                <a class="pull-right btn btn-info updatechid btn-xs"><span class="glyphicon glyphicon-save"></span></a>
-                <a class="pull-right btn btn-primary create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                <a class="pull-right btn btn-info save itemSave btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
+                <a class="pull-right btn btn-warning edit itemEdit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
+                <a class="pull-right btn btn-info itemUpdate updatechid btn-xs"><span class="glyphicon glyphicon-save"></span></a>
+                <a class="pull-right btn btn-primary iteamCreate create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
             </div>
         </li>
     </div>
@@ -200,12 +232,12 @@
                         <input  type="text" class="newNodeName oldName tooltipName form-control" required data-toggle="tooltip" title="You don't Empty" placeholder=""/>
                     </div>
                 <div class="CUD CUDchid">
-                    <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon glyphicon-remove"></span>
+                    <a class="pull-right btn btn-danger delete btn-xs"><span class="glyphicon itemDelete glyphicon-remove"></span>
                     </a>
-                    <a class="pull-right btn btn-info save btn-xs"><span class="glyphicon glyphicon-save"></span></a>
-                    <a class="pull-right btn btn-warning edit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a class="pull-right btn btn-info updatechid btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
-                    <a class="pull-right btn btn-primary create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
+                    <a class="pull-right btn btn-info save btn-xs"><span class="glyphicon itemSave glyphicon-save"></span></a>
+                    <a class="pull-right btn btn-warning edit editchid btn-xs"><span class="glyphicon itemEdit glyphicon-edit"></span></a>
+                    <a class="pull-right btn btn-info updatechid btn-xs" ><span class="glyphicon itemUpdate glyphicon-save"></span></a>
+                    <a class="pull-right btn btn-primary create createChid btn-xs" ><span class="glyphicon iteamCreate glyphicon-plus"></span></a>
                 </div> 
             </li>
         </ul>
