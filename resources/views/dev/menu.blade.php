@@ -57,13 +57,12 @@
 
         .plus{
             margin-left:-20px;
-            margin-top: ;
+            margin-top:1px ;
             float: left;
         }
         .minus{
             float: left;
-            margin-top: ;
-
+            margin-top:6px ;
             margin-left:-20px;
         }
         .oldName{
@@ -112,7 +111,11 @@
             width: 20px;
             line-height: 25px;
         }
-        .tooltip-arrow, .menuName + .tooltip >  .tooltip-inner {background-color: #df6662;border:none;box-shadow:none;outline:none;}
+         .menuName + .tooltip >.tooltip-inner {background-color: #df6662;border:none;box-shadow:none;outline:none;}
+
+         .tooltip .tooltip-arrow {
+            border-top-color: #df6662 !important;
+         }
 
     </style>
     <div class="row justify-content-center">
@@ -129,10 +132,13 @@
                         if($dataCategory[$i]->level_value == $prevLevel){?>
 
                         <li class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>" >
-                            <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                    <span class="glyphicon plus plusButton glyphicon-plus"></span>
-                                    <span class="glyphicon minus minusButton glyphicon-minus"></span>
-                            <?php } ?>
+                            <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){
+                                    $isHide = '';
+                           } else{
+                                     $isHide = 'display-none';
+                             }?>
+                                    <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
+                                    <span class="glyphicon minus minusButton glyphicon-minus{{ $isHide }}"></span>
                                 <input type="text" class="oldName menuName form-control" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
                             <div class="CUD ButtonCUD">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -149,10 +155,13 @@
 
                         <ul class="group-menu-item display-none">
                             <li class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>">
-                                <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                   <span class="glyphicon plus plusButton glyphicon-plus"></span>
-                                   <span class="glyphicon minus minusButton glyphicon-minus"></span>
-                                <?php } ?>
+                                <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){
+                                   $isHide = '';
+                             }else{
+                                    $isHide = 'display-none';
+                                } ?>
+                                    <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
+                                    <span class="glyphicon minus minusButton glyphicon-minus{{ $isHide }}"></span>
                                     <input type="text" class="menuName oldName form-control" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
                                 <div class="CUD chid">
                                     <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -170,10 +179,15 @@
                         </ul>
                             <?php } ?>
                         <li class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>">
-                            <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                <span class="glyphicon plus plusButton glyphicon-plus"></span>
-                                <span class="glyphicon minus minusButton glyphicon-minus"></span>
-                            <?php } ?>
+                            <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){
+                                   $isHide = '';
+                                
+                             }
+                            else{
+                                $isHide = 'display-none';
+                            } ?>
+                            <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
+                                <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
                                 <input type="text" class="menuName oldName form-control" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
                             <div class="CUD chid2">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -207,7 +221,7 @@
 
     <div id="new-node-temp" hidden="true">
         <li class="menu-item">
-                    <input type="text" class="newNodeName menuName oldName form-control" title="You don't Empty" placeholder="Add new" />
+            <input type="text" class="newNodeName menuName oldName form-control" title="You don't Empty" placeholder="Add new" />
             <div class="CUD" >
                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span></a>
                 <a class="pull-right btn btn-info save itemSave btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
@@ -346,12 +360,14 @@
             $(document).on('click','.save', function(event) {
 
                 var parentAddId =  $(this).parents('li.menu-item').first().data('id');
+
                 var liParent = $(this).parents('li.menu-item').first();
                 var insert = $(this);
                 var input = $(this).parents('li.menu-item').first().find('input.menuName').first();
                 var name = $(input).val();
                 var parentId = $(input).attr('parentNodeId');
 
+                $(liParent).find('.minusButton').removeClass('display-none');
                 var datas = {
                     name:name,
                     parent_id:parentId
@@ -372,9 +388,7 @@
                             var dataFromSP = JSON.parse(res.data[0].data);
                             var newId = dataFromSP.newid;
                             $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().attr('data-id',newId);
-
-                            $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().append();
-
+                            // $(insert).
                             if (res.status) {
                                 toastr.success('Yeah! add new success !');
                             }
@@ -389,7 +403,8 @@
 //Xóa Menu
             $(document).on('click','.delete', function(event) {
                 var id = $(this).parents('li.menu-item').data('id');
-                var liParent =$(this).parents('li.menu-item').first();
+                var currentNode =$(this).parents('li.menu-item').first();
+                var parentNode  =$(currentNode).parents('li.menu-item').first();
                 var buttonDelete =  $(this);
 
                 swal({
@@ -410,12 +425,15 @@
                             data: {id: id},
                             success : function(res) {
                                 if (res.status) {
-                                    toastr.success('deleted success!', '',{timeOut: 3000});
 
-                                    $(buttonDelete).parents('li.menu-item').first().remove();                                   
+                                    $(currentNode).remove();                                   
+                                     toastr.success('deleted success!', '',{timeOut: 3000});
 
-                                    if ($(liParent).length ==0){
-                                        $(liParent).find('.minusButton').first().remove();
+                                    if ($(parentNode).find('li.menu-item').length <=0){
+                                        $(parentNode).find('.minusButton').first().remove();
+                                        $(parentNode).find('.plusButton').first().remove();
+                                        // $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().append("ok");
+                                        
                                     }
 
                                 }
