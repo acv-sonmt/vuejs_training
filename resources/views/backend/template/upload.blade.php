@@ -32,7 +32,8 @@
         .image-item:hover .delete-btn {
             display: block !important;
         }
-        .block-main{
+
+        .block-main {
             margin-top: 50px;
         }
     </style>
@@ -67,16 +68,7 @@
 
         </div>
         <div class="row">
-            <div id="img-upload-area-s3" class="img-uploaded">
-                <?php if(!empty($fileS3InforList)){?>
-                <?php foreach ($fileS3InforList as $url){ ?>
-                <div class="image-item form-row">
-                    <img class='img-item' src='{{$url['url']}}' path="{{$url['path']}}" image-name=""/>
-                    <span class="fa fa-trash delete-btn"></span>
-                </div>
-                <?php } ?>
-                <?php } ?>
-            </div>
+            <div id="img-upload-area-s3" class="img-uploaded"></div>
         </div>
         <div class="clearfix"></div>
         <input type="file" id="fileuploads3" multiple="true">
@@ -98,7 +90,7 @@
         $(document).ready(function () {
             loadImageFromS3();
 
-            $(document).on('click','#upload',function () {
+            $(document).on('click', '#upload', function () {
                 var formData = new FormData();
                 var fileList = $('#fileupload').prop('files');
                 var countFile = fileList.length;
@@ -131,7 +123,7 @@
                     }
                 });
             });
-            $(document).on('click','#uploadS3',function () {
+            $(document).on('click', '#uploadS3', function () {
                 var formData = new FormData();
                 var fileList = $('#fileuploads3').prop('files');
                 var countFile = fileList.length;
@@ -165,45 +157,95 @@
                 });
             });
             $(document).on('click', '#img-upload-area-s3 .delete-btn', function () {
-                var parentBlock = $(this).parent('.image-item');
-                var path = $(parentBlock).find('.img-item').attr('path');
-                $.ajax({
-                    type: 'Post',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    dataType: 'JSON',
-                    data: {path: path},
-                    url: "<?php echo @route('doDeleteFileS3_template')?>",
-                    success: function (result) {
-                        if (result.status == '{{SDBStatusCode::OK}}') {
-                            $(parentBlock).remove();
+                var currentBtn =  $(this);
+                $.confirm({
+                    title: 'Confirm!',
+                    content: 'Are you sure to delete?',
+                    buttons: {
+                        ok: {
+                            text: 'Ok',
+                            action: function () {
+                                callDeleteFileFromS3($(currentBtn));
+                            }
+                        },
+                        Cancel: function () {
+
                         }
 
                     }
                 });
+
             });
             $(document).on('click', '#img-upload-area .delete-btn', function () {
-                var parentBlock = $(this).parent('.image-item');
-                var path = $(parentBlock).find('.img-item').attr('path');
-                $.ajax({
-                    type: 'Post',
-                    headers: {
-                        'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-                    },
-                    dataType: 'JSON',
-                    data: {path: path},
-                    url: "<?php echo @route('doDeleteFile_template')?>",
-                    success: function (result) {
-                        if (result.status == '{{SDBStatusCode::OK}}') {
-                            $(parentBlock).remove();
+                var currentBtn =  $(this);
+                $.confirm({
+                    title: 'Confirm!',
+                    content: 'Are you sure to delete?',
+                    buttons: {
+                        OK: {
+                            text: 'Ok',
+                            action: function () {
+                                callDeleteFileLocal($(currentBtn));
+                            }
+                        }
+                        ,
+                        cancel: {
+                            text: 'Cancel',
+                            action: function () {
+                                //close
+                            }
                         }
 
                     }
                 });
+
             });
         });
-        function loadImageFromS3(){
+
+        function callDeleteFileLocal(btnDeleteSeletor) {
+            var parentBlock = $(btnDeleteSeletor).parent('.image-item');
+            var path = $(parentBlock).find('.img-item').attr('path');
+            $.ajax({
+                type: 'Post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'JSON',
+                data: {path: path},
+                url: "<?php echo @route('doDeleteFile_template')?>",
+                success: function (result) {
+                    if (result.status == '{{SDBStatusCode::OK}}') {
+                        $(parentBlock).remove();
+                    }
+
+                }
+            });
+        }
+
+        function callDeleteFileFromS3(btnDeleteSeletor) {
+            var parentBlock = $(btnDeleteSeletor).parent('.image-item');
+            var path = $(parentBlock).find('.img-item').attr('path');
+            $.ajax({
+                type: 'Post',
+                headers: {
+                    'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+                },
+                dataType: 'JSON',
+                data: {path: path},
+                url: "<?php echo @route('doDeleteFileS3_template')?>",
+                success: function (result) {
+                    if (result.status == '{{SDBStatusCode::OK}}') {
+                        $(parentBlock).remove();
+                    }
+
+                }
+            });
+        }
+
+        /**
+         * load image from s3
+         */
+        function loadImageFromS3() {
             var parentBlock = $(this).parent('.image-item');
             $.ajax({
                 type: 'Get',

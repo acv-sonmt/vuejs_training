@@ -20,7 +20,7 @@
 
     <link href="{{ asset('backend/template1/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/bootstrap-colorpicker.min.css')}}" rel="stylesheet">
-
+    <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">
     @yield('lib_style')
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
@@ -199,6 +199,7 @@
 <!-- Bootstrap -->
 <script src="{{ asset('backend/template1/js/bootstrap.min.js')}}"></script>
 <script src="{{ asset('backend/template1/js/jquery.autocomplete.min.js')}}"></script>
+<script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
 <script src="{{ asset('backend/template1/js/moment-with-locales.js')}}"></script>
 
 <!-- bootstrap-datetimepicker -->
