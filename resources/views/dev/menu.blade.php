@@ -1,18 +1,15 @@
 @extends('layouts.dev')
 
 <!-- Latest compiled and minified CSS & JS -->
-<link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
-<script src="//code.jquery.com/jquery.js"></script>
-<script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
-
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <script src="//code.jquery.com/jquery.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/js/bootstrap.min.js" integrity="sha384-0mSbJDEHialfmuBBQP6A4Qrprq5OVfW37PRR3j5ELqxss1yVqOtnepnHVP9aJ7xS" crossorigin="anonymous"></script>
     <link rel="stylesheet" href="//code.jquery.com/ui/1.12.1/themes/base/jquery-ui.css">
-  {{-- <link rel="stylesheet" href="/resources/demos/style.css"> --}}
-  <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
-  <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
-
     <link rel="stylesheet" type="text/css" href="https://stackpath.bootstrapcdn.com/font-awesome/4.7.0/css/font-awesome.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.css">
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.css">
+    <script src="https://code.jquery.com/jquery-1.12.4.js"></script>
+    <script src="https://code.jquery.com/ui/1.12.1/jquery-ui.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/toastr.js/2.1.4/toastr.min.js"></script>
     <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/sweetalert/1.1.3/sweetalert.min.js"></script>
 @section('content')
@@ -75,6 +72,7 @@
             margin-top:15px;
             height: 30px !important;
         }
+
         .itemDelete{
             margin-left: 10px;
 
@@ -114,10 +112,7 @@
             width: 20px;
             line-height: 25px;
         }
-        title{
-            color: red;
-        }
-
+        .menuName + .tooltip > .tooltip-inner {background-color: #f00;}
 
     </style>
     <div class="row justify-content-center">
@@ -133,15 +128,13 @@
                         for($i = 0;$i < $count ; $i++){
                         if($dataCategory[$i]->level_value == $prevLevel){?>
 
-                        <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>" >
+                        <li class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>" >
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                    <span class="glyphicon plus plusButton showplus glyphicon-plus"></span>
+                                    <span class="glyphicon plus plusButton glyphicon-plus"></span>
                                     <span class="glyphicon minus minusButton glyphicon-minus"></span>
                             <?php } ?>
-                            <div class="cssIput">
-                                <input type="text" name="" class=" oldName menuName tooltipName form-control" data-toggle="tooltip" title="You don't Empty" required disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                            </div>
-                            <div class="CUD ButtonCUD dad">
+                                <input type="text" class="oldName menuName form-control" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                            <div class="CUD ButtonCUD">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
                                 <a class="pull-right btn btn-info update itemUpdate btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
@@ -155,16 +148,12 @@
                         <?php }else if($dataCategory[$i]->level_value > $prevLevel){?>
 
                         <ul class="group-menu-item display-none">
-                            <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
+                            <li class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>">
                                 <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                   <span class="glyphicon plus plusButton showplus glyphicon-plus"></span>
+                                   <span class="glyphicon plus plusButton glyphicon-plus"></span>
                                    <span class="glyphicon minus minusButton glyphicon-minus"></span>
                                 <?php } ?>
-
-                                <div class="cssIput">
-                                    <input type="text" name="" class=" tooltipName menuName oldName form-control" required data-toggle="tooltip" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                                </div> 
-                                
+                                    <input type="text" class="menuName oldName form-control" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
                                 <div class="CUD chid">
                                     <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                     <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -180,14 +169,12 @@
                             <?php for($j = $dataCategory[$i]->level_value;$j<$prevLevel;$j++){ ?>
                         </ul>
                             <?php } ?>
-                        <li class="menu-item menu" data-id="<?php echo $dataCategory[$i]->id; ?>">
+                        <li class="menu-item" data-id="<?php echo $dataCategory[$i]->id; ?>">
                             <?php if ($i+1 < $count && $dataCategory[$i+1]->level_value > $dataCategory[$i]->level_value){?>
-                                <span class="glyphicon plus plusButton showplus glyphicon-plus"></span>
+                                <span class="glyphicon plus plusButton glyphicon-plus"></span>
                                 <span class="glyphicon minus minusButton glyphicon-minus"></span>
                             <?php } ?>
-                            <div class="cssIput">
-                                <input type="text" name="" class=" tooltipName menuName oldName form-control" required data-toggle="tooltip" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>">
-                            </div>
+                                <input type="text" class="menuName oldName form-control" title="You don't Empty" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
                             <div class="CUD chid2">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -211,42 +198,35 @@
                 </div>
 
                 <div class="ref">
-                    <b>Refer: </b><a href="http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/"
-                                     target="_blank">http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/</a>
+                    <b>Refer: </b><a href="http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/" target="_blank">http://mikehillyer.com/articles/managing-hierarchical-data-in-mysql/</a>
                 </div>
             </div>
         </div>
     </div>
 
 
-    <div id="new-node-temp" class=".divchid" hidden="true">
-        <li class="menu-item menu">
-                <div class="cssIput">
-                    <input type="text" class="newNodeName menuName oldName tooltipName form-control" title="You don't Empty" placeholder="" />
-                </div>
-            <div class="CUD CUDchid" >
-                <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span>
-                </a>
+    <div id="new-node-temp" hidden="true">
+        <li class="menu-item">
+                    <input type="text" class="newNodeName menuName oldName form-control" title="You don't Empty" placeholder="Add new" />
+            <div class="CUD" >
+                <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span></a>
                 <a class="pull-right btn btn-info save itemSave btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
                 <a class="pull-right btn btn-warning edit itemEdit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
-                <a class="pull-right btn btn-info itemUpdate updatechid btn-xs"><span class="glyphicon glyphicon-save"></span></a>
+                <a class="pull-right btn btn-info itemUpdate update btn-xs"><span class="glyphicon glyphicon-save"></span></a>
                 <a class="pull-right btn btn-primary iteamCreate create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
             </div>
         </li>
     </div>
 
-    <div id="new-node-group-temp" class=".divchid" hidden="true">
+    <div id="new-node-group-temp" hidden="true">
         <ul class="group-menu-item">
-            <li class="menu-item menu">
-                    <div class="cssIput">
-                        <input  type="text" class="newNodeName menuName oldName tooltipName form-control" title="You don't Empty" placeholder=""/>
-                    </div>
-                <div class="CUD CUDchid">
-                    <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span>
-                    </a>
+            <li class="menu-item">
+                <input  type="text" class="newNodeName menuName oldName form-control" title="You don't Empty" placeholder="Add new"/>
+                <div class="CUD">
+                    <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span></a>
                     <a class="pull-right btn btn-info itemSave save btn-xs"><span class="glyphicon glyphicon-save"></span></a>
                     <a class="pull-right btn btn-warning itemEdit edit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
-                    <a class="pull-right btn btn-info itemUpdate updatechid btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
+                    <a class="pull-right btn btn-info itemUpdate update btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
                     <a class="pull-right btn btn-primary iteamCreate create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
                 </div> 
             </li>
@@ -293,26 +273,19 @@
 
 // Mở input ra để sửa Menu
             $(document).on('click', '.edit' ,function(event) {
-                $(this).parents('li.menu-item').first().find('input.menuName').first().prop('disabled', false).select();
-                // $(this).parents('li.menu-item').first().find('input.newNodeName').first().prop('disabled', false).select();
-                $(this).parents('li.menu-item').first().find('.edit').first().addClass('display-none');
-                $(this).parents('li.menu-item').first().find('.create').first().addClass('display-none');
-                $(this).parents('li.menu-item').first().find('.update').first().removeClass('display-none');
-                // $(this).parents('li.menu-item').first().find('.updatechid').first().removeClass('display-none');
-            });
-
-            $(document).on('click', '.editchid' ,function(event) {
-                $(this).parents('li.menu-item').first().find('.updatechid').first().removeClass('display-none');
+                var liParent =  $(this).parents('li.menu-item').first();
+                $(liParent).find('input.menuName').first().prop('disabled', false).select();
+                $(liParent).find('.edit').first().addClass('display-none');
+                $(liParent).find('.create').first().addClass('display-none');
+                $(liParent).find('.update').first().removeClass('display-none');
 
             });
-
 
 //Thêm mới menu
             $(document).on('click', '.create' ,function(event) {
-                $(this).parents('li.menu-item').first().find('.showplus').first().trigger('click');
                 $(this).removeClass('display-none');
-                $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');
-                $('.menu-item').removeClass('display-none');
+
+                $(this).parents('li.menu-item').first().find('.plusButton').first().trigger('click');
 
                  var parentNodeId =  $(this).parents('li.menu-item').data('id');
                  var addNode = $('#new-node-temp').clone().contents(); //gán html vừa viết ở trên
@@ -363,43 +336,10 @@
                         }
                     });
                 }
-
                 else{
                     $(input).tooltip('show');
                 }
 
-            });
-
-// Lưu lại Sau Khi Sửa thằng đang tạo ra
-            $(document).on('click','.updatechid', function(event) {
-                var id = $(this).parents('li.menu-item').data('id');
-                var inputchid = $(this).parents('li.menu-item').first().find('input.newNodeName').first();
-                var name = $(inputchid).val();
-                var data = {
-                    id:id,
-                    name:name,
-                 };
-
-                if (name != ''){
-                    $(this).parents('li.menu-item').first().find('input.menuName').first().prop('disabled', true);
-                    $(this).parents('li.menu-item').first().find('.updatechid').first().addClass('display-none');
-                    $(this).parents('li.menu-item').first().find('.edit').first().removeClass('display-none');
-                    $(this).parents('li.menu-item').first().find('.create').first().removeClass('display-none');
-                     $.ajax({
-                        url: '{{ route('updateMenu') }}',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: data,
-                        success : function(res){
-                            if (res.status) {
-                                toastr.success('Yeah! update success!', '',{timeOut: 3000});
-                            }
-                        }
-                    });
-                 }
-                 else{
-                    $(this).parents('li.menu-item').find('input.tooltipName').first().tooltip('show');
-                 }
             });
 
 
@@ -407,21 +347,21 @@
             $(document).on('click','.save', function(event) {
 
                 var parentAddId =  $(this).parents('li.menu-item').first().data('id');
-
+                var liParent = $(this).parents('li.menu-item').first();
                 var insert = $(this);
                 var input = $(this).parents('li.menu-item').first().find('input.menuName').first();
-
                 var name = $(input).val();
                 var parentId = $(input).attr('parentNodeId');
+
                 var datas = {
                     name:name,
                     parent_id:parentId
                 };
 
                 if (name != ''){
-                    $(this).parents('li.menu-item').first().find('.editchid').first().removeClass('display-none');
-                    $(this).parents('li.menu-item').first().find('.save').first().addClass('display-none');
-                    $(this).parents('li.menu-item').first().find('.createChid').first().removeClass('display-none');
+                    $(liParent).find('.edit').first().removeClass('display-none');
+                    $(liParent).find('.save').first().addClass('display-none');
+                    $(liParent).find('.create').first().removeClass('display-none');
                     $(input).prop('disabled', true);
                     $.ajax({
                         url: '{{ route('createMenu') }}',
@@ -439,7 +379,7 @@
                     });
                 }
                 else{
-                    $(this).parents('li.menu-item').first().find('input.tooltipName').first().tooltip('show');
+                    $(input).tooltip('show');
                 }
             });
 
@@ -469,12 +409,10 @@
                                     toastr.success('deleted success!', '',{timeOut: 3000});
                                 }
                                 $(buttonDelete).parents('li.menu-item').first().remove();
+                                $(buttonDelete).parents('li.menu-item').first().find('.plusButton').first().remove();
                             }
                         });
                         }
-                        else{
-                        toastr.error('discarded operation!', '',{timeOut: 3000});
-                    }
                 }); 
             });
         }); 
