@@ -112,7 +112,7 @@
             width: 20px;
             line-height: 25px;
         }
-        .menuName + .tooltip > .tooltip-inner {background-color: #f00;}
+        .tooltip-arrow, .menuName + .tooltip >  .tooltip-inner {background-color: #df6662;border:none;box-shadow:none;outline:none;}
 
     </style>
     <div class="row justify-content-center">
@@ -339,7 +339,6 @@
                 else{
                     $(input).tooltip('show');
                 }
-
             });
 
 
@@ -363,6 +362,7 @@
                     $(liParent).find('.save').first().addClass('display-none');
                     $(liParent).find('.create').first().removeClass('display-none');
                     $(input).prop('disabled', true);
+
                     $.ajax({
                         url: '{{ route('createMenu') }}',
                         type: 'POST',
@@ -372,6 +372,9 @@
                             var dataFromSP = JSON.parse(res.data[0].data);
                             var newId = dataFromSP.newid;
                             $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().attr('data-id',newId);
+
+                            $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().append();
+
                             if (res.status) {
                                 toastr.success('Yeah! add new success !');
                             }
@@ -386,6 +389,7 @@
 //Xóa Menu
             $(document).on('click','.delete', function(event) {
                 var id = $(this).parents('li.menu-item').data('id');
+                var liParent =$(this).parents('li.menu-item').first();
                 var buttonDelete =  $(this);
 
                 swal({
@@ -407,9 +411,14 @@
                             success : function(res) {
                                 if (res.status) {
                                     toastr.success('deleted success!', '',{timeOut: 3000});
+
+                                    $(buttonDelete).parents('li.menu-item').first().remove();                                   
+
+                                    if ($(liParent).length ==0){
+                                        $(liParent).find('.minusButton').first().remove();
+                                    }
+
                                 }
-                                $(buttonDelete).parents('li.menu-item').first().remove();
-                                $(buttonDelete).parents('li.menu-item').first().find('.plusButton').first().remove();
                             }
                         });
                         }
