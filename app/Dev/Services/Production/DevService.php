@@ -20,17 +20,6 @@ use App\Dev\Helpers\CommonHelper;
 
 class DevService extends BaseService implements DevServiceInterface
 {
-    protected  $listModule = [];
-    public function __construct()
-    {
-        $modules =  DEVDB::select('SELECT module_code FROM sys_modules');
-        if(!empty($modules)){
-            foreach ($modules as $item){
-                $this->listModule[] = $item->module_code;
-            }
-        }
-    }
-
     public function getLanguageCodeList():DataResultCollection
     {
         $lang = DEVDB::execSPsToDataResultCollection('DEV_GET_LANGUAGE_CODE_LST');
@@ -430,9 +419,10 @@ class DevService extends BaseService implements DevServiceInterface
         try{
             //Generate Storeprocedure entity
             $spsList =  DEVDB::execSPsToDataResultCollection('DEV_GET_ALL_SP_LST');
+            $modules =  DEVDB::select('SELECT module_code FROM sys_modules');
             if($spsList->status==\SDBStatusCode::OK){
                 foreach ($spsList->data as $row){
-                    DEVDB::generateEntityClass($row->Name,$this->getModuleNameFromSpName($row->Name));
+                    DEVDB::generateEntityClass($row->Name,$this->getModuleNameFromSpName($row->Name,$modules));
                 }
             }
             //Generate Table and View entity
@@ -447,7 +437,8 @@ class DevService extends BaseService implements DevServiceInterface
         }
     }
     public function generateSpecEntityClass($spName){
-        DEVDB::generateEntityClass($spName,$this->getModuleNameFromSpName($spName));
+        $modules =  DEVDB::select('SELECT module_code FROM sys_modules');
+        DEVDB::generateEntityClass($spName,$this->getModuleNameFromSpName($spName,$modules));
     }
     public function getAllSPList():DataResultCollection{
         $spsList =  DEVDB::execSPsToDataResultCollection('DEV_GET_ALL_SP_LST');
@@ -539,13 +530,18 @@ class DevService extends BaseService implements DevServiceInterface
         $categoryData = DEVDB::execSPsToDataResultCollection('DEV_GET_CATEGORY_LST');
         return $categoryData;
     }
-    protected function getModuleNameFromSpName($procedureName){
+    protected function getModuleNameFromSpName($procedureName,$modules){
         $result = 'Core';//default
         $delimiter = '_';
         $procedureName =  strtolower($procedureName);
+        if(!empty($modules)){
+            foreach ($modules as $item){
+                $listModule[] = $item->module_code;
+            }
+        }
         if(strpos($procedureName, $delimiter) !== false){
             $module =explode ($delimiter,$procedureName)[0];
-            if(in_array($module,$this->listModule)){
+            if(in_array($module,$listModule)){
                 $result =  ucfirst($module);
             }
         }
