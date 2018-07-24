@@ -97,9 +97,8 @@ class DEVDB extends DB
             $dataResult->status = \SDBStatusCode::Excep;
             $dataResult->message = $exception->getMessage();
             //Logging
-            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.")    Error: {");
+            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.")    Error: ");
             Log::error($exception->getMessage());
-            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.")    Error: }");
         }
         return $dataResult;
     }
@@ -154,9 +153,8 @@ class DEVDB extends DB
             if (!$exec) return $pdo->errorInfo();
         } catch (\Exception $exception) {
             //Logging
-            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.",".$module.")    Error: {");
+            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.",".$module.")    Error: ");
             Log::error($exception->getMessage());
-            Log::error(__CLASS__."::".__FUNCTION__."(".$procName.",".$module.")    Error: }");
         }
         DEVDB::rollBack();
         self::createFile($meta,$procName,$module);
