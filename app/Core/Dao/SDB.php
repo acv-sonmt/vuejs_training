@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;
+use Illuminate\Support\Facades\Log;
+
 /**
  * Class SDB
  * @package App\Dao
@@ -42,6 +44,7 @@ class SDB extends DB
                     $stmt->bindValue((1 + $i), $parameters[$i]);
                 }
             }
+            self::writeLogAdvance($syntax,$parameters);
             $exec = $stmt->execute();
             if (!$exec) {
                 $dataResult->status = \SDBStatusCode::PDOExceoption;
@@ -105,6 +108,7 @@ class SDB extends DB
                     $stmt->bindValue((1 + $i), $parameters[$i]);
                 }
             }
+            self::writeLogAdvance($syntax,$parameters);
             $exec = $stmt->execute();
             if (!$exec) return $pdo->errorInfo();
             if ($isExecute) return $exec;
@@ -128,4 +132,52 @@ class SDB extends DB
         return $results;
     }
 
+    /**
+     * @param $query : string
+     */
+    protected static function writeLog($queryString){
+        if((boolean)Config::get('database.logs')=='true') {
+            Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+                $queryString
+            );
+        }
+    }
+
+    /**
+     * @param $syntax
+     * @param $param
+     */
+    protected static function writeLogAdvance($syntax,$param){
+        try{
+            if((boolean)Config::get('database.logs')=='true') {
+                Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+                    self::createSqlString($syntax,$param)
+                );
+            }
+        }catch (\Exception $e){
+            Log::error($e->getMessage());
+        }
+
+    }
+
+    /**
+     * @param $string
+     * @param $data
+     * @return mixed|null|string|string[]
+     */
+    protected static function createSqlString($string,$data) {
+        try{
+            if(!empty($data)){
+                $indexed=$data==array_values($data);
+                foreach($data as $k=>$v) {
+                    if(is_string($v)) $v="'$v'";
+                    if($indexed) $string=preg_replace('/\?/',$v,$string,1);
+                    else $string=str_replace(":$k",$v,$string);
+                }
+            }
+        }catch (\Exception $e){
+            $string = $e->getMessage();
+        }
+        return $string;
+    }
 }

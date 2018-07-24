@@ -12,7 +12,9 @@
 <p><strong>5. New log mode</strong></p>
 <p><strong>&nbsp;-&nbsp;</strong>If you change .env&nbsp;LOG_CHANNEL to custom, logs will writed <span style="color: #000000;">by</span> custom policy:</p>
 <p>&nbsp; &nbsp; &nbsp;+ Write log with new structure&nbsp; logs/date_folder/module_date.txt</p>
-<p>&nbsp; &nbsp; &nbsp;+ All of event logs still perform as default of Laravel.</p>
+<p>&nbsp; &nbsp; &nbsp;+ Logger for database query excute.</p>
+<p>&nbsp; &nbsp; &nbsp;+ All of default event logs still perform as default of Laravel.</p>
+<p>&nbsp; &nbsp; &nbsp;+ Coding struct like default of Laravel.</p>
 <p><strong>6. Helper</strong></p>
 <p><strong>&nbsp; -</strong> Provide some helper for developer.</p>
 <p>&nbsp;<strong>7. Console: Generate access token key</strong></p>

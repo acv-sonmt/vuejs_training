@@ -15,15 +15,8 @@ class AppServiceProvider extends ServiceProvider
     public function boot()
     {
         //Custom to logs query form database
-        if(Config::get('database.logs')=='true'){
-            DB::listen(function($query) {
-                Log::channel('sql_query')->debug(
-                    $query->sql,
-                    $query->bindings,
-                    $query->time
-                );
-            });
-        }
+        $this->databaseLogger();
+
     }
 
     /**
@@ -34,5 +27,24 @@ class AppServiceProvider extends ServiceProvider
     public function register()
     {
         // Register services
+    }
+
+    /**
+     * databaseLogger
+     */
+    protected function databaseLogger(){
+        try{
+            if((boolean)Config::get('database.logs')==true){
+                DB::listen(function($query) {
+                    Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+                        $query->sql,
+                        $query->bindings,
+                        $query->time
+                    );
+                });
+            }
+        }catch (\Exception $e){
+            Log::error( $e->getMessage());
+        }
     }
 }

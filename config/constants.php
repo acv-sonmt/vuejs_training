@@ -52,3 +52,6 @@ class UploadConst
     const BACKEND_UPLOAD_VIDEO_MAX = '512000'; // 500MB
 }
 
+class LoggingConst{
+    const SQL_LOG_channel =  'sql_query';
+}
