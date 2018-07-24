@@ -322,17 +322,18 @@
                     name:name,
                  };
 
-                if (name != ''){
+                if(validateMenu($(input))==true){
+
                     $(input).prop('disabled', true);
                     $(liParent).find('.update').first().addClass('display-none');
                     $(liParent).find('.edit').first().removeClass('display-none');
                     $(liParent).find('.create').first().removeClass('display-none');
-                     $.ajax({
+                    $.ajax({
                         url: '{{ route('updateMenu') }}',
                         type: 'POST',
                         dataType: 'JSON',
                         data: data,
-                        success : function(res){
+                        success: function (res) {
                             $.alert({
                                 title: 'Congratulations!',
                                 type: 'green',
@@ -342,6 +343,7 @@
                         }
                     });
                     clearError($(input));
+                    validateMenu($(input));
                 }
                 else{
                     showMenuError($(input));
@@ -365,7 +367,8 @@
                     parent_id:parentId
                 };
 
-                if (name != ''){
+                if(validateMenu($(input))==true) {
+
                     $(liParent).find('.edit').first().removeClass('display-none');
                     $(liParent).find('.save').first().addClass('display-none');
                     $(liParent).find('.create').first().removeClass('display-none');
@@ -375,7 +378,7 @@
                         type: 'POST',
                         dataType: 'JSON',
                         data: datas,
-                        success : function(res){
+                        success: function (res) {
                             $.alert({
                                 title: 'Congratulations!',
                                 type: 'green',
@@ -384,7 +387,7 @@
                             });
                             var dataFromSP = JSON.parse(res.data[0].data);
                             var newId = dataFromSP.newid;
-                            $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().attr('data-id',newId);
+                            $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().attr('data-id', newId);
                         }
                     });
                     clearError($(input));
@@ -441,7 +444,6 @@
                     $(currentNode).remove();
                     if ($(parentNode).find('li.menu-item').length <=0){
                         $(parentNode).find('.minusButton').first().addClass('display-none');
-
                     }
                }
                 
@@ -450,23 +452,31 @@
             // var selector = $(this).parents('li.menu-item').first().find('input.menuName').first();
             function showMenuError(selector){
                 var messageError ="This field is not empty !";
-                $(selector).attr('title',messageError);
+                $(selector).attr('data-original-title',messageError);
                 $(selector).tooltip('show');
                 $(selector).addClass('input-error');
             }
             function clearError(selector){
                 if(selector.length > 0){
-                    $(selector).attr('title','');
+                    $(selector).attr('data-original-title','');
                     $(selector).removeClass('input-error');
                 }else{
                     $('.input-error').each(function(){
-                        $(selector).attr('title','');
+                        $(selector).attr('data-original-title','');
                         $(selector).removeClass('input-error');
                     });
                 }
             }
-        }); 
 
+            function validateMenu(selector) {
+                var result =  false;
+                //check required
+                if($(selector).val()!=''){
+                    result =  true;
+                }
+                return result;
+            }
+        });
     </script>
 
 
