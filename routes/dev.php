@@ -24,6 +24,9 @@ Route::post('/dev/menu/createMenu','MenuController@createMenu')->name('createMen
 Route::post('/dev/menu/updateMenu','MenuController@updateMenu')->name('updateMenu');
 Route::delete('/dev/menu/delete','MenuController@deleteMenu')->name('deleteMenu');
 
+Route::get('import', 'ImportController@getImport')->name('import');
+Route::post('import', 'ImportController@import')->name('postImport');
+
 Route::post('/dev/updateAclActive', 'DevController@updateAclActive')->name('updateAclActive');
 Route::post('/dev/updateAclActiveAll', 'DevController@updateAclActiveAll')->name('updateAclActiveAll');
 
