@@ -192,7 +192,7 @@ return [
         /**
          * FrontEnd
          */
-        App\Frontend\Providers\RouteServiceProvider::class
+        App\Frontend\Providers\RouteServiceProvider::class,
 
     ],
 

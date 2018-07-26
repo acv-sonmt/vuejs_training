@@ -19,6 +19,7 @@ use Illuminate\Support\Facades\Log;
  */
 class DEVDB extends DB
 {
+    public const defaultModuleName='Core';
     public const _defaultValue = [
         'varchar' => '',
         'longtext'=>'',
@@ -165,7 +166,7 @@ class DEVDB extends DB
      * @param $module
      * @return array
      */
-    public static function generateEntityClassByTable($tableName,$module = 'Core')
+    public static function generateEntityClassByTable($tableName,$module = self::defaultModuleName)
     {
         $meta = [];
         try {

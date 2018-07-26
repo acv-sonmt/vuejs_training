@@ -929,31 +929,20 @@ if (typeof NProgress != 'undefined') {
           }
         }
 
-        function showErrorAlert(reason, detail) {
-          var msg = '';
-          if (reason === 'unsupported-file-type') {
-            msg = "Unsupported format " + detail;
-          } else {
-            console.log("error uploading file", reason, detail);
-          }
-          $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
-            '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
-        }
-
-       $('.editor-wrapper').each(function(){
-			var id = $(this).attr('id');	//editor-one
-
-			$(this).wysiwyg({
-				toolbarSelector: '[data-target="#' + id + '"]',
-				fileUploadError: showErrorAlert
-			});
-		});
-
-
         window.prettyPrint;
         prettyPrint();
 
     };
+    function showErrorAlert(reason, detail) {
+        var msg = '';
+        if (reason === 'unsupported-file-type') {
+            msg = "Unsupported format " + detail;
+        } else {
+            console.log("error uploading file", reason, detail);
+        }
+        $('<div class="alert"> <button type="button" class="close" data-dismiss="alert">&times;</button>' +
+            '<strong>File upload error</strong> ' + msg + ' </div>').prependTo('#alerts');
+    }
 
 	/* CROPPER */
 
