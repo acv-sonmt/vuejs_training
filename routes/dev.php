@@ -24,8 +24,9 @@ Route::post('/dev/menu/createMenu','MenuController@createMenu')->name('createMen
 Route::post('/dev/menu/updateMenu','MenuController@updateMenu')->name('updateMenu');
 Route::delete('/dev/menu/delete','MenuController@deleteMenu')->name('deleteMenu');
 
-Route::get('import', 'ImportController@getImport')->name('import');
-Route::post('import', 'ImportController@import')->name('postImport');
+Route::get('excel', 'ImportController@getImport')->name('import');
+Route::post('excel/import', 'ImportController@import')->name('postImport');
+Route::get('excel/export', 'ImportController@export')->name('export');
 
 Route::post('/dev/updateAclActive', 'DevController@updateAclActive')->name('updateAclActive');
 Route::post('/dev/updateAclActiveAll', 'DevController@updateAclActiveAll')->name('updateAclActiveAll');

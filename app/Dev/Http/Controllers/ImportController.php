@@ -2,14 +2,8 @@
 
 namespace App\Dev\Http\Controllers;
 
-use App\Core\Services\Interfaces\UploadServiceInterface;
-use App\Core\Dao\SDB;
-use App\Core\Entities\DataResultCollection;
-use App\Core\Helpers\CommonHelper;
-use App\Core\Helpers\ResponseHelper;
+use App\Http\Controllers\Controllers;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Storage;
-use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
 use Illuminate\Support\Facades\Input;
@@ -28,14 +22,13 @@ class ImportController extends Controller
 
 
     public function import(Request $request){
-
-        // dd($request);
     	if(Input::hasFile('imported-file')){
 			$path = Input::file('imported-file')->getRealPath();
+
 			$data = Excel::load($path, function($reader) {
 			})->get();
 
-			// dd($data);
+			dd($data);
 
 			if(!empty($data) && $data->count()){
 				foreach ($data as $key => $value) {
@@ -47,39 +40,15 @@ class ImportController extends Controller
 			}
 		}
 		return back();
-
-	    // if($request->file('imported-file')){
-     //        $path = $request->file('imported-file')->getRealPath();
-     //        $data = Excel::load($path, function($reader){
-     //        })->get();
-     //      dd($path);
-
-     //      if(!empty($data) && $data->count()){
-     //        foreach ($data->toArray() as $row){
-
-     //          if(!empty($row)){
-     //            $dataArray[] =[
-     //              'name' => $row['name'],
-     //              // 'item_code' => $row['code'],
-     //              // 'item_price' => $row['price'],
-     //              // 'item_qty' => $row['quantity'],
-     //              // 'item_tax' => $row['tax'],
-     //              // 'item_status' => $row['status'],
-     //              // 'created_at' => $row['created_at']
-     //            ];
-     //          }
-     //      }
-
-     //      if(!empty($dataArray))
-     //      {
-     //         DB::table('catelory')::insert($dataArray);
-     //         return back();
-     //       }
-     //     }
-     //   }
-     //   else{
-     //   	return "false";
-     //   }
    	}
-}
 
+    public function export(){
+        $export = DB::table('users')->get();
+        Excel::create('users',function($excel) use($export){
+            $excel->sheet('Sheet 1', function($sheet) use($export){
+                $exportData = json_decode( json_encode($export),true);
+                $sheet->fromArray($exportData,'B5','B5',true);
+            });
+        })->export('xlsx');
+    }
+}

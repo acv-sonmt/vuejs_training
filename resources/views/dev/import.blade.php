@@ -1,5 +1,6 @@
 @extends('layouts.backend')
 @section('content')
+      <a href="{{ route('export') }}">Export</a>
 
     <form action="{{route('postImport')}}" class="form-horizontal" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
