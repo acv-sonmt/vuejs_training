@@ -35,7 +35,7 @@ class TemplateController extends Controller
     public function index()
     {
         $this->executeSchedule();
-        return view('backend.template.index');
+        //return view('backend.template.index');
     }
 
     public function form()
@@ -171,7 +171,8 @@ class TemplateController extends Controller
         return view('backend.template.export');
     }
     public function executeSchedule(){
-        $cronTabPath =  storage_path('/cronjob/task_list.txt');
+        $cronTabPath =  storage_path('cronjob/task_list.txt');
+        echo $cronTabPath;
 
         exec( 'crontab '.$cronTabPath );
         exec('service crond start');
