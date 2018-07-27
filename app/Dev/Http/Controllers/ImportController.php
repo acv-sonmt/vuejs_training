@@ -12,43 +12,34 @@ use DB;
 
 class ImportController extends Controller
 {
-//        Excel::load('file.xls', function($reader) {
-//            // reader methods
-//        });
 
-    public function getImport(){
+    public function getImport()
+    {
         return view('dev.import');
     }
 
+    public function import(Request $request)
+    {
+        if (Input::hasFile('imported_file')) {
+            $path = Input::file('imported_file')->getRealPath();
+            Excel::load(Input::file('imported_file'), function ($file) {
+                $data = DB::table('users')->get();
 
-    public function import(Request $request){
-    	if(Input::hasFile('imported-file')){
-			$path = Input::file('imported-file')->getRealPath();
+                Excel::create('file', function ($excel) use ($data , $file) {
+                    $exportData = json_decode(json_encode($data), true);
 
-			$data = Excel::load($path, function($reader) {
-			})->get();
-
-			dd($data);
-
-			if(!empty($data) && $data->count()){
-				foreach ($data as $key => $value) {
-					$insert[] = ['name' => $value->name];
-				}
-				if(!empty($insert)){
-					DB::table('catelory')->insert($insert);
-		      	}
-			}
-		}
-		return back();
-   	}
-
-    public function export(){
-        $export = DB::table('users')->get();
-        Excel::create('users',function($excel) use($export){
-            $excel->sheet('Sheet 1', function($sheet) use($export){
-                $exportData = json_decode( json_encode($export),true);
-                $sheet->fromArray($exportData,'B5','B5',true);
+                    // đang check lại
+                    for ($i=0; $i < 2 ; $i++) { 
+                        $sheet1 = $file->setActiveSheetIndex($i);
+                        $sheet1->fromArray($exportData, null, 'F8', true);
+                        $excel->addExternalSheet($sheet1);
+                        }
+                    
+                })->export('xls');
             });
-        })->export('xlsx');
+        }
+        
+        return back();
     }
 }
+

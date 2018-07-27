@@ -1,14 +1,15 @@
 @extends('layouts.backend')
 @section('content')
-      <a href="{{ route('export') }}">Export</a>
 
     <form action="{{route('postImport')}}" class="form-horizontal" method="post" enctype="multipart/form-data">
         <div class="col-md-6">
           {{csrf_field()}}
-          <input type="file" name="imported-file"/>
+          <input type="file" name="imported_file"/>
+          {{-- <input type="file" name="imported"/> --}}
         </div>
         <div class="col-md-6">
             <button class="btn btn-primary" type="submit">Import</button>
+            <a href="{{ route('export') }}">Export</a>
         </div>
       </form>
 
