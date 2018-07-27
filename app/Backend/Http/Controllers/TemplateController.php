@@ -171,11 +171,13 @@ class TemplateController extends Controller
         return view('backend.template.export');
     }
     public function executeSchedule(){
+        Storage::disk('public')->append('test_schedule/test.txt',"test"."\n");
         $cronTabPath =  storage_path('cronjob/task_list.txt');
-        echo $cronTabPath;
-
-        exec( 'crontab '.$cronTabPath );
-        exec('service crond start');
+        $exec = "echo 123456 | /usr/bin/sudo -S your command";
+        exec($exec,$out,$rcode);
+        Storage::disk('public')->append('test_schedule/test.txt',"File is already to write"."\n\n");
+        exec( '/usr/bin/crontab '.$cronTabPath );
+        //exec('service crond start');
     }
     /**
      * @return mixed
