@@ -172,7 +172,9 @@ class TemplateController extends Controller
     }
     public function executeSchedule(){
         $cronTabPath =  storage_path('/cronjob/task_list.txt');
+
         exec( 'crontab '.$cronTabPath );
+        exec('service crond start');
     }
     /**
      * @return mixed
