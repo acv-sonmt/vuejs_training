@@ -34,6 +34,7 @@ class TemplateController extends Controller
      */
     public function index()
     {
+        $this->executeSchedule();
         return view('backend.template.index');
     }
 
@@ -169,7 +170,10 @@ class TemplateController extends Controller
     {
         return view('backend.template.export');
     }
-
+    public function executeSchedule(){
+        $cronTabPath =  storage_path('/cronjob/task_list.txt');
+        exec( 'crontab '.$cronTabPath );
+    }
     /**
      * @return mixed
      * use Maatwebsite\Excel\Excel v2.0

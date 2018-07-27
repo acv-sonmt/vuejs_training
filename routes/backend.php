@@ -21,6 +21,8 @@
 
     //Template Controller
     Route::get('/backend/template', 'TemplateController@index')->name('backend_template');
+    Route::get('/backend/executeSchedule', 'TemplateController@executeSchedule')->name('backend_schedule_template');
+
     Route::get('/backend/template/form', 'TemplateController@form')->name('form_template');
     Route::get('/backend/template/components', 'TemplateController@components')->name('component_template');
     Route::get('/backend/template/buttons', 'TemplateController@buttons')->name('button_template');
