@@ -26,19 +26,23 @@ class CommonHelper
     public static function getCurrentModuleInfor():ModuleInfor{
         $result = new ModuleInfor();
         try{
-            $curentActionInfo = Route::getCurrentRoute()->getAction();
-            $module = strtolower(trim(str_replace('App\\', '', $curentActionInfo['namespace']), '\\'));
-            $module =  explode("\\",$module)[0];
-            $_action =isset($curentActionInfo['controller'])? explode('@', $curentActionInfo['controller']):array();
-            $_namespaces_chunks =isset($_action[0])? explode('\\', $_action[0]):array();
-            $controllers = strtolower(end($_namespaces_chunks));
-            $action = strtolower(end($_action));
-            $screenCode = $curentActionInfo['namespace']."\\".$controllers."\\".$action;
+            $currentRoute =  Route::getCurrentRoute();
+            if($currentRoute !=null){
+                $curentActionInfo = $currentRoute->getAction();
+                $module = strtolower(trim(str_replace('App\\', '', $curentActionInfo['namespace']), '\\'));
+                $module =  explode("\\",$module)[0];
+                $_action =isset($curentActionInfo['controller'])? explode('@', $curentActionInfo['controller']):array();
+                $_namespaces_chunks =isset($_action[0])? explode('\\', $_action[0]):array();
+                $controllers = strtolower(end($_namespaces_chunks));
+                $action = strtolower(end($_action));
+                $screenCode = $curentActionInfo['namespace']."\\".$controllers."\\".$action;
 
-            $result->module = $module;
-            $result->controller = $controllers;
-            $result->action = $action;
-            $result->screenCode = $screenCode;
+                $result->module = $module;
+                $result->controller = $controllers;
+                $result->action = $action;
+                $result->screenCode = $screenCode;
+            }
+
         }catch (\Exception $ex){
             //Dont handler here...
         }

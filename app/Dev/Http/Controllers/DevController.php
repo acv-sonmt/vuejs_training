@@ -192,6 +192,9 @@ class DevController extends Controller
     public function userAcl(){
         return view("dev/useracl");
     }
+    public function runSchedules(){
+
+    }
     public function test()
     {
         echo '<pre>';
