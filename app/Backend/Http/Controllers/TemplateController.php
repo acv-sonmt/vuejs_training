@@ -176,11 +176,7 @@ class TemplateController extends Controller
     public function executeSchedule(){
         Storage::disk('public')->append('test_schedule/test.txt',"test"."\n");
         $cronTabPath =  storage_path('cronjob/task_list.txt');
-        $exec = "echo 123456 | /usr/bin/sudo -S your command";
-        exec($exec,$out,$rcode);
-        Storage::disk('public')->append('test_schedule/test.txt',"File is already to write"."\n\n");
-        exec( '/usr/bin/crontab '.$cronTabPath );
-        //exec('service crond start');
+        exec( 'crontab '.$cronTabPath );
     }
     /**
      * @return mixed
