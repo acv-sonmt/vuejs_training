@@ -36,16 +36,16 @@ class MenuController extends Controller
         $data= $request->all();
         $dataMenuCollection =  new DataResultCollection();
         $dataMenuCollection->status = \SDBStatusCode::OK;
-        if ($data['name'] !='') {
-            $dataMenuCollection = $this->devService->categoryAddChildInLeft( $data['parent_id'],$data['name']);   
+        if ($data['name'] !='' /* && $data['url'] !=''*/) {
+            $dataMenuCollection = $this->devService->categoryAddChildInLeft(array($data['id'], $data['name'],$data['url']));   
         }
         return ResponseHelper::JsonDataResult($dataMenuCollection);
     }
 
     public function updateMenu(Request $request){
         $data = $request->all();
-        if ($data['name'] !='') {
-            $dataUpdateCollection = $this->devService->categoryUpdateMenu($data['id'], $data['name']);
+        if ($data['name'] !=''  /* && $data['url'] !='' */) {
+            $dataUpdateCollection = $this->devService->categoryUpdateMenu(array($data['id'], $data['name'],$data['url']));
         }
 
         $dataUpdate = ($dataUpdateCollection->status == \SDBStatusCode::OK)?$dataUpdateCollection->data:array();

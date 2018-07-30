@@ -20,7 +20,7 @@ interface DevServiceInterface
 
     public function categoryDeleteNodeAndChild($nodeId):DataResultCollection;
 
-    public function categoryUpdateMenu($nodeId, $pName):DataResultCollection;
+    public function categoryUpdateMenu($paramArr):DataResultCollection;
 
     public function getAllSPList():DataResultCollection;
     public function getRoleInfoFromDB();

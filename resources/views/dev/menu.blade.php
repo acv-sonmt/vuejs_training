@@ -40,25 +40,23 @@
         .CUD{
             float :right !important;
             margin-right:-130px;
-            margin-top:-30px;
+            margin-top:13px;
+
         }
 
         .plus{
             margin-left:-20px;
-            margin-top:1px ;
+            margin-top:15px ;
             float: left;
         }
         .minus{
             float: left;
-            margin-top:6px ;
+            margin-top:20px ;
             margin-left:-20px;
         }
         .oldName{
-            width:100%;
+            width:25%;
             background-color: #e7f3a44d !important;
-            margin-top:15px;
-            height: 30px !important;
-            border-color: white;
         }
 
         .itemDelete{
@@ -108,6 +106,18 @@
         .input-error{
             border-color: #ff151f;
         }
+        .oldURL{
+            width:70%;
+            background-color: #e7f3a44d !important;
+
+        }
+        .dInput{
+            width: 100%;
+            display: inline-flex;
+            margin-top:13px;
+            height: 30px !important;
+
+        }
 
     </style>
     <div class="row justify-content-center">
@@ -131,7 +141,10 @@
                             }?>
                             <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
                             <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
-                            <input type="text" class="oldName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                            <div class=" dInput">
+                                <input type="text" class="oldName menuName form-control " disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                                <input type="text" class=" form-control menuURL oldURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Add new">
+                            </div>
                             <div class="CUD ButtonCUD">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -153,7 +166,10 @@
                                 }?>
                                 <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
                                 <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
-                                <input type="text" class="menuName oldName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                                <div class=" dInput">
+                                    <input type="text" class="oldName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                                    <input type="text" class=" form-control menuURL oldURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Add new">
+                                </div>
 
                                 <div class="CUD chid">
                                     <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -179,7 +195,10 @@
                             }?>
                             <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
                             <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
-                            <input type="text" class="menuName oldName form-control"  disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                            <div class=" dInput">
+                                <input type="text" class="oldName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
+                                <input type="text" class=" form-control menuURL oldURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Add new">
+                            </div>
                             <div class="CUD chid2">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -206,7 +225,11 @@
 
     <div id="new-node-temp" hidden="true">
         <li class="menu-item">
-            <input type="text" class="newNodeName menuName oldName form-control" placeholder="Add new" />
+            <div class="dInput">
+                <input type="text" class="newNodeName menuName oldName form-control " placeholder="Add new" />
+                <input type="text" class=" form-control menuURL oldURL" placeholder="Add new">
+            </div>
+            {{-- <input type="text" class="newNodeName menuName oldName form-control" placeholder="Add new" /> --}}
             <div class="CUD" >
                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span></a>
                 <a class="pull-right btn btn-info save itemSave btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
@@ -220,7 +243,11 @@
     <div id="new-node-group-temp" hidden="true">
         <ul class="group-menu-item">
             <li class="menu-item">
-                <input  type="text" class="newNodeName menuName oldName form-control" placeholder="Add new"/>
+                {{-- <input  type="text" class="newNodeName menuName oldName form-control" placeholder="Add new"/> --}}
+                <div class="dInput">
+                    <input type="text" class="newNodeName menuName oldName form-control " placeholder="Add new" />
+                    <input type="text" class=" form-control menuURL oldURL" placeholder="Add new">
+                </div>
                 <div class="CUD">
                     <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                     <a class="pull-right btn btn-info itemSave save btn-xs"><span class="glyphicon glyphicon-save"></span></a>
@@ -267,15 +294,7 @@
                 }
             });
 
-// Edit Enabled input
-            $(document).on('click', '.edit' ,function(event) {
-                var liParent =  $(this).parents('li.menu-item').first();
-                $(liParent).find('input.menuName').first().prop('disabled', false).select();
-                $(liParent).find('.edit').first().addClass('display-none');
-                $(liParent).find('.create').first().addClass('display-none');
-                $(liParent).find('.update').first().removeClass('display-none');
 
-            });
 
 //Add New menu
             $(document).on('click', '.create' ,function(event) {
@@ -289,6 +308,7 @@
                     $(currentNode).find('.plusButton').first().trigger('click');
 
                  if(childBag.length>0){ 
+                    $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
                     $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
                     $(addNode).removeClass('display-none');
                     $(this).parents('li.menu-item').first().find('ul.group-menu-item').first().prepend(addNode);
@@ -308,48 +328,6 @@
                     }
                 }
             });
-
-// Update
-            $(document).on('click','.update', function(event) {
-                
-                var id = $(this).parents('li.menu-item').data('id');
-                var input = $(this).parents('li.menu-item').first().find('input.menuName').first();
-                var name = $(input).val();
-                var liParent = $(this).parents('li.menu-item').first();
-
-                var data = {
-                    id:id,
-                    name:name,
-                 };
-
-                if(validateMenu($(input))==true){
-
-                    $(input).prop('disabled', true);
-                    $(liParent).find('.update').first().addClass('display-none');
-                    $(liParent).find('.edit').first().removeClass('display-none');
-                    $(liParent).find('.create').first().removeClass('display-none');
-                    $.ajax({
-                        url: '{{ route('updateMenu') }}',
-                        type: 'POST',
-                        dataType: 'JSON',
-                        data: data,
-                        success: function (res) {
-                            $.alert({
-                                title: 'Congratulations!',
-                                type: 'green',
-                                typeAnimated: true,
-                                content: 'Update new success!',
-                            });
-                        }
-                    });
-                    clearError($(input));
-                    validateMenu($(input));
-                }
-                else{
-                    showMenuError($(input));
-                }
-            });
-
 
 //Save
             $(document).on('click','.save', function(event) {
@@ -398,6 +376,66 @@
 
                 }
             });
+
+// Edit Enabled input
+            $(document).on('click', '.edit' ,function(event) {
+                var liParent =  $(this).parents('li.menu-item').first();
+                $(liParent).find('input.menuName').first().prop('disabled', false).select();
+                $(liParent).find('input.menuURL').first().prop('disabled', false).select();
+                $(liParent).find('.edit').first().addClass('display-none');
+                $(liParent).find('.create').first().addClass('display-none');
+                $(liParent).find('.update').first().removeClass('display-none');
+
+            });
+
+// Update
+            $(document).on('click','.update', function(event) {
+                
+                var id = $(this).parents('li.menu-item').data('id');
+                var input = $(this).parents('li.menu-item').first().find('input.menuName').first();
+                var inputURL = $(this).parents('li.menu-item').first().find('input.menuURL').first();
+                var name = $(input).val();
+                var url = $(inputURL).val();
+                var liParent = $(this).parents('li.menu-item').first();
+
+                var data = {
+                    id:id,
+                    name:name,
+                    url:url
+                 };
+
+                 console.log(data);
+
+                if(validateMenu($(input))==true){
+
+                    $(input).prop('disabled', true);
+                    $(liParent).find('.update').first().addClass('display-none');
+                    $(liParent).find('.edit').first().removeClass('display-none');
+                    $(liParent).find('.create').first().removeClass('display-none');
+                    $.ajax({
+                        url: '{{ route('updateMenu') }}',
+                        type: 'POST',
+                        dataType: 'JSON',
+                        data: data,
+                        success: function (res) {
+                            // $.alert({
+                            //     title: 'Congratulations!',
+                            //     type: 'green',
+                            //     typeAnimated: true,
+                            //     content: 'Update new success!',
+                            // });
+                        }
+                    });
+                    clearError($(input));
+                    validateMenu($(input));
+                }
+                else{
+                    showMenuError($(input));
+                }
+            });
+
+
+
 
 //Delete
             $(document).on('click','.delete', function(event) {

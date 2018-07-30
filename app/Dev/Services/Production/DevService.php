@@ -82,8 +82,8 @@ class DevService extends BaseService implements DevServiceInterface
         return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_DELETE_NODE_AND_CHILD',array($nodeId));
     }
 
-    public function categoryUpdateMenu($nodeId, $pName):DataResultCollection {
-        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_UPDATE',array($nodeId, $pName));
+    public function categoryUpdateMenu($paramArr):DataResultCollection {
+        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_UPDATE',$paramArr);
     }
 
 
