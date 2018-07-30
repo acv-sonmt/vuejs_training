@@ -12,6 +12,9 @@ use Illuminate\Support\Facades\Storage;
 use Illuminate\Support\Facades\Validator;
 use Maatwebsite\Excel\Facades\Excel;
 use Maatwebsite\Excel\Writers\LaravelExcelWriter;
+use Illuminate\Support\Facades\Input;
+use File;
+use DB;
 
 class TemplateController extends Controller
 {
@@ -183,19 +186,48 @@ class TemplateController extends Controller
      * @return mixed
      * use Maatwebsite\Excel\Excel v2.0
      */
-    public function doExports()
-    {
-        $data = SDB::execSPsToDataResultCollection('ACL_GET_MODULES_LST', array());
-        $dataArr = $data->dataToArray();
-        $excelTemplatePath = CommonHelper::getExcelTemplatePath() . "\\backend\\template1.xlsx";
-        $reader = Excel::load($excelTemplatePath);
-        Excel::create('Filename', function (LaravelExcelWriter $excel) use ($dataArr, $reader) {
-            $excel->sheet('New sheet', function (\PHPExcel_Worksheet $sheet) use ($dataArr) {
-                $sheet->fromArray($dataArr);
-            });
-        })->export('xlsx');
+    public function doExports(){
+        //import file
+         Excel::load(('resources/export_templates/backend/ユーザー.xlsx'), function ($file) {
+            $data = DB::table('test_excel')->get();
 
-        return 'dsds';
+             // create file name
+            Excel::create('ユーザー', function ($excel) use ($data , $file) {
+                $exportData = json_decode(json_encode($data), true);
+                    $sheet1 = $file->setActiveSheetIndex(0);
+                    //print start column F7
+                    $sheet1->fromArray($exportData, null, 'F7', true);
+                    $excel->addExternalSheet($sheet1);
+            })->export('xlsx');
+        });
+    }
+
+    public function doImport(){
+
+        if(Input::hasFile('imported_file')){
+            $path = Input::file('imported_file')->getRealPath();
+            $data = Excel::load($path, function($reader) {
+            })->get();
+
+            // dd($data);
+            if(!empty($data)){
+                foreach ($data as $row){
+                    $dataArray[] = $row;
+//                        [
+////                            'キー' => $row['id'],
+//                            '名前' => $row['名前'],
+//                            '電子メール' => $row['電子メール'],
+//                            'パスワード' => $row['パスワード'],
+//                        ];
+                }
+                if(!empty($insert)){
+                    DB::table('test_excel')->insert($dataArray);
+                }
+            }
+        }
+        return back();
+
+
     }
 
     /**
