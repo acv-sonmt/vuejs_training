@@ -203,26 +203,19 @@ class TemplateController extends Controller
         if(Input::hasFile('imported_file')){
             $path = Input::file('imported_file')->getRealPath();
             $data = Excel::load($path, function($reader) {
+                $dataArray = $reader->getActiveSheet()
+                ->rangeToArray(
+                    'C3:E5',     // The worksheet range that we want to retrieve
+                    null,        // Value that should be returned for empty cells
+                    TRUE,        // Should formulas be calculated (the equivalent of getCalculatedValue() for each cell)
+                    TRUE,        // Should values be formatted (the equivalent of getFormattedValue() for each cell)
+                    TRUE         // Should the array be indexed by cell row and cell column
+                );
+                echo '<pre>';
+                print_r($dataArray);          
             })->get();
 
-            // dd($data);
-            if(!empty($data)){
-                foreach ($data as $row){
-                    $dataArray[] = $row;
-//                        [
-////                            'キー' => $row['id'],
-//                            '名前' => $row['名前'],
-//                            '電子メール' => $row['電子メール'],
-//                            'パスワード' => $row['パスワード'],
-//                        ];
-                }
-                if(!empty($insert)){
-                    DB::table('test_excel')->insert($dataArray);
-                }
-            }
         }
-        return back();
-
 
     }
 
