@@ -16,8 +16,7 @@ interface DevServiceInterface
     public function getTranslateList($translateType,$lang):DataResultCollection;
     public function getCategoryWithLevelList():DataResultCollection;
 
-    public function categoryAddChildInLeft($parentNodeId, $newNodeName):DataResultCollection;
-
+    public function categoryAddChildInLeft($paramArr):DataResultCollection;
     public function categoryDeleteNodeAndChild($nodeId):DataResultCollection;
 
     public function categoryUpdateMenu($paramArr):DataResultCollection;

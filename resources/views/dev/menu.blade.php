@@ -1,5 +1,6 @@
 @extends('layouts.dev')
 
+<link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.css') }}">
 @section('content')
     <style>
         .treeview .list-group-item {
@@ -40,8 +41,7 @@
         .CUD{
             float :right !important;
             margin-right:-130px;
-            margin-top:13px;
-
+            margin-top:-25px;
         }
 
         .plus{
@@ -54,9 +54,21 @@
             margin-top:20px ;
             margin-left:-20px;
         }
-        .oldName{
+        .CssName{
             width:25%;
             background-color: #e7f3a44d !important;
+        }
+
+        .CssURL{
+            /*width:70%;*/
+            background-color: #e7f3a44d !important;
+
+        }
+        .dInput{
+            width: 100%;
+            display: inline-flex;
+            margin-top:13px;
+            height: 30px !important;
         }
 
         .itemDelete{
@@ -106,18 +118,21 @@
         .input-error{
             border-color: #ff151f;
         }
-        .oldURL{
-            width:70%;
-            background-color: #e7f3a44d !important;
-
+ 
+        .checked{
+            float: right;
+            left: -18px;
+            color: #23c223;
+            top: 8px;
+            font-size: 13px;
+            visibility: hidden;
         }
-        .dInput{
-            width: 100%;
-            display: inline-flex;
-            margin-top:13px;
-            height: 30px !important;
-
+        .attach{
+            top: 9px;
+            right: 6px;
+            font-size: 15px;
         }
+       
 
     </style>
     <div class="row justify-content-center">
@@ -142,9 +157,13 @@
                             <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
                             <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
                             <div class=" dInput">
-                                <input type="text" class="oldName menuName form-control " disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
-                                <input type="text" class=" form-control menuURL oldURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Add new">
+                                <input type="text" class="CssName menuName form-control " disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
+                                <span class="glyphicon checkName checked glyphicon-ok"></span>
+                                <span class="glyphicon attach glyphicon-paperclip"></span>
+                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                <span class="glyphicon checkURL checked glyphicon-ok"></span>
                             </div>
+
                             <div class="CUD ButtonCUD">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
@@ -167,11 +186,15 @@
                                 <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
                                 <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
                                 <div class=" dInput">
-                                    <input type="text" class="oldName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
-                                    <input type="text" class=" form-control menuURL oldURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Add new">
+                                    <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
+                                    <span class="glyphicon checkName checked glyphicon-ok"></span>
+                                    <span class="glyphicon attach glyphicon-paperclip"></span>
+                                    <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                    <span class="glyphicon checkURL checked glyphicon-ok"></span>
+
                                 </div>
 
-                                <div class="CUD chid">
+                                <div class="CUD">
                                     <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                     <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
                                     <a class="pull-right btn btn-info update itemUpdate btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
@@ -196,10 +219,14 @@
                             <span class="glyphicon plus plusButton glyphicon-plus {{ $isHide }}"></span>
                             <span class="glyphicon minus minusButton glyphicon-minus {{ $isHide }}"></span>
                             <div class=" dInput">
-                                <input type="text" class="oldName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="Add new">
-                                <input type="text" class=" form-control menuURL oldURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Add new">
+                                <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
+                                <span class="glyphicon checked checkName glyphicon-ok"></span>
+                                <span class="glyphicon attach glyphicon-paperclip"></span>
+                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                <span class="glyphicon checked checkURL glyphicon-ok"></span>
+
                             </div>
-                            <div class="CUD chid2">
+                            <div class="CUD">
                                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
                                 <a class="pull-right btn btn-warning itemEdit edit btn-xs" ><span class="glyphicon glyphicon-edit"></span></a>
                                 <a class="pull-right btn btn-info update itemUpdate btn-xs" hidden="true"><span class="glyphicon glyphicon-save"></span></a>
@@ -225,11 +252,16 @@
 
     <div id="new-node-temp" hidden="true">
         <li class="menu-item">
+                <span class="glyphicon plus plusChid plusButton glyphicon-plus"></span>
+                <span class="glyphicon minus minusButton glyphicon-minus"></span>
             <div class="dInput">
-                <input type="text" class="newNodeName menuName oldName form-control " placeholder="Add new" />
-                <input type="text" class=" form-control menuURL oldURL" placeholder="Add new">
+                <input type="text" class="newNodeName menuName CssName form-control " placeholder="New Name" />
+                <span class="glyphicon checkName checked glyphicon-ok"></span>
+                <span class="glyphicon attach glyphicon-paperclip"></span>
+                <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="Link is emty">
+                <span class="glyphicon checkURL checked glyphicon-ok"></span>
+
             </div>
-            {{-- <input type="text" class="newNodeName menuName oldName form-control" placeholder="Add new" /> --}}
             <div class="CUD" >
                 <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon  glyphicon-remove"></span></a>
                 <a class="pull-right btn btn-info save itemSave btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
@@ -243,10 +275,15 @@
     <div id="new-node-group-temp" hidden="true">
         <ul class="group-menu-item">
             <li class="menu-item">
-                {{-- <input  type="text" class="newNodeName menuName oldName form-control" placeholder="Add new"/> --}}
+                <span class="glyphicon plus plusChid plusButton glyphicon-plus"></span>
+                <span class="glyphicon minus minusButton glyphicon-minus"></span>
                 <div class="dInput">
-                    <input type="text" class="newNodeName menuName oldName form-control " placeholder="Add new" />
-                    <input type="text" class=" form-control menuURL oldURL" placeholder="Add new">
+                    <input type="text" class="newNodeName menuName CssName form-control " placeholder="New Name" />
+                    <span class="glyphicon checkName checked glyphicon-ok"></span>
+                    <span class="glyphicon attach glyphicon-paperclip"></span>
+                    <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="Link is emty">
+                    <span class="glyphicon  checked glyphicon-ok"></span>
+
                 </div>
                 <div class="CUD">
                     <a class="pull-right btn btn-danger itemDelete delete btn-xs"><span class="glyphicon glyphicon-remove"></span></a>
@@ -262,15 +299,16 @@
 
 @endsection
 @section('scripts')
-    <script type="text/javascript">
 
-        
+<script type="text/javascript" src="{{ asset('js/toastr.js') }}"></script>
+    <script type="text/javascript">
 
         $('.update').addClass('display-none');
         $('.updatechid').addClass('display-none');
         $('.minus').addClass('display-none');
         $('.createChid').addClass('display-none');
         $('.editchid').addClass('display-none');
+        $('.plusChid').addClass('display-none');
 
 // Show menu
         $('.plusButton').on('click', function(event) {
@@ -296,19 +334,18 @@
 
 
 
-//Add New menu
+//Create New menu
             $(document).on('click', '.create' ,function(event) {
                 var currentNode = $(this).parents('li.menu-item').first();
                 var parentNodeId =  $(this).parents('li.menu-item').data('id');
                 var addNode = $('#new-node-temp').clone().contents();
                 var addNodeGroup = $('#new-node-group-temp').clone().contents();
-                var childBag = $(this).parent('.ButtonCUD').nextAll('ul.group-menu-item').first();
+                var childBag = $(this).parent('li.menu-item').nextAll('ul.group-menu-item').first();
 
                 $(this).removeClass('display-none');
                     $(currentNode).find('.plusButton').first().trigger('click');
 
-                 if(childBag.length>0){ 
-                    $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
+                if(childBag.length>0){
                     $(addNode).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
                     $(addNode).removeClass('display-none');
                     $(this).parents('li.menu-item').first().find('ul.group-menu-item').first().prepend(addNode);
@@ -317,12 +354,12 @@
                     if($(currentNode).find('li.menu-item').length>0){
                             $(currentNode).find('.minusButton').first().removeClass('display-none');
                         }
-                    
                 }else{
                     $(addNodeGroup).find('input.newNodeName').first().attr('parentNodeId',parentNodeId);
                     $(addNodeGroup).removeClass('display-none');
                     $(this).parents('li.menu-item').first().append(addNodeGroup);
                     $(this).parents('li.menu-item').first().find('input.newNodeName').first().focus();
+                    // $(this).parents('li.menu-item').first().find('input.newNodeURL').first().focus();
                     if($(currentNode).find('li.menu-item').length>0){
                         $(currentNode).find('.minusButton').first().removeClass('display-none');
                     }
@@ -333,14 +370,20 @@
             $(document).on('click','.save', function(event) {
 
                 var parentAddId =  $(this).parents('li.menu-item').first().data('id');
+
                 var liParent = $(this).parents('li.menu-item').first();
                 var insert = $(this);
                 var input = $(this).parents('li.menu-item').first().find('input.menuName').first();
+                var inputURL = $(this).parents('li.menu-item').first().find('input.newNodeURL').first();
                 var name = $(input).val();
+                var url = $(inputURL).val();
+
                 var parentId = $(input).attr('parentNodeId');
+
                 var currentNode =$(this).parents('li.menu-item').first();
                 var parentNode  =$(currentNode).parents('li.menu-item').first();
                 var datas = {
+                    url:url,
                     name:name,
                     parent_id:parentId
                 };
@@ -350,22 +393,20 @@
                     $(liParent).find('.edit').first().removeClass('display-none');
                     $(liParent).find('.save').first().addClass('display-none');
                     $(liParent).find('.create').first().removeClass('display-none');
+
                     $(input).prop('disabled', true);
+                    $(inputURL).prop('disabled', true);
                     $.ajax({
                         url: '{{ route('createMenu') }}',
                         type: 'POST',
                         dataType: 'JSON',
                         data: datas,
                         success: function (res) {
-                            $.alert({
-                                title: 'Congratulations!',
-                                type: 'green',
-                                typeAnimated: true,
-                                content: 'Add new success!',
-                            });
                             var dataFromSP = JSON.parse(res.data[0].data);
                             var newId = dataFromSP.newid;
                             $(insert).parents('ul.group-menu-item').first().find('li.menu-item').first().attr('data-id', newId);
+                            toastr.success('Create new success!', '',{timeOut: 2000});
+
                         }
                     });
                     clearError($(input));
@@ -390,7 +431,9 @@
 
 // Update
             $(document).on('click','.update', function(event) {
-                
+
+                var curren = $(this);
+
                 var id = $(this).parents('li.menu-item').data('id');
                 var input = $(this).parents('li.menu-item').first().find('input.menuName').first();
                 var inputURL = $(this).parents('li.menu-item').first().find('input.menuURL').first();
@@ -404,8 +447,6 @@
                     url:url
                  };
 
-                 console.log(data);
-
                 if(validateMenu($(input))==true){
 
                     $(input).prop('disabled', true);
@@ -418,12 +459,7 @@
                         dataType: 'JSON',
                         data: data,
                         success: function (res) {
-                            // $.alert({
-                            //     title: 'Congratulations!',
-                            //     type: 'green',
-                            //     typeAnimated: true,
-                            //     content: 'Update new success!',
-                            // });
+                           toastr.success('Update success!', '',{timeOut: 2000});
                         }
                     });
                     clearError($(input));
@@ -455,7 +491,6 @@
                                 btnClass: 'btn-red',
                                 text: 'Yes,I agree',
                                 action: function () {
-                                    $.alert('Deleted the user!');
                                     $.ajax({
                                         url: '{{ route('deleteMenu') }}',
                                         type: 'DELETE',
@@ -467,6 +502,7 @@
                                                     $(parentNode).find('.minusButton').first().addClass('display-none');
 
                                                 }
+                                                toastr.success('Deleted success!', '',{timeOut: 2000});
 
                                             }
                                         }

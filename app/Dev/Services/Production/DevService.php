@@ -72,20 +72,21 @@ class DevService extends BaseService implements DevServiceInterface
         return DEVDB::execSPsToDataResultCollection('DEV_GET_CATEGORY_WITH_LEVEL_LIST');
     }
 
-    public function categoryAddChildInLeft($parentNodeId, $newNodeName ):DataResultCollection
-    {
-        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_ADD_CHILD_IN_LEFT',array($parentNodeId, $newNodeName));
-    }
+    // public function categoryAddChildInLeft($parentNodeId, $newNodeName,$newUrl ):DataResultCollection{
+    //     return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_ADD_CHILD_IN_LEFT',array($parentNodeId, $newNodeName,$newUrl));
+    // }
 
-    public function categoryDeleteNodeAndChild($nodeId):DataResultCollection
-    {
-        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_DELETE_NODE_AND_CHILD',array($nodeId));
+    public function categoryAddChildInLeft($paramArr):DataResultCollection{
+        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_ADD_CHILD_IN_LEFT',$paramArr);
     }
 
     public function categoryUpdateMenu($paramArr):DataResultCollection {
         return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_UPDATE',$paramArr);
     }
 
+    public function categoryDeleteNodeAndChild($nodeId):DataResultCollection{
+        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_DELETE_NODE_AND_CHILD',array($nodeId));
+    }
 
 
     public function getRoleInfoFromDB()
