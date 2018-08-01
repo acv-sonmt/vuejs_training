@@ -30,7 +30,7 @@ CREATE TABLE `catelory` (
   `url` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `order_value` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=530 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=594 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -39,7 +39,7 @@ CREATE TABLE `catelory` (
 
 LOCK TABLES `catelory` WRITE;
 /*!40000 ALTER TABLE `catelory` DISABLE KEYS */;
-INSERT INTO `catelory` VALUES (1,'Root',1,40,'HJHJ',NULL),(215,'E',38,39,NULL,NULL),(216,'D',36,37,NULL,NULL),(217,'Products',28,35,NULL,NULL),(218,'d',31,34,NULL,NULL),(219,'Abouts',24,27,NULL,NULL),(220,'dsdsdsd',29,30,NULL,NULL),(232,'d15',32,33,NULL,NULL),(301,'hoà',25,26,NULL,NULL),(387,'a',22,23,NULL,NULL),(388,'tghgh',18,21,NULL,NULL),(450,'tt',19,20,NULL,NULL),(451,'iy',4,5,NULL,NULL),(454,'KL',2,3,'fdfd',NULL);
+INSERT INTO `catelory` VALUES (1,'Root',2,NULL,'https://root.com',NULL),(554,'Y',7,12,'Y',NULL),(562,'G',8,11,'G',NULL),(567,'asd',9,10,'asd',NULL),(573,'B',5,6,NULL,NULL),(593,'rể',3,4,NULL,NULL);
 /*!40000 ALTER TABLE `catelory` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -1883,4 +1883,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-07-30 18:32:50
+-- Dump completed on 2018-08-01 13:57:08
