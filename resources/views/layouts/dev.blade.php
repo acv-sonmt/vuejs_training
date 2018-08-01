@@ -10,8 +10,6 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    {{-- <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/3.3.6/css/bootstrap.min.css" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous"> --}}
-
     <script src="{{ asset('js/lib/jquery-3.3.1.min.js')}}"></script>
 
     <script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
@@ -25,7 +23,8 @@
 
 
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css">
+{{--     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css"> --}}
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/googleapis') }}">
 
     <!-- Styles -->
     <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">

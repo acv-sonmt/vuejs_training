@@ -7,7 +7,7 @@
 @section('content')
     <style>
 
-    @media screen and (-webkit-min-device-pixel-ratio:0) {
+    @media screen and (-webkit-device-pixel-ratio:1) {
 
         .CUD{
             float :right !important;
@@ -15,98 +15,7 @@
             margin-top:-27px !important;
         }
 
-        .plus{
-            cursor: pointer;
-            margin-left:-20px;
-            margin-top:15px ;
-            float: left;
-        }
-        .minus{
-            cursor: pointer;
-            float: left;
-            margin-top:20px ;
-            margin-left:-20px;
-        }
-        .CssName{
-            width:25%;
-            background-color: #e7f3a44d !important;
-        }
-
-        .CssURL{
-            /*width:70%;*/
-            background-color: #e7f3a44d !important;
-
-        }
-        .dInput{
-            width: 100%;
-            display: inline-flex;
-            margin-top:13px;
-            height: 30px !important;
-        }
-
-        .itemDelete{
-            margin-left: 10px;
-
-        }
-        .itemEdit{
-            margin-left: 10px;
-
-        }
-        .itemUpdate{
-            margin-left: 10px;
-
-        }
-        .iteamCreate{
-            margin-left: 10px;
-
-        }
-        .itemSave{
-            margin-left: 10px;
-        }
-        .glyphicon-remove{
-            width: 20px;
-            line-height: 25px;
-        }
-        .glyphicon-edit{
-            width: 20px;
-            line-height: 25px;
-        }
-        .glyphicon-update{
-           width: 20px;
-           line-height: 25px;
-        }
-        .glyphicon-plus{
-            width: 20px;
-            line-height: 25px;
-        }
-        .glyphicon-save{
-            width: 20px;
-            line-height: 25px;
-        }
-        .tooltip >.tooltip-inner {background-color: #df6662;border:none;box-shadow:none;outline:none;}
-
-         .tooltip .tooltip-arrow {
-            border-top-color: #df6662 !important;
-         }
-        .input-error{
-            border-color: #ff151f;
-        }
- 
-        .checked{
-            float: right;
-            left: -18px;
-            color: #23c223;
-            top: 8px;
-            font-size: 13px;
-            visibility: hidden;
-        }
-        .attach{
-            top: 9px;
-            right: 6px;
-            font-size: 15px;
-        }
     }
-
 
         .treeview .list-group-item {
             cursor: pointer;
@@ -165,11 +74,11 @@
         }
         .CssName{
             width:25%;
-            background-color: #e7f3a44d !important;
+            background-color: rgba(231, 243, 164, 0.26) !important; 
         }
 
         .CssURL{
-            background-color: #e7f3a44d !important;
+            background-color: rgba(231, 243, 164, 0.26) !important;
 
         }
         .dInput{
@@ -221,16 +130,16 @@
         .tooltip >.tooltip-inner {background-color /**/: #df6662;border:none;box-shadow:none;outline:none;}
 
          .tooltip .tooltip-arrow {
-            border-top-color /**/: #df6662 !important;
+            border-top-color: #df6662 !important;
          }
         .input-error{
-            border-color /**/: #ff151f;
+            border-color: #ff151f;
         }
  
         .checked{
             float: right;
             left: -18px;
-            color /**/: #23c223;
+            color : #23c223;
             top: 8px;
             font-size: 13px;
             visibility: hidden;
@@ -268,7 +177,7 @@
                             <div class=" dInput">
                                 <input type="text" class="CssName menuName form-control " disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                 <span class="glyphicon checkName checked glyphicon-ok"></span>
-                                <span class="attach"><i class="glyphicon glyphicon-paperclip"></i></span>
+                                <span class="glyphicon attach glyphicon-paperclip"></span>
                                 <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
                                 <span class="glyphicon checkURL checked glyphicon-ok"></span>
                             </div>
@@ -297,7 +206,7 @@
                                 <div class=" dInput">
                                     <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                     <span class="glyphicon checkName checked glyphicon-ok"></span>
-                                    <span class="attach"><i class="glyphicon glyphicon-paperclip"></i></span>
+                                    <span class="glyphicon attach glyphicon-paperclip"></span>
                                     <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
                                     <span class="glyphicon checkURL checked glyphicon-ok"></span>
 
@@ -330,7 +239,7 @@
                             <div class=" dInput">
                                 <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                 <span class="glyphicon checked checkName glyphicon-ok"></span>
-                                <span class="attach"><i class="glyphicon glyphicon-paperclip"></i></span>
+                                <span class="glyphicon attach glyphicon-paperclip"></span>
                                 <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
                                 <span class="glyphicon checked checkURL glyphicon-ok"></span>
 
