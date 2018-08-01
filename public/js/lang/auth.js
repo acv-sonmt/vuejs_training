@@ -1,0 +1,3 @@
+//This is dev automatic generate 
+ var _validateMessage = 
+{"jp":{"failed":"These credentials do not match our records.","not_active":"\u30a2\u30ab\u30a6\u30f3\u30c8\u306f\u30a2\u30af\u30c6\u30a3\u30d6\u3067\u306f\u3042\u308a\u307e\u305b\u3093","throttle":"Too many login attempts. Please try again in :seconds seconds."},"en":{"not_active":"Account mus actived","throttle":"Too many login attempts. Please try again in :seconds seconds."},"fr":{"failed":"These credentials do not match our records.","not_active":"Le compte est activ\u00e9","throttle":"Too many login attempts. Please try again in :seconds seconds."}};
