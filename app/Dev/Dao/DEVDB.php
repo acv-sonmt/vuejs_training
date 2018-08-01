@@ -189,7 +189,7 @@ class DEVDB extends DB
             Log::error($exception->getMessage());
             Log::error(__CLASS__."::".__FUNCTION__."(".$tableName.",".$module.")    Error: }");
         }
-        self::createFile($meta,$tableName,$module);
+        self::createFile($meta,$tableName,$module,'//Tables');
         return $meta;
     }
 
@@ -249,7 +249,7 @@ class DEVDB extends DB
      * @param $procedureName
      * @param $module
      */
-    protected static function createFile($metaField, $procedureName, $module)
+    protected static function createFile($metaField, $procedureName, $module,$subfolder = '//Sp')
     {
         $entitiesFolderName = "\\" . $module . "\\Entities";
         $folderPath = base_path() . '/app/' . $module . '/Entities';
@@ -261,7 +261,7 @@ class DEVDB extends DB
             if (!is_dir($folderPath)) {
                 mkdir($folderPath);
             }
-            $folderPath .= '/Sp';
+            $folderPath .= $subfolder;
             if (!is_dir($folderPath)) {
                 mkdir($folderPath);
             }

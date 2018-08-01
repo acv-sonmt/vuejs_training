@@ -31,7 +31,9 @@ class ApiConst
     const ApiRefreshTokenParamName = 'refresh_token';
     const ApiModuleName = 'api';
 }
-
+class CoreConst{
+    const CoreModuleName = 'Core';
+}
 class RoleConst
 {
     const PartyRole = 10;

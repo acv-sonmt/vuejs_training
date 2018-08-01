@@ -97,6 +97,9 @@ class DevController extends Controller
        $this->devService->generationRoleDataToDB();
     }
 
+    /**
+     * test readAcl file
+     */
     public function readAclConfig()
     {
         $a = $this->devService->getConfigDataFromFile('acl');

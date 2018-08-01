@@ -5,6 +5,7 @@ return [
      * Developer config
      */
     'DEV_MODE'=>env('DEV_MODE', false),//DEV_MODE allow active Module Dev
+    'SKIPS_ACL_MODULE'=>['dev','laravel'],
     /*
     |--------------------------------------------------------------------------
     | Application Name

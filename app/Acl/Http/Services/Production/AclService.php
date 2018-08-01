@@ -28,20 +28,21 @@ class AclService extends BaseService implements AclServiceInterface
     public function getRoleMapArray()
     {
         $resultArr = [];
-        $roleInfo = SDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
+        $roleInfo = DEVDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
         if (!empty($roleInfo)) {
             $roles = $roleInfo[0];
             $roleMap = $roleInfo[1];
             if (!empty($roles)) {
                 foreach ($roles as $item) {
-                    $resultArr[$item->role_value] = array();
+                    $resultArr[$item->role_value]['data'] = array();
+                    $resultArr[$item->role_value]['name'] = $item->role_name;
                 }
                 if (!empty($resultArr)) {
                     foreach ($resultArr as $itemKey => $itemValue) {
                         if (!empty($roleMap)) {
                             foreach ($roleMap as $roleMapItem) {
                                 if ($itemKey == $roleMapItem->role_value) {
-                                    $resultArr[$itemKey][$roleMapItem->screen_code] = $roleMapItem->is_active;
+                                    $resultArr[$itemKey]['data'][$roleMapItem->screen_code] = $roleMapItem->is_active;
                                 }
                             }
                         }
@@ -62,7 +63,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function generationAclFile()
     {
         $roleMapScreen = $this->getRoleMapArray();
-        $fileName = 'acl';//fixed, warning: Must not dupplicate other config file, which existed.
+        $fileName = 'acl';//fixed, warning: Must not dupplicate with other config file, which existed.
         $fileAcl = base_path() . '/config/' . $fileName . '.php';
 
         //Create file validate if not existed
@@ -78,9 +79,9 @@ class AclService extends BaseService implements AclServiceInterface
         $contentFile .= "return [\n";
         if (!empty($roleMapScreen)) {
             foreach ($roleMapScreen as $roleValue => $value) {
-                $contentFile .= "\t'" . $roleValue . "'=>[\n";
-                if (!empty($value)) {
-                    foreach ($value as $screenCode => $isActive) {
+                $contentFile .= "\t'" . $roleValue . "'=>[ //".$value['name']." \n";
+                if (isset($value) &&!empty($value['data'])) {
+                    foreach ($value['data'] as $screenCode => $isActive) {
                         $contentFile .= "\t\t'" . $screenCode . "'=>'" . $isActive . "',\n";
                     }
                 }

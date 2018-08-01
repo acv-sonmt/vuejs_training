@@ -199,14 +199,15 @@ class DevService extends BaseService implements DevServiceInterface
             $roleMap = $roleInfo[1];
             if (!empty($roles)) {
                 foreach ($roles as $item) {
-                    $resultArr[$item->role_value] = array();
+                    $resultArr[$item->role_value]['data'] = array();
+                    $resultArr[$item->role_value]['name'] = $item->role_name;
                 }
                 if (!empty($resultArr)) {
                     foreach ($resultArr as $itemKey => $itemValue) {
                         if (!empty($roleMap)) {
                             foreach ($roleMap as $roleMapItem) {
                                 if ($itemKey == $roleMapItem->role_value) {
-                                    $resultArr[$itemKey][$roleMapItem->screen_code] = $roleMapItem->is_active;
+                                    $resultArr[$itemKey]['data'][$roleMapItem->screen_code] = $roleMapItem->is_active;
                                 }
                             }
                         }
@@ -243,9 +244,9 @@ class DevService extends BaseService implements DevServiceInterface
         $contentFile .= "return [\n";
         if (!empty($roleMapScreen)) {
             foreach ($roleMapScreen as $roleValue => $value) {
-                $contentFile .= "\t'" . $roleValue . "'=>[\n";
-                if (!empty($value)) {
-                    foreach ($value as $screenCode => $isActive) {
+                $contentFile .= "\t'" . $roleValue . "'=>[ //".$value['name']." \n";
+                if (isset($value) &&!empty($value['data'])) {
+                    foreach ($value['data'] as $screenCode => $isActive) {
                         $contentFile .= "\t\t'" . $screenCode . "'=>'" . $isActive . "',\n";
                     }
                 }
@@ -455,10 +456,11 @@ class DevService extends BaseService implements DevServiceInterface
     }
     /**
      * @return array
+     * get all screen informations
      */
     protected function getListScreen()
     {
-        $controllers = [];
+        $screens = [];
         $i = 0;
         $id = 0;
         $listRouter = Route:: getRoutes()->getRoutes();
@@ -472,16 +474,16 @@ class DevService extends BaseService implements DevServiceInterface
 
                 $_namespaces_chunks = explode('\\', $_action[0]);
 
-                $controllers[$i]['id'] = $id;
-                $controllers[$i]['module'] = $_module;
-                $controllers[$i]['controller'] = strtolower(end($_namespaces_chunks));
-                $controllers[$i]['action'] = strtolower(end($_action));
-                $controllers[$i]['screen_code']=$action['namespace']."\\".$controllers[$i]['controller']."\\".$controllers[$i]['action'];
-                $controllers[$i]['description']=$action['namespace'];
+                $screens[$i]['id'] = $id;
+                $screens[$i]['module'] = $_module;
+                $screens[$i]['controller'] = strtolower(end($_namespaces_chunks));
+                $screens[$i]['action'] = strtolower(end($_action));
+                $screens[$i]['screen_code']=$action['namespace']."\\".$screens[$i]['controller']."\\".$screens[$i]['action'];
+                $screens[$i]['description']=$action['namespace'];
             }
             $i++;
         }
-        return ($controllers);
+        return ($screens);
     }
     protected function getListModulesFromProjectStruct(){
         $moduleList = [];
@@ -504,7 +506,7 @@ class DevService extends BaseService implements DevServiceInterface
      * read project struct to generation module list to Database
      */
     protected function importModuleListToDB(){
-        $moduleSkipAcl = ['dev'];
+        $moduleSkipAcl =Config::get('app.SKIPS_ACL_MODULE');
         DEVDB::table(('sys_modules'))->truncate();
         $dataModule = [];
         $dataModuleList =  $this->getListModulesFromProjectStruct();
@@ -531,10 +533,17 @@ class DevService extends BaseService implements DevServiceInterface
         $categoryData = DEVDB::execSPsToDataResultCollection('DEV_GET_CATEGORY_LST');
         return $categoryData;
     }
+
+    /**
+     * @param $procedureName
+     * @param $modules
+     * @return string
+     */
     protected function getModuleNameFromSpName($procedureName,$modules){
-        $result = 'Core';//default
+        $result = \CoreConst::CoreModuleName ;//default
         $delimiter = '_';
         $procedureName =  strtolower($procedureName);
+        $listModule = array();
         if(!empty($modules)){
             foreach ($modules as $item){
                 $listModule[] = $item->module_code;
