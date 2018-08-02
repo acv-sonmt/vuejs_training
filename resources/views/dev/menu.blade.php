@@ -339,7 +339,7 @@
 
 // Show menu
             $(document).on('click', '.plusButton' ,function(event) {
-                    $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
+                    $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');
                     $(this).next('.minusButton').removeClass('display-none');
                     $(this).addClass('display-none');
                 });
