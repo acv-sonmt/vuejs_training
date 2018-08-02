@@ -7,15 +7,14 @@
 @section('content')
     <style>
 
-    @media screen and (-webkit-device-pixel-ratio:1) {
-
-        .CUD{
-            float :right !important;
-            margin-right:-130px;
-            margin-top:-27px !important;
+        @supports not ((-webkit-hyphens: auto) or (-ms-hyphens: auto) or (hyphens: auto)) {
+            .CUD{
+                float :right !important;
+                margin-right:-130px;
+                margin-top:-27px !important;
+            }
         }
 
-    }
 
         .treeview .list-group-item {
             cursor: pointer;
@@ -74,7 +73,7 @@
         }
         .CssName{
             width:25%;
-            background-color: rgba(231, 243, 164, 0.26) !important; 
+            background-color: rgba(231, 243, 164, 0.26) !important;
         }
 
         .CssURL{
@@ -135,7 +134,7 @@
         .input-error{
             border-color: #ff151f;
         }
- 
+
         .checked{
             float: right;
             left: -18px;
@@ -149,7 +148,7 @@
             right: 6px;
             font-size: 15px;
         }
-    
+
 
 
     </style>
@@ -309,7 +308,7 @@
                     <a class="pull-right btn btn-warning itemEdit edit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
                     <a class="pull-right btn btn-info itemUpdate update btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
                     <a class="pull-right btn btn-primary iteamCreate create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
-                </div> 
+                </div>
             </li>
         </ul>
     </div>
@@ -516,8 +515,8 @@
                                         data: {id: id},
                                         success : function(res) {
                                             if (res.status) {
-                                                $(currentNode).remove();  
-                                                if ($(parentNode).find('li.menu-item').length <=0){ 
+                                                $(currentNode).remove();
+                                                if ($(parentNode).find('li.menu-item').length <=0){
                                                     $(parentNode).find('.minusButton').first().addClass('display-none');
 
                                                 }
@@ -539,7 +538,7 @@
                         $(parentNode).find('.minusButton').first().addClass('display-none');
                     }
                }
-                
+
             });
 
             // var selector = $(this).parents('li.menu-item').first().find('input.menuName').first();
