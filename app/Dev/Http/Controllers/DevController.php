@@ -206,8 +206,6 @@ class DevController extends Controller
     }
     public function test()
     {
-        echo '<pre>';
-        $data=DB::table('sys_translation')->simplePaginate(15,null,'page',3);
         $data=DB::table('sys_translation')->simplePaginate(15,null,'page',4);
         $this->devService->test();
         print_r($data);

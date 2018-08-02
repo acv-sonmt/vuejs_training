@@ -16,12 +16,14 @@ class DataResultCollection
     public $message;
     public $errorCode = [];
 
-    public function DataResultCollection(DataResultCollection $dataResultCollection)
+    public function __construct($dataResultCollection=null)
     {
-        $this->data = $dataResultCollection->data;
-        $this->status =  $dataResultCollection->status;
-        $this->message =  $dataResultCollection->message;
-        $this->errorCode =  $dataResultCollection->errorCode;
+        if(isset($dataResultCollection) && $dataResultCollection!=null) {
+            $this->data = $dataResultCollection->data;
+            $this->status = $dataResultCollection->status;
+            $this->message = $dataResultCollection->message;
+            $this->errorCode = $dataResultCollection->errorCode;
+        }
     }
 
     public function first()
