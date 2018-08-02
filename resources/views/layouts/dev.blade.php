@@ -14,11 +14,11 @@
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/font-face.css') }}">
     <!-- Latest compiled and minified CSS & JS -->
-    <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
+    <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">
-    
+
     <link href="{{ asset('css/lib/jquery.dataTables.min.css') }}" rel="stylesheet">
     <style>
         .navbar-laravel{
