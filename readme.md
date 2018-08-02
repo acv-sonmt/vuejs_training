@@ -7,7 +7,7 @@
 <p><strong>2. Dev Module.</strong></p>
 <p><strong>&nbsp;-</strong>&nbsp;As<strong>&nbsp;</strong>helper feature for Developer config project ( refer DETAIL )</p>
 <p><strong>3. DAO component</strong></p>
-<p><strong>&nbsp;-&nbsp;</strong>As data access model, help excute and standardized output from <strong>Store procedure&nbsp;</strong></p>
+<p><strong>&nbsp;-&nbsp;</strong>As data access object, help excute and standardized output from <strong>Store procedure&nbsp;</strong></p>
 <p><strong>4. Entity</strong></p>
 <p><strong>&nbsp;</strong>- As entity class, define ouput structure of entity data from Database.</p>
 <p><strong>5. New log mode</strong></p>

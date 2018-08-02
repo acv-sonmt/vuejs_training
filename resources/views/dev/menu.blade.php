@@ -177,7 +177,7 @@
                                 <input type="text" class="CssName menuName form-control " disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                 <span class="glyphicon checkName checked glyphicon-ok"></span>
                                 <span class="glyphicon attach glyphicon-paperclip"></span>
-                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="http://">
                                 <span class="glyphicon checkURL checked glyphicon-ok"></span>
                             </div>
 
@@ -206,7 +206,7 @@
                                     <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                     <span class="glyphicon checkName checked glyphicon-ok"></span>
                                     <span class="glyphicon attach glyphicon-paperclip"></span>
-                                    <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                    <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="http://">
                                     <span class="glyphicon checkURL checked glyphicon-ok"></span>
 
                                 </div>
@@ -239,7 +239,7 @@
                                 <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                 <span class="glyphicon checked checkName glyphicon-ok"></span>
                                 <span class="glyphicon attach glyphicon-paperclip"></span>
-                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="http://">
                                 <span class="glyphicon checked checkURL glyphicon-ok"></span>
 
                             </div>
@@ -275,7 +275,7 @@
                 <input type="text" class="newNodeName menuName CssName form-control " placeholder="New Name" />
                 <span class="glyphicon checkName checked glyphicon-ok"></span>
                 <span class="glyphicon attach glyphicon-paperclip"></span>
-                <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="Link is emty">
+                <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="http://">
                 <span class="glyphicon checkURL checked glyphicon-ok"></span>
 
             </div>
@@ -298,7 +298,7 @@
                     <input type="text" class="newNodeName menuName CssName form-control " placeholder="New Name" />
                     <span class="glyphicon checkName checked glyphicon-ok"></span>
                     <span class="glyphicon attach glyphicon-paperclip"></span>
-                    <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="Link is emty">
+                    <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="http://">
                     <span class="glyphicon  checked glyphicon-ok"></span>
 
                 </div>
