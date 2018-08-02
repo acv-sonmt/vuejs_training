@@ -11,7 +11,6 @@
     <title>{{ config('app.name', 'Laravel') }}</title>
 
     <!-- Fonts -->
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
     <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/font-face.css') }}">
     <!-- Latest compiled and minified CSS & JS -->
     <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet">
