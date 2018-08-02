@@ -82,7 +82,7 @@
     <div class="row justify-content-center">
         <div class="col-md-12">
             <div class="card">
-                <div class="card-header font-weight-bold">USER - ACL</div>
+                <div class="card-header font-weight-bold">USER - ROLE</div>
 
                 <div class="card-body form-group">
                     <fieldset class="border">
@@ -101,88 +101,66 @@
                                         }?>
                                     </select>
                                 </div>
-                                <div class="col-md-2 form-title">Module</div>
+                                <div class="col-md-2 form-title">Email</div>
                                 <div class="col-md-4">
-                                    <select id="cb-module" class="lang form-control">
-                                        <option value="">---</option>
-                                        <?php if(!empty($moduleList)){?>
-                                        <?php foreach ($moduleList as $moduleItem){?>
-                                        <option
-                                                value="<?php echo $moduleItem->module_code;?>"><?php echo $moduleItem->module_code?></option>
-                                        <?php   }
-                                        }?>
-                                    </select>
+                                    <input type="text" id="text-email" class="form-control"/>
+
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
-                                <div class="col-md-2 form-title">Controller</div>
+                                <div class="col-md-2 form-title">Name</div>
                                 <div class="col-md-4">
-                                    <input type="text" id="text-controller" class="form-control"/>
+                                    <input type="text" id="text-name" class="form-control"/>
                                 </div>
-                                <div class="col-md-2 form-title">Action</div>
+                                <div class="col-md-2 form-title">Active</div>
                                 <div class="col-md-4">
-                                    <input type="text" id="text-action" class="form-control"/>
+                                    <input type="text" id="text-active" class="form-control"/>
                                 </div>
                             </div>
                         </div>
 
 
                     </fieldset>
-                    <div class="col-md-12 padding-left-0">
-                        <div class="function pull-left padding-left-0 col-md-6">
-                            <button id="refresh" class="btn btn-primary">Synchronously <span
-                                        class="glyphicon glyphicon-refresh"></span></button>
-                            <button id="generation" class="btn btn-primary">Generate to config file <span
-                                        class="glyphicon glyphicon-file"></span></button>
 
-                        </div>
-                        <div class="function text-right col-md-6">
-                            <label style="color: red">Active for all of screen ( both screen filtered and not filtered ): </label>
-                            <label class="switch">
-                                <input type="checkbox" class="change-active-all">
-                                <span class="slider round">
-                            </span>
-                            </label>
-                        </div>
-                    </div>
-
-                    <table id="acl-table" class="table-bordered table table-hover w-100">
+                    <table id="Useracl-table" class="table-bordered table table-hover w-100">
                         <thead>
                         <tr>
-                            <th>No</th>
+                            <th>###</th>
                             <th>Name</th>
                             <th>Email</th>
-                            <th>Controller</th>
+                            <th>Gender</th>
+                            <th>Role</th>
+                            <th>IsActive</th>
+                            <th>Birthday</th>
                             <th>Action</th>
-                            <th>Namespace</th>
-                            <th>Active</th>
                         </tr>
                         </thead>
                         <tbody>
                         <?php $index = 0; ?>
-                        <?php if(!empty($dataAcl[1])){
-                        foreach ($dataAcl[1] as $item){
+                        <?php if(!empty($dataUseRole)){
+                        foreach ($dataUseRole as $item){
                         $index++;
                         ?>
                         <tr>
                             <td class="text-center"><?php echo $index; ?></td>
+                            <td><?php echo $item->user_name; ?></td>
+                            <td><?php echo $item->user_email; ?></td>
+                            <td><?php echo $item->user_gender; ?></td>
                             <td><?php echo $item->role_name; ?></td>
-                            <td><?php echo $item->module; ?></td>
-                            <td><?php echo $item->controller; ?></td>
-                            <td><?php echo $item->action; ?></td>
-                            <td><?php echo $item->screen_code; ?></td>
+                            <td><?php echo $item->user_active; ?></td>
+                            <td><?php echo $item->user_birth_date; ?></td>
+
                             <td class="text-center">
-                                <?php
-                                $selected = '';
-                                if ($item->is_active == 1) {
-                                    $selected = "checked";
-                                }
-                                ?>
-                                <label class="switch">
-                                    <input type="checkbox" class="change-active" <?php echo $selected; ?>
-                                    data-role_map_id="<?php echo $item->role_map_id;?>">
-                                    <span class="slider round"></span>
-                                </label>
+                                <select id="change_role" class="form-control">
+                                    <option value=""></option>
+                                    <?php if(!empty($roleList)){?>
+                                    <?php foreach ($roleList as $roleItem){?>
+                                    <option
+                                            value="<?php echo $roleItem->id;?>"><?php echo $roleItem->name?></option>
+                                    <?php   }
+                                    }?>
+                                </select>
+
                             </td>
                         </tr>
                         <?php }
@@ -199,7 +177,7 @@
 @section('scripts')
     <script type="text/javascript">
         $(document).ready(function () {
-            var table = $('#acl-table').DataTable(
+            var table = $('#Useracl-table').DataTable(
                 {
                     scrollY:        '60vh',
                     scrollCollapse: true,
@@ -216,17 +194,17 @@
                 }
             );
 
-            $('#cb-role').on('change', function () {
+
+            $('#text-name').on('change', function () {
                 table.column(1).search(this.value).draw();
             });
-            $('#cb-module').on('change', function () {
+
+            $('#text-email').on('change', function () {
                 table.column(2).search(this.value).draw();
             });
-            $('#text-controller').on('change', function () {
-                table.column(3).search(this.value).draw();
-            });
-            $('#text-action').on('change', function () {
-                table.column(4).search(this.value).draw();
+
+            $('#text-active').on('change', function () {
+                table.column(5).search(this.value).draw();
             });
 
             $(document).on('change', '.change-active', function () {
@@ -255,16 +233,17 @@
                     url: "<?php echo @route('updateAclActiveAll')?>",
                     success: function (result) {
                         $('#cb-role').val('');
+                        $('#change_role').val();
                         $('#cb-module').val('');
-                        $('#text-controller').val('');
+                        $('#text-name').val('');
                         $('#text-action').val('');
                         table.column(1).search('').draw();
                         if(checked==true){
-                            $('#acl-table .change-active').each(function(){
+                            $('#Useracl-table .change-active').each(function(){
                                 $(this).prop('checked',true);
                             });
                         }else{
-                            $('#acl-table  .change-active').each(function(){
+                            $('#Useracl-table  .change-active').each(function(){
                                 $(this).prop('checked',false);
                             });
                         }
@@ -272,39 +251,6 @@
                 });
             });
 
-            $(document).on('click', '#generation', function () {
-                $.ajax({
-                    type: 'Post',
-                    url: "<?php echo @route('generationAclFile')?>",
-                    success: function (result) {
-                        $.alert(
-                            {
-                                title: 'Alert!',
-                                content: 'Gennerated!',
-                            }
-                        );
-                    }
-                });
-            });
-            $(document).on('click', '#refresh', function () {
-                $.ajax({
-                    type: 'Post',
-                    url: "<?php echo @route('refreshAclInDB')?>",
-                    success: function (result) {
-                        $.alert(
-                            {
-                                title: 'Alert!',
-                                content: 'Synchronized!',
-                                buttons: {
-                                    ok: function(){
-                                        location.reload();
-                                    }
-                                }
-                            }
-                        );
-                    }
-                });
-            });
         });
 
 

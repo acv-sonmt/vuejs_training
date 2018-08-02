@@ -29,7 +29,7 @@ Route::post('/dev/updateAclActiveAll', 'DevController@updateAclActiveAll')->name
 
 Route::post('/dev/generationAclFile', 'DevController@generationAclFile')->name('generationAclFile');
 Route::post('/dev/refreshAclDB', 'DevController@refreshAclDB')->name('refreshAclInDB');
-Route::get('/dev/userAcl', 'DevController@userAcl')->name('userAcl');
+Route::get('/dev/userRole', 'DevController@userRole')->name('userRole');
 
 Route::post('/dev/updateTranslate', 'DevController@updateTranslate')->name('updateTranslate');
 

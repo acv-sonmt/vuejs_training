@@ -23,6 +23,8 @@ interface DevServiceInterface
 
     public function getAllSPList():DataResultCollection;
     public function getRoleInfoFromDB();
+    public function getListUser();
+    public function getUserDetail();
     public function generationTranslateFileAndScript();
     public function generationTranslateFile( $translateType, $fileName);
     public function generationTranslateScript( $translateType, $fileName);

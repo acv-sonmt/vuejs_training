@@ -126,6 +126,15 @@ class DevController extends Controller
         return view("dev/acl", compact(['dataAcl','roleList','moduleList']));
     }
 
+    public function userRole(){
+        $dataUseRole = $this->devService->getListUser();
+//       dd($dataUseRole);
+        $roleList =  $this->devService->getRoleList();
+        $userDetail = $this->devService->getUserDetail();
+        return view("dev/userRole", compact(['dataUseRole','roleList','userDetail']));
+
+    }
+
     public function updateAclActive(Request $request)
     {
         $active = $request->input('active');
@@ -191,9 +200,6 @@ class DevController extends Controller
     }
     public function log(){
         return view("dev/log");
-    }
-    public function userAcl(){
-        return view("dev/useracl");
     }
     public function runSchedules(){
 

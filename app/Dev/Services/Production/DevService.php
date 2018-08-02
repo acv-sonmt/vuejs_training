@@ -94,6 +94,15 @@ class DevService extends BaseService implements DevServiceInterface
         return DEVDB::execSPs('DEV_GET_ROLES_MAP_ACTION_LST');
     }
 
+    public function getListUser(){
+        return DEVDB::execSPs('DEV_USER_ROLE_GET_LIST_USERS');
+    }
+
+    public function getUserDetail(){
+        $userDetail = DEVDB::execSPs('DEV_USER_DETAIL');
+        return $userDetail;
+    }
+
     /**
      * @param $validateArray
      * @param $fileName
