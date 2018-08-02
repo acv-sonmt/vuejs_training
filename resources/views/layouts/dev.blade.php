@@ -10,25 +10,15 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <script src="{{ asset('js/lib/jquery-3.3.1.min.js')}}"></script>
-
-    <script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
-
-    <script src="{{ asset('js/lib/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('js/common.js')}}"></script>
-    <!-- Scripts -->
-    <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
-
     <!-- Fonts -->
-
-
     <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-{{--     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css"> --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/googleapis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/font-face.css') }}">
+    <!-- Latest compiled and minified CSS & JS -->
+    <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet" integrity="sha384-1q8mTJOASx8j1Au+a5WDVnPi2lkFfwwEAa8hDDdjZlpLegxhjVME1fgjWPGmkzs7" crossorigin="anonymous">
 
     <!-- Styles -->
     <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet">
+    
     <link href="{{ asset('css/lib/jquery.dataTables.min.css') }}" rel="stylesheet">
     <style>
         .navbar-laravel{
@@ -110,6 +100,14 @@
             </div>
         </main>
     </div>
+
+    <script src="{{ asset('js/lib/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
+    <script src="{{ asset('js/lib/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('js/common.js')}}"></script>
+    <!-- Scripts -->
+
     @yield('scripts')
 </body>
 </html>
