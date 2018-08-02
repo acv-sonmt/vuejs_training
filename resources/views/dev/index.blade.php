@@ -5,9 +5,6 @@
             .table-bordered{
                 padding: 10px;
             }
-            .font-weight-bold{
-                font-weight: bold;
-            }
             .text-warning{
                 color: orange;
             }

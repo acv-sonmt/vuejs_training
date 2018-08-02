@@ -41,6 +41,9 @@
         .container{
             min-width: 1400px !important;
         }
+        .font-weight-bold{
+            font-weight: bold;
+        }
     </style>
 </head>
 <body>
