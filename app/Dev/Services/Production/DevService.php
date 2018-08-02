@@ -417,6 +417,11 @@ class DevService extends BaseService implements DevServiceInterface
     {
         DEVDB::execSPsToDataResultCollection("DEV_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
     }
+    public function updateUserRole($role_name, $role_id)
+    {
+        DEVDB::execSPsToDataResultCollection("DEV_USER_ROLE_UPDATE_ROLES", array($role_name, $role_id));
+    }
+
     public function updateTranslateText($id, $transText)
     {
         DEVDB::execSPsToDataResultCollection("DEV_TRANSLATE_UPDATE_TEXT_ACT", array($id, $transText));

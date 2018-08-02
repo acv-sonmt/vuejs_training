@@ -39,6 +39,9 @@ interface DevServiceInterface
 
     public function updateActiveAcl($roleMapId,$isActive);
     public function updateActiveAclAll($isActive);
+
+    public function updateUserRole($role_name, $role_id);
+
     public function updateTranslateText($id,$transText);
     public function insertTranslationItem($transType,$transInputType,$transTextCode,$textTrans);
     public function generateEntityClass();

@@ -101,10 +101,17 @@
                                         }?>
                                     </select>
                                 </div>
-                                <div class="col-md-2 form-title">Email</div>
+                                <div class="col-md-2 form-title">Active</div>
                                 <div class="col-md-4">
-                                    <input type="text" id="text-email" class="form-control"/>
-
+                                    <select id="cb_active" class="form-control">
+                                        <option value="">---</option>
+                                        <?php if(!empty($dataUseRole)){?>
+                                        <?php foreach ($dataUseRole as $Item){?>
+                                        <option
+                                                value="<?php echo $Item->user_active;?>"><?php echo $Item->user_active?></option>
+                                        <?php   }
+                                        }?>
+                                    </select>
                                 </div>
                             </div>
                             <div class="col-md-12 form-group">
@@ -112,9 +119,10 @@
                                 <div class="col-md-4">
                                     <input type="text" id="text-name" class="form-control"/>
                                 </div>
-                                <div class="col-md-2 form-title">Active</div>
+                                <div class="col-md-2 form-title">Email</div>
                                 <div class="col-md-4">
-                                    <input type="text" id="text-active" class="form-control"/>
+                                    <input type="text" id="text-email" class="form-control"/>
+
                                 </div>
                             </div>
                         </div>
@@ -126,13 +134,13 @@
                         <thead>
                         <tr>
                             <th>###</th>
-                            <th>Name</th>
                             <th>Email</th>
+                            <th>Name</th>
                             <th>Gender</th>
-                            <th>Role</th>
-                            <th>IsActive</th>
                             <th>Birthday</th>
-                            <th>Action</th>
+                            <th>IsActive</th>
+                            <th>Role</th>
+
                         </tr>
                         </thead>
                         <tbody>
@@ -143,25 +151,41 @@
                         ?>
                         <tr>
                             <td class="text-center"><?php echo $index; ?></td>
-                            <td><?php echo $item->user_name; ?></td>
                             <td><?php echo $item->user_email; ?></td>
-                            <td><?php echo $item->user_gender; ?></td>
-                            <td><?php echo $item->role_name; ?></td>
-                            <td><?php echo $item->user_active; ?></td>
-                            <td><?php echo $item->user_birth_date; ?></td>
+                            <td><?php echo $item->user_name; ?></td>
+                            <td>
+                                <?php  if ($item->user_gender == 1) {
+                                   echo 'nam';
+                                }
+                                elseif($item->user_gender == 2){
+                                    echo 'nữ';
+                                }
+                                ?>
+                            </td>
 
-                            <td class="text-center">
-                                <select id="change_role" class="form-control">
-                                    <option value=""></option>
+                            <td><?php echo $item->user_birth_date; ?></td>
+                            <td>
+                                <?php  if ($item->user_active == 1) {
+                                    echo 'Actived';
+                                }
+                                else{
+                                    echo 'Not active';
+                                }
+                                ?>
+                            </td>
+                            <td>
+                                <select id="change-role" class="lang form-control">
+                                    <option value=""><?php echo $item->role_name; ?></option>
                                     <?php if(!empty($roleList)){?>
                                     <?php foreach ($roleList as $roleItem){?>
                                     <option
-                                            value="<?php echo $roleItem->id;?>"><?php echo $roleItem->name?></option>
+                                            value="<?php echo $roleItem->id;?>"><?php echo $roleItem->name?>
+                                    </option>
                                     <?php   }
                                     }?>
                                 </select>
-
                             </td>
+
                         </tr>
                         <?php }
                         }?>
@@ -194,7 +218,6 @@
                 }
             );
 
-
             $('#text-name').on('change', function () {
                 table.column(1).search(this.value).draw();
             });
@@ -203,24 +226,21 @@
                 table.column(2).search(this.value).draw();
             });
 
-            $('#text-active').on('change', function () {
-                table.column(5).search(this.value).draw();
-            });
-
-            $(document).on('change', '.change-active', function () {
+            $(document).on('change', '.change-role', function () {
                 var data = {
-                    active: $(this).prop('checked'),
-                    role_map_id: $(this).data('role_map_id')
+                    role_name: $(this).clone('checked'),
+                    role_id: $(this).data('role_map_id')
                 };
                 $.ajax({
                     data: data,
                     type: 'Post',
                     dataType: 'json',
-                    url: "<?php echo @route('updateAclActive')?>",
+                    url: "<?php echo @route('updateUserRole')?>",
                     success: function (result) {
                     }
                 });
             });
+
             $(document).on('change', '.change-active-all', function () {
                 var checked =  $(this).prop('checked');
                 var data = {
@@ -233,8 +253,8 @@
                     url: "<?php echo @route('updateAclActiveAll')?>",
                     success: function (result) {
                         $('#cb-role').val('');
+                        $('#cb_active').val('');
                         $('#change_role').val();
-                        $('#cb-module').val('');
                         $('#text-name').val('');
                         $('#text-action').val('');
                         table.column(1).search('').draw();

@@ -29,11 +29,13 @@ Route::post('/dev/updateAclActiveAll', 'DevController@updateAclActiveAll')->name
 
 Route::post('/dev/generationAclFile', 'DevController@generationAclFile')->name('generationAclFile');
 Route::post('/dev/refreshAclDB', 'DevController@refreshAclDB')->name('refreshAclInDB');
+
+
 Route::get('/dev/userRole', 'DevController@userRole')->name('userRole');
+Route::post('/dev/updateUserRole', 'DevController@updateUserRole')->name('updateUserRole');
+
 
 Route::post('/dev/updateTranslate', 'DevController@updateTranslate')->name('updateTranslate');
-
-
 Route::post('/dev/generationLanguageFiles', 'DevController@generationLanguageFiles')->name('generationLanguageFiles');
 
 Route::post('/dev/importTranslateToDB', 'DevController@importTranslateToDB')->name('importTranslateToDB');

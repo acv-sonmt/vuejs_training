@@ -135,6 +135,11 @@ class DevController extends Controller
 
     }
 
+    public function updateUserRole($role_name, $role_id){
+        $this->devService->updateActiveAcl($role_name, $role_id);
+        return CommonHelper::convertVaidateErrorToCommonStruct(array());
+    }
+
     public function updateAclActive(Request $request)
     {
         $active = $request->input('active');
