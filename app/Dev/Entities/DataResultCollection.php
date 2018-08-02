@@ -16,7 +16,7 @@ class DataResultCollection
     public $message;
     public $errorCode = [];
 
-    public function __construct(DataResultCollection $dataResultCollection)
+    public function DataResultCollection(DataResultCollection $dataResultCollection)
     {
         $this->data = $dataResultCollection->data;
         $this->status =  $dataResultCollection->status;
