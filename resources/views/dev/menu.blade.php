@@ -327,19 +327,7 @@
         $('.editchid').addClass('display-none');
         $('.plusChid').addClass('display-none');
 
-// Show menu
-        $('.plusButton').on('click', function(event) {
-            $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
-            $(this).next('.minusButton').removeClass('display-none');
-            $(this).addClass('display-none');
-        });
 
-// Hide Menu
-        $('.minusButton').on('click', function(event) {
-            $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
-            $(this).prev('.plusButton').removeClass('display-none');
-            $(this).addClass('display-none');
-        });
 
 
         $(document).ready(function () {
@@ -349,7 +337,20 @@
                 }
             });
 
+// Show menu
+            $(document).on('click', '.plusButton' ,function(event) {
+                    $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
+                    $(this).next('.minusButton').removeClass('display-none');
+                    $(this).addClass('display-none');
+                });
 
+
+// Hide Menu
+           $(document).on('click', '.minusButton' ,function(event) {
+                $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
+                $(this).prev('.plusButton').removeClass('display-none');
+                $(this).addClass('display-none');
+           });
 
 //Create New menu
             $(document).on('click', '.create' ,function(event) {
