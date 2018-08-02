@@ -3,7 +3,7 @@
 <!-- Latest compiled and minified CSS & JS -->
 
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/lib/toastr.css') }}">
 @section('content')
     <style>
 
@@ -318,7 +318,7 @@
 @endsection
 @section('scripts')
 
-<script type="text/javascript" src="{{ asset('js/toastr.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/lib/toastr.js') }}"></script>
     <script type="text/javascript">
 
         $('.update').addClass('display-none');
