@@ -70,7 +70,6 @@ class AclController
     }
 
     public function userRole(){
-    dd('asa');die;
         $dataUseRole = $this->service->getListUser();
         $roleList =  $this->service->getRoleList();
 

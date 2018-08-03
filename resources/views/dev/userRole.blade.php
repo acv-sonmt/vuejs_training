@@ -1,4 +1,5 @@
 @extends('layouts.dev')
+<link rel="stylesheet" type="text/css" href="{{ asset('css/lib/toastr.css') }}">
 @section('content')
     <style>
         /* The switch - the box around the slider */
@@ -8,16 +9,13 @@
             width: 44px;
             height: 24px;
         }
-
         /* Hide default HTML checkbox */
         .switch input {
             display: none;
         }
-
         label.switch  {
             margin-bottom: -6px !important;
         }
-
         /* The slider */
         .slider {
             position: absolute;
@@ -30,7 +28,6 @@
             -webkit-transition: .4s;
             transition: .4s;
         }
-
         .slider:before {
             position: absolute;
             content: "";
@@ -42,34 +39,27 @@
             -webkit-transition: .4s;
             transition: .4s;
         }
-
         input:checked + .slider {
             background-color: #2196F3;
         }
-
         input:focus + .slider {
             box-shadow: 0 0 1px #2196F3;
         }
-
         input:checked + .slider:before {
             -webkit-transform: translateX(26px);
             -ms-transform: translateX(26px);
             transform: translateX(26px);
         }
-
         /* Rounded sliders */
         .slider.round {
             border-radius: 34px;
         }
-
         .slider.round:before {
             border-radius: 50%;
         }
-
         .table th {
             text-align: center;
         }
-
         .function {
             padding-bottom: 10px;
         }
@@ -91,12 +81,12 @@
                             <div class="col-md-12 form-group">
                                 <div class="col-md-2 form-title">Role</div>
                                 <div class="col-md-4">
-                                    <select id="cb-role" class="form-control">
+                                    <select id="cb_role" class="form-control">
                                         <option value="">---</option>
                                         <?php if(!empty($roleList)){?>
                                         <?php foreach ($roleList as $roleItem){?>
                                         <option
-                                                value="<?php echo $roleItem->name;?>"><?php echo $roleItem->name?></option>
+                                            value="<?php echo $roleItem->id;?>"><?php echo $roleItem->name?></option>
                                         <?php   }
                                         }?>
                                     </select>
@@ -108,7 +98,15 @@
                                         <?php if(!empty($dataUseRole)){?>
                                         <?php foreach ($dataUseRole as $Item){?>
                                         <option
-                                                value="<?php echo $Item->user_active;?>"><?php echo $Item->user_active?></option>
+                                            value="<?php echo $Item->user_active;?>">
+                                            <?php  if ($Item->user_active == 1) {
+                                                echo 'Actived';
+                                            }
+                                            else{
+                                                echo 'Not active';
+                                            }
+                                            ?>
+                                        </option>
                                         <?php   }
                                         }?>
                                     </select>
@@ -129,6 +127,7 @@
 
 
                     </fieldset>
+
 
                     <table id="Useracl-table" class="table-bordered table table-hover w-100">
                         <thead>
@@ -155,7 +154,7 @@
                             <td><?php echo $item->user_name; ?></td>
                             <td>
                                 <?php  if ($item->user_gender == 1) {
-                                   echo 'nam';
+                                    echo 'nam';
                                 }
                                 elseif($item->user_gender == 2){
                                     echo 'nữ';
@@ -174,16 +173,21 @@
                                 ?>
                             </td>
                             <td>
-                                <select id="change-role" class="lang form-control">
-                                    <option value=""><?php echo $item->role_name; ?></option>
+                                <select id="change-role" class="lang form-control" data-user-id="{{$item->user_id}}">
                                     <?php if(!empty($roleList)){?>
-                                    <?php foreach ($roleList as $roleItem){?>
+                                    <?php foreach ($roleList as $roleItem){
+                                    $selected = "";
+                                    if($item->user_role_value == $roleItem->role_value){
+                                        $selected = "selected";
+                                    }
+                                    ?>
                                     <option
-                                            value="<?php echo $roleItem->id;?>"><?php echo $roleItem->name?>
+                                        value="<?php echo $roleItem->role_value ?>" {{$selected}}><?php echo $roleItem->name?>
                                     </option>
                                     <?php   }
                                     }?>
                                 </select>
+
                             </td>
 
                         </tr>
@@ -199,11 +203,12 @@
 
 @endsection
 @section('scripts')
+    <script type="text/javascript" src="{{ asset('js/lib/toastr.js') }}"></script>
     <script type="text/javascript">
         $(document).ready(function () {
             var table = $('#Useracl-table').DataTable(
                 {
-                    scrollY:        '60vh',
+                    scrollY:'60vh',
                     scrollCollapse: true,
                     fixedHeader: true,
                     bJQueryUI: true,
@@ -217,65 +222,36 @@
                     }]
                 }
             );
-
             $('#text-name').on('change', function () {
-                table.column(1).search(this.value).draw();
-            });
-
-            $('#text-email').on('change', function () {
                 table.column(2).search(this.value).draw();
             });
-
-            $(document).on('change', '.change-role', function () {
+            $('#cb_role').on('change', function () {
+                table.column(6).search(this.value).draw();
+            });
+            $('#cb_active').on('change', function () {
+                table.column(5).search(this.value).draw();
+            });
+            $('#text-email').on('change', function () {
+                table.column(1).search(this.value).draw();
+            });
+            $(document).on('change', '#change-role', function () {
+                var curren_id = $(this).data('user-id');
                 var data = {
-                    role_name: $(this).clone('checked'),
-                    role_id: $(this).data('role_map_id')
+                    $current_id: curren_id,
+                    $current_role_value: $(this).val()
                 };
+                console.log(data);
                 $.ajax({
                     data: data,
                     type: 'Post',
                     dataType: 'json',
                     url: "<?php echo @route('updateUserRole')?>",
                     success: function (result) {
+                        toastr.success('Update success!' ,{timeOut: 2000});
                     }
                 });
             });
-
-            $(document).on('change', '.change-active-all', function () {
-                var checked =  $(this).prop('checked');
-                var data = {
-                    active: checked
-                };
-                $.ajax({
-                    data: data,
-                    type: 'Post',
-                    dataType: 'json',
-                    url: "<?php echo @route('updateAclActiveAll')?>",
-                    success: function (result) {
-                        $('#cb-role').val('');
-                        $('#cb_active').val('');
-                        $('#change_role').val();
-                        $('#text-name').val('');
-                        $('#text-action').val('');
-                        table.column(1).search('').draw();
-                        if(checked==true){
-                            $('#Useracl-table .change-active').each(function(){
-                                $(this).prop('checked',true);
-                            });
-                        }else{
-                            $('#Useracl-table  .change-active').each(function(){
-                                $(this).prop('checked',false);
-                            });
-                        }
-                    }
-                });
-            });
-
         });
-
-
     </script>
 
 @endsection
-
-
