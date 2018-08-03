@@ -85,30 +85,23 @@
                                         <option value="">---</option>
                                         <?php if(!empty($roleList)){?>
                                         <?php foreach ($roleList as $roleItem){?>
+                                        $selected = "";
+                                        if($item->user_role_value == $roleItem->role_value){
+                                        $selected = "selected";
+                                        }
                                         <option
-                                            value="<?php echo $roleItem->id;?>"><?php echo $roleItem->name?></option>
+                                                value="<?php echo $roleItem->name;?>"><?php echo $roleItem->name?></option>
                                         <?php   }
                                         }?>
                                     </select>
                                 </div>
                                 <div class="col-md-2 form-title">Active</div>
                                 <div class="col-md-4">
-                                    <select id="cb_active" class="form-control">
+                                    <select id="cb-active" class="form-control">
                                         <option value="">---</option>
-                                        <?php if(!empty($dataUseRole)){?>
-                                        <?php foreach ($dataUseRole as $Item){?>
-                                        <option
-                                            value="<?php echo $Item->user_active;?>">
-                                            <?php  if ($Item->user_active == 1) {
-                                                echo 'Actived';
-                                            }
-                                            else{
-                                                echo 'Not active';
-                                            }
-                                            ?>
-                                        </option>
-                                        <?php   }
-                                        }?>
+                                        <option value="Actived">Actived</option>
+                                        <option value="Not Active">Not Active</option>
+
                                     </select>
                                 </div>
                             </div>
@@ -139,7 +132,7 @@
                             <th>Birthday</th>
                             <th>IsActive</th>
                             <th>Role</th>
-
+                            <th class="display-none"></th>
                         </tr>
                         </thead>
                         <tbody>
@@ -173,6 +166,8 @@
                                 ?>
                             </td>
                             <td>
+
+
                                 <select id="change-role" class="lang form-control" data-user-id="{{$item->user_id}}">
                                     <?php if(!empty($roleList)){?>
                                     <?php foreach ($roleList as $roleItem){
@@ -181,13 +176,15 @@
                                         $selected = "selected";
                                     }
                                     ?>
-                                    <option
-                                        value="<?php echo $roleItem->role_value ?>" {{$selected}}><?php echo $roleItem->name?>
+                                        <option value="<?php echo $roleItem->role_value ?>" {{$selected}}><?php echo $roleItem->name?>
                                     </option>
                                     <?php   }
                                     }?>
                                 </select>
 
+                            </td>
+                            <td class="display-none">
+                                {{$item->role_name}}
                             </td>
 
                         </tr>
@@ -218,7 +215,10 @@
                     searching: true,
                     "columnDefs": [{
                         "targets": 5,
-                        "orderable": false
+                        "orderable": false,
+
+                    },{
+                        "type": "html-input", "targets": [6]
                     }]
                 }
             );
@@ -226,9 +226,9 @@
                 table.column(2).search(this.value).draw();
             });
             $('#cb_role').on('change', function () {
-                table.column(6).search(this.value).draw();
+                table.column(7).search(this.value).draw();
             });
-            $('#cb_active').on('change', function () {
+            $('#cb-active').on('change', function () {
                 table.column(5).search(this.value).draw();
             });
             $('#text-email').on('change', function () {
@@ -240,7 +240,6 @@
                     $current_id: curren_id,
                     $current_role_value: $(this).val()
                 };
-                console.log(data);
                 $.ajax({
                     data: data,
                     type: 'Post',
