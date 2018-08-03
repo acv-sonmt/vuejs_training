@@ -1,6 +1,9 @@
 <p><strong>Date: 2018/07/18</strong></p>
+<p><span style="color: #3366ff;"><strong>Config:</strong></span></p>
+<p>- The first checkout : run composor install.</p>
+<p><strong>- Provider </strong>of modules must registed in<strong> config/app.</strong></p>
 <p>&nbsp;</p>
-<p><strong>CODE:</strong></p>
+<p><span style="color: #3366ff;"><strong>CODE:</strong></span></p>
 <p><strong>1.ACL Module.</strong></p>
 <p><strong>&nbsp;- Required:&nbsp;</strong>Core module</p>
 <p><strong>&nbsp;-</strong> Acl management for user, define&nbsp;<strong>policy</strong> for access all of action.</p>
@@ -21,9 +24,10 @@
 <p>&nbsp;<strong>7. Console: Generate access token key</strong></p>
 <p><strong>&nbsp;&nbsp;</strong>- Ex: php artisan access-token:generate <a href="mailto:your_email@mail.com">your_email@mail.com</a>&nbsp; &nbsp;&nbsp;<br />&nbsp; =&gt; generate a access token key with specific roles, which use to help client access api.</p>
 <p>--------------------------------------------------------------------------------------------------------------------------</p>
-<h2><span style="color: #000000;"><strong>DETAIL</strong></span></h2>
-<p><strong>DEV Module.</strong></p>
-<p><strong>Required:</strong>&nbsp;file .env has "DEV_MODE = true"</p>
+<h2><span style="color: #333399;"><strong>DETAIL</strong></span></h2>
+<p><span style="color: #333399;"><strong>DEV Module.</strong></span></p>
+<p><strong>Required:</strong>&nbsp;</p>
+<p>&nbsp;- file .env has "DEV_MODE = true" .</p>
 <p><strong>1. Initialization project</strong><br />&nbsp;- Click button to generate common config (ACL file, Translation file...), import list of action to Database.</p>
 <p><strong>2. Translation</strong></p>
 <p><strong>&nbsp;- Translation page </strong>management&nbsp; based on languages.</p>
@@ -34,5 +38,14 @@
 <p><strong>&nbsp;</strong>- Acl management, change access permission for each user roles.</p>
 <p><strong>&nbsp;-&nbsp;</strong>Generate ACL file based on Database to Project code. ( Database to Code)</p>
 <p>&nbsp;-&nbsp;Synchronously if has changed code ( if you add new action, module or controller. you should run <strong>synchrously&nbsp;</strong> to update data acl)</p>
+<p><strong>4. User-Role</strong></p>
+<p>&nbsp;- Setting role for users.</p>
+<p><strong>5. Category</strong></p>
+<p>&nbsp;- Template insert, update, delete&nbsp; category.</p>
+<p>&nbsp;</p>
+<p><span style="color: #333399;"><strong>Acl Module</strong></span></p>
+<p><span style="color: #333399;"><strong>-&nbsp;</strong><span style="color: #000000;"> Defined rule of <strong>access police&nbsp;</strong></span><span style="color: #000000;">in acl middleware.</span></span></p>
+<p><span style="color: #333399;"><span style="color: #000000;">-&nbsp; Apply for all of action has registed "acl" middleware.</span></span></p>
+<p><span style="color: #333399;"><span style="color: #000000;">&nbsp;</span></span></p>
 <p>&nbsp;</p>
 <p>&nbsp;</p>
