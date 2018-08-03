@@ -75,10 +75,6 @@ class AclService extends BaseService implements AclServiceInterface
     {
         DEVDB::execSPsToDataResultCollection("DEV_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
     }
-    public function updateUserRole($role_name, $role_id)
-    {
-        DEVDB::execSPsToDataResultCollection("DEV_USER_ROLE_UPDATE_ROLES", array($role_name, $role_id));
-    }
     /**
      * @return array
      * HELPER: get role mapping screen to Array
@@ -242,6 +238,10 @@ class AclService extends BaseService implements AclServiceInterface
     }
     public function getListUser(){
         return DEVDB::execSPs('DEV_USER_ROLE_GET_LIST_USERS');
+    }
+    public function updateUserRole($current_id, $current_role_value)
+    {
+        DEVDB::execSPsToDataResultCollection("DEV_USER_ROLE_UPDATE_ROLES", array($current_id, $current_role_value));
     }
 
 }

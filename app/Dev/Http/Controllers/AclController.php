@@ -48,21 +48,6 @@ class AclController
         $moduleList =$this->service->getModuleList();
         return view("dev/acl", compact(['dataAcl','roleList','moduleList']));
     }
-
-    public function userRole(){
-        $dataUseRole = $this->service->getListUser();
-//       dd($dataUseRole);
-        $roleList =  $this->service->getRoleList();
-        $userDetail = $this->service->getUserDetail();
-        return view("dev/userRole", compact(['dataUseRole','roleList','userDetail']));
-
-    }
-
-    public function updateUserRole($role_name, $role_id){
-        $this->service->updateActiveAcl($role_name, $role_id);
-        return CommonHelper::convertVaidateErrorToCommonStruct(array());
-    }
-
     public function updateAclActive(Request $request)
     {
         $active = $request->input('active');
@@ -81,6 +66,21 @@ class AclController
             $isActive = 1;
         }
         $this->service->updateActiveAclAll( $isActive);
+        return CommonHelper::convertVaidateErrorToCommonStruct(array());
+    }
+
+    public function userRole(){
+    dd('asa');die;
+        $dataUseRole = $this->service->getListUser();
+        $roleList =  $this->service->getRoleList();
+
+        return view("dev.userRole", compact(['dataUseRole','roleList']));
+    }
+
+    public function updateUserRole(Request $request){
+        $current_id = $request->input('$current_id');
+        $current_role_value = $request->input('$current_role_value');
+        $this->service->updateUserRole($current_id, $current_role_value);
         return CommonHelper::convertVaidateErrorToCommonStruct(array());
     }
 

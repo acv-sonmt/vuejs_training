@@ -18,4 +18,5 @@ interface AclServiceInterface
     public function getRoleList();
     public function getModuleList();
     public function getListUser();
+    public function updateUserRole($current_id,$current_role_value);
 }
