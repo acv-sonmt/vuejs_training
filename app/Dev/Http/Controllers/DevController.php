@@ -7,9 +7,11 @@ namespace App\Dev\Http\Controllers;
 use App\Core\Dao\SDB;
 use App\Dev\Entities\DataResultCollection;
 use App\Dev\Rules\UpperCaseRule;
+use App\Dev\Services\Interfaces\AclServiceInterface;
 use App\Dev\Services\Interfaces\DevServiceInterface;
 use App\Dev\Helpers\ResponseHelper;
 use App\Dev\Helpers\CommonHelper;
+use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
@@ -18,83 +20,25 @@ use Validator;
 class DevController extends Controller
 {
     protected $devService;
+    protected $aclService;
+    protected $translateService;
 
     /**
      * Constructor
      */
-    public function __construct(DevServiceInterface $devService)
+    public function __construct(DevServiceInterface $devService, AclServiceInterface $aclService , TranslateServiceInterface $translateService)
     {
         $this->devService = $devService;
+        $this->aclService = $aclService;
+        $this->translateService = $translateService;
     }
-
-    public function translationManagement()
-    {
-        //form CRUD translate text
-        $langListFromDB = $this->devService->getLanguageCodeList();
-        $dataTransFromDB = $this->devService->getTranslateList('', '');
-        $langList = ($langListFromDB->status == \SDBStatusCode::OK)?$langListFromDB->data:array();
-        $dataTrans = ($dataTransFromDB->status == \SDBStatusCode::OK)?$dataTransFromDB->data:array();
-        $dataComboFilter = $this->devService->getNewTransComboList();
-        return view("dev/translation", compact(['dataTrans', 'langList', 'dataComboFilter']));
-    }
-
-    public function createNewTranslationItem(Request $request)
-    {
-        $validator =
-            Validator::make($request->all(), [
-                'text_code' => 'required'
-            ]);
-
-        if ($validator->fails()) {
-            $error = array($validator->errors());
-            $dataResult = new DataResultCollection();
-            $dataResult->status = \SDBStatusCode::WebError;
-            $dataResult->data = $error;
-            return ResponseHelper::JsonDataResult($dataResult);
-
-        } else {
-            $transType = $request->input('trans_type');
-            $transInputType = $request->input('trans_input_type');
-            $transTextCode = $request->input('text_code');
-            $textTrans = $request->input('text_trans');
-            $dataFromDB = $this->devService->insertTranslationItem($transType, $transInputType, $transTextCode, $textTrans);
-            return ResponseHelper::JsonDataResult($dataFromDB);
-        }
-
-    }
-
-    public function generationLanguageFiles()
-    {
-        $this->devService->generationTranslateFileAndScript();
-
-    }
-
-    public function generationAclConfigFiles()
-    {
-        $this->devService->generationAclFile();
-    }
-
-
-    public function importScreensList()
-    {
-        $this->devService->initRoleDataToDB();
-    }
-
-    public function importTranslateToDB()
-    {
-        $this->devService->generationTransDataToDB();
-    }
-
     public function initProject()
     {
         $this->devService->generateEntityClass();
-        $this->devService->initRoleDataToDB();
-        $this->devService->generationAclFile();
+        $this->aclService->initRoleDataToDB();
+        $this->aclService->generationAclFile();
         //generationTranslate validation
-        $this->devService->generationTranslateFileAndScript();
-    }
-    public function refreshAclDB(){
-       $this->devService->generationRoleDataToDB();
+        $this->translateService->generationTranslateFileAndScript();
     }
 
     /**
@@ -110,70 +54,6 @@ class DevController extends Controller
     public function index()
     {
         return view("dev/index");
-    }
-
-    public function generationAclFile()
-    {
-        $this->devService->generationAclFile();
-        return null;
-    }
-
-    public function aclManangement()
-    {
-        $dataAcl = $this->devService->getRoleInfoFromDB();
-        $roleList =  $this->devService->getRoleList();
-        $moduleList =$this->devService->getModuleList();
-        return view("dev/acl", compact(['dataAcl','roleList','moduleList']));
-    }
-
-    public function userRole(){
-        $dataUseRole = $this->devService->getListUser();
-//       dd($dataUseRole);
-        $roleList =  $this->devService->getRoleList();
-        $userDetail = $this->devService->getUserDetail();
-        return view("dev/userRole", compact(['dataUseRole','roleList','userDetail']));
-
-    }
-
-    public function updateUserRole($role_name, $role_id){
-        $this->devService->updateActiveAcl($role_name, $role_id);
-        return CommonHelper::convertVaidateErrorToCommonStruct(array());
-    }
-
-    public function updateAclActive(Request $request)
-    {
-        $active = $request->input('active');
-        $roleMapId = $request->input('role_map_id');
-        $isActive = 0;
-        if (isset($active) && strtolower($active) == 'true') {
-            $isActive = 1;
-        }
-        $this->devService->updateActiveAcl($roleMapId, $isActive);
-        return CommonHelper::convertVaidateErrorToCommonStruct(array());
-    }
-    public function updateAclActiveAll(Request $request){
-        $active = $request->input('active');
-        $isActive = 0;
-        if (isset($active) && strtolower($active) == 'true') {
-            $isActive = 1;
-        }
-        $this->devService->updateActiveAclAll( $isActive);
-        return CommonHelper::convertVaidateErrorToCommonStruct(array());
-    }
-    public function updateTranslate(Request $request)
-    {
-        $id = $request->input('id');
-        $transText = $request->input('text');
-        $this->devService->updateTranslateText($id, $transText);
-        return null;
-    }
-
-    public function newTextTrans()
-    {
-        $langListFromDB = $this->devService->getLanguageCodeList();
-        $langList = ($langListFromDB->status == \SDBStatusCode::OK)?$langListFromDB->data:array();
-        $comboList = $this->devService->getNewTransComboList();
-        return view("dev/addtranslate", compact(['langList', 'comboList']))->renderSections()['content'];
     }
 
     public function testCustomValidate(Request $request)

@@ -11,41 +11,9 @@ use App\Dev\Entities\DataResultCollection;
 interface DevServiceInterface
 {
     public function test();
-    public function getLanguageCodeList():DataResultCollection;
-    public function getTranslateMessageArray( $translateType);
-    public function getTranslateList($translateType,$lang):DataResultCollection;
-    public function getCategoryWithLevelList():DataResultCollection;
-
-    public function categoryAddChildInLeft($paramArr):DataResultCollection;
-    public function categoryDeleteNodeAndChild($nodeId):DataResultCollection;
-
-    public function categoryUpdateMenu($paramArr):DataResultCollection;
-
     public function getAllSPList():DataResultCollection;
-    public function getRoleInfoFromDB();
-    public function getListUser();
-    public function getUserDetail();
-    public function generationTranslateFileAndScript();
-    public function generationTranslateFile( $translateType, $fileName);
-    public function generationTranslateScript( $translateType, $fileName);
-    public function getRoleMapArray();
-    public function generationAclFile();
     public function getConfigDataFromFile($name);
-    public function initRoleDataToDB();
-    public function generationRoleDataToDB();
-    public function generationTransDataToDB();
 
-    public function getNewTransComboList();
-
-    public function updateActiveAcl($roleMapId,$isActive);
-    public function updateActiveAclAll($isActive);
-
-    public function updateUserRole($role_name, $role_id);
-
-    public function updateTranslateText($id,$transText);
-    public function insertTranslationItem($transType,$transInputType,$transTextCode,$textTrans);
     public function generateEntityClass();
     public function generateSpecEntityClass($spName);
-    public function getRoleList();
-    public function getModuleList();
 }

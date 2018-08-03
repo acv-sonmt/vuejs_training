@@ -11,6 +11,9 @@ class DevServiceProvider extends ServiceProvider
 {
     protected $services = [
         Interfaces\DevServiceInterface::class => Production\DevService::class,
+        Interfaces\TranslateServiceInterface::class=>Production\TranslationService::class,
+        Interfaces\AclServiceInterface::class=>Production\AclService::class,
+        Interfaces\CategoryServiceInterface::class=>Production\CaterogyService::class,
     ];
     /**
      * Bootstrap services.
