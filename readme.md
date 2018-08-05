@@ -17,6 +17,7 @@
 <p><strong>&nbsp;-&nbsp;</strong>If you change .env&nbsp;LOG_CHANNEL to custom, logs will writed <span style="color: #000000;">by</span> custom policy:</p>
 <p>&nbsp; &nbsp; &nbsp;+ Write log with new structure&nbsp; logs/date_folder/module_date.txt</p>
 <p>&nbsp; &nbsp; &nbsp;+ Logger for database query excuted if set .env&nbsp;DB_LOG=true</p>
+<p>&nbsp; &nbsp; &nbsp; &nbsp; ( listen to Database Event in&nbsp; <strong>AppServiceProvider</strong>.<strong><em>boot</em></strong>() )</p>
 <p>&nbsp; &nbsp; &nbsp;+ All of default event logs still perform as default of Laravel.</p>
 <p>&nbsp; &nbsp; &nbsp;+ Coding struct like default of Laravel.</p>
 <p><strong>6. Helper</strong></p>
