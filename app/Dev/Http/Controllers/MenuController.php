@@ -10,7 +10,6 @@ use App\Dev\Services\Interfaces\CategoryServiceInterface;
 use App\Dev\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use Validator;
-use App\Dev\Catelory;
 
 class MenuController extends Controller
 {

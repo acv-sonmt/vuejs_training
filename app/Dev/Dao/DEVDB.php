@@ -210,7 +210,6 @@ class DEVDB extends DB
                 }
             }
             $syntax = 'CALL ' . $procName . '(' . $syntax . ');';
-
             $pdo = parent::connection()->getPdo();
             $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
             $stmt = $pdo->prepare($syntax, [\PDO::ATTR_CURSOR => \PDO::CURSOR_SCROLL]);
@@ -221,7 +220,6 @@ class DEVDB extends DB
             }
             self::writeLogAdvance($syntax,$parameters);
             $exec = $stmt->execute();
-
             if (!$exec) return $pdo->errorInfo();
             if ($isExecute) return $exec;
             do {

@@ -10,5 +10,8 @@ use App\Dev\Entities\DataResultCollection;
 
 interface CategoryServiceInterface
 {
-
+    public function getCategoryWithLevelList():DataResultCollection;
+    public function categoryAddChildInLeft($paramArr):DataResultCollection;
+    public function categoryUpdateMenu($paramArr):DataResultCollection;
+    public function categoryDeleteNodeAndChild($nodeId):DataResultCollection;
 }
