@@ -44,6 +44,7 @@
             </div>
 
         </div>
+        <div class="row" style="margin-left: 5px;"><b>Note:</b> You should be run command to create public storage link: <i>php artisan storage:link</i></div>
         <div class="row">
             <div id="img-upload-area" class="img-uploaded">
                 <?php if(!empty($fileLocalInforList)){?>

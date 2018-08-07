@@ -10,25 +10,14 @@
 
     <title>{{ config('app.name', 'Laravel') }}</title>
 
-    <script src="{{ asset('js/lib/jquery-3.3.1.min.js')}}"></script>
-
-    <script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
-
-    <script src="{{ asset('js/lib/jquery.dataTables.min.js')}}"></script>
-    <script src="{{ asset('js/common.js')}}"></script>
-    <!-- Scripts -->
-    <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
-
     <!-- Fonts -->
-
-
-    <link rel="dns-prefetch" href="https://fonts.gstatic.com">
-{{--     <link href="https://fonts.googleapis.com/css?family=Raleway:300,400,600" rel="stylesheet" type="text/css"> --}}
-    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/googleapis') }}">
+    <link rel="stylesheet" type="text/css" href="{{ asset('css/fonts/font-face.css') }}">
+    <!-- Latest compiled and minified CSS & JS -->
+    <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet">
 
     <!-- Styles -->
     <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">
-    <link href="{{ asset('css/lib/bootstrap.min.css') }}" rel="stylesheet">
+
     <link href="{{ asset('css/lib/jquery.dataTables.min.css') }}" rel="stylesheet">
     <style>
         .navbar-laravel{
@@ -51,6 +40,9 @@
         }
         .container{
             min-width: 1400px !important;
+        }
+        .font-weight-bold{
+            font-weight: bold;
         }
     </style>
 </head>
@@ -89,7 +81,7 @@
                             <a class="nav-link font-weight-bold" href="{{ route('aclManangement') }}">Acl - Roles</a>
                         </li>
                         <li class="nav-item">
-                            <a class="nav-link font-weight-bold" href="{{ route('userAcl') }}">User - Roles</a>
+                            <a class="nav-link font-weight-bold" href="{{ route('userRole') }}">User - Roles</a>
                         </li>
                         <li class="nav-item">
                             <a class="nav-link font-weight-bold" href="{{ route('menu') }}">Categories</a>
@@ -110,6 +102,14 @@
             </div>
         </main>
     </div>
+
+    <script src="{{ asset('js/lib/jquery-3.3.1.min.js')}}"></script>
+    <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
+    <script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
+    <script src="{{ asset('js/lib/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('js/common.js')}}"></script>
+    <!-- Scripts -->
+
     @yield('scripts')
 </body>
 </html>

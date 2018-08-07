@@ -37,8 +37,7 @@ class TemplateController extends Controller
      */
     public function index()
     {
-        $this->executeSchedule();
-        //return view('backend.template.index');
+        return view('backend.template.index');
     }
 
     public function form()
@@ -173,6 +172,11 @@ class TemplateController extends Controller
     {
         return view('backend.template.export');
     }
+
+    /**
+     * Register task list
+     * At now not access permission to run crontab commmand
+     */
     public function executeSchedule(){
         Storage::disk('public')->append('test_schedule/test.txt',"test"."\n");
         $cronTabPath =  storage_path('cronjob/task_list.txt');
@@ -212,7 +216,7 @@ class TemplateController extends Controller
                     TRUE         // Should the array be indexed by cell row and cell column
                 );
                 echo '<pre>';
-                print_r($dataArray);          
+                print_r($dataArray);
             })->get();
 
         }

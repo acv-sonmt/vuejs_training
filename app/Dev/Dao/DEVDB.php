@@ -189,7 +189,7 @@ class DEVDB extends DB
             Log::error($exception->getMessage());
             Log::error(__CLASS__."::".__FUNCTION__."(".$tableName.",".$module.")    Error: }");
         }
-        self::createFile($meta,$tableName,$module);
+        self::createFile($meta,$tableName,$module,'//Tables');
         return $meta;
     }
 
@@ -210,7 +210,6 @@ class DEVDB extends DB
                 }
             }
             $syntax = 'CALL ' . $procName . '(' . $syntax . ');';
-
             $pdo = parent::connection()->getPdo();
             $pdo->setAttribute(\PDO::ATTR_EMULATE_PREPARES, true);
             $stmt = $pdo->prepare($syntax, [\PDO::ATTR_CURSOR => \PDO::CURSOR_SCROLL]);
@@ -221,7 +220,6 @@ class DEVDB extends DB
             }
             self::writeLogAdvance($syntax,$parameters);
             $exec = $stmt->execute();
-
             if (!$exec) return $pdo->errorInfo();
             if ($isExecute) return $exec;
             do {
@@ -249,7 +247,7 @@ class DEVDB extends DB
      * @param $procedureName
      * @param $module
      */
-    protected static function createFile($metaField, $procedureName, $module)
+    protected static function createFile($metaField, $procedureName, $module,$subfolder = '//Sp')
     {
         $entitiesFolderName = "\\" . $module . "\\Entities";
         $folderPath = base_path() . '/app/' . $module . '/Entities';
@@ -261,7 +259,7 @@ class DEVDB extends DB
             if (!is_dir($folderPath)) {
                 mkdir($folderPath);
             }
-            $folderPath .= '/Sp';
+            $folderPath .= $subfolder;
             if (!is_dir($folderPath)) {
                 mkdir($folderPath);
             }

@@ -8,6 +8,8 @@ class DEV_GET_CATEGORY_WITH_LEVEL_LIST extends Entity{
 	public $level_value;
 	public $lft;
 	public $rgt;
+	public $url;
+	public $order_value;
 	public  function __construct($object){
 		 parent::__construct($object);
 	}

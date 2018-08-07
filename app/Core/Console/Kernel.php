@@ -24,9 +24,12 @@ class Kernel extends ConsoleKernel
      */
     protected function schedule(Schedule $schedule)
     {
-         $schedule->call(function(){
+        /*
+         * test schedules
+         */
+         /*$schedule->call(function(){
             Storage::disk('public')->append('test_schedule/test.txt',now()->toDateTimeString()."\n");
-         })->everyMinute();
+         })->everyMinute();*/
     }
     /**
      * Register the commands for the application.

@@ -6,28 +6,25 @@
 namespace App\Dev\Http\Controllers;
 use App\Dev\Entities\DataResultCollection;
 use App\Dev\Rules\UpperCaseRule;
-use App\Dev\Services\Interfaces\DevServiceInterface;
+use App\Dev\Services\Interfaces\CategoryServiceInterface;
 use App\Dev\Helpers\ResponseHelper;
-use App\Dev\Helpers\CommonHelper;
 use Illuminate\Http\Request;
-use Illuminate\Support\Facades\Log;
 use Validator;
-use App\Dev\Catelory;
 
 class MenuController extends Controller
 {
 
-    protected $devService;
+    protected $service;
 
-    public function __construct(DevServiceInterface $devService)
+    public function __construct(CategoryServiceInterface $categoryService)
     {
-        $this->devService = $devService;
+        $this->service = $categoryService;
     }
 
     public function menu()
     {
         //form CRUD translate text
-        $dataCategoryCollection = $this->devService->getCategoryWithLevelList();
+        $dataCategoryCollection = $this->service->getCategoryWithLevelList();
         $dataCategory = ($dataCategoryCollection->status == \SDBStatusCode::OK)?$dataCategoryCollection->data:array();
         return view("dev/menu", compact('dataCategory'));
     }
@@ -37,7 +34,7 @@ class MenuController extends Controller
         $dataMenuCollection =  new DataResultCollection();
         $dataMenuCollection->status = \SDBStatusCode::OK;
         if ($data['name'] !='') {
-            $dataMenuCollection = $this->devService->categoryAddChildInLeft(array($data['parent_id'], $data['name'],$data['url']));   
+            $dataMenuCollection = $this->service->categoryAddChildInLeft(array($data['parent_id'], $data['name'],$data['url']));
         }
         return ResponseHelper::JsonDataResult($dataMenuCollection);
     }
@@ -45,7 +42,7 @@ class MenuController extends Controller
     public function updateMenu(Request $request){
         $data = $request->all();
         if ($data['name'] !='') {
-            $dataUpdateCollection = $this->devService->categoryUpdateMenu(array($data['id'], $data['name'],$data['url']));
+            $dataUpdateCollection = $this->service->categoryUpdateMenu(array($data['id'], $data['name'],$data['url']));
         }
 
         $dataUpdate = ($dataUpdateCollection->status == \SDBStatusCode::OK)?$dataUpdateCollection->data:array();
@@ -57,8 +54,8 @@ class MenuController extends Controller
 
     public function deleteMenu(Request $request){
         $id = $request->id;
-        $menuDelete = $this->devService->categoryDeleteNodeAndChild($id);
-        $dataMenuDelete = ($menuDelete->status == \SDBStatusCode::OK)?$dataMenuCollection->data:array();
+        $menuDelete = $this->service->categoryDeleteNodeAndChild($id);
+        $dataMenuDelete = ($menuDelete->status == \SDBStatusCode::OK)?$menuDelete->data:array();
         return response()->json([
             'status' => 'true',
             'data' => $dataMenuDelete,

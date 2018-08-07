@@ -3,19 +3,18 @@
 <!-- Latest compiled and minified CSS & JS -->
 
 
-<link rel="stylesheet" type="text/css" href="{{ asset('css/toastr.css') }}">
+<link rel="stylesheet" type="text/css" href="{{ asset('css/lib/toastr.css') }}">
 @section('content')
     <style>
 
-    @media screen and (-webkit-device-pixel-ratio:1) {
-
-        .CUD{
-            float :right !important;
-            margin-right:-130px;
-            margin-top:-27px !important;
+        @supports not ((-webkit-hyphens: auto) or (-ms-hyphens: auto) or (hyphens: auto)) {
+            .CUD{
+                float :right !important;
+                margin-right:-130px;
+                margin-top:-27px !important;
+            }
         }
 
-    }
 
         .treeview .list-group-item {
             cursor: pointer;
@@ -74,7 +73,7 @@
         }
         .CssName{
             width:25%;
-            background-color: rgba(231, 243, 164, 0.26) !important; 
+            background-color: rgba(231, 243, 164, 0.26) !important;
         }
 
         .CssURL{
@@ -135,7 +134,7 @@
         .input-error{
             border-color: #ff151f;
         }
- 
+
         .checked{
             float: right;
             left: -18px;
@@ -149,7 +148,7 @@
             right: 6px;
             font-size: 15px;
         }
-    
+
 
 
     </style>
@@ -178,7 +177,7 @@
                                 <input type="text" class="CssName menuName form-control " disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                 <span class="glyphicon checkName checked glyphicon-ok"></span>
                                 <span class="glyphicon attach glyphicon-paperclip"></span>
-                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="http://">
                                 <span class="glyphicon checkURL checked glyphicon-ok"></span>
                             </div>
 
@@ -207,7 +206,7 @@
                                     <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                     <span class="glyphicon checkName checked glyphicon-ok"></span>
                                     <span class="glyphicon attach glyphicon-paperclip"></span>
-                                    <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                    <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="http://">
                                     <span class="glyphicon checkURL checked glyphicon-ok"></span>
 
                                 </div>
@@ -240,7 +239,7 @@
                                 <input type="text" class="CssName menuName form-control" disabled value="<?php echo $dataCategory[$i]->name; ?>" placeholder="New Name">
                                 <span class="glyphicon checked checkName glyphicon-ok"></span>
                                 <span class="glyphicon attach glyphicon-paperclip"></span>
-                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="Link is emty">
+                                <input type="text" class=" form-control menuURL CssURL" disabled value="<?php echo $dataCategory[$i]->url; ?>" placeholder="http://">
                                 <span class="glyphicon checked checkURL glyphicon-ok"></span>
 
                             </div>
@@ -276,7 +275,7 @@
                 <input type="text" class="newNodeName menuName CssName form-control " placeholder="New Name" />
                 <span class="glyphicon checkName checked glyphicon-ok"></span>
                 <span class="glyphicon attach glyphicon-paperclip"></span>
-                <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="Link is emty">
+                <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="http://">
                 <span class="glyphicon checkURL checked glyphicon-ok"></span>
 
             </div>
@@ -299,7 +298,7 @@
                     <input type="text" class="newNodeName menuName CssName form-control " placeholder="New Name" />
                     <span class="glyphicon checkName checked glyphicon-ok"></span>
                     <span class="glyphicon attach glyphicon-paperclip"></span>
-                    <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="Link is emty">
+                    <input type="text" class=" form-control newNodeURL menuURL CssURL" placeholder="http://">
                     <span class="glyphicon  checked glyphicon-ok"></span>
 
                 </div>
@@ -309,7 +308,7 @@
                     <a class="pull-right btn btn-warning itemEdit edit editchid btn-xs"><span class="glyphicon glyphicon-edit"></span></a>
                     <a class="pull-right btn btn-info itemUpdate update btn-xs" ><span class="glyphicon glyphicon-save"></span></a>
                     <a class="pull-right btn btn-primary iteamCreate create createChid btn-xs" ><span class="glyphicon glyphicon-plus"></span></a>
-                </div> 
+                </div>
             </li>
         </ul>
     </div>
@@ -318,7 +317,7 @@
 @endsection
 @section('scripts')
 
-<script type="text/javascript" src="{{ asset('js/toastr.js') }}"></script>
+<script type="text/javascript" src="{{ asset('js/lib/toastr.js') }}"></script>
     <script type="text/javascript">
 
         $('.update').addClass('display-none');
@@ -328,19 +327,7 @@
         $('.editchid').addClass('display-none');
         $('.plusChid').addClass('display-none');
 
-// Show menu
-        $('.plusButton').on('click', function(event) {
-            $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');  //Lấy ra thằng ul gần nhất
-            $(this).next('.minusButton').removeClass('display-none');
-            $(this).addClass('display-none');
-        });
 
-// Hide Menu
-        $('.minusButton').on('click', function(event) {
-            $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
-            $(this).prev('.plusButton').removeClass('display-none');
-            $(this).addClass('display-none');
-        });
 
 
         $(document).ready(function () {
@@ -350,7 +337,20 @@
                 }
             });
 
+// Show menu
+            $(document).on('click', '.plusButton' ,function(event) {
+                    $(this).parent('.menu-item').find('ul.group-menu-item').first().removeClass('display-none');
+                    $(this).next('.minusButton').removeClass('display-none');
+                    $(this).addClass('display-none');
+                });
 
+
+// Hide Menu
+           $(document).on('click', '.minusButton' ,function(event) {
+                $(this).parent('.menu-item').find('ul.group-menu-item').first().addClass('display-none');
+                $(this).prev('.plusButton').removeClass('display-none');
+                $(this).addClass('display-none');
+           });
 
 //Create New menu
             $(document).on('click', '.create' ,function(event) {
@@ -516,8 +516,8 @@
                                         data: {id: id},
                                         success : function(res) {
                                             if (res.status) {
-                                                $(currentNode).remove();  
-                                                if ($(parentNode).find('li.menu-item').length <=0){ 
+                                                $(currentNode).remove();
+                                                if ($(parentNode).find('li.menu-item').length <=0){
                                                     $(parentNode).find('.minusButton').first().addClass('display-none');
 
                                                 }
@@ -539,7 +539,7 @@
                         $(parentNode).find('.minusButton').first().addClass('display-none');
                     }
                }
-                
+
             });
 
             // var selector = $(this).parents('li.menu-item').first().find('input.menuName').first();

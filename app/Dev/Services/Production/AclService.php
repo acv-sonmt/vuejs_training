@@ -2,25 +2,79 @@
 /**
  * Created by PhpStorm.
  * User: MSI
- * Date: 6/14/2018
- * Time: 10:28 AM
+ * Date: 8/3/2018
+ * Time: 10:44 AM
  */
 
-namespace App\Acl\Services\Production;
+namespace App\Dev\Services\Production;
 
-use App\Core\Dao\SDB;
+use App\Dev\Dao\DEVDB;
+use App\Dev\Services\Interfaces\AclServiceInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
-use App\Acl\Services\Interfaces\AclServiceInterface;
-
 class AclService extends BaseService implements AclServiceInterface
 {
+    /**
+     * innitization role in database
+     * @return bool
+     *
+     */
+    public function initRoleDataToDB(){
+        $data = $this->getListScreen();
+        $systemAdminRole = \RoleConst::SysAdminRole;
+        $roleList = $this->getRoleList();
+        //Insert sys screen data
+        DEVDB::table('sys_screens')->truncate();
+        DEVDB::table('sys_screens')->insert($data);
 
-    public function getRoleInfoFromDB()
-    {
-        return SDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
+        //Insert dev module data
+        $this->importModuleListToDB();
+
+        //Mapping role with screen
+        DEVDB::table('sys_role_map_screen')->truncate();
+        $id = 0;
+        $dataRolesMapping = array();
+        if(!empty($roleList)){
+            foreach ($roleList as $role) {
+                if(!empty($data)){
+                    foreach ($data as $item) {
+                        $id++;
+                        $isActive = 0;
+                        if ($role->role_value == $systemAdminRole) {
+                            $isActive = 1;
+                        }
+                        $dataRolesMapping[] = array(
+                            'id' => $id,
+                            'role_value' => $role->role_value,
+                            'screen_id' => $item['id'],
+                            'is_active' => $isActive
+                        );
+                    }
+                }
+
+            }
+
+        }
+
+        DEVDB::table('sys_role_map_screen')->insert($dataRolesMapping);
+        return true;
     }
-
+    public function getRoleList(){
+        $roleList = DEVDB::execSPs('DEV_GET_ROLES_LST');
+        return $roleList;
+    }
+    public function getModuleList(){
+        $moduleList = DEVDB::execSPs('DEV_GET_MODULES_LST');
+        return $moduleList;
+    }
+    public function updateActiveAcl($roleMapId, $isActive)
+    {
+        DEVDB::execSPsToDataResultCollection("DEV_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
+    }
+    public function updateActiveAclAll($isActive)
+    {
+        DEVDB::execSPsToDataResultCollection("DEV_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
+    }
     /**
      * @return array
      * HELPER: get role mapping screen to Array
@@ -28,7 +82,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function getRoleMapArray()
     {
         $resultArr = [];
-        $roleInfo = DEVDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
+        $roleInfo = DEVDB::execSPs('DEV_GET_ROLES_MAP_ACTION_LST');
         if (!empty($roleInfo)) {
             $roles = $roleInfo[0];
             $roleMap = $roleInfo[1];
@@ -95,51 +149,29 @@ class AclService extends BaseService implements AclServiceInterface
         fclose($fh);
 
     }
-
     /**
-     * @param $name : name of config file. ex: 'acl' or 'app' or 'auth'....
-     * @return mixed
-     * HELPER: Read file config
+     * @return array
+     * generation screens list, insert role map screen and merger role to database.
      */
-    public function getConfigDataFromFile($name)
+    public function generationRoleDataToDB()
     {
-        $resultArray = Config::get($name);
-        return $resultArray;
+        //Insert dev module data
+        $this->importModuleListToDB();
+        $data = $this->getListScreen();
+        DEVDB::execSPs('DEV_IMPORT_AND_MERGER_ROLE_ACT',array(json_encode($data)));
+        return true;
     }
-
-
-    public function updateActiveAcl($roleMapId, $isActive)
+    public function getRoleInfoFromDB()
     {
-        $result = SDB::execSPsToDataResultCollection("ACL_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
-        if($result->status == \SDBStatusCode::OK){
-
-           $this->generationAclFile();
-        }
-        return $result;
-    }
-    public function updateActiveAclAll($isActive)
-    {
-        $result = SDB::execSPsToDataResultCollection("ACL_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
-        if($result->status==\SDBStatusCode::OK){
-            $this->generationAclFile();
-        }
-        return $result;
-    }
-
-    public function getRoleList(){
-        $roleList = SDB::execSPs('ACL_GET_ROLES_LST');
-        return $roleList;
-    }
-    public function getModuleList(){
-        $moduleList = SDB::execSPs('ACL_GET_MODULES_LST');
-        return $moduleList;
+        return DEVDB::execSPs('DEV_GET_ROLES_MAP_ACTION_LST');
     }
     /**
      * @return array
+     * get all screen informations
      */
     protected function getListScreen()
     {
-        $controllers = [];
+        $screens = [];
         $i = 0;
         $id = 0;
         $listRouter = Route:: getRoutes()->getRoutes();
@@ -152,17 +184,17 @@ class AclService extends BaseService implements AclServiceInterface
                 $_action = explode('@', $action['controller']);
 
                 $_namespaces_chunks = explode('\\', $_action[0]);
-                $controllers[$i]['id'] = $id;
-                $controllers[$i]['module'] = $_module;
-                $controllers[$i]['controller'] = strtolower(end($_namespaces_chunks));
-                $controllers[$i]['action'] = strtolower(end($_action));
-                $controllers[$i]['screen_code']=$action['namespace']."\\".$controllers[$i]['controller']."\\".$controllers[$i]['action'];
-                $controllers[$i]['description']=$action['namespace'];
 
+                $screens[$i]['id'] = $id;
+                $screens[$i]['module'] = $_module;
+                $screens[$i]['controller'] = strtolower(end($_namespaces_chunks));
+                $screens[$i]['action'] = strtolower(end($_action));
+                $screens[$i]['screen_code']=$action['namespace']."\\".$screens[$i]['controller']."\\".$screens[$i]['action'];
+                $screens[$i]['description']=$action['namespace'];
             }
             $i++;
         }
-        return ($controllers);
+        return ($screens);
     }
     protected function getListModulesFromProjectStruct(){
         $moduleList = [];
@@ -185,8 +217,8 @@ class AclService extends BaseService implements AclServiceInterface
      * read project struct to generation module list to Database
      */
     protected function importModuleListToDB(){
-        $moduleSkipAcl = ['dev'];
-        SDB::table(('dev_modules'))->truncate();
+        $moduleSkipAcl =Config::get('app.SKIPS_ACL_MODULE');
+        DEVDB::table(('sys_modules'))->truncate();
         $dataModule = [];
         $dataModuleList =  $this->getListModulesFromProjectStruct();
         if(!empty($dataModuleList)){
@@ -202,12 +234,14 @@ class AclService extends BaseService implements AclServiceInterface
                 );
             }
         }
-        SDB::table('dev_modules')->insert($dataModule);
+        DEVDB::table('sys_modules')->insert($dataModule);
     }
-
-    public function test()
+    public function getListUser(){
+        return DEVDB::execSPs('DEV_USER_ROLE_GET_LIST_USERS');
+    }
+    public function updateUserRole($current_id, $current_role_value)
     {
-       echo 'acl.test';
+        DEVDB::execSPsToDataResultCollection("DEV_USER_ROLE_UPDATE_ROLES", array($current_id, $current_role_value));
     }
-}
 
+}
