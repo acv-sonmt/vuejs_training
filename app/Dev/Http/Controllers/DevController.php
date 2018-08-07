@@ -29,7 +29,6 @@ class DevController extends Controller
     }
     public function initProject()
     {
-        $this->devService->generateEntityClass();
         $this->aclService->initRoleDataToDB();
         $this->aclService->generationAclFile();
         //generationTranslate validation
