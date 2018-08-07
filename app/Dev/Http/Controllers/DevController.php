@@ -4,17 +4,12 @@
  */
 
 namespace App\Dev\Http\Controllers;
-use App\Core\Dao\SDB;
-use App\Dev\Entities\DataResultCollection;
 use App\Dev\Rules\UpperCaseRule;
 use App\Dev\Services\Interfaces\AclServiceInterface;
 use App\Dev\Services\Interfaces\DevServiceInterface;
-use App\Dev\Helpers\ResponseHelper;
-use App\Dev\Helpers\CommonHelper;
 use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
-use Illuminate\Support\Facades\Log;
 use Validator;
 
 class DevController extends Controller
