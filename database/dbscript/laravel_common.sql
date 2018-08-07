@@ -578,7 +578,7 @@ DROP TABLE IF EXISTS `view_category_item_level`;
 /*!50001 DROP VIEW IF EXISTS `view_category_item_level`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `view_category_item_level` AS SELECT 
+/*!50001 CREATE VIEW `view_category_item_level` AS SELECT
  1 AS `id`,
  1 AS `name`,
  1 AS `lft`,
@@ -938,24 +938,24 @@ BEGIN
 		WHERE id = parentNodeId
         LIMIT 1
 	);
-    
+
     SET SQL_SAFE_UPDATES = 0;
     UPDATE catelory
 	SET
 		lft = lft+2
     WHERE
 		lft > lft_tmp;
-	
+
 	UPDATE catelory
 	SET
 		rgt = rgt+2
     WHERE
 		rgt > lft_tmp;
-	
+
     INSERT INTO catelory(name, lft, rgt,url) VALUES(newNodeName, lft_tmp + 1, lft_tmp + 2,newUrl);
     SET newId = LAST_INSERT_ID();
     CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code","newid":',newId,'}'));
-    
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -980,7 +980,7 @@ BEGIN
 		SELECT  rgt FROM catelory
 		WHERE id = currentNodeId
         LIMIT 1);
-    
+
     UPDATE catelory
 	SET
 		lft = lft+2
@@ -991,7 +991,7 @@ BEGIN
 		rgt = rgt+2
     WHERE
 		rgt > rgt_tmp;
-	
+
     INSERT INTO catelory(name, lft, rgt,url) VALUES(newNodeName, rgt_tmp + 1, rgt_tmp + 2,newUrl);
     SET newId = LAST_INSERT_ID();
     CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code","newid":',newId,'}'));
@@ -1016,7 +1016,7 @@ BEGIN
 	DECLARE myLeft INT default 0;
     DECLARE myRight INT default 0;
 	DECLARE myWidth INT default 0;
-    
+
 	SELECT lft, rgt,(rgt - lft + 1) INTO myLeft , myRight , myWidth
 	FROM catelory
 	WHERE id = nodeId;
@@ -1048,7 +1048,7 @@ CREATE DEFINER=`root`@`localhost` PROCEDURE `DEV_CATELORY_UPDATE`(nodeId INT, pN
 BEGIN
 	UPDATE catelory SET name = pName , url = p_url WHERE id = nodeId;
     CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code"}'));
-    
+
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1391,7 +1391,7 @@ DELIMITER ;;
 CREATE DEFINER=`root`@`localhost` PROCEDURE `DEV_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
 BEGIN
 
-		
+
 		DECLARE i,j INT DEFAULT 1;
 		DECLARE countElement INT DEFAULT 0;
 		DECLARE screen_json_arr JSON;
@@ -1446,7 +1446,7 @@ BEGIN
 			;
 			SET i = i+1;
 		END WHILE;
-        
+
 		/** BUSSINESS**/
 		INSERT SCREEN_MAP_ROLE(
 			module ,
@@ -1465,7 +1465,7 @@ BEGIN
 		INNER JOIN sys_screens AS S ON
 			RMS.screen_id = S.id;
 		/** Remove all not exists in screen list**/
-        
+
 		DELETE FROM SCREEN_MAP_ROLE
         WHERE
 			SCREEN_MAP_ROLE.module NOT IN (SELECT module FROM SCREEN_INFO);
@@ -1476,7 +1476,7 @@ BEGIN
         WHERE
 			SCREEN_MAP_ROLE.action_name NOT IN (SELECT action_name FROM SCREEN_INFO);
 
-		
+
         INSERT INTO SCREEN_MAP_ROLE_INSERT(
 			module ,
 			controller,
@@ -1745,7 +1745,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_USER_ROLE_GET_LIST_USERS`()
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DEV_USER_ROLE_GET_LIST_USERS`()
 BEGIN
 
 	SELECT
@@ -1760,7 +1760,7 @@ BEGIN
     ,	sr.description AS role_description
     ,   ud.birth_date AS user_birth_date
     ,   ud.gender AS user_gender
-    
+
     FROM users AS us
     LEFT JOIN sys_roles AS sr ON
 			us.role_value = sr.role_value
@@ -1782,7 +1782,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
+CREATE DEFINER=`root`@`localhost` PROCEDURE `DEV_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
 BEGIN
 	UPDATE users
     SET
