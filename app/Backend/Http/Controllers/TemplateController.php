@@ -189,7 +189,7 @@ class TemplateController extends Controller
     public function doExports(){
         //import file
          Excel::load(('resources/export_templates/backend/ユーザー.xlsx'), function ($file) {
-            $data = DB::table('test_excel')->get();
+            $data = array('data1','data2','data3');
 
              // create file name
             Excel::create('ユーザー', function ($excel) use ($data , $file) {
