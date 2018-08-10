@@ -70,9 +70,9 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
      * @param $fileName
      * HELPER: Generation Javascript File contain text translated.
      */
-    public function generationTranslateScript($translateType, $fileName)
+    public function generationTranslateScript($fileName="text")
     {
-        $validateArray = $this->getTranslateMessageArray($translateType);
+        $validateArray = $this->getTranslateMessageArray();
         $dir = base_path() . '/public/js/lang/';
         $folderLangPath = $dir. $fileName . '.js';
         //Create file validate if not existed
@@ -81,7 +81,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         }
         $fh = fopen($folderLangPath, 'w');
         $contentFile = "//This is dev automatic generate \n ";
-        $contentFile .= "var _validateMessage = \n";
+        $contentFile .= "var _messageTranslation = \n";
         $txt = json_encode($validateArray);
         $contentFile .= $txt . ';';
         //Write content file
@@ -95,10 +95,10 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         $transTypeList = DEVDB::execSPsToDataResultCollection("DEV_GET_TRANSLATION_TYPE_LST");
         if ($transTypeList->status==\SDBStatusCode::OK) {
             foreach ($transTypeList->data as $item) {
-                $this->generationTranslateScript($item->code, $item->code);
                 $this->generationTranslateFile($item->code, $item->code);
             }
         }
+        $this->generationTranslateScript();
     }
 
     public function getNewTransComboList()
