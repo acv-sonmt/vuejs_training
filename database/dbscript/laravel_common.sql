@@ -18,7 +18,7 @@
 --
 -- Table structure for table `catelory`
 --
-
+SET GLOBAL log_bin_trust_function_creators = 1;
 DROP TABLE IF EXISTS `catelory`;
 /*!40101 SET @saved_cs_client     = @@character_set_client */;
 /*!40101 SET character_set_client = utf8 */;
