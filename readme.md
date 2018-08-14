@@ -4,7 +4,7 @@
 <p><strong>&nbsp;-&nbsp;&nbsp;</strong>MySql version &gt;= 8.0</p>
 <p><span style="color: #3366ff;"><strong>Config:</strong></span></p>
 <p>- The first checkout : run composor install.</p>
-<p>- Run database/script</p>
+<p>- Run migration.</p>
 <p><strong>- Provider </strong>of modules must registed in<strong> config/app.</strong></p>
 <p>&nbsp;</p>
 <p><span style="color: #3366ff;"><strong>CODE:</strong></span></p>
