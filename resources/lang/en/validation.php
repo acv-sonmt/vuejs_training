@@ -1,7 +1,7 @@
 <?php 
 //This is dev automatic generate 
  return [
-	"accepted"=>"The :attribute must be accepted",
+	"accepted"=>"The :attribute must be accepted.",
 	"active_url"=>"The :attribute is not a valid URL.",
 	"after"=>"The :attribute must be a date after :date.",
 	"after_or_equal"=>"The :attribute must be a date after or equal to :date.",
@@ -22,8 +22,6 @@
 	"confirmed"=>"The :attribute confirmation does not match.",
 	"date"=>"The :attribute is not a valid date.",
 	"date_format"=>"The :attribute does not match the format :format.",
-	"dff"=>"h",
-	"dffuuu"=>"h",
 	"different"=>"The :attribute and :other must be different.",
 	"digits"=>"The :attribute must be :digits digits.",
 	"digits_between"=>"The :attribute must be between :min and :max digits.",
@@ -53,7 +51,6 @@
 	"ip"=>"The :attribute must be a valid IP address.",
 	"ipv4"=>"The :attribute must be a valid IPv4 address.",
 	"ipv6"=>"The :attribute must be a valid IPv6 address.",
-	"jkl"=>"1",
 	"json"=>"The :attribute must be a valid JSON string.",
 	'lt'=>[
 		"array"=>"The :attribute must have less than :value items.",
@@ -106,7 +103,6 @@
 		"numeric"=>"test0",
 	],
 	"timezone"=>"The :attribute must be a valid zone.",
-	"TTTTT"=>"TTT323",
 	"unique"=>"The :attribute has already been taken.",
 	"uploaded"=>"The :attribute failed to upload.",
 	"url"=>"The :attribute format is invalid.",

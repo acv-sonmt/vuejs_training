@@ -16,7 +16,6 @@ class AppServiceProvider extends ServiceProvider
     {
         //Custom to logs query form database
         $this->databaseLogger();
-
     }
 
     /**

@@ -1,10 +1,7 @@
 <?php 
 //This is dev automatic generate 
  return [
-	'99'=>[
-		"numeric"=>"2",
-	],
-	"accepted"=>"：属性を受け入れる必要があります。",
+	"accepted"=>"The :attribute must be accepted.",
 	"active_url"=>"The :attribute is not a valid URL.",
 	"after"=>"The :attribute must be a date after :date.",
 	"after_or_equal"=>"The :attribute must be a date after or equal to :date.",
@@ -21,12 +18,10 @@
 		"string"=>"The :attribute must be between :min and :max characters.",
 	],
 	"boolean"=>"The :attribute field must be true or false.",
-	"common_error"=>"一般的なエラー",
+	"common_error"=>"Common error",
 	"confirmed"=>"The :attribute confirmation does not match.",
 	"date"=>"The :attribute is not a valid date.",
 	"date_format"=>"The :attribute does not match the format :format.",
-	"dff"=>"h",
-	"dffuuu"=>"h",
 	"different"=>"The :attribute and :other must be different.",
 	"digits"=>"The :attribute must be :digits digits.",
 	"digits_between"=>"The :attribute must be between :min and :max digits.",
@@ -34,7 +29,7 @@
 	"distinct"=>"The :attribute field has a duplicate value.",
 	"email"=>"The :attribute must be a valid email address.",
 	"exists"=>"The selected :attribute is invalid.",
-	"f vg"=>"re",
+	"f vg"=>"red",
 	"file"=>"The :attribute must be a file.",
 	"filled"=>"The :attribute field must have a value.",
 	'gt'=>[
@@ -56,7 +51,6 @@
 	"ip"=>"The :attribute must be a valid IP address.",
 	"ipv4"=>"The :attribute must be a valid IPv4 address.",
 	"ipv6"=>"The :attribute must be a valid IPv6 address.",
-	"jkl"=>"1",
 	"json"=>"The :attribute must be a valid JSON string.",
 	'lt'=>[
 		"array"=>"The :attribute must have less than :value items.",
@@ -109,7 +103,6 @@
 		"numeric"=>"test0",
 	],
 	"timezone"=>"The :attribute must be a valid zone.",
-	"TTTTT"=>"TTT",
 	"unique"=>"The :attribute has already been taken.",
 	"uploaded"=>"The :attribute failed to upload.",
 	"url"=>"The :attribute format is invalid.",

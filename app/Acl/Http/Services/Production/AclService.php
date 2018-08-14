@@ -186,7 +186,7 @@ class AclService extends BaseService implements AclServiceInterface
      */
     protected function importModuleListToDB(){
         $moduleSkipAcl = ['dev'];
-        SDB::table(('dev_modules'))->truncate();
+        SDB::table(('sys_modules'))->truncate();
         $dataModule = [];
         $dataModuleList =  $this->getListModulesFromProjectStruct();
         if(!empty($dataModuleList)){
@@ -202,7 +202,7 @@ class AclService extends BaseService implements AclServiceInterface
                 );
             }
         }
-        SDB::table('dev_modules')->insert($dataModule);
+        SDB::table('sys_modules')->insert($dataModule);
     }
 
     public function test()
