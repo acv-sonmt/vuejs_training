@@ -1139,7 +1139,7 @@ function init() {
                             $(this).val(val+'%');
                         }
                     } catch (e) {
-                        alert('Error input.numeric blur event: '
+                        console.log('Error input.numeric blur event: '
                             + e.message);
                     }
                 });
@@ -1417,193 +1417,6 @@ function addCommas(nStr) {
     return x1 + x2;
 }
 /**
- * Common item validation process. Call when click save button.
- *
- * @author : hiepnv - 2016/07/13 - create
- * @author :
- * @param :  element
- * @return : true/false
- * @access : public
- * @see :
- */
-function _validate2(element) {
-    if (!element) {
-        element = $('body');
-    }
-    var error = 0;
-    var cnt = 0;
-    var arrError = [];
-    _clearErrors();
-    try {
-        // validate required
-        element.find('.required:enabled').each(function() {
-            if ($(this).is(':visible') || typeof $(this).parents('.w-result-tabs').html() != 'undefined') {
-                if (($(this).is("input") || $(this).is("textarea")) && $.trim($(this).val()) == '') {
-                    $(this).addClass('hasError');
-                    arrError.push($(this).attr('titleText')+_text[27]);
-                    error++;
-                } else if ($(this).is("select") && ($(this).val() == '0' || $(this).val() == undefined)) {
-                    $(this).addClass('hasError');
-                    arrError.push($(this).attr('titleText')+_text[27]);
-                    error++;
-                }
-            }
-        });
-        element.find('.checkbox-required').each(function() {
-            $(this).find('input').each(function(){
-                if($(this).attr('checked')=='checked'){
-                    cnt ++;
-                }
-            });
-            if(cnt == 0  ){
-                $(this).addClass('hasError');
-                arrError.push({id:$(this).attr('id') , value:$(this).attr('titleText')+_text[27]});
-                error++;
-            }
-        });
-        element.find('.email').each(function() {
-            if (!_validateEmail($(this).val())) {
-                $(this).addClass('hasError');
-                arrError.push($(this).attr('titleText')+_text[90]);
-                error++;
-            }
-        });
-        //quangnk update 23/07/2016
-        element.find('.from-date').each(function() {
-            if (!_validateFromToDate($(this).val(),$(this).parents('.form-rows').find('.to-date').val())) {
-                $(this).addClass('hasError');
-                arrError.push(_text[67]);
-                error++;
-            }
-        });
-
-        element.find('.from-hh').each(function() {
-            var from_hh = $(this).find('option:selected').text();
-            var from_mm = $(this).parents('.form-rows').find('.from-mm option:selected').text();
-            var to_hh = $(this).parents('.form-rows').find('.to-hh option:selected').text();
-            var to_mm = $(this).parents('.form-rows').find('.to-mm option:selected').text();
-            var from = from_hh.toString() + from_mm.toString();
-            var to	 = to_hh.toString() + to_mm.toString();
-            if (!_validateFromToTime(from,to)) {
-                $(this).addClass('hasError');
-                arrError.push($(this).attr('titleText')+_text[163]);
-                error++;
-            }
-            if (!_validateFromToTime2(from,to)) {
-                $(this).addClass('hasError');
-                arrError.push($(this).attr('titleText')+_text[236]);
-                error++;
-            }
-        });
-        //confirm password quangnk update 2016/08/05
-        if(element.find('.password').val()!=element.find('.confirm-password').val()){
-            $(this).addClass('hasError');
-            arrError.push(element.find('.password').attr('titleText')+_text[201]);
-            error++;
-        }
-        if(element.find('.password').length > 0 && element.find('.password').val()!='' && element.find('.password').val().length < 6){
-            $(this).addClass('hasError');
-            arrError.push(element.find('.password').attr('titleText')+_text[215]);
-            error++;
-        }
-        // trinhnv update follow EST_005
-        var count1	=	0;
-        var count2	=	0;
-        $('.tbn-amount-fil002').find('select').each(function(){
-            if($(this).val()==6){
-                count1++;
-            }
-        });
-        $('.tbn-amount-fil001').find('select').each(function(){
-            if($(this).val()==7){
-                count2++;
-            }
-        });
-        if(count1 > 1){
-            $('.tbn-amount-fil002').find('select').each(function(){
-                if($(this).val()==6){
-                    $(this).addClass('hasError');
-                    arrError.push('1個あたりの料金項目' + _text[196]);
-                }
-            });
-        }
-        if(count2 > 1){
-            $('.tbn-amount-fil001').find('select').each(function(){
-                if($(this).val()==7){
-                    $(this).addClass('hasError');
-                    arrError.push('受注全体の金額項目' + _text[196]);
-                }
-            });
-        }
-        if(count1 > 1|| count2>1){
-            error++;
-        }
-        if (error > 0) {
-            messageError(arrError);
-            $('.hasError:first').focus();
-            return false;
-        } else {
-            return true;
-        }
-    } catch (e) {
-        alert('_validate2: ' + e.toString());
-    }
-}
-/**
- * Common item validation process. Call when click save button.
- *
- * @author : viettd - 2015/10/02 - create
- * @author :
- * @param :
- *            element
- * @return : true/false
- * @access : public
- * @see :
- */
-function _validate(element) {
-    if (!element) {
-        element = $('body');
-    }
-    var error = 0;
-    var cnt = 0;
-    try {
-        _clearErrors();
-        // validate required
-        element.find('.required:enabled:not([readonly])').each(function() {
-
-            //biennv 2016/01/14 fix required in tab
-            if ($(this).is(':visible') || typeof $(this).parents('.w-result-tabs').html() != 'undefined') {
-                if (($(this).is("input") || $(this).is("textarea")) && $.trim($(this).val()) == '') {
-                    $(this).errorStyle(_text[27]);
-                    error++;
-                } else if ($(this).is("select") && ($(this).val() == '0' || $(this).val() == undefined)) {
-                    $(this).errorStyle(_text[27]);
-                    error++;
-                }
-            }
-        });
-        element.find('.checkbox-required').each(function() {
-            $(this).find('input').each(function(){
-                if($(this).attr('checked')=='checked'){
-                    cnt ++;
-                }
-            });
-            if(cnt == 0  ){
-                $(this).errorStyle(_text[27]);
-                $(this).css('background','#FDB8BA');
-                error++;
-            }
-        });
-        if (error > 0) {
-            return false;
-        } else {
-            return true;
-        }
-    } catch (e) {
-        alert('_validate: ' + e.toString());
-    }
-}
-/**
  * format phone, fax number
  *
  * @param string
@@ -1673,7 +1486,7 @@ function _validateLength(string, length) {
             return true;
         }
     } catch (e) {
-        alert('_validateLength: ' + e);
+        console.log('_validateLength: ' + e);
     }
 }
 /**
@@ -1692,7 +1505,7 @@ function _validateFullSize(string) {
             return false;
         }
     } catch (e) {
-        alert('_validateFullSize: ' + e);
+        console.log('_validateFullSize: ' + e);
     }
 }
 /**
@@ -1713,7 +1526,7 @@ function _validateZipCd(zip_cd) {
             return false;
         }
     } catch (e) {
-        alert('_validateZipCd: ' + e);
+        console.log('_validateZipCd: ' + e);
     }
 }
 /**
@@ -1733,98 +1546,10 @@ function _validateZipCdEn(zip_cd_en) {
             return false;
         }
     } catch (e) {
-        alert('_validateZipCdEn: ' + e);
-    }
-}
-/**
- * Check Date
- *
- * @param string
- * @returns {Boolean}
- */
-function _validateYyyyMmDd(string) {
-    if (string == '') {
-        return true;
-    }
-    if (string.length == 8) {
-        string = string.substring(0, 4) + '/' + string.substring(4, 6) + '/'
-            + string.substring(6);
-    }
-    string = _formatString(string);
-    var reg = /^((19|[2-9][0-9])[0-9]{2})[\/.](0[13578]|1[02])[\/.]31|((19|[2-9][0-9])[0-9]{2}[\/.](01|0[3-9]|1[0-2])[\/.](29|30))|((19|[2-9][0-9])[0-9]{2}[\/.](0[1-9]|1[0-2])[\/.](0[1-9]|1[0-9]|2[0-8]))|((((19|[2-9][0-9])(04|08|[2468][048]|[13579][26]))|2000)[\/.](02)[\/.]29)$/;
-    if (string.match(reg)) {
-        return true;
-    } else {
-        return false;
+        console.log('_validateZipCdEn: ' + e);
     }
 }
 
-/**
- * Check Date
- *
- * @param string
- * @returns {Boolean}
- */
-function _validateYyyyMmDd2(string) {
-    if (string == '') {
-        return true;
-    }
-    if (string.length == 8) {
-        string = string.substring(0, 4) + '/' + string.substring(4, 6) + '/'
-            + string.substring(6);
-    }
-    string = _formatString(string);
-    var reg = /^([0-9]{4})[\/.](0[13578]|1[02])[\/.]31|([0-9]{4}[\/.](01|0[3-9]|1[0-2])[\/.](29|30))|([0-9]{4}[\/.](0[1-9]|1[0-2])[\/.](0[1-9]|1[0-9]|2[0-8]))|((((1[0-9]|[2-9][0-9])(04|08|[2468][048]|[13579][26]))|2000)[\/.](02)[\/.]29)$/;
-    if (string.match(reg)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
- * Check Date
- *
- * @param string
- * @returns {Boolean}
- */
-function _validateYyyyMm(string) {
-    if (string == '') {
-        return true;
-    }
-    if (string.length == 6) {
-        string = string.substring(0, 4) + '/' + string.substring(4);
-    }
-    string = _formatString(string);
-    var reg = /^((1[0-9]|[2-9][0-9])[0-9]{2})[\/.](0[1-9]|1[0-2])$/;
-    if (string.match(reg)) {
-        return true;
-    } else {
-        return false;
-    }
-}
-
-/**
- * Check Date
- *
- * @param string
- * @returns {Boolean}
- */
-function _validateYyyy(string) {
-    if (string == '') {
-        return true;
-    }
-    if (string.length == 6) {
-        string = string.substring(0, 4) + '/' + string.substring(4);
-    }
-    string = _formatString(string);
-    var reg = /^((1[0-9]|[2-9][0-9])[0-9]{2})[\/.](0[1-9]|1[0-2])$/;
-    if (string.match(reg)) {
-        return true;
-    } else {
-        return false;
-    }
-}
 
 /**
  * function validate money
@@ -1857,7 +1582,7 @@ function _validateMoney(string, real, img) {
             }
         }
     } catch (e) {
-        alert('_validateMoney: ' + e);
+        console.log('_validateMoney: ' + e);
     }
 }
 
@@ -1896,41 +1621,12 @@ function _validateZero(string) {
             return false;
         }
     } catch (e) {
-        alert('_validateZero: ' + e);
+        console.log('_validateZero: ' + e);
     }
 }
-/**
- * Validate length
- *
- * @param value_input
- * @param length_compare
- * @returns {Boolean}
- */
-function _validateEqualLength(value_input, length_compare) {
-    try {
-        var string = $.trim(value_input);
-        if (string == '') {
-            return true;
-        } else {
-            if (string.length != length_compare) {
-                return false;
-            } else {
-                return true;
-            }
-        }
-    } catch (e) {
-        alert('_validateEqualLength: ' + e);
-    }
-}
+
 /**
  * _formatInput
- *
- * @author : viettd - 2015/10/05 - create
- * @author :
- * @return : null
- * @access : public
- * @see :
- * @mode :  not param func resizeMaster , 1 = mode function resizeMaster2()
  */
 function _formatInput(mode) {
     try {
@@ -2038,73 +1734,6 @@ function _formatInput(mode) {
                     input = '000000000000000' + '' + input;
                     var tmp = input.substring(input.length,input.length - maxLength);
                     $(this).val(tmp);
-                }
-            }
-        });
-        $('.w-title-item label, .lbl-title, .login-info, .lbl-title-no-bg').each(function(){
-            var eleTitle = $(this);
-            var title  = $(this).text();
-            var str = '';
-            if(title.length <= 7){
-                var noSpace = $(this).attr("noSpace");
-
-                if (typeof noSpace == 'undefined'){
-                    str = title.split('').join(' ');
-                    eleTitle.text(str);
-                }
-
-            }
-        });
-        $('.m-div-title:not(.no-space-text)').each(function(){
-            var eleTitle = $(this);
-            var title  = $(this).text();
-            var str = '';
-            if(title.length <= 7){
-                var noSpace = $(this).attr("noSpace");
-                if (typeof noSpace == 'undefined'){
-                    str = title.split('').join(' ');
-                    eleTitle.text(str);
-                }
-            }
-        });
-        //quangnk update 2016/07/15
-        $('.nav-tabs li a').each(function(){
-            var eleTitle = $(this);
-            var title  = $(this).text();
-            var str = '';
-            if(title.length <= 7){
-                str = title.split('').join(' ');
-                eleTitle.text(str);
-            }
-        });
-        //quangnk update 2016/07/15
-        $('.tbl-header:not(.no-space-text) thead tr th').each(function(){
-
-            if($(this).find('select').length == 0  && $(this).find('input').length == 0 && $(this).find('button').length==0 && $(this).find('img').length==0 && $(this).find('span').length==0){
-                var eleTitle = $(this);
-                var title  = $.trim($(this).text());
-                var str = '';
-                if(title.length <= 7){
-                    str = title.split('').join(' ');
-                    eleTitle.text(str);
-                }
-            }
-        });
-        $('.tbl-header-1:not(.no-space-text) thead tr th').each(function(){
-            if($(this).find('select').length == 0  && $(this).find('input').length == 0 && $(this).find('button').length==0 && $(this).find('img').length==0 && $(this).find('span').length==0){
-                var eleTitle = $(this);
-                var title  = $.trim($(this).text());
-                var str = '';
-                if(title.length <= 7){
-                    var noSpace = $(this).attr("noSpace");
-                    if (typeof noSpace == 'undefined'){
-                        str = title.split('').join(' ');
-                        eleTitle.text(str);
-                    }
-
-                    /*
-                    str = title.split('').join(' ');
-                    eleTitle.text(str);*/
                 }
             }
         });
