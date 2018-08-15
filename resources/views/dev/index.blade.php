@@ -40,8 +40,8 @@
                                 - Generate all of EntityClass for Dev<br>
                                 - Generation Role Data, insert to DB: get all screen -> insert screen to DB, update DB to set active all for administrator role initialization<br>
                                 - Generation Acl config file : .\config\acl.php<br>
-                                - Generation translate file :  .\resources\lang\.* <br>
-                                <span class="text-warning font-weight-bold">Warning: rewrite file in .\resources\lang\.* from Database, old data in file will be remove</span>
+                                - Import translate file   .\resources\lang\.* to database <br>
+                                <span class="text-warning font-weight-bold">Warning: rewrite file in .\resources\lang\.* to Database, old data in sys_translation will be remove</span>
                             </div>
                             <div class="col-md-2 text-right"><button id="init-role" class="btn-primary btn">Reset & Innitization</button></div>
                         </div>
