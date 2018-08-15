@@ -32,7 +32,7 @@ class DevController extends Controller
         $this->aclService->initRoleDataToDB();
         $this->aclService->generationAclFile();
         //generationTranslate validation
-        $this->translateService->generationTranslateFileAndScript();
+        $this->translateService->generationTransDataToDB();
     }
 
     /**

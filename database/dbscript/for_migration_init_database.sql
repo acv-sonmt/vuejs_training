@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 192.168.3.87    Database: test_migration
+-- Host: 192.168.3.87    Database: laravel_common
 -- ------------------------------------------------------
 -- Server version	8.0.11
 
@@ -19,7 +19,7 @@
 -- Position to start replication or point-in-time recovery from
 --
 
--- CHANGE MASTER TO MASTER_LOG_FILE='binlog.000023', MASTER_LOG_POS=155;
+-- CHANGE MASTER TO MASTER_LOG_FILE='binlog.000033', MASTER_LOG_POS=155;
 
 --
 -- Table structure for table `catelory`
@@ -90,7 +90,7 @@ CREATE TABLE `sys_modules` (
   `order_value` int(11) DEFAULT NULL,
   `is_skip_acl` tinyint(4) DEFAULT NULL COMMENT 'skips show acl in form, but not affect to action check acl',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,6 +99,7 @@ CREATE TABLE `sys_modules` (
 
 LOCK TABLES `sys_modules` WRITE;
 /*!40000 ALTER TABLE `sys_modules` DISABLE KEYS */;
+REPLACE INTO `sys_modules` VALUES (1,'dev','dev',1,1),(2,'laravel','laravel',2,1),(3,'auth','auth',3,0),(4,'acl','acl',4,0),(5,'api','api',5,0),(6,'backend','backend',6,0),(7,'frontend','frontend',7,0);
 /*!40000 ALTER TABLE `sys_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -226,7 +227,7 @@ CREATE TABLE `sys_translation` (
   `updated_at` datetime DEFAULT NULL,
   `is_deleted` tinyint(1) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=289 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -235,7 +236,6 @@ CREATE TABLE `sys_translation` (
 
 LOCK TABLES `sys_translation` WRITE;
 /*!40000 ALTER TABLE `sys_translation` DISABLE KEYS */;
-REPLACE INTO `sys_translation` VALUES (1,'en','auth','not_active','Account mus actived','','2018-08-14 17:08:43',NULL,0),(2,'en','auth','throttle','Too many login attempts. Please try again in :seconds seconds.','','2018-08-14 17:08:43',NULL,0),(3,'en','pagination','next','Next &raquo;','','2018-08-14 17:08:43',NULL,0),(4,'en','pagination','previous','&laquo; Previous','','2018-08-14 17:08:43',NULL,0),(5,'en','passwords','password','Passwords must be at least six characters and match the confirmation.','','2018-08-14 17:08:43',NULL,0),(6,'en','passwords','reset','Your password has been reset!','','2018-08-14 17:08:43',NULL,0),(7,'en','passwords','sent','We have e-mailed your password reset link!','','2018-08-14 17:08:43',NULL,0),(8,'en','passwords','token','This password reset token is invalid.','','2018-08-14 17:08:43',NULL,0),(9,'en','passwords','user','We can\'t find a user with that e-mail address.','','2018-08-14 17:08:43',NULL,0),(10,'en','validation','accepted','The :attribute must be accepted.','','2018-08-14 17:08:43',NULL,0),(11,'en','validation','active_url','The :attribute is not a valid URL.','','2018-08-14 17:08:43',NULL,0),(12,'en','validation','after','The :attribute must be a date after :date.','','2018-08-14 17:08:43',NULL,0),(13,'en','validation','after_or_equal','The :attribute must be a date after or equal to :date.','','2018-08-14 17:08:43',NULL,0),(14,'en','validation','alpha','The :attribute may only contain letters.','','2018-08-14 17:08:43',NULL,0),(15,'en','validation','alpha_dash','The :attribute may only contain letters, numbers, dashes and underscores.','','2018-08-14 17:08:43',NULL,0),(16,'en','validation','alpha_num','The :attribute may only contain letters and numbers.','','2018-08-14 17:08:43',NULL,0),(17,'en','validation','array','The :attribute must be an array.','','2018-08-14 17:08:43',NULL,0),(18,'en','validation','before','The :attribute must be a date before :date.','','2018-08-14 17:08:43',NULL,0),(19,'en','validation','before_or_equal','The :attribute must be a date before or equal to :date.','','2018-08-14 17:08:43',NULL,0),(20,'en','validation','between','The :attribute must have between :min and :max items.','array','2018-08-14 17:08:43',NULL,0),(21,'en','validation','between','The :attribute must be between :min and :max kilobytes.','file','2018-08-14 17:08:43',NULL,0),(22,'en','validation','between','The :attribute must be between :min and :max.','numeric','2018-08-14 17:08:43',NULL,0),(23,'en','validation','between','The :attribute must be between :min and :max characters.','string','2018-08-14 17:08:43',NULL,0),(24,'en','validation','boolean','The :attribute field must be true or false.','','2018-08-14 17:08:43',NULL,0),(25,'en','validation','common_error','Common error','','2018-08-14 17:08:43',NULL,0),(26,'en','validation','confirmed','The :attribute confirmation does not match.','','2018-08-14 17:08:43',NULL,0),(27,'en','validation','date','The :attribute is not a valid date.','','2018-08-14 17:08:43',NULL,0),(28,'en','validation','date_format','The :attribute does not match the format :format.','','2018-08-14 17:08:43',NULL,0),(29,'en','validation','different','The :attribute and :other must be different.','','2018-08-14 17:08:43',NULL,0),(30,'en','validation','digits','The :attribute must be :digits digits.','','2018-08-14 17:08:43',NULL,0),(31,'en','validation','digits_between','The :attribute must be between :min and :max digits.','','2018-08-14 17:08:43',NULL,0),(32,'en','validation','dimensions','The :attribute has invalid image dimensions.','','2018-08-14 17:08:43',NULL,0),(33,'en','validation','distinct','The :attribute field has a duplicate value.','','2018-08-14 17:08:43',NULL,0),(34,'en','validation','email','The :attribute must be a valid email address.','','2018-08-14 17:08:43',NULL,0),(35,'en','validation','exists','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(36,'en','validation','f vg','red','','2018-08-14 17:08:43',NULL,0),(37,'en','validation','file','The :attribute must be a file.','','2018-08-14 17:08:43',NULL,0),(38,'en','validation','filled','The :attribute field must have a value.','','2018-08-14 17:08:43',NULL,0),(39,'en','validation','gt','The :attribute must have more than :value items.','array','2018-08-14 17:08:43',NULL,0),(40,'en','validation','gt','The :attribute must be greater than :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(41,'en','validation','gt','The :attribute must be greater than :value.','numeric','2018-08-14 17:08:43',NULL,0),(42,'en','validation','gt','The :attribute must be greater than :value characters.','string','2018-08-14 17:08:43',NULL,0),(43,'en','validation','gte','The :attribute must have :value items or more.','array','2018-08-14 17:08:43',NULL,0),(44,'en','validation','gte','The :attribute must be greater than or equal :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(45,'en','validation','gte','The :attribute must be greater than or equal :value.','numeric','2018-08-14 17:08:43',NULL,0),(46,'en','validation','gte','The :attribute must be greater than or equal :value characters.','string','2018-08-14 17:08:43',NULL,0),(47,'en','validation','image','The :attribute must be an image.','','2018-08-14 17:08:43',NULL,0),(48,'en','validation','in','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(49,'en','validation','integer','The :attribute must be an integer.','','2018-08-14 17:08:43',NULL,0),(50,'en','validation','in_array','The :attribute field does not exist in :other.','','2018-08-14 17:08:43',NULL,0),(51,'en','validation','ip','The :attribute must be a valid IP address.','','2018-08-14 17:08:43',NULL,0),(52,'en','validation','ipv4','The :attribute must be a valid IPv4 address.','','2018-08-14 17:08:43',NULL,0),(53,'en','validation','ipv6','The :attribute must be a valid IPv6 address.','','2018-08-14 17:08:43',NULL,0),(54,'en','validation','json','The :attribute must be a valid JSON string.','','2018-08-14 17:08:43',NULL,0),(55,'en','validation','lt','The :attribute must have less than :value items.','array','2018-08-14 17:08:43',NULL,0),(56,'en','validation','lt','The :attribute must be less than :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(57,'en','validation','lt','The :attribute must be less than :value.','numeric','2018-08-14 17:08:43',NULL,0),(58,'en','validation','lt','The :attribute must be less than :value characters.','string','2018-08-14 17:08:43',NULL,0),(59,'en','validation','lte','The :attribute must not have more than :value items.','array','2018-08-14 17:08:43',NULL,0),(60,'en','validation','lte','The :attribute must be less than or equal :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(61,'en','validation','lte','The :attribute must be less than or equal :value.','numeric','2018-08-14 17:08:43',NULL,0),(62,'en','validation','lte','The :attribute must be less than or equal :value characters.','string','2018-08-14 17:08:43',NULL,0),(63,'en','validation','max','The :attribute may not have more than :max items.','array','2018-08-14 17:08:43',NULL,0),(64,'en','validation','max','The :attribute may not be greater than :max kilobytes.','file','2018-08-14 17:08:43',NULL,0),(65,'en','validation','max','The :attribute may not be greater than :max.','numeric','2018-08-14 17:08:43',NULL,0),(66,'en','validation','max','The :attribute may not be greater than :max characters.','string','2018-08-14 17:08:43',NULL,0),(67,'en','validation','mimes','The :attribute must be a file of type: :values.','','2018-08-14 17:08:43',NULL,0),(68,'en','validation','mimetypes','The :attribute must be a file of type: :values.','','2018-08-14 17:08:43',NULL,0),(69,'en','validation','min','The :attribute must have at least :min items.','array','2018-08-14 17:08:43',NULL,0),(70,'en','validation','min','The :attribute must be at least :min kilobytes.','file','2018-08-14 17:08:43',NULL,0),(71,'en','validation','min','The :attribute must be at least :min.','numeric','2018-08-14 17:08:43',NULL,0),(72,'en','validation','min','The :attribute must be at least :min characters.','string','2018-08-14 17:08:43',NULL,0),(73,'en','validation','not_in','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(74,'en','validation','not_regex','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(75,'en','validation','numeric','The :attribute must be a number.','','2018-08-14 17:08:43',NULL,0),(76,'en','validation','present','The :attribute field must be present.','','2018-08-14 17:08:43',NULL,0),(77,'en','validation','regex','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(78,'en','validation','required','The :attribute field is required.','','2018-08-14 17:08:43',NULL,0),(79,'en','validation','required_if','The :attribute field is required when :other is :value.','','2018-08-14 17:08:43',NULL,0),(80,'en','validation','required_unless','The :attribute field is required unless :other is in :values.','','2018-08-14 17:08:43',NULL,0),(81,'en','validation','required_with','The :attribute field is required when :values is present.','','2018-08-14 17:08:43',NULL,0),(82,'en','validation','required_without','The :attribute field is required when :values is not present.','','2018-08-14 17:08:43',NULL,0),(83,'en','validation','required_without_all','The :attribute field is required when none of :values are present.','','2018-08-14 17:08:43',NULL,0),(84,'en','validation','required_with_all','The :attribute field is required when :values is present.','','2018-08-14 17:08:43',NULL,0),(85,'en','validation','same','The :attribute and :other must match.','','2018-08-14 17:08:43',NULL,0),(86,'en','validation','size','The :attribute must contain :size items.','array','2018-08-14 17:08:43',NULL,0),(87,'en','validation','size','The :attribute must be :size kilobytes.','file','2018-08-14 17:08:43',NULL,0),(88,'en','validation','size','The :attribute must be :size.','numeric','2018-08-14 17:08:43',NULL,0),(89,'en','validation','size','The :attribute must be :size characters.','string','2018-08-14 17:08:43',NULL,0),(90,'en','validation','string','The :attribute must be a string.','','2018-08-14 17:08:43',NULL,0),(91,'en','validation','test8','test0','file','2018-08-14 17:08:43',NULL,0),(92,'en','validation','test8','test0','numeric','2018-08-14 17:08:43',NULL,0),(93,'en','validation','timezone','The :attribute must be a valid zone.','','2018-08-14 17:08:43',NULL,0),(94,'en','validation','unique','The :attribute has already been taken.','','2018-08-14 17:08:43',NULL,0),(95,'en','validation','uploaded','The :attribute failed to upload.','','2018-08-14 17:08:43',NULL,0),(96,'en','validation','url','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(97,'fr','auth','not_active','Account mus actived','','2018-08-14 17:08:43',NULL,0),(98,'fr','auth','throttle','Too many login attempts. Please try again in :seconds seconds.','','2018-08-14 17:08:43',NULL,0),(99,'fr','pagination','next','Next &raquo;','','2018-08-14 17:08:43',NULL,0),(100,'fr','pagination','previous','&laquo; Previous','','2018-08-14 17:08:43',NULL,0),(101,'fr','passwords','password','Passwords must be at least six characters and match the confirmation.','','2018-08-14 17:08:43',NULL,0),(102,'fr','passwords','reset','Your password has been reset!','','2018-08-14 17:08:43',NULL,0),(103,'fr','passwords','sent','We have e-mailed your password reset link!','','2018-08-14 17:08:43',NULL,0),(104,'fr','passwords','token','This password reset token is invalid.','','2018-08-14 17:08:43',NULL,0),(105,'fr','passwords','user','We can\'t find a user with that e-mail address.','','2018-08-14 17:08:43',NULL,0),(106,'fr','validation','accepted','The :attribute must be accepted.','','2018-08-14 17:08:43',NULL,0),(107,'fr','validation','active_url','The :attribute is not a valid URL.','','2018-08-14 17:08:43',NULL,0),(108,'fr','validation','after','The :attribute must be a date after :date.','','2018-08-14 17:08:43',NULL,0),(109,'fr','validation','after_or_equal','The :attribute must be a date after or equal to :date.','','2018-08-14 17:08:43',NULL,0),(110,'fr','validation','alpha','The :attribute may only contain letters.','','2018-08-14 17:08:43',NULL,0),(111,'fr','validation','alpha_dash','The :attribute may only contain letters, numbers, dashes and underscores.','','2018-08-14 17:08:43',NULL,0),(112,'fr','validation','alpha_num','The :attribute may only contain letters and numbers.','','2018-08-14 17:08:43',NULL,0),(113,'fr','validation','array','The :attribute must be an array.','','2018-08-14 17:08:43',NULL,0),(114,'fr','validation','before','The :attribute must be a date before :date.','','2018-08-14 17:08:43',NULL,0),(115,'fr','validation','before_or_equal','The :attribute must be a date before or equal to :date.','','2018-08-14 17:08:43',NULL,0),(116,'fr','validation','between','The :attribute must have between :min and :max items.','array','2018-08-14 17:08:43',NULL,0),(117,'fr','validation','between','The :attribute must be between :min and :max kilobytes.','file','2018-08-14 17:08:43',NULL,0),(118,'fr','validation','between','The :attribute must be between :min and :max.','numeric','2018-08-14 17:08:43',NULL,0),(119,'fr','validation','between','The :attribute must be between :min and :max characters.','string','2018-08-14 17:08:43',NULL,0),(120,'fr','validation','boolean','The :attribute field must be true or false.','','2018-08-14 17:08:43',NULL,0),(121,'fr','validation','common_error','Common error','','2018-08-14 17:08:43',NULL,0),(122,'fr','validation','confirmed','The :attribute confirmation does not match.','','2018-08-14 17:08:43',NULL,0),(123,'fr','validation','date','The :attribute is not a valid date.','','2018-08-14 17:08:43',NULL,0),(124,'fr','validation','date_format','The :attribute does not match the format :format.','','2018-08-14 17:08:43',NULL,0),(125,'fr','validation','different','The :attribute and :other must be different.','','2018-08-14 17:08:43',NULL,0),(126,'fr','validation','digits','The :attribute must be :digits digits.','','2018-08-14 17:08:43',NULL,0),(127,'fr','validation','digits_between','The :attribute must be between :min and :max digits.','','2018-08-14 17:08:43',NULL,0),(128,'fr','validation','dimensions','The :attribute has invalid image dimensions.','','2018-08-14 17:08:43',NULL,0),(129,'fr','validation','distinct','The :attribute field has a duplicate value.','','2018-08-14 17:08:43',NULL,0),(130,'fr','validation','email','The :attribute must be a valid email address.','','2018-08-14 17:08:43',NULL,0),(131,'fr','validation','exists','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(132,'fr','validation','f vg','red','','2018-08-14 17:08:43',NULL,0),(133,'fr','validation','file','The :attribute must be a file.','','2018-08-14 17:08:43',NULL,0),(134,'fr','validation','filled','The :attribute field must have a value.','','2018-08-14 17:08:43',NULL,0),(135,'fr','validation','gt','The :attribute must have more than :value items.','array','2018-08-14 17:08:43',NULL,0),(136,'fr','validation','gt','The :attribute must be greater than :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(137,'fr','validation','gt','The :attribute must be greater than :value.','numeric','2018-08-14 17:08:43',NULL,0),(138,'fr','validation','gt','The :attribute must be greater than :value characters.','string','2018-08-14 17:08:43',NULL,0),(139,'fr','validation','gte','The :attribute must have :value items or more.','array','2018-08-14 17:08:43',NULL,0),(140,'fr','validation','gte','The :attribute must be greater than or equal :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(141,'fr','validation','gte','The :attribute must be greater than or equal :value.','numeric','2018-08-14 17:08:43',NULL,0),(142,'fr','validation','gte','The :attribute must be greater than or equal :value characters.','string','2018-08-14 17:08:43',NULL,0),(143,'fr','validation','image','The :attribute must be an image.','','2018-08-14 17:08:43',NULL,0),(144,'fr','validation','in','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(145,'fr','validation','integer','The :attribute must be an integer.','','2018-08-14 17:08:43',NULL,0),(146,'fr','validation','in_array','The :attribute field does not exist in :other.','','2018-08-14 17:08:43',NULL,0),(147,'fr','validation','ip','The :attribute must be a valid IP address.','','2018-08-14 17:08:43',NULL,0),(148,'fr','validation','ipv4','The :attribute must be a valid IPv4 address.','','2018-08-14 17:08:43',NULL,0),(149,'fr','validation','ipv6','The :attribute must be a valid IPv6 address.','','2018-08-14 17:08:43',NULL,0),(150,'fr','validation','json','The :attribute must be a valid JSON string.','','2018-08-14 17:08:43',NULL,0),(151,'fr','validation','lt','The :attribute must have less than :value items.','array','2018-08-14 17:08:43',NULL,0),(152,'fr','validation','lt','The :attribute must be less than :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(153,'fr','validation','lt','The :attribute must be less than :value.','numeric','2018-08-14 17:08:43',NULL,0),(154,'fr','validation','lt','The :attribute must be less than :value characters.','string','2018-08-14 17:08:43',NULL,0),(155,'fr','validation','lte','The :attribute must not have more than :value items.','array','2018-08-14 17:08:43',NULL,0),(156,'fr','validation','lte','The :attribute must be less than or equal :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(157,'fr','validation','lte','The :attribute must be less than or equal :value.','numeric','2018-08-14 17:08:43',NULL,0),(158,'fr','validation','lte','The :attribute must be less than or equal :value characters.','string','2018-08-14 17:08:43',NULL,0),(159,'fr','validation','max','The :attribute may not have more than :max items.','array','2018-08-14 17:08:43',NULL,0),(160,'fr','validation','max','The :attribute may not be greater than :max kilobytes.','file','2018-08-14 17:08:43',NULL,0),(161,'fr','validation','max','The :attribute may not be greater than :max.','numeric','2018-08-14 17:08:43',NULL,0),(162,'fr','validation','max','The :attribute may not be greater than :max characters.','string','2018-08-14 17:08:43',NULL,0),(163,'fr','validation','mimes','The :attribute must be a file of type: :values.','','2018-08-14 17:08:43',NULL,0),(164,'fr','validation','mimetypes','The :attribute must be a file of type: :values.','','2018-08-14 17:08:43',NULL,0),(165,'fr','validation','min','The :attribute must have at least :min items.','array','2018-08-14 17:08:43',NULL,0),(166,'fr','validation','min','The :attribute must be at least :min kilobytes.','file','2018-08-14 17:08:43',NULL,0),(167,'fr','validation','min','The :attribute must be at least :min.','numeric','2018-08-14 17:08:43',NULL,0),(168,'fr','validation','min','The :attribute must be at least :min characters.','string','2018-08-14 17:08:43',NULL,0),(169,'fr','validation','not_in','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(170,'fr','validation','not_regex','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(171,'fr','validation','numeric','The :attribute must be a number.','','2018-08-14 17:08:43',NULL,0),(172,'fr','validation','present','The :attribute field must be present.','','2018-08-14 17:08:43',NULL,0),(173,'fr','validation','regex','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(174,'fr','validation','required','The :attribute field is required.','','2018-08-14 17:08:43',NULL,0),(175,'fr','validation','required_if','The :attribute field is required when :other is :value.','','2018-08-14 17:08:43',NULL,0),(176,'fr','validation','required_unless','The :attribute field is required unless :other is in :values.','','2018-08-14 17:08:43',NULL,0),(177,'fr','validation','required_with','The :attribute field is required when :values is present.','','2018-08-14 17:08:43',NULL,0),(178,'fr','validation','required_without','The :attribute field is required when :values is not present.','','2018-08-14 17:08:43',NULL,0),(179,'fr','validation','required_without_all','The :attribute field is required when none of :values are present.','','2018-08-14 17:08:43',NULL,0),(180,'fr','validation','required_with_all','The :attribute field is required when :values is present.','','2018-08-14 17:08:43',NULL,0),(181,'fr','validation','same','The :attribute and :other must match.','','2018-08-14 17:08:43',NULL,0),(182,'fr','validation','size','The :attribute must contain :size items.','array','2018-08-14 17:08:43',NULL,0),(183,'fr','validation','size','The :attribute must be :size kilobytes.','file','2018-08-14 17:08:43',NULL,0),(184,'fr','validation','size','The :attribute must be :size.','numeric','2018-08-14 17:08:43',NULL,0),(185,'fr','validation','size','The :attribute must be :size characters.','string','2018-08-14 17:08:43',NULL,0),(186,'fr','validation','string','The :attribute must be a string.','','2018-08-14 17:08:43',NULL,0),(187,'fr','validation','test8','test0','file','2018-08-14 17:08:43',NULL,0),(188,'fr','validation','test8','test0','numeric','2018-08-14 17:08:43',NULL,0),(189,'fr','validation','timezone','The :attribute must be a valid zone.','','2018-08-14 17:08:43',NULL,0),(190,'fr','validation','unique','The :attribute has already been taken.','','2018-08-14 17:08:43',NULL,0),(191,'fr','validation','uploaded','The :attribute failed to upload.','','2018-08-14 17:08:43',NULL,0),(192,'fr','validation','url','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(193,'jp','auth','not_active','Account mus actived','','2018-08-14 17:08:43',NULL,0),(194,'jp','auth','throttle','Too many login attempts. Please try again in :seconds seconds.','','2018-08-14 17:08:43',NULL,0),(195,'jp','pagination','next','Next &raquo;','','2018-08-14 17:08:43',NULL,0),(196,'jp','pagination','previous','&laquo; Previous','','2018-08-14 17:08:43',NULL,0),(197,'jp','passwords','password','Passwords must be at least six characters and match the confirmation.','','2018-08-14 17:08:43',NULL,0),(198,'jp','passwords','reset','Your password has been reset!','','2018-08-14 17:08:43',NULL,0),(199,'jp','passwords','sent','We have e-mailed your password reset link!','','2018-08-14 17:08:43',NULL,0),(200,'jp','passwords','token','This password reset token is invalid.','','2018-08-14 17:08:43',NULL,0),(201,'jp','passwords','user','We can\'t find a user with that e-mail address.','','2018-08-14 17:08:43',NULL,0),(202,'jp','validation','accepted','The :attribute must be accepted.','','2018-08-14 17:08:43',NULL,0),(203,'jp','validation','active_url','The :attribute is not a valid URL.','','2018-08-14 17:08:43',NULL,0),(204,'jp','validation','after','The :attribute must be a date after :date.','','2018-08-14 17:08:43',NULL,0),(205,'jp','validation','after_or_equal','The :attribute must be a date after or equal to :date.','','2018-08-14 17:08:43',NULL,0),(206,'jp','validation','alpha','The :attribute may only contain letters.','','2018-08-14 17:08:43',NULL,0),(207,'jp','validation','alpha_dash','The :attribute may only contain letters, numbers, dashes and underscores.','','2018-08-14 17:08:43',NULL,0),(208,'jp','validation','alpha_num','The :attribute may only contain letters and numbers.','','2018-08-14 17:08:43',NULL,0),(209,'jp','validation','array','The :attribute must be an array.','','2018-08-14 17:08:43',NULL,0),(210,'jp','validation','before','The :attribute must be a date before :date.','','2018-08-14 17:08:43',NULL,0),(211,'jp','validation','before_or_equal','The :attribute must be a date before or equal to :date.','','2018-08-14 17:08:43',NULL,0),(212,'jp','validation','between','The :attribute must have between :min and :max items.','array','2018-08-14 17:08:43',NULL,0),(213,'jp','validation','between','The :attribute must be between :min and :max kilobytes.','file','2018-08-14 17:08:43',NULL,0),(214,'jp','validation','between','The :attribute must be between :min and :max.','numeric','2018-08-14 17:08:43',NULL,0),(215,'jp','validation','between','The :attribute must be between :min and :max characters.','string','2018-08-14 17:08:43',NULL,0),(216,'jp','validation','boolean','The :attribute field must be true or false.','','2018-08-14 17:08:43',NULL,0),(217,'jp','validation','common_error','Common error','','2018-08-14 17:08:43',NULL,0),(218,'jp','validation','confirmed','The :attribute confirmation does not match.','','2018-08-14 17:08:43',NULL,0),(219,'jp','validation','date','The :attribute is not a valid date.','','2018-08-14 17:08:43',NULL,0),(220,'jp','validation','date_format','The :attribute does not match the format :format.','','2018-08-14 17:08:43',NULL,0),(221,'jp','validation','different','The :attribute and :other must be different.','','2018-08-14 17:08:43',NULL,0),(222,'jp','validation','digits','The :attribute must be :digits digits.','','2018-08-14 17:08:43',NULL,0),(223,'jp','validation','digits_between','The :attribute must be between :min and :max digits.','','2018-08-14 17:08:43',NULL,0),(224,'jp','validation','dimensions','The :attribute has invalid image dimensions.','','2018-08-14 17:08:43',NULL,0),(225,'jp','validation','distinct','The :attribute field has a duplicate value.','','2018-08-14 17:08:43',NULL,0),(226,'jp','validation','email','The :attribute must be a valid email address.','','2018-08-14 17:08:43',NULL,0),(227,'jp','validation','exists','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(228,'jp','validation','f vg','red','','2018-08-14 17:08:43',NULL,0),(229,'jp','validation','file','The :attribute must be a file.','','2018-08-14 17:08:43',NULL,0),(230,'jp','validation','filled','The :attribute field must have a value.','','2018-08-14 17:08:43',NULL,0),(231,'jp','validation','gt','The :attribute must have more than :value items.','array','2018-08-14 17:08:43',NULL,0),(232,'jp','validation','gt','The :attribute must be greater than :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(233,'jp','validation','gt','The :attribute must be greater than :value.','numeric','2018-08-14 17:08:43',NULL,0),(234,'jp','validation','gt','The :attribute must be greater than :value characters.','string','2018-08-14 17:08:43',NULL,0),(235,'jp','validation','gte','The :attribute must have :value items or more.','array','2018-08-14 17:08:43',NULL,0),(236,'jp','validation','gte','The :attribute must be greater than or equal :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(237,'jp','validation','gte','The :attribute must be greater than or equal :value.','numeric','2018-08-14 17:08:43',NULL,0),(238,'jp','validation','gte','The :attribute must be greater than or equal :value characters.','string','2018-08-14 17:08:43',NULL,0),(239,'jp','validation','image','The :attribute must be an image.','','2018-08-14 17:08:43',NULL,0),(240,'jp','validation','in','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(241,'jp','validation','integer','The :attribute must be an integer.','','2018-08-14 17:08:43',NULL,0),(242,'jp','validation','in_array','The :attribute field does not exist in :other.','','2018-08-14 17:08:43',NULL,0),(243,'jp','validation','ip','The :attribute must be a valid IP address.','','2018-08-14 17:08:43',NULL,0),(244,'jp','validation','ipv4','The :attribute must be a valid IPv4 address.','','2018-08-14 17:08:43',NULL,0),(245,'jp','validation','ipv6','The :attribute must be a valid IPv6 address.','','2018-08-14 17:08:43',NULL,0),(246,'jp','validation','json','The :attribute must be a valid JSON string.','','2018-08-14 17:08:43',NULL,0),(247,'jp','validation','lt','The :attribute must have less than :value items.','array','2018-08-14 17:08:43',NULL,0),(248,'jp','validation','lt','The :attribute must be less than :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(249,'jp','validation','lt','The :attribute must be less than :value.','numeric','2018-08-14 17:08:43',NULL,0),(250,'jp','validation','lt','The :attribute must be less than :value characters.','string','2018-08-14 17:08:43',NULL,0),(251,'jp','validation','lte','The :attribute must not have more than :value items.','array','2018-08-14 17:08:43',NULL,0),(252,'jp','validation','lte','The :attribute must be less than or equal :value kilobytes.','file','2018-08-14 17:08:43',NULL,0),(253,'jp','validation','lte','The :attribute must be less than or equal :value.','numeric','2018-08-14 17:08:43',NULL,0),(254,'jp','validation','lte','The :attribute must be less than or equal :value characters.','string','2018-08-14 17:08:43',NULL,0),(255,'jp','validation','max','The :attribute may not have more than :max items.','array','2018-08-14 17:08:43',NULL,0),(256,'jp','validation','max','The :attribute may not be greater than :max kilobytes.','file','2018-08-14 17:08:43',NULL,0),(257,'jp','validation','max','The :attribute may not be greater than :max.','numeric','2018-08-14 17:08:43',NULL,0),(258,'jp','validation','max','The :attribute may not be greater than :max characters.','string','2018-08-14 17:08:43',NULL,0),(259,'jp','validation','mimes','The :attribute must be a file of type: :values.','','2018-08-14 17:08:43',NULL,0),(260,'jp','validation','mimetypes','The :attribute must be a file of type: :values.','','2018-08-14 17:08:43',NULL,0),(261,'jp','validation','min','The :attribute must have at least :min items.','array','2018-08-14 17:08:43',NULL,0),(262,'jp','validation','min','The :attribute must be at least :min kilobytes.','file','2018-08-14 17:08:43',NULL,0),(263,'jp','validation','min','The :attribute must be at least :min.','numeric','2018-08-14 17:08:43',NULL,0),(264,'jp','validation','min','The :attribute must be at least :min characters.','string','2018-08-14 17:08:43',NULL,0),(265,'jp','validation','not_in','The selected :attribute is invalid.','','2018-08-14 17:08:43',NULL,0),(266,'jp','validation','not_regex','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(267,'jp','validation','numeric','The :attribute must be a number.','','2018-08-14 17:08:43',NULL,0),(268,'jp','validation','present','The :attribute field must be present.','','2018-08-14 17:08:43',NULL,0),(269,'jp','validation','regex','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0),(270,'jp','validation','required','The :attribute field is required.','','2018-08-14 17:08:43',NULL,0),(271,'jp','validation','required_if','The :attribute field is required when :other is :value.','','2018-08-14 17:08:43',NULL,0),(272,'jp','validation','required_unless','The :attribute field is required unless :other is in :values.','','2018-08-14 17:08:43',NULL,0),(273,'jp','validation','required_with','The :attribute field is required when :values is present.','','2018-08-14 17:08:43',NULL,0),(274,'jp','validation','required_without','The :attribute field is required when :values is not present.','','2018-08-14 17:08:43',NULL,0),(275,'jp','validation','required_without_all','The :attribute field is required when none of :values are present.','','2018-08-14 17:08:43',NULL,0),(276,'jp','validation','required_with_all','The :attribute field is required when :values is present.','','2018-08-14 17:08:43',NULL,0),(277,'jp','validation','same','The :attribute and :other must match.','','2018-08-14 17:08:43',NULL,0),(278,'jp','validation','size','The :attribute must contain :size items.','array','2018-08-14 17:08:43',NULL,0),(279,'jp','validation','size','The :attribute must be :size kilobytes.','file','2018-08-14 17:08:43',NULL,0),(280,'jp','validation','size','The :attribute must be :size.','numeric','2018-08-14 17:08:43',NULL,0),(281,'jp','validation','size','The :attribute must be :size characters.','string','2018-08-14 17:08:43',NULL,0),(282,'jp','validation','string','The :attribute must be a string.','','2018-08-14 17:08:43',NULL,0),(283,'jp','validation','test8','test0','file','2018-08-14 17:08:43',NULL,0),(284,'jp','validation','test8','test0','numeric','2018-08-14 17:08:43',NULL,0),(285,'jp','validation','timezone','The :attribute must be a valid zone.','','2018-08-14 17:08:43',NULL,0),(286,'jp','validation','unique','The :attribute has already been taken.','','2018-08-14 17:08:43',NULL,0),(287,'jp','validation','uploaded','The :attribute failed to upload.','','2018-08-14 17:08:43',NULL,0),(288,'jp','validation','url','The :attribute format is invalid.','','2018-08-14 17:08:43',NULL,0);
 /*!40000 ALTER TABLE `sys_translation` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,11 +340,11 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping events for database 'test_migration'
+-- Dumping events for database 'laravel_common'
 --
 
 --
--- Dumping routines for database 'test_migration'
+-- Dumping routines for database 'laravel_common'
 --
 /*!50003 DROP FUNCTION IF EXISTS `get_error_code` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -356,7 +356,7 @@ SET character_set_client = @saved_cs_client;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  FUNCTION `get_error_code`() RETURNS int(11)
+CREATE FUNCTION `get_error_code`() RETURNS int(11)
 BEGIN
 	RETURN -1;
 END ;
@@ -375,7 +375,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  FUNCTION `get_error_message`(code INT, message_code VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
+CREATE FUNCTION `get_error_message`(code INT, message_code VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
 BEGIN
 	RETURN '';
 END ;
@@ -394,7 +394,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  FUNCTION `get_success_code`() RETURNS int(11)
+CREATE FUNCTION `get_success_code`() RETURNS int(11)
 BEGIN
 	RETURN 0;
 END ;
@@ -413,7 +413,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  FUNCTION `SPLIT_STRING`(
+CREATE FUNCTION `SPLIT_STRING`(
 	str LONGTEXT CHARSET utf8,
 	delim VARCHAR(10) ,
 	pos INT
@@ -443,7 +443,7 @@ RETURN REPLACE(
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `ACL_GET_MODULES_LST`()
+CREATE PROCEDURE `ACL_GET_MODULES_LST`()
 BEGIN
 	SELECT * FROM sys_modules ORDER BY order_value;
 
@@ -463,7 +463,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `ACL_GET_ROLES_LST`()
+CREATE PROCEDURE `ACL_GET_ROLES_LST`()
 BEGIN
 	SELECT * FROM sys_roles
     ORDER BY role_value;
@@ -483,7 +483,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `ACL_GET_ROLES_MAP_ACTION_LST`()
+CREATE PROCEDURE `ACL_GET_ROLES_MAP_ACTION_LST`()
 BEGIN
 
 	SELECT
@@ -533,7 +533,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
+CREATE PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
 BEGIN
 	UPDATE sys_role_map_screen
     SET
@@ -558,7 +558,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
+CREATE PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
 BEGIN
 	UPDATE sys_role_map_screen
     SET
@@ -581,7 +581,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `API_GET_CATEGORY_LST`()
+CREATE PROCEDURE `API_GET_CATEGORY_LST`()
 BEGIN
 
 	SELECT BASE.id, BASE.`name`, BASE.level_value , TMP.id AS parent
@@ -607,7 +607,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_ADD_TRANSLATE_COMBO_LST`()
+CREATE PROCEDURE `DEV_ADD_TRANSLATE_COMBO_LST`()
 BEGIN
 
     SELECT
@@ -639,7 +639,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_BACKUP_TRANSLATE_ACT`()
+CREATE PROCEDURE `DEV_BACKUP_TRANSLATE_ACT`()
 BEGIN
 
     TRUNCATE TABLE sys_translate_backup;
@@ -684,7 +684,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
+CREATE PROCEDURE `DEV_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
 	DECLARE lft_tmp INT default 0;
     DECLARE newId INT default 0;
@@ -727,7 +727,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
+CREATE PROCEDURE `DEV_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
 	DECLARE rgt_tmp INT default 0;
     DECLARE newId INT default 0;
@@ -766,7 +766,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_CATELORY_DELETE_NODE_AND_CHILD`(nodeId INT)
+CREATE PROCEDURE `DEV_CATELORY_DELETE_NODE_AND_CHILD`(nodeId INT)
 BEGIN
 	DECLARE myLeft INT default 0;
     DECLARE myRight INT default 0;
@@ -799,7 +799,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
+CREATE PROCEDURE `DEV_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
 BEGIN
 	UPDATE catelory SET name = pName , url = p_url WHERE id = nodeId;
     CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code"}'));
@@ -820,7 +820,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_ALL_SP_LST`()
+CREATE PROCEDURE `DEV_GET_ALL_SP_LST`()
 BEGIN
 	SHOW PROCEDURE STATUS
 	WHERE Db = DATABASE() AND Type = 'PROCEDURE';
@@ -841,7 +841,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_ALL_TABLE_LST`()
+CREATE PROCEDURE `DEV_GET_ALL_TABLE_LST`()
 BEGIN
 	select table_name As name from information_schema.tables WHERE TABLE_SCHEMA = DATABASE();
 
@@ -861,7 +861,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_CATEGORY_LST`()
+CREATE PROCEDURE `DEV_GET_CATEGORY_LST`()
 BEGIN
 
 	SELECT BASE.id, BASE.name, BASE.level_value ,BASE.url, BASE.order_value, TMP.id AS parent
@@ -887,7 +887,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_CATEGORY_WITH_LEVEL_LIST`()
+CREATE PROCEDURE `DEV_GET_CATEGORY_WITH_LEVEL_LIST`()
 BEGIN
 	SELECT BASE.id, BASE.name, BASE.level_value, BASE.lft, BASE.rgt,BASE.url, BASE.order_value
     FROM view_category_item_level AS BASE
@@ -908,7 +908,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  PROCEDURE `DEV_GET_LANGUAGE_CODE_LST`()
+CREATE PROCEDURE `DEV_GET_LANGUAGE_CODE_LST`()
 BEGIN
 	SELECT
 		id,
@@ -931,7 +931,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_MODULES_LST`()
+CREATE PROCEDURE `DEV_GET_MODULES_LST`()
 BEGIN
 	SELECT * FROM sys_modules ORDER BY order_value;
 
@@ -951,7 +951,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_PARAM_OF_SPS_LST`(p_procedureName VARCHAR(250) charset utf8)
+CREATE PROCEDURE `DEV_GET_PARAM_OF_SPS_LST`(p_procedureName VARCHAR(250) charset utf8)
 BEGIN
 
 	SELECT *
@@ -976,7 +976,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  PROCEDURE `DEV_GET_ROLES_LST`()
+CREATE PROCEDURE `DEV_GET_ROLES_LST`()
 BEGIN
 	SELECT * FROM sys_roles
     ORDER BY role_value;
@@ -996,7 +996,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_ROLES_MAP_ACTION_LST`()
+CREATE PROCEDURE `DEV_GET_ROLES_MAP_ACTION_LST`()
 BEGIN
 
 	SELECT
@@ -1046,7 +1046,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
+CREATE PROCEDURE `DEV_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
 BEGIN
 	SELECT
 			V.id
@@ -1085,7 +1085,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_TRANSLATION_TYPE_LST`()
+CREATE PROCEDURE `DEV_GET_TRANSLATION_TYPE_LST`()
 BEGIN
 	SELECT id,code,comment,has_input_type FROM sys_translate_type
     ORDER BY code;
@@ -1105,7 +1105,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_GET_VALIDATION_RULES_LST`()
+CREATE PROCEDURE `DEV_GET_VALIDATION_RULES_LST`()
 BEGIN
 	SELECT
 		V.id
@@ -1143,7 +1143,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
+CREATE PROCEDURE `DEV_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
 BEGIN
 
 
@@ -1324,7 +1324,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
+CREATE PROCEDURE `DEV_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
 BEGIN
 	UPDATE sys_role_map_screen
     SET
@@ -1349,7 +1349,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
+CREATE PROCEDURE `DEV_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
 BEGIN
 	UPDATE sys_role_map_screen
     SET
@@ -1372,7 +1372,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_TRANSLATE_DELETE_TEXT_ACT`(p_id INT)
+CREATE PROCEDURE `DEV_TRANSLATE_DELETE_TEXT_ACT`(p_id INT)
 BEGIN
 	DELETE FROM sys_translation WHERE id= p_id;
 	CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
@@ -1392,13 +1392,16 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_TRANSLATE_INSERT_NEW_TEXT_ACT`(
+CREATE PROCEDURE `DEV_TRANSLATE_INSERT_NEW_TEXT_ACT`(
 	p_transType VARCHAR(20)
 ,	p_transInputType VARCHAR(20)
 ,	p_transTextCode VARCHAR(100)
 ,	p_textTrans JSON
 )
 BEGIN
+
+    DECLARE isValidateType INT default 0;
+
 
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	BEGIN
@@ -1420,6 +1423,9 @@ BEGIN
                 )
 			)
 	) THEN
+
+        SET isValidateType =  (SELECT MAX(has_input_type) FROM sys_translate_type WHERE code= p_transInputType );
+
 		INSERT INTO temp(
 			lang
 		,	trans_text
@@ -1428,6 +1434,7 @@ BEGIN
 			SL.code,
 			JSON_UNQUOTE(JSON_EXTRACT(p_textTrans, CONCAT('$.',SL.code))) AS trans_text
 		FROM  sys_languages AS SL;
+
 
 		INSERT INTO sys_translation(
 				lang_code
@@ -1444,7 +1451,10 @@ BEGIN
 		,	p_transType
 		,	p_transTextCode
 		,	TMP.trans_text
-		,	p_transInputType
+		,	CASE
+				WHEN isValidateType = 1 THEN p_transInputType
+                ELSE ''
+			END
 		,	NOW()
 		,	NULL
 		,	0
@@ -1472,7 +1482,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_TRANSLATE_UPDATE_TEXT_ACT`(
+CREATE PROCEDURE `DEV_TRANSLATE_UPDATE_TEXT_ACT`(
 	p_id INT
 ,	p_text TEXT  CHARACTER SET utf8 )
 BEGIN
@@ -1500,7 +1510,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_USER_ROLE_GET_LIST_USERS`()
+CREATE PROCEDURE `DEV_USER_ROLE_GET_LIST_USERS`()
 BEGIN
 
 	SELECT
@@ -1537,7 +1547,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `DEV_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
+CREATE PROCEDURE `DEV_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
 BEGIN
 	UPDATE users
     SET
@@ -1562,7 +1572,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `GET_CATEGORY_LST`()
+CREATE PROCEDURE `GET_CATEGORY_LST`()
 BEGIN
 
 	SELECT BASE.id, BASE.`name`, BASE.level_value , TMP.id AS parent
@@ -1588,7 +1598,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `GET_CATEGORY_WITH_LEVEL_LIST`()
+CREATE PROCEDURE `GET_CATEGORY_WITH_LEVEL_LIST`()
 BEGIN
 	SELECT BASE.id, BASE.`name`, BASE.level_value, BASE.lft, BASE.rgt
     FROM view_category_item_level AS BASE
@@ -1609,7 +1619,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `sys_show_message_error`(code INT, dataError JSON)
+CREATE PROCEDURE `sys_show_message_error`(code INT, dataError JSON)
 BEGIN
 	SELECT code AS code, dataError AS data_error;
 END ;
@@ -1628,7 +1638,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  PROCEDURE `sys_show_message_exception`(message_code varchar(500))
+CREATE PROCEDURE `sys_show_message_exception`(message_code varchar(500))
 BEGIN
 	SELECT -9999 AS code, message_code AS message_code;
 END ;
@@ -1647,7 +1657,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  PROCEDURE `sys_show_message_success`()
+CREATE PROCEDURE `sys_show_message_success`()
 BEGIN
 	SELECT 0 AS code, 'success_message' AS message_code;
 END ;
@@ -1666,7 +1676,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE  PROCEDURE `sys_show_result`(code INT, dataError JSON)
+CREATE PROCEDURE `sys_show_result`(code INT, dataError JSON)
 BEGIN
 	SELECT code AS code, dataError AS data;
 END ;
@@ -1688,7 +1698,7 @@ END ;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013  SQL SECURITY DEFINER */
+/*!50013 SQL SECURITY DEFINER */
 /*!50001 VIEW `view_category_item_level` AS select `n`.`id` AS `id`,`n`.`name` AS `name`,`n`.`lft` AS `lft`,`n`.`rgt` AS `rgt`,`n`.`url` AS `url`,`n`.`order_value` AS `order_value`,(count(`p`.`id`) - 1) AS `level_value` from (`catelory` `n` left join `catelory` `p` on((`n`.`lft` between `p`.`lft` and `p`.`rgt`))) group by `n`.`id`,`n`.`name`,`n`.`lft`,`n`.`rgt` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
@@ -1703,4 +1713,4 @@ END ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-14 17:28:25
+-- Dump completed on 2018-08-15 17:20:53
