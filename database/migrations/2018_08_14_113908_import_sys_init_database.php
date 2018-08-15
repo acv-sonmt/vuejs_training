@@ -24,6 +24,6 @@ class ImportSysInitDatabase extends Migration
      */
     public function down()
     {
-
+        //no thing
     }
 }
