@@ -60,20 +60,20 @@ class AclService extends BaseService implements AclServiceInterface
         return true;
     }
     public function getRoleList(){
-        $roleList = DEVDB::execSPs('DEV_GET_ROLES_LST');
+        $roleList = DEVDB::execSPs('DEBUG_GET_ROLES_LST');
         return $roleList;
     }
     public function getModuleList(){
-        $moduleList = DEVDB::execSPs('DEV_GET_MODULES_LST');
+        $moduleList = DEVDB::execSPs('DEBUG_GET_MODULES_LST');
         return $moduleList;
     }
     public function updateActiveAcl($roleMapId, $isActive)
     {
-        DEVDB::execSPsToDataResultCollection("DEV_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
+        DEVDB::execSPsToDataResultCollection("DEBUG_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
     }
     public function updateActiveAclAll($isActive)
     {
-        DEVDB::execSPsToDataResultCollection("DEV_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
+        DEVDB::execSPsToDataResultCollection("DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
     }
     /**
      * @return array
@@ -82,7 +82,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function getRoleMapArray()
     {
         $resultArr = [];
-        $roleInfo = DEVDB::execSPs('DEV_GET_ROLES_MAP_ACTION_LST');
+        $roleInfo = DEVDB::execSPs('DEBUG_GET_ROLES_MAP_ACTION_LST');
         if (!empty($roleInfo)) {
             $roles = $roleInfo[0];
             $roleMap = $roleInfo[1];
@@ -158,12 +158,12 @@ class AclService extends BaseService implements AclServiceInterface
         //Insert dev module data
         $this->importModuleListToDB();
         $data = $this->getListScreen();
-        DEVDB::execSPs('DEV_IMPORT_AND_MERGER_ROLE_ACT',array(json_encode($data)));
+        DEVDB::execSPs('DEBUG_IMPORT_AND_MERGER_ROLE_ACT',array(json_encode($data)));
         return true;
     }
     public function getRoleInfoFromDB()
     {
-        return DEVDB::execSPs('DEV_GET_ROLES_MAP_ACTION_LST');
+        return DEVDB::execSPs('DEBUG_GET_ROLES_MAP_ACTION_LST');
     }
     /**
      * @return array
@@ -237,11 +237,11 @@ class AclService extends BaseService implements AclServiceInterface
         DEVDB::table('sys_modules')->insert($dataModule);
     }
     public function getListUser(){
-        return DEVDB::execSPs('DEV_USER_ROLE_GET_LIST_USERS');
+        return DEVDB::execSPs('DEBUG_USER_ROLE_GET_LIST_USERS');
     }
     public function updateUserRole($current_id, $current_role_value)
     {
-        DEVDB::execSPsToDataResultCollection("DEV_USER_ROLE_UPDATE_ROLES", array($current_id, $current_role_value));
+        DEVDB::execSPsToDataResultCollection("DEBUG_USER_ROLE_UPDATE_ROLES", array($current_id, $current_role_value));
     }
 
 }

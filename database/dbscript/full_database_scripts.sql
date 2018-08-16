@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.17, for Win64 (x86_64)
 --
--- Host: 192.168.3.87    Database: laravel_common
+-- Host: 192.168.3.87    Database: laravel_common_v2
 -- ------------------------------------------------------
 -- Server version	8.0.11
 
@@ -19,7 +19,7 @@
 -- Position to start replication or point-in-time recovery from
 --
 
--- CHANGE MASTER TO MASTER_LOG_FILE='binlog.000033', MASTER_LOG_POS=155;
+-- CHANGE MASTER TO MASTER_LOG_FILE='binlog.000036', MASTER_LOG_POS=155;
 
 --
 -- Table structure for table `catelory`
@@ -90,7 +90,7 @@ CREATE TABLE `sys_modules` (
   `order_value` int(11) DEFAULT NULL,
   `is_skip_acl` tinyint(4) DEFAULT NULL COMMENT 'skips show acl in form, but not affect to action check acl',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -99,7 +99,6 @@ CREATE TABLE `sys_modules` (
 
 LOCK TABLES `sys_modules` WRITE;
 /*!40000 ALTER TABLE `sys_modules` DISABLE KEYS */;
-REPLACE INTO `sys_modules` VALUES (1,'dev','dev',1,1),(2,'laravel','laravel',2,1),(3,'auth','auth',3,0),(4,'acl','acl',4,0),(5,'api','api',5,0),(6,'backend','backend',6,0),(7,'frontend','frontend',7,0);
 /*!40000 ALTER TABLE `sys_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -340,11 +339,11 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping events for database 'laravel_common'
+-- Dumping events for database 'laravel_common_v2'
 --
 
 --
--- Dumping routines for database 'laravel_common'
+-- Dumping routines for database 'laravel_common_v2'
 --
 /*!50003 DROP FUNCTION IF EXISTS `get_error_code` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -571,7 +570,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `API_GET_CATEGORY_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_ADD_TRANSLATE_COMBO_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -581,33 +580,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `API_GET_CATEGORY_LST`()
-BEGIN
-
-	SELECT BASE.id, BASE.`name`, BASE.level_value , TMP.id AS parent
-    FROM view_category_item_level AS BASE
-	LEFT JOIN view_category_item_level AS TMP ON
-			TMP.level_value = BASE.level_value -1
-		AND  BASE.lft BETWEEN TMP.lft AND TMP.rgt
-	ORDER BY BASE.id;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_ADD_TRANSLATE_COMBO_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_ADD_TRANSLATE_COMBO_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_ADD_TRANSLATE_COMBO_LST`()
 BEGIN
 
     SELECT
@@ -629,7 +602,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_BACKUP_TRANSLATE_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_BACKUP_TRANSLATE_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -639,7 +612,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_BACKUP_TRANSLATE_ACT`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_BACKUP_TRANSLATE_ACT`()
 BEGIN
 
     TRUNCATE TABLE sys_translate_backup;
@@ -674,7 +647,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_CATELORY_ADD_CHILD_IN_LEFT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_CATELORY_ADD_CHILD_IN_LEFT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -684,7 +657,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
 	DECLARE lft_tmp INT default 0;
     DECLARE newId INT default 0;
@@ -717,7 +690,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_CATELORY_ADD_SIBLING` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_CATELORY_ADD_SIBLING` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -727,7 +700,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
 	DECLARE rgt_tmp INT default 0;
     DECLARE newId INT default 0;
@@ -756,7 +729,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_CATELORY_DELETE_NODE_AND_CHILD` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_CATELORY_DELETE_NODE_AND_CHILD` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -766,7 +739,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_CATELORY_DELETE_NODE_AND_CHILD`(nodeId INT)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_CATELORY_DELETE_NODE_AND_CHILD`(nodeId INT)
 BEGIN
 	DECLARE myLeft INT default 0;
     DECLARE myRight INT default 0;
@@ -789,7 +762,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_CATELORY_UPDATE` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_CATELORY_UPDATE` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -799,7 +772,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
 BEGIN
 	UPDATE catelory SET name = pName , url = p_url WHERE id = nodeId;
     CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code"}'));
@@ -810,7 +783,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_ALL_SP_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_ALL_SP_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -820,7 +793,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_ALL_SP_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_ALL_SP_LST`()
 BEGIN
 	SHOW PROCEDURE STATUS
 	WHERE Db = DATABASE() AND Type = 'PROCEDURE';
@@ -831,7 +804,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_ALL_TABLE_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_ALL_TABLE_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -841,7 +814,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_ALL_TABLE_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_ALL_TABLE_LST`()
 BEGIN
 	select table_name As name from information_schema.tables WHERE TABLE_SCHEMA = DATABASE();
 
@@ -851,7 +824,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_CATEGORY_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_CATEGORY_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -861,7 +834,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_CATEGORY_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_CATEGORY_LST`()
 BEGIN
 
 	SELECT BASE.id, BASE.name, BASE.level_value ,BASE.url, BASE.order_value, TMP.id AS parent
@@ -877,7 +850,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_CATEGORY_WITH_LEVEL_LIST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_CATEGORY_WITH_LEVEL_LIST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -887,7 +860,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_CATEGORY_WITH_LEVEL_LIST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_CATEGORY_WITH_LEVEL_LIST`()
 BEGIN
 	SELECT BASE.id, BASE.name, BASE.level_value, BASE.lft, BASE.rgt,BASE.url, BASE.order_value
     FROM view_category_item_level AS BASE
@@ -898,7 +871,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_LANGUAGE_CODE_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_LANGUAGE_CODE_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -908,7 +881,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_LANGUAGE_CODE_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_LANGUAGE_CODE_LST`()
 BEGIN
 	SELECT
 		id,
@@ -921,7 +894,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_MODULES_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_MODULES_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -931,7 +904,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_MODULES_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_MODULES_LST`()
 BEGIN
 	SELECT * FROM sys_modules ORDER BY order_value;
 
@@ -941,7 +914,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_PARAM_OF_SPS_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_PARAM_OF_SPS_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -951,7 +924,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_PARAM_OF_SPS_LST`(p_procedureName VARCHAR(250) charset utf8)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_PARAM_OF_SPS_LST`(p_procedureName VARCHAR(250) charset utf8)
 BEGIN
 
 	SELECT *
@@ -966,7 +939,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_ROLES_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_ROLES_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -976,7 +949,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_ROLES_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_ROLES_LST`()
 BEGIN
 	SELECT * FROM sys_roles
     ORDER BY role_value;
@@ -986,7 +959,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_ROLES_MAP_ACTION_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_ROLES_MAP_ACTION_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -996,7 +969,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_ROLES_MAP_ACTION_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_ROLES_MAP_ACTION_LST`()
 BEGIN
 
 	SELECT
@@ -1036,7 +1009,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_TRANSLATION_DATA_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_TRANSLATION_DATA_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1046,7 +1019,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
 BEGIN
 	SELECT
 			V.id
@@ -1075,7 +1048,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_TRANSLATION_TYPE_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_TRANSLATION_TYPE_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1085,7 +1058,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_TRANSLATION_TYPE_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_TRANSLATION_TYPE_LST`()
 BEGIN
 	SELECT id,code,comment,has_input_type FROM sys_translate_type
     ORDER BY code;
@@ -1095,7 +1068,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_GET_VALIDATION_RULES_LST` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_VALIDATION_RULES_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1105,7 +1078,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_GET_VALIDATION_RULES_LST`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_GET_VALIDATION_RULES_LST`()
 BEGIN
 	SELECT
 		V.id
@@ -1133,7 +1106,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_IMPORT_AND_MERGER_ROLE_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_IMPORT_AND_MERGER_ROLE_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1143,7 +1116,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
 BEGIN
 
 
@@ -1314,7 +1287,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_ROLE_UPDATE_ACTIVE_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_ROLE_UPDATE_ACTIVE_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1324,7 +1297,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
 BEGIN
 	UPDATE sys_role_map_screen
     SET
@@ -1339,7 +1312,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_ROLE_UPDATE_ACTIVE_ALL_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1349,7 +1322,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
 BEGIN
 	UPDATE sys_role_map_screen
     SET
@@ -1362,7 +1335,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_TRANSLATE_DELETE_TEXT_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_TRANSLATE_DELETE_TEXT_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1372,7 +1345,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_TRANSLATE_DELETE_TEXT_ACT`(p_id INT)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_TRANSLATE_DELETE_TEXT_ACT`(p_id INT)
 BEGIN
 	DELETE FROM sys_translation WHERE id= p_id;
 	CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
@@ -1382,7 +1355,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_TRANSLATE_INSERT_NEW_TEXT_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_TRANSLATE_INSERT_NEW_TEXT_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1392,16 +1365,16 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_TRANSLATE_INSERT_NEW_TEXT_ACT`(
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_TRANSLATE_INSERT_NEW_TEXT_ACT`(
 	p_transType VARCHAR(20)
 ,	p_transInputType VARCHAR(20)
 ,	p_transTextCode VARCHAR(100)
 ,	p_textTrans JSON
 )
 BEGIN
-	
+
     DECLARE isValidateType INT default 0;
-        
+
 
     DECLARE CONTINUE HANDLER FOR SQLEXCEPTION
 	BEGIN
@@ -1413,7 +1386,7 @@ BEGIN
     ,	trans_text VARCHAR(255) ,
     PRIMARY KEY (id)
     ) engine Memory;
-	
+
     IF NOT EXISTS(SELECT id FROM sys_translation
     WHERE 	(code=p_transTextCode AND COALESCE(input_type,'') = COALESCE(p_transInputType,'') )
         OR (code=p_transTextCode
@@ -1423,9 +1396,9 @@ BEGIN
                 )
 			)
 	) THEN
-		
+
         SET isValidateType =  (SELECT MAX(has_input_type) FROM sys_translate_type WHERE code= p_transInputType );
-    
+
 		INSERT INTO temp(
 			lang
 		,	trans_text
@@ -1434,8 +1407,8 @@ BEGIN
 			SL.code,
 			JSON_UNQUOTE(JSON_EXTRACT(p_textTrans, CONCAT('$.',SL.code))) AS trans_text
 		FROM  sys_languages AS SL;
-		
-        
+
+
 		INSERT INTO sys_translation(
 				lang_code
 			,	translate_type
@@ -1472,7 +1445,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_TRANSLATE_UPDATE_TEXT_ACT` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_TRANSLATE_UPDATE_TEXT_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1482,7 +1455,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_TRANSLATE_UPDATE_TEXT_ACT`(
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_TRANSLATE_UPDATE_TEXT_ACT`(
 	p_id INT
 ,	p_text TEXT  CHARACTER SET utf8 )
 BEGIN
@@ -1500,7 +1473,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_USER_ROLE_GET_LIST_USERS` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_USER_ROLE_GET_LIST_USERS` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1510,7 +1483,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_USER_ROLE_GET_LIST_USERS`()
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_USER_ROLE_GET_LIST_USERS`()
 BEGIN
 
 	SELECT
@@ -1537,7 +1510,7 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEV_USER_ROLE_UPDATE_ROLES` */;
+/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_USER_ROLE_UPDATE_ROLES` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
 /*!50003 SET @saved_col_connection = @@collation_connection */ ;
@@ -1547,7 +1520,7 @@ DELIMITER ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `DEV_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
+CREATE DEFINER=`root`@`%` PROCEDURE `DEBUG_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
 BEGIN
 	UPDATE users
     SET
@@ -1556,53 +1529,6 @@ BEGIN
 		id = current_id;
 
     CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `GET_CATEGORY_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `GET_CATEGORY_LST`()
-BEGIN
-
-	SELECT BASE.id, BASE.`name`, BASE.level_value , TMP.id AS parent
-    FROM view_category_item_level AS BASE
-	LEFT JOIN view_category_item_level AS TMP ON
-			TMP.level_value = BASE.level_value -1
-		AND  BASE.lft BETWEEN TMP.lft AND TMP.rgt
-	ORDER BY BASE.id;
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `GET_CATEGORY_WITH_LEVEL_LIST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`%` PROCEDURE `GET_CATEGORY_WITH_LEVEL_LIST`()
-BEGIN
-	SELECT BASE.id, BASE.`name`, BASE.level_value, BASE.lft, BASE.rgt
-    FROM view_category_item_level AS BASE
-	ORDER BY BASE.id;
 END ;;
 DELIMITER ;
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
@@ -1713,4 +1639,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-08-15 17:20:53
+-- Dump completed on 2018-08-16  9:07:09

@@ -15,17 +15,17 @@ class CaterogyService extends BaseService implements CategoryServiceInterface
 {
     public function getCategoryWithLevelList():DataResultCollection
     {
-        return DEVDB::execSPsToDataResultCollection('DEV_GET_CATEGORY_WITH_LEVEL_LIST');
+        return DEVDB::execSPsToDataResultCollection('DEBUG_GET_CATEGORY_WITH_LEVEL_LIST');
     }
     public function categoryAddChildInLeft($paramArr):DataResultCollection{
-        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_ADD_CHILD_IN_LEFT',$paramArr);
+        return DEVDB::execSPsToDataResultCollection('DEBUG_CATELORY_ADD_CHILD_IN_LEFT',$paramArr);
     }
 
     public function categoryUpdateMenu($paramArr):DataResultCollection {
-        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_UPDATE',$paramArr);
+        return DEVDB::execSPsToDataResultCollection('DEBUG_CATELORY_UPDATE',$paramArr);
     }
 
     public function categoryDeleteNodeAndChild($nodeId):DataResultCollection{
-        return DEVDB::execSPsToDataResultCollection('DEV_CATELORY_DELETE_NODE_AND_CHILD',array($nodeId));
+        return DEVDB::execSPsToDataResultCollection('DEBUG_CATELORY_DELETE_NODE_AND_CHILD',array($nodeId));
     }
 }

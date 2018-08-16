@@ -113,7 +113,7 @@ class DEVDB extends DB
     {
         $meta = [];
         DEVDB::beginTransaction();
-        $paramInfor = DEVDB::execSPs('DEV_GET_PARAM_OF_SPS_LST', array($procName));
+        $paramInfor = DEVDB::execSPs('DEBUG_GET_PARAM_OF_SPS_LST', array($procName));
         $param = array();
         if (!empty($paramInfor)) {
             foreach ($paramInfor as $p) {

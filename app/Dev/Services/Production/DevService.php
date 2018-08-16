@@ -22,13 +22,13 @@ class DevService extends BaseService implements DevServiceInterface
 {
     public function getLanguageCodeList():DataResultCollection
     {
-        $lang = DEVDB::execSPsToDataResultCollection('DEV_GET_LANGUAGE_CODE_LST');
+        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
         return $lang;
     }
 
     public function getTranslateList($translateType, $lang):DataResultCollection
     {
-        return DEVDB::execSPsToDataResultCollection('DEV_GET_TRANSLATION_DATA_LST', array($translateType, $lang));
+        return DEVDB::execSPsToDataResultCollection('DEBUG_GET_TRANSLATION_DATA_LST', array($translateType, $lang));
     }
 
     /**
@@ -39,13 +39,13 @@ class DevService extends BaseService implements DevServiceInterface
     public function getTranslateMessageArray($translateType = '')
     {
         $resuiltArr = [];
-        $lang = DEVDB::execSPsToDataResultCollection('DEV_GET_LANGUAGE_CODE_LST');
+        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
         if ($lang->status==\SDBStatusCode::OK) {
 
             foreach ($lang->data as $item) {
                 $resuiltArr[$item->code] = array();
             }
-            $rules = DEVDB::execSPsToDataResultCollection('DEV_GET_TRANSLATION_DATA_LST', array($translateType, ''));
+            $rules = DEVDB::execSPsToDataResultCollection('DEBUG_GET_TRANSLATION_DATA_LST', array($translateType, ''));
 
             if (!empty($resuiltArr)) {
                 foreach ($resuiltArr as $itemKey => $itemValue) {
@@ -81,7 +81,7 @@ class DevService extends BaseService implements DevServiceInterface
     public function generateEntityClass(){
         try{
             //Generate Storeprocedure entity
-            $spsList =  DEVDB::execSPsToDataResultCollection('DEV_GET_ALL_SP_LST');
+            $spsList =  DEVDB::execSPsToDataResultCollection('DEBUG_GET_ALL_SP_LST');
             $modules =  DEVDB::select('SELECT module_code FROM sys_modules');
             if($spsList->status==\SDBStatusCode::OK){
                 foreach ($spsList->data as $row){
@@ -89,7 +89,7 @@ class DevService extends BaseService implements DevServiceInterface
                 }
             }
             //Generate Table and View entity
-            $tableList =  DEVDB::execSPsToDataResultCollection('DEV_GET_ALL_TABLE_LST');
+            $tableList =  DEVDB::execSPsToDataResultCollection('DEBUG_GET_ALL_TABLE_LST');
             if($tableList->status==\SDBStatusCode::OK){
                 foreach ($tableList->data as $row){
                     DEVDB::generateEntityClassByTable($row->name);
@@ -104,7 +104,7 @@ class DevService extends BaseService implements DevServiceInterface
         DEVDB::generateEntityClass($spName,$this->getModuleNameFromSpName($spName,$modules));
     }
     public function getAllSPList():DataResultCollection{
-        $spsList =  DEVDB::execSPsToDataResultCollection('DEV_GET_ALL_SP_LST');
+        $spsList =  DEVDB::execSPsToDataResultCollection('DEBUG_GET_ALL_SP_LST');
         return $spsList;
     }
     /**

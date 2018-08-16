@@ -7,7 +7,7 @@ class CateloryController extends Controller
 {
     public function index(){
 
-        $listCategory = SDB::execSPsToDataResultCollection('API_GET_CATEGORY_LST');
+        $listCategory = SDB::select("SELECT * FROM catelory");
         return ResponseHelper::JsonDataResult($listCategory);
     }
 }
