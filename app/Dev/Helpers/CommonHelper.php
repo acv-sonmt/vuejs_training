@@ -41,7 +41,7 @@ class CommonHelper
     public static function convertVaidateErrorToCommonStruct($error){
         $result = array(
             array(
-                'code'=>Config::get('constants.from_validate_error_code'),
+                'code'=>\SDBStatusCode::WebError,
                 'data_error'=>json_encode($error)
             )
         );

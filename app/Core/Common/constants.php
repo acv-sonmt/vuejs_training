@@ -18,12 +18,7 @@ class SDBStatusCode
     const PDOExceoption = 'PDOExceoption';
     const ValidateError = 'ValidateError';
 }
-//Use for dev
-return [
-    'from_validate_error_code' => -9998,
-    'exception_error_code' => -9999,
-    'success_code' => 0
-];
+
 
 class ApiConst
 {
@@ -31,9 +26,13 @@ class ApiConst
     const ApiRefreshTokenParamName = 'refresh_token';
     const ApiModuleName = 'api';
 }
-class CoreConst{
+
+
+class CoreConst
+{
     const CoreModuleName = 'Core';
 }
+
 class RoleConst
 {
     const PartyRole = 10;
@@ -54,6 +53,8 @@ class UploadConst
     const BACKEND_UPLOAD_VIDEO_MAX = '512000'; // 500MB
 }
 
-class LoggingConst{
-    const SQL_LOG_channel =  'sql_query';
+class LoggingConst
+{
+    const SQL_LOG_channel = 'sql_query';
 }
+
