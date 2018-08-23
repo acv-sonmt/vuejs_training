@@ -56,6 +56,11 @@ class TranslationController
             return ResponseHelper::JsonDataResult($dataFromDB);
         }
     }
+    public function deleteTranslate(Request $request)
+    {
+        $code = $request->code;
+        $this->service->deleteTranslate($code);
+    }
     public function updateTranslate(Request $request)
     {
         $id = $request->input('id');

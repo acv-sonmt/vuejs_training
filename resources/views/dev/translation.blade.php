@@ -113,7 +113,7 @@
                                 <td class="text-center" style="vertical-align: middle;">
                                     <span class="edit glyphicon glyphicon-edit"></span>
                                     <span class="save glyphicon glyphicon-floppy-saved display-none" data-id="<?php echo $item->id; ?>"></span>
-                                    <span class="delete glyphicon glyphicon-trash" data-id="<?php echo $item->id; ?>"></span>
+                                    <span class="delete glyphicon glyphicon-trash" data-id="<?php echo $item->id; ?>" data-code={{$item->code}}></span>
                                 </td>
                             </tr>
                             <?php }
@@ -164,6 +164,7 @@
                 if($(currentOption).length>0 && 1*$(currentOption).attr('has_input_type')==1){
                     $('#trans-input-type').prop('disabled',false);
                 }else{
+                    $('#trans-input-type').val("");
                     $('#trans-input-type').prop('disabled',true);
                 }
             });
@@ -248,8 +249,42 @@
                 });
 
             });
+            // Delete Trans
             $(document).on('click', '.delete', function () {
-                alert('Comming soon...');
+                var code = $(this).data("code");
+                alert(code);
+                $.confirm({
+                    title: '<p class="text-warning">Warning</p>',
+                    Width: '30%',
+                    useBootstrap: false,
+                    closeOnclick: false,
+                    content: "Are you want to delete all? It will delete all language",
+                    buttons: {
+                        Save: {
+                            text: 'OK',
+                            btnClass: 'btn btn-primary',
+                            action: function () {
+                                $.ajax({
+                                    method: 'Post',
+                                    data:{code:code},
+                                    url: "<?php echo @route('deleteTranslate')?>",
+                                    success: function (result) {
+                                    alert("Done!")
+                                        location.reload();
+                                    }
+                                });
+                            }
+                        },
+                        cancel: {
+                            text: ' Cancel',
+                            btnClass: 'btn btn-danger',
+                            action: function () {
+                            }
+                        }
+                    }
+
+
+                });
             });
 
             $(document).on('click', '#add', function () {

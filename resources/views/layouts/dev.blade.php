@@ -39,7 +39,7 @@
             font-weight: bold;
         }
         .container{
-            min-width: 1400px !important;
+            min-width: 1200px !important;
         }
         .font-weight-bold{
             font-weight: bold;
