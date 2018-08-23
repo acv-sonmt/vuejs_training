@@ -3,7 +3,8 @@
 namespace App\Backend\Http\Controllers;
 
 use App\Core\Services\Interfaces\UploadServiceInterface;
-use App\Core\Dao\SDB;
+use App\Core\Common\SDBStatusCode;
+use App\Core\Common\UploadConst;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;
 use App\Core\Helpers\ResponseHelper;
@@ -73,7 +74,7 @@ class TemplateController extends Controller
     }
     public function getImageFromS3(){
         $result = new DataResultCollection();
-        $result->status = \SDBStatusCode::OK;
+        $result->status = SDBStatusCode::OK;
         $diskS3Name = 's3';
         $fileList = Storage::disk($diskS3Name)->allFiles('uploads/templates');
         $fileS3InforList = array();
@@ -103,7 +104,7 @@ class TemplateController extends Controller
             $result = $this->uploadService->uploadFile($files,'public','uploads/templates','');
         } else {
             $error = array($validator->errors());
-            $result->status = \SDBStatusCode::ValidateError;
+            $result->status = SDBStatusCode::ValidateError;
             $result->message = 'An error occured while uploading the file.';
             $result->data =$error;
         }
@@ -125,7 +126,7 @@ class TemplateController extends Controller
             $result = $this->uploadService->uploadFile($files,'s3','uploads/templates','public');
         } else {
             $error = array($validator->errors());
-            $result->status = \SDBStatusCode::ValidateError;
+            $result->status = SDBStatusCode::ValidateError;
             $result->message = 'An error occured while uploading the file.';
             $result->data =$error;
         }
@@ -232,9 +233,9 @@ class TemplateController extends Controller
     {
         return [
             'required',
-            'mimes:' . \UploadConst::FILE_IMAGE_UPLOAD_ACCESSED,
+            'mimes:' . UploadConst::FILE_IMAGE_UPLOAD_ACCESSED,
             'image',
-            'max:' . \UploadConst::BACKEND_UPLOAD_IMAGE_MAX
+            'max:' . UploadConst::BACKEND_UPLOAD_IMAGE_MAX
         ];
     }
 }

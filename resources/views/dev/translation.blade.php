@@ -274,7 +274,7 @@
                             btnClass: 'btn btn-primary',
                             action: function () {
                                 saveNewTranslateText(this.$content,function(res){
-                                    if(res.status == '{{SDBStatusCode::OK}}'&& res.data[0].code==0){
+                                    if(res.status == '{{\App\Core\Common\SDBStatusCode::OK}}'&& res.data[0].code==0){
                                         location.reload();
                                     }
                                 });

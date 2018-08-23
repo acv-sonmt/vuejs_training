@@ -7,6 +7,8 @@ use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\CommonHelper;
+use App\Core\Common\SDBStatusCode;
+use App\Core\Common\LoggingConst;
 use Illuminate\Support\Facades\Log;
 
 /**
@@ -47,7 +49,7 @@ class SDB extends DB
             self::writeLogAdvance($syntax,$parameters);
             $exec = $stmt->execute();
             if (!$exec) {
-                $dataResult->status = \SDBStatusCode::PDOExceoption;
+                $dataResult->status = SDBStatusCode::PDOExceoption;
                 $dataResult->message = $pdo->errorInfo();
             }
             if ($isExecute) return $exec;
@@ -60,7 +62,7 @@ class SDB extends DB
             } while ($stmt->nextRowset());
             if (isset($results[0])) {
                 $dataResult->data = $results[0];
-                $dataResult->status = \SDBStatusCode::OK;
+                $dataResult->status = SDBStatusCode::OK;
                 $dataResult->message = null;
             }
             else {
@@ -70,10 +72,10 @@ class SDB extends DB
                 }else{
                     $dataResult->data = null;
                 }
-                $dataResult->status = \SDBStatusCode::DataNull;
+                $dataResult->status = SDBStatusCode::DataNull;
             }
         } catch (\Exception $exception) {
-            $dataResult->status = \SDBStatusCode::Excep;
+            $dataResult->status = SDBStatusCode::Excep;
             $dataResult->message = $exception->getMessage();
             //Logging
             CommonHelper::CommonLog($exception->getMessage());
@@ -137,7 +139,7 @@ class SDB extends DB
      */
     protected static function writeLog($queryString){
         if((boolean)Config::get('database.logs')=='true') {
-            Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+            Log::channel(LoggingConst::SQL_LOG_channel)->debug(
                 $queryString
             );
         }
@@ -150,7 +152,7 @@ class SDB extends DB
     protected static function writeLogAdvance($syntax,$param){
         try{
             if((boolean)Config::get('database.logs')=='true') {
-                Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+                Log::channel(LoggingConst::SQL_LOG_channel)->debug(
                     self::createSqlString($syntax,$param)
                 );
             }

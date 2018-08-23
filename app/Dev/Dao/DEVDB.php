@@ -4,8 +4,8 @@
  */
 
 namespace App\Dev\Dao;
-
-use App\Core\Entities\Entity;
+use App\Core\Common\LoggingConst;
+use App\Core\Common\SDBStatusCode;
 use App\Dev\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\DB;
@@ -68,7 +68,7 @@ class DEVDB extends DB
             self::writeLogAdvance($syntax,$parameters);
             $exec = $stmt->execute();
             if (!$exec) {
-                $dataResult->status = \SDBStatusCode::PDOExceoption;
+                $dataResult->status = SDBStatusCode::PDOExceoption;
                 $dataResult->message = $pdo->errorInfo();
             }
             if ($isExecute) return $exec;
@@ -81,7 +81,7 @@ class DEVDB extends DB
             } while ($stmt->nextRowset());
             if (isset($results[0])) {
                 $dataResult->data = $results[0];
-                $dataResult->status = \SDBStatusCode::OK;
+                $dataResult->status = SDBStatusCode::OK;
                 $dataResult->message = null;
             }
             else {
@@ -91,11 +91,11 @@ class DEVDB extends DB
                 }else{
                     $dataResult->data = null;
                 }
-                $dataResult->status = \SDBStatusCode::DataNull;
+                $dataResult->status = SDBStatusCode::DataNull;
             }
             Log::notice(__CLASS__."::".__FUNCTION__."(".$procName.") : Passed");
         } catch (\Exception $exception) {
-            $dataResult->status = \SDBStatusCode::Excep;
+            $dataResult->status = SDBStatusCode::Excep;
             $dataResult->message = $exception->getMessage();
             //Logging
             Log::error(__CLASS__."::".__FUNCTION__."(".$procName.")    Error: ");
@@ -298,7 +298,7 @@ class DEVDB extends DB
      */
     protected static function writeLog($queryString){
         if((boolean)Config::get('database.logs')=='true') {
-            Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+            Log::channel(LoggingConst::SQL_LOG_channel)->debug(
                 $queryString
             );
         }
@@ -311,7 +311,7 @@ class DEVDB extends DB
     protected static function writeLogAdvance($syntax,$param){
         try{
             if((boolean)Config::get('database.logs')=='true') {
-                Log::channel(\LoggingConst::SQL_LOG_channel)->debug(
+                Log::channel(LoggingConst::SQL_LOG_channel)->debug(
                     self::createSqlString($syntax,$param)
                 );
             }

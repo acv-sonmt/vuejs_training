@@ -9,6 +9,7 @@
 namespace App\Acl\Services\Production;
 
 use App\Core\Dao\SDB;
+use App\Core\Common;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use App\Acl\Services\Interfaces\AclServiceInterface;
@@ -111,7 +112,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function updateActiveAcl($roleMapId, $isActive)
     {
         $result = SDB::execSPsToDataResultCollection("ACL_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
-        if($result->status == \SDBStatusCode::OK){
+        if($result->status == SDBStatusCode::OK){
 
            $this->generationAclFile();
         }
@@ -120,7 +121,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function updateActiveAclAll($isActive)
     {
         $result = SDB::execSPsToDataResultCollection("ACL_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
-        if($result->status==\SDBStatusCode::OK){
+        if($result->status==SDBStatusCode::OK){
             $this->generationAclFile();
         }
         return $result;

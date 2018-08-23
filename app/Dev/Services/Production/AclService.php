@@ -9,6 +9,7 @@
 namespace App\Dev\Services\Production;
 
 use App\Dev\Dao\DEVDB;
+use App\Core\Common\RoleConst;
 use App\Dev\Services\Interfaces\AclServiceInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -21,7 +22,7 @@ class AclService extends BaseService implements AclServiceInterface
      */
     public function initRoleDataToDB(){
         $data = $this->getListScreen();
-        $systemAdminRole = \RoleConst::SysAdminRole;
+        $systemAdminRole = RoleConst::SysAdminRole;
         $roleList = $this->getRoleList();
         //Insert sys screen data
         DEVDB::table('sys_screens')->truncate();

@@ -4,7 +4,8 @@ namespace App\Api\V1\Http\Controllers\Auth;
 
 use App\Api\V1\Models\User;
 use App\Api\V1\Http\Controllers\Controller;
-use App\Core\Dao\SDB;
+use App\Core\Common\SDBStatusCode;
+use App\Core\Common\ApiConst;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\ResponseHelper;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
@@ -70,17 +71,17 @@ class UserController extends Controller
             $token =  $user->createToken('By Login from user:'.$user->getAuthIdentifier());
             $accessToken = $token->accessToken;
             $refreshToken = '';// $token->refresh_token;
-            $response->status = \SDBStatusCode::OK;
-            $response->data = array(\ApiConst::ApiAccessTokenParamName=>$accessToken,\ApiConst::ApiRefreshTokenParamName=>$refreshToken);
+            $response->status = SDBStatusCode::OK;
+            $response->data = array(ApiConst::ApiAccessTokenParamName=>$accessToken,ApiConst::ApiRefreshTokenParamName=>$refreshToken);
             return ResponseHelper::JsonDataResult($response);
         }else{
             $this->incrementLoginAttempts($request);
             // Customization: If client status is inactive (0) return failed_status error.
             if (isset($client->is_active)&& $client->is_active === 0) {
-                $response->status = \SDBStatusCode::ApiError;
+                $response->status = SDBStatusCode::ApiError;
                 $response->message= trans('auth.not_active');
             }else{
-                $response->status = \SDBStatusCode::ApiError;
+                $response->status = SDBStatusCode::ApiError;
                 $response->message= trans('auth.can_not_login');
             }
         }
@@ -94,9 +95,9 @@ class UserController extends Controller
      */
     public function logout(){
         $result  =  new DataResultCollection();
-        $result->status = \SDBStatusCode::ApiAuthNotPass;
+        $result->status = SDBStatusCode::ApiAuthNotPass;
         if(Auth::check()){
-            $result->status = \SDBStatusCode::OK;
+            $result->status = SDBStatusCode::OK;
             $accessToken = Auth::user()->token();
             $accessToken->revoke();
         }

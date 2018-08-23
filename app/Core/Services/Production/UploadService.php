@@ -11,6 +11,7 @@ namespace App\Core\Services\Production;
 use App\Core\Services\Interfaces\UploadServiceInterface;
 use App\Core\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Storage;
+use App\Core\Common\SDBStatusCode;
 
 class UploadService extends BaseService implements UploadServiceInterface
 {
@@ -23,7 +24,7 @@ class UploadService extends BaseService implements UploadServiceInterface
      */
     public function uploadFile($fileList,$diskName,$subFolder,$option):DataResultCollection{
         $result = new DataResultCollection();
-        $result->status = \SDBStatusCode::OK;
+        $result->status = SDBStatusCode::OK;
         $result->data = array();
         //NOTE : This will store file to path with: root path has config in config/filesystems.php, sub folder is $subFolder
         if (is_array($fileList) && !empty($fileList)) {
@@ -41,7 +42,7 @@ class UploadService extends BaseService implements UploadServiceInterface
     }
     public function deleteFile($diskName,$filePath):DataResultCollection{
         $result = new DataResultCollection();
-        $result->status = \SDBStatusCode::OK;
+        $result->status = SDBStatusCode::OK;
         $result->data = array();
         Storage::disk($diskName)->delete($filePath);
         return $result;

@@ -9,6 +9,7 @@
 namespace App\Dev\Services\Production;
 
 use App\Dev\Dao\DEVDB;
+use App\Core\Common\SDBStatusCode;
 use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Illuminate\Support\Facades\Lang;
 use App\Dev\Entities\DataResultCollection;
@@ -93,7 +94,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
     public function generationTranslateFileAndScript()
     {
         $transTypeList = DEVDB::execSPsToDataResultCollection("DEBUG_GET_TRANSLATION_TYPE_LST");
-        if ($transTypeList->status==\SDBStatusCode::OK) {
+        if ($transTypeList->status==SDBStatusCode::OK) {
             foreach ($transTypeList->data as $item) {
                 $this->generationTranslateFile($item->code, $item->code);
             }
@@ -201,7 +202,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
     {
         $resuiltArr = [];
         $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
-        if ($lang->status==\SDBStatusCode::OK) {
+        if ($lang->status==SDBStatusCode::OK) {
 
             foreach ($lang->data as $item) {
                 $resuiltArr[$item->code] = array();
@@ -210,7 +211,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
 
             if (!empty($resuiltArr)) {
                 foreach ($resuiltArr as $itemKey => $itemValue) {
-                    if ($rules->status==\SDBStatusCode::OK) {
+                    if ($rules->status==SDBStatusCode::OK) {
                         foreach ($rules->data as $ruleItem) {
                             if ($itemKey == $ruleItem->lang_code) {
                                 if ($ruleItem->type_code == '') {

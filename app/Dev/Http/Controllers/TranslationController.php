@@ -8,6 +8,7 @@
 
 namespace App\Dev\Http\Controllers;
 
+use App\Core\Common\SDBStatusCode;
 use App\Dev\Helpers\ResponseHelper;
 use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Validator;
@@ -27,8 +28,8 @@ class TranslationController
         //form CRUD translate text
         $langListFromDB = $this->service->getLanguageCodeList();
         $dataTransFromDB = $this->service->getTranslateList('', '');
-        $langList = ($langListFromDB->status == \SDBStatusCode::OK)?$langListFromDB->data:array();
-        $dataTrans = ($dataTransFromDB->status == \SDBStatusCode::OK)?$dataTransFromDB->data:array();
+        $langList = ($langListFromDB->status == SDBStatusCode::OK)?$langListFromDB->data:array();
+        $dataTrans = ($dataTransFromDB->status == SDBStatusCode::OK)?$dataTransFromDB->data:array();
         $dataComboFilter = $this->service->getNewTransComboList();
         return view("dev/translation", compact(['dataTrans', 'langList', 'dataComboFilter']));
     }
@@ -42,7 +43,7 @@ class TranslationController
         if ($validator->fails()) {
             $error = array($validator->errors());
             $dataResult = new DataResultCollection();
-            $dataResult->status = \SDBStatusCode::WebError;
+            $dataResult->status = SDBStatusCode::WebError;
             $dataResult->data = $error;
             return ResponseHelper::JsonDataResult($dataResult);
 
@@ -66,7 +67,7 @@ class TranslationController
     public function newTextTrans()
     {
         $langListFromDB = $this->service->getLanguageCodeList();
-        $langList = ($langListFromDB->status == \SDBStatusCode::OK)?$langListFromDB->data:array();
+        $langList = ($langListFromDB->status == SDBStatusCode::OK)?$langListFromDB->data:array();
         $comboList = $this->service->getNewTransComboList();
         return view("dev/addtranslate", compact(['langList', 'comboList']))->renderSections()['content'];
     }

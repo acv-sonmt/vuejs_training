@@ -10,6 +10,7 @@ use App\Dev\Services\Interfaces\DevServiceInterface;
 use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
+use App\Core\Common\SDBStatusCode;
 use Validator;
 
 class DevController extends Controller
@@ -62,7 +63,7 @@ class DevController extends Controller
     }
     public function entityManagement(){
         $listSPCollection =  $this->devService->getAllSPList();
-        $listSp = $listSPCollection->status==\SDBStatusCode::OK?$listSPCollection->data:array();
+        $listSp = $listSPCollection->status==SDBStatusCode::OK?$listSPCollection->data:array();
         return view("dev/entitymanagement", compact('listSp'));
     }
     public function generateEntity()

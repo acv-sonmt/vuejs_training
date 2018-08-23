@@ -6,6 +6,7 @@
  * Date: 6/21/2018
  * Time: 10:26 AM
  */
+namespace App\Core\Common;
 class SDBStatusCode
 {
     const OK = 'OK';

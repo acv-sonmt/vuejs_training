@@ -10,6 +10,7 @@ namespace App\Dev\Helpers;
 
 use Illuminate\Support\Facades\Log;
 use Illuminate\Support\Facades\Config;
+use App\Core\Common\SDBStatusCode;
 
 class CommonHelper
 {
@@ -41,7 +42,7 @@ class CommonHelper
     public static function convertVaidateErrorToCommonStruct($error){
         $result = array(
             array(
-                'code'=>\SDBStatusCode::WebError,
+                'code'=>SDBStatusCode::WebError,
                 'data_error'=>json_encode($error)
             )
         );

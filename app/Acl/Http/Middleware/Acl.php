@@ -4,7 +4,8 @@
  */
 namespace App\Acl\Http\Middleware;
 use App\Core\Helpers\CommonHelper;
-use App\Core\Helpers\ResponseHelper;
+use App\Core\Common\SDBStatusCode;
+use App\Core\Common;
 use App\Core\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
@@ -34,7 +35,7 @@ class Acl
         }
 
         $result = new DataResultCollection();
-        $result->status = \SDBStatusCode::ACLNotPass;
+        $result->status = SDBStatusCode::ACLNotPass;
         $result->data=array('error'=> trans('acl_not_access'));
         return redirect('/');
         //return ResponseHelper::JsonDataResult($result);

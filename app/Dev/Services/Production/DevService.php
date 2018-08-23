@@ -10,9 +10,8 @@ namespace App\Dev\Services\Production;
 
 use App\Dev\Dao\DEVDB;
 use Illuminate\Support\Facades\Config;
-use Illuminate\Support\Facades\Lang;
-use Illuminate\Support\Facades\Log;
-use Illuminate\Support\Facades\Route;
+use App\Core\Common\SDBStatusCode;
+use App\Core\Common\CoreConst;
 use App\Dev\Services\Interfaces\DevServiceInterface;
 use App\Dev\Entities\DataResultCollection;
 use Mockery\CountValidator\Exception;
@@ -40,7 +39,7 @@ class DevService extends BaseService implements DevServiceInterface
     {
         $resuiltArr = [];
         $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
-        if ($lang->status==\SDBStatusCode::OK) {
+        if ($lang->status==SDBStatusCode::OK) {
 
             foreach ($lang->data as $item) {
                 $resuiltArr[$item->code] = array();
@@ -49,7 +48,7 @@ class DevService extends BaseService implements DevServiceInterface
 
             if (!empty($resuiltArr)) {
                 foreach ($resuiltArr as $itemKey => $itemValue) {
-                    if ($rules->status==\SDBStatusCode::OK) {
+                    if ($rules->status==SDBStatusCode::OK) {
                         foreach ($rules->data as $ruleItem) {
                             if ($itemKey == $ruleItem->lang_code) {
                                 if ($ruleItem->type_code == '') {
@@ -83,14 +82,14 @@ class DevService extends BaseService implements DevServiceInterface
             //Generate Storeprocedure entity
             $spsList =  DEVDB::execSPsToDataResultCollection('DEBUG_GET_ALL_SP_LST');
             $modules =  DEVDB::select('SELECT module_code FROM sys_modules');
-            if($spsList->status==\SDBStatusCode::OK){
+            if($spsList->status==SDBStatusCode::OK){
                 foreach ($spsList->data as $row){
                     DEVDB::generateEntityClass($row->Name,$this->getModuleNameFromSpName($row->Name,$modules));
                 }
             }
             //Generate Table and View entity
             $tableList =  DEVDB::execSPsToDataResultCollection('DEBUG_GET_ALL_TABLE_LST');
-            if($tableList->status==\SDBStatusCode::OK){
+            if($tableList->status==SDBStatusCode::OK){
                 foreach ($tableList->data as $row){
                     DEVDB::generateEntityClassByTable($row->name);
                 }
@@ -113,7 +112,7 @@ class DevService extends BaseService implements DevServiceInterface
      * @return string
      */
     protected function getModuleNameFromSpName($procedureName,$modules){
-        $result = \CoreConst::CoreModuleName ;//default
+        $result = CoreConst::CoreModuleName ;//default
         $delimiter = '_';
         $procedureName =  strtolower($procedureName);
         $listModule = array();
