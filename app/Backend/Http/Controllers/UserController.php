@@ -13,8 +13,11 @@ class UserController
     {
         $this->service = $userService;
     }
-    public function getAll(){
+    public function getList(){
+    	return view("backend.users.list");
+    }
+    public function paginate(){
     	$arrUser = $this->service->getAll();
-    	return view("backend.users.list",["arrUser" => $arrUser]);
+    	return response()->json(["data" => $arrUser]);
     }
 }

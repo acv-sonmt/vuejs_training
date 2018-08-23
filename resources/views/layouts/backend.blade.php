@@ -214,6 +214,8 @@
 <script src="{{ asset('backend/template1/js/bootstrap-datetimepicker.min.js')}}"></script>
 
 <script src="{{ asset('backend/template1/js/bootstrap-colorpicker.min.js')}}"></script>
+<!--Paginate JS-->
+<script src="{{ asset('backend/template1/paginate/jquery.twbsPagination.js')}}"></script>
 <!-- Custom Theme Scripts -->
 @yield('lib_scripts')
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>

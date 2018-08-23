@@ -49,5 +49,8 @@
     Route::post('/backend/template/doImport', 'TemplateController@doImport')->name('doImport_template');
     //User Controller 
     Route::group(["prefix" => "user"],function(){
-        Route::get("list",'UserController@getAll')->name("list");
+        //get view user
+        Route::get("list",'UserController@getList')->name("list");
+        //get user and paginate
+        Route::get("paginate",'UserController@paginate')->name("paginate");
     });

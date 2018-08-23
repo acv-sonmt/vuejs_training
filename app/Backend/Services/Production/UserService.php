@@ -21,7 +21,7 @@ class UserService extends BaseService implements UserServiceInterface
      */
     public function getAll()
     {
-        $arrUser = DB::table("users")->get();
+        $arrUser = DB::table("users")->orderby("id","desc")->paginate(5);
         return $arrUser;
     }
 }
