@@ -26,6 +26,7 @@
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/backend_common.css')}}" rel="stylesheet">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    @stack("css")
 
 </head>
 
@@ -90,7 +91,13 @@
                                     <li><a href="{{route('table_template')}}">Tables</a></li>
                                 </ul>
                             </li>
-
+                            <!--User-->
+                            <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{route('list')}}">List</a></li>
+                                    <li><a href="{{route('backend_template')}}">Add</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -211,5 +218,6 @@
 @yield('lib_scripts')
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>
 @yield('form_scripts')
+@stack("js")
 </html>
 

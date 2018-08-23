@@ -252,7 +252,6 @@
             // Delete Trans
             $(document).on('click', '.delete', function () {
                 var code = $(this).data("code");
-                alert(code);
                 $.confirm({
                     title: '<p class="text-warning">Warning</p>',
                     Width: '30%',

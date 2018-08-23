@@ -47,3 +47,7 @@
 
     Route::get('/backend/template/doExports', 'TemplateController@doExports')->name('doExports_template');
     Route::post('/backend/template/doImport', 'TemplateController@doImport')->name('doImport_template');
+    //User Controller 
+    Route::group(["prefix" => "user"],function(){
+        Route::get("list",'UserController@getAll')->name("list");
+    });
