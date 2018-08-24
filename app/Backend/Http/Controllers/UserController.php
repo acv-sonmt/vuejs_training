@@ -20,4 +20,10 @@ class UserController
     	$arrUser = $this->service->getAll();
     	return response()->json(["data" => $arrUser]);
     }
+    public function delete(Request $request){
+        $this->service->delete($request->id);
+    }
+    public function deleteAll(Request $request){
+        $this->service->deleteAll($request->arrUser);
+    }
 }

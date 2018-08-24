@@ -10,5 +10,6 @@ namespace App\Backend\Services\Interfaces;
 interface UserServiceInterface
 {
     public function getAll();
-
+    public function delete($id);
+    public function deleteAll($arrUser);
 }
