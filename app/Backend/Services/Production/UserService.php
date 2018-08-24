@@ -32,7 +32,7 @@ class UserService extends BaseService implements UserServiceInterface
     public function delete($id)
     {
         DB::table("users")->where("id",$id)->update(["is_deleted"=>1]);
-        DB::table("users_detail")->where("id",$id)->update(["is_deleted"=>1]);
+        DB::table("users_detail")->where("user_id",$id)->update(["is_deleted"=>1]);
     }
     public function deleteAll($arrUser)
     {
