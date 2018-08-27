@@ -17,11 +17,32 @@ var _DELIMITER = '|#$%-|';
  * @version		:	1.0.0
  * ****************************************************************************
  */
+/**
+ * value is array or string
+ */
 jQuery.fn.extend({
     _addError: function(value) {
-        var message = value;
+        var message_code = value;
+        var message = "";
+        var messageArr = [];
+        var localtion = 'jp';
+        console.log(_messageTranslation[localtion]);
         if($.isArray(value)){
-            message = value.join();
+            $.each(value,function(key,valueItem){
+                message_code = valueItem;
+                if(_messageTranslation[localtion].hasOwnProperty(message_code)){
+                    messageArr.push(_messageTranslation[localtion][message_code]);
+                }else{
+                    messageArr.push(message_code);
+                }
+            })
+            message = messageArr.join();
+        }else{
+            if(_messageTranslation[localtion].hasOwnProperty(message_code)){
+                message =_messageTranslation[localtion][message_code];
+            }else{
+                message = message_code;
+            }
         }
 
         return this.each(function() {
