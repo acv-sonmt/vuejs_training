@@ -12,7 +12,7 @@
 				<td class="role"></td>
 				<td class="active"></td>
 				<td>
-					<button type="button" class="btn btn-primary edit round" data-toggle="modal" data-target="#myModal">
+					<button type="button" class="btn btn-primary edit round">
 					  <i class="fa fa-pencil-square-o"></i>
 					</button>
 				</td>

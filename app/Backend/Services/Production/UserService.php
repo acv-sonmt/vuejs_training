@@ -29,6 +29,20 @@ class UserService extends BaseService implements UserServiceInterface
                         ->paginate(5);
         return $arrUser;
     }
+    public function getRole()
+    {
+        $arrRole = DB::table("sys_roles")->get();
+        return $arrRole;
+    }
+    public function getById($id)
+    {
+        $user = DB::table("users")
+                    ->join("users_detail","users.id","=","users_detail.user_id")
+                    ->where([["users.is_deleted",0],["users.id",$id]])
+                    ->select("users.*","users_detail.gender","users_detail.birth_date")
+                    ->get();
+        return $user[0];
+    }
     public function delete($id)
     {
         DB::table("users")->where("id",$id)->update(["is_deleted"=>1]);

@@ -20,6 +20,19 @@ class UserController
     	$arrUser = $this->service->getAll();
     	return response()->json(["data" => $arrUser]);
     }
+    public function add()
+    {
+        $arrRole = $this->service->getRole();
+        return view("backend.users.add",["arrRole" => $arrRole]);
+    }
+    public function getById(Request $request){
+        $user = $this->service->getById($request->id);
+        $arrRole = $this->service->getRole();
+        return view("backend.users.edit",[
+            "user" => $user, 
+            "arrRole" => $arrRole
+        ]);
+    }
     public function delete(Request $request){
         $this->service->delete($request->id);
     }

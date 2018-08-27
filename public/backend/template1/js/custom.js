@@ -867,7 +867,6 @@ if (typeof NProgress != 'undefined') {
 
 			if( typeof (select2) === 'undefined'){ return; }
 			console.log('init_toolbox');
-
 			$(".select2_single").select2({
 			  placeholder: "Select a state",
 			  allowClear: true
@@ -1555,7 +1554,41 @@ if (typeof NProgress != 'undefined') {
 
 			$('#single_cal1').daterangepicker({
 			  singleDatePicker: true,
-			  singleClasses: "picker_1"
+			  singleClasses: "picker_1",
+			  "locale": {
+			  	"format": "DD/MM/YYYY",
+			  	"separator": " - ",
+			  	"applyLabel": "Apply",
+			  	"cancelLabel": "Cancel",
+			  	"fromLabel": "From",
+			  	"toLabel": "To",
+			  	"customRangeLabel": "Custom",
+			  	"weekLabel": "W",
+			  	"daysOfWeek": [
+			  	"Su",
+			  	"Mo",
+			  	"Tu",
+			  	"We",
+			  	"Th",
+			  	"Fr",
+			  	"Sa"
+			  	],
+			  	"monthNames": [
+			  	"January",
+			  	"February",
+			  	"March",
+			  	"April",
+			  	"May",
+			  	"June",
+			  	"July",
+			  	"August",
+			  	"September",
+			  	"October",
+			  	"November",
+			  	"December"
+			  	],
+			  	"firstDay": 1
+			  },
 			}, function(start, end, label) {
 			  console.log(start.toISOString(), end.toISOString(), label);
 			});

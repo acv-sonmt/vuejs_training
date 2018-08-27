@@ -29,7 +29,9 @@
 <div class="col-md-12 col-sm-12 col-xs-12" style="margin-top: 20px;">
     <div class="x_panel">
         <div class="x_title">
-        	<button class="btn btn-primary" id="add"><i class="fa fa-plus"></i></button>
+        	<button class="btn btn-primary" id="add">
+        		<i class="fa fa-plus"></i>
+        	</button>
             <button class="btn btn-danger" id="delete_all">Delete All</button>
             <ul class="nav navbar-right panel_toolbox">
                 <li><a class="collapse-link"><i class="fa fa-chevron-up"></i></a>
@@ -82,6 +84,61 @@
 			});
 		});
 	}
+	//function add
+	$(document).on('click', '#add', function(event) {
+		$('#modal-add').iziModal('open',event);
+	});
+	$('#modal-add').iziModal(
+	{
+		title          : 'User',
+		subtitle       :'Add',
+		headerColor    :"#405467",
+		icon           :"fa fa-user",
+		iconColor      :"#ECF0F1",
+		fullscreen     :true,
+		arrowKeys      :true,
+		pauseOnHover   :true,
+		overlayColor   : 'rgba(0, 0, 0, 0.2)',
+		navigateCaption:true,
+		bodyOverflow   : true,
+		radius         :15,
+		transitionIn   :"bounceInDown",
+		transitionOut  :"bounceOutUp",
+		arrowKeys      :true,
+		iframe         : true,
+		iframeWidth    :400,
+		iframeURL      :"{{route('add')}}"
+	});
+	//function edit
+	$(document).on('click', '.edit', function(event) {
+	  	$('#modal-edit').iziModal('open',event);
+	});
+	$('#modal-edit').iziModal(
+	{
+		onOpening: function(modal){
+			var id =$(event.target).closest("button").data("id");//get Id, get button then get id
+			$(".iziModal-iframe").attr("src","{{route('edit')}}?id="+id);
+			//set url iframe
+		},
+		title          : 'User',
+		subtitle       :'Edit',
+		headerColor    :"#405467",
+		icon           :"fa fa-user",
+		iconColor      :"#ECF0F1",
+		fullscreen     :true,
+		arrowKeys      :true,
+		pauseOnHover   :true,
+		overlayColor   : 'rgba(0, 0, 0, 0.2)',
+		navigateCaption:true,
+		bodyOverflow   : true,
+		radius         :15,
+		transitionIn   :"bounceInDown",
+		transitionOut  :"bounceOutUp",
+		arrowKeys      :true,
+		iframe         : true,
+		iframeWidth    :400,
+		iframeURL      :""
+	});
 	//Delete User
 	$("body").on("click",".delete",function(e){
 		var id = $(this).data("id");

@@ -53,6 +53,10 @@
         Route::get("list",'UserController@getList')->name("list");
         //get user and paginate
         Route::get("paginate",'UserController@paginate')->name("paginate");
+        //add user
+        Route::get("add",'UserController@add')->name("add");
+        //edit user
+        Route::get("edit",'UserController@getById')->name("edit");
         //delete user
         Route::get("delete",'UserController@delete')->name("delete");
         //delete all user
