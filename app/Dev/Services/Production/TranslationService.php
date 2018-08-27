@@ -173,6 +173,10 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
             }
         }
     }
+    public function deleteTranslate($code)
+    {
+        $arr = DEVDB::table("sys_translation")->where("code",$code)->delete();
+    }
     public function updateTranslateText($id, $transText)
     {
         DEVDB::execSPsToDataResultCollection("DEBUG_TRANSLATE_UPDATE_TEXT_ACT", array($id, $transText));

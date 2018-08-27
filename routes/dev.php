@@ -11,6 +11,8 @@ Route::post('/dev/initProject', 'DevController@initProject')->name('initProject'
 
 
 Route::get('/dev/translationManagement', 'TranslationController@translationManagement')->name('translationManagement');
+//Delete translate 
+Route::post('/dev/deleteTranslate', 'TranslationController@deleteTranslate')->name('deleteTranslate');
 Route::post('/dev/updateTranslate', 'TranslationController@updateTranslate')->name('updateTranslate');
 Route::post('/dev/generationLanguageFiles', 'TranslationController@generationLanguageFiles')->name('generationLanguageFiles');
 Route::post('/dev/importTranslateToDB', 'TranslationController@importTranslateToDB')->name('importTranslateToDB');
