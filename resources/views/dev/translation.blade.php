@@ -252,13 +252,12 @@
             // Delete Trans
             $(document).on('click', '.delete', function () {
                 var code = $(this).data("code");
-                alert(code);
                 $.confirm({
                     title: '<p class="text-warning">Warning</p>',
-                    Width: '30%',
+                    boxWidth: '500px',
                     useBootstrap: false,
                     closeOnclick: false,
-                    content: "Are you want to delete all? It will delete all language",
+                    content: "Are you want to delete all? It will delete all language with this code",
                     buttons: {
                         Save: {
                             text: 'OK',
@@ -269,7 +268,6 @@
                                     data:{code:code},
                                     url: "<?php echo @route('deleteTranslate')?>",
                                     success: function (result) {
-                                    alert("Done!")
                                         location.reload();
                                     }
                                 });
