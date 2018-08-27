@@ -56,8 +56,8 @@
 		<div class="x_panel">
 			<div class="x_content">
 			<br>
-			<form class="form-horizontal input_mask">
-				<input type="hidden" name="_token" value="{{csrf_token()}}">
+			<form class="form-horizontal input_mask" method="POST">
+				<input type="hidden" name="_token" value="{{csrf_token('')}}">
 				<div class="form-group">
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
 						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
@@ -70,7 +70,7 @@
 				<div class="form-group">
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
 						<label>Name </label>
-						<input type="text" autofocus="" class="form-control has-feedback-left" id="name"
+						<input type="text" autofocus="" name="name" class="form-control has-feedback-left" id="name"
 						placeholder="Name">
 						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 					</div>
@@ -97,7 +97,6 @@
 							</label>
 						</div>
 					</div>
-	
 				</div>
 				<div class="form-group">
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -109,7 +108,7 @@
 				<div class="form-group" style="margin-top: 15px">
 					<div class="col-md-6 col-sm-6 col-xs-12">
 						<label>Role </label>
-						<select class="form-control">
+						<select class="form-control" id="role">
 							<option>Choose Role</option>
 							@foreach($arrRole as $role)
 							<option value="{{$role->role_value}}">
@@ -121,12 +120,13 @@
 				</div>
 				<div class="ln_solid"></div>
 				<div class="form-group">
-					<div class=>
+					<div>
 						<button type="button" class="btn btn-primary">Cancel</button>
 						<button class="btn btn-primary" type="reset">Reset</button>
+						<button type="button" class="btn btn-success add">Submit</button>
 					</div>
 				</div>
-				<button data-izimodal-close="">Close</button>
+
 			</form>
 			</div>
 		</div>
@@ -185,5 +185,26 @@
 	$('#preview').on('click', '.remove_img_preview', function () {
 		$("#preview").empty()
 		$("#file").val("");
+	});
+	//submit add 
+	$("body").on("click",".add",function(e){
+		var image  = $("#image").val();
+		var name   = $("#name").val();
+		var date   = $("#date").val();
+		var gender = $('input[name=gender]:checked').val();
+		var email  = $("#email").val();
+		var role   = $("#role").val();
+		$.post("{{route('add')}}",
+			{
+				image :image,
+				name  :name,
+				date  :date,
+				gender:gender,
+				email :email,
+				role  :role,
+				_token: '{{csrf_token()}}'
+			},function(data){
+			console.log(data);
+		});
 	});
 </script>

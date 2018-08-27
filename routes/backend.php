@@ -62,4 +62,8 @@
         Route::get("delete",'UserController@delete')->name("delete");
         //delete all user
         Route::get("deleteAll",'UserController@deleteAll')->name("deleteAll");
+        //test
+        Route::get("test",function(){
+            return view("backend.users.test");
+        })->name("testAdd");
     });

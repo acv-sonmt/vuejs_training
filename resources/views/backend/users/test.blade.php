@@ -6,6 +6,15 @@
 	<script src="https://code.jquery.com/jquery-2.2.4.js"></script>
 </head>
 <body>
+  @if ($errors->any())
+    <div class="alert alert-danger">
+        <ul>
+            @foreach ($errors->all() as $error)
+                <li>{{ $error }}</li>
+            @endforeach
+        </ul>
+    </div>
+@endif
 <!-- Modal structure -->
 <button class="open-default button">default</button>
 <div id="modal-default">

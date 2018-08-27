@@ -40,6 +40,24 @@ class UploadService extends BaseService implements UploadServiceInterface
         }
         return $result;
     }
+    public function uploadAvatar($fileList,$diskName,$subFolder,$option):DataResultCollection{
+        $result = new DataResultCollection();
+        $result->status = SDBStatusCode::OK;
+        $result->data = array();
+        //NOTE : This will store file to path with: root path has config in config/filesystems.php, sub folder is $subFolder
+        if (is_array($fileList) && !empty($fileList)) {
+            foreach ($fileList as $item) {
+                $path = Storage::disk($diskName)->put($subFolder, $item, $option);
+                $fileInfor = array(
+                    'client_file_name' => $item->getClientOriginalName(),
+                    'uri' => $path,
+                    'url' => Storage::disk($diskName)->url($path)
+                );
+                $result->data[] = $fileInfor;
+            }
+        }
+        return $result;
+    }
     public function deleteFile($diskName,$filePath):DataResultCollection{
         $result = new DataResultCollection();
         $result->status = SDBStatusCode::OK;
@@ -47,9 +65,6 @@ class UploadService extends BaseService implements UploadServiceInterface
         Storage::disk($diskName)->delete($filePath);
         return $result;
     }
-    public function test()
-    {
-        echo 'upload.test';
-    }
+    public function uploadAvatar()
 }
 
