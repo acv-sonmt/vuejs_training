@@ -210,6 +210,7 @@
 <!-- Custom Theme Scripts -->
 @yield('lib_scripts')
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>
+<script src="{{ asset('js/common.js')}}"></script>
 @yield('form_scripts')
 </html>
 

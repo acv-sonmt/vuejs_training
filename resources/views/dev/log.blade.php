@@ -1,5 +1,9 @@
 
 @extends('layouts.dev')
 @section('content')
-    Logging management
+    Logging
+@endsection
+@section('scripts')
+    {{--script here--}}
+
 @endsection

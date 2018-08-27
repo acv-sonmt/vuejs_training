@@ -19,6 +19,7 @@
     <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/lib/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet">
     <style>
         .navbar-laravel{
             position: fixed;

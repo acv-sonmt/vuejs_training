@@ -274,8 +274,10 @@
                             btnClass: 'btn btn-primary',
                             action: function () {
                                 saveNewTranslateText(this.$content,function(res){
-                                    if(res.status == '{{\App\Core\Common\SDBStatusCode::OK}}'&& res.data[0].code==0){
+                                    if(res.status == '{{\App\Core\Common\SDBStatusCode::OK}}'){
                                         location.reload();
+                                    }else{
+                                        _commonShowError(res.data);
                                     }
                                 });
                                 return false;
