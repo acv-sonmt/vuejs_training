@@ -25,6 +25,10 @@ class UserController
         $arrRole = $this->service->getRole();
         return view("backend.users.add",["arrRole" => $arrRole]);
     }
+    public function addPost(Request $request)
+    {
+        return view("backend.users.list");
+    }
     public function getById(Request $request){
         $user = $this->service->getById($request->id);
         $arrRole = $this->service->getRole();

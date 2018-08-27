@@ -11,6 +11,8 @@
 	<link href="{{ asset('backend/template1/css/prettify.min.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
+    <!--Modal CSS-->
+    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
     <style type="text/css">
     	.form{
 			margin-left : auto;
@@ -18,6 +20,35 @@
 			margin-top: 5%;
 			float       : none;
     	}
+    	input[type="file"] {
+    		display: none;
+    	}
+		.custom-file-upload { 
+			display: inline; 
+			padding: 6px 12px;
+		}
+		.thumb {
+			width : 100px;
+			height: 100px;
+			margin: 0.2em -0.7em 0 0;
+			border-radius: 50%;
+		}
+		.remove_img_preview {
+			position:relative;
+			left: 20%;
+			top:-100px;
+			width: 15px;
+			background:black;
+			color:white;
+			border-radius:50px;
+			font-size:0.9em;
+			padding: 0 0.3em 0;
+			text-align:center;
+			cursor:pointer;
+		}
+		.remove_img_preview:before {
+			content:"×";
+		}
     </style>
 </head>
 <body>
@@ -25,11 +56,15 @@
 		<div class="x_panel">
 			<div class="x_content">
 			<br>
-			<form class="form-horizontal input_mask" method="POST">
+			<form class="form-horizontal input_mask">
 				<input type="hidden" name="_token" value="{{csrf_token()}}">
 				<div class="form-group">
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-						<p>Image Here</p>
+						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
+							<i class="fa fa-camera"></i> Choose Avatar
+						</label>
+						<input id="file" name="images" type="file" class="form-control" />
+						<div id="preview"></div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -62,6 +97,7 @@
 							</label>
 						</div>
 					</div>
+	
 				</div>
 				<div class="form-group">
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -88,10 +124,9 @@
 					<div class=>
 						<button type="button" class="btn btn-primary">Cancel</button>
 						<button class="btn btn-primary" type="reset">Reset</button>
-						<button type="submit" class="btn btn-success">Submit</button>
 					</div>
 				</div>
-
+				<button data-izimodal-close="">Close</button>
 			</form>
 			</div>
 		</div>
@@ -110,6 +145,8 @@
 <!-- Custom Theme Scripts -->
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>
 <script src="{{ asset('backend/template1/js/prettify.js')}}"></script>
+<!--Modal JS-->
+<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.js"></script>
 <script type="text/javascript">
 	//set gender
 	$(document).ready(function(){
@@ -131,5 +168,22 @@
 		$(this).parent("label").addClass("btn btn-primary active");
 		//remove class unckecked
 		$('input[name=gender]:not(:checked)').parent("label").removeClass('btn-primary').addClass("btn-default");
+	});
+	//upload image 
+	function handleFileSelect(event) {
+		var input = this;
+		if (input.files && input.files.length) {
+			var reader = new FileReader();
+			this.enabled = false
+			reader.onload = (function (e) {
+				$("#preview").html(['<img class="thumb" src="', e.target.result, '" title="Avatar"/><span class="remove_img_preview" title="remove"></span>'].join(''))
+			});
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	$('#file').change(handleFileSelect);
+	$('#preview').on('click', '.remove_img_preview', function () {
+		$("#preview").empty()
+		$("#file").val("");
 	});
 </script>
