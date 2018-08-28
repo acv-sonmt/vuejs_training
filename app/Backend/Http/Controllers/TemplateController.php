@@ -92,6 +92,7 @@ class TemplateController extends Controller
     public function doUpload(Request $request)
     {
         $files = $request->allFiles();
+        dd($files);
         $result =  new DataResultCollection();
         $rule = [
             "*"=>$this->getImageRules(),
