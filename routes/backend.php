@@ -46,4 +46,6 @@
     Route::get('/backend/template/exports', 'TemplateController@exports')->name('export_template');
 
     Route::get('/backend/template/doExports', 'TemplateController@doExports')->name('doExports_template');
+    Route::get('/backend/template/doExportsCommon/{type}', 'TemplateController@doExportsCommon')->name('doExportsCommon_template');
+
     Route::post('/backend/template/doImport', 'TemplateController@doImport')->name('doImport_template');
