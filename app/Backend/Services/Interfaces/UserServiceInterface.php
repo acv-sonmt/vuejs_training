@@ -14,5 +14,6 @@ interface UserServiceInterface
     public function deleteAll($arrUser);
     public function getById($id);
     public function getRole();
+    public function insert($obj);
 
 }

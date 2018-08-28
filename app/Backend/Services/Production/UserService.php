@@ -42,6 +42,22 @@ class UserService extends BaseService implements UserServiceInterface
                     ->select("users.*","users_detail.gender","users_detail.birth_date")
                     ->get();
         return $user[0];
+    } 
+    public function insert($obj)
+    {
+        DB::table("users")->insert([
+            "name"       => $obj->name,
+            "email"      => $obj->email,
+            "role_value" => $obj->role,
+            "password"   => $obj->pass,
+        ]);
+        $id = DB::table("users")->where([["name",$obj->name],["email",$obj->email]])->select("id")->get();
+        DB::table("users_detail")->insert([
+            "user_id"    => $id[0]->id,
+            "gender"     => $obj->gender,
+            "birth_date" => $obj->date,
+            "avatar"     => $obj->image
+        ]);
     }
     public function delete($id)
     {

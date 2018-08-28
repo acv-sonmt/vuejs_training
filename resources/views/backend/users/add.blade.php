@@ -13,6 +13,7 @@
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <!--Modal CSS-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style type="text/css">
     	.form{
 			margin-left : auto;
@@ -56,7 +57,7 @@
 		<div class="x_panel">
 			<div class="x_content">
 			<br>
-			<form class="form-horizontal input_mask" method="POST" enctype="multipart/form-data">
+			<form id="form_add" class="form-horizontal input_mask" method="POST" enctype="multipart/form-data">
 				<input type="hidden" name="_token" value="{{csrf_token('')}}">
 				<div class="form-group">
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
@@ -101,8 +102,22 @@
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
 						<label>Email </label>
-						<input type="text" class="form-control has-feedback-left" id="email" placeholder="Email">
+						<input type="email" class="form-control has-feedback-left" id="email" placeholder="Email">
 						<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+						<label>Password </label>
+						<input type="password" class="form-control has-feedback-left" id="password" placeholder="Password">
+						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
+					</div>
+				</div>
+				<div class="form-group">
+					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+						<label>Re Password </label>
+						<input type="password" class="form-control has-feedback-left" id="re-password" placeholder="Re Password">
+						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
 				<div class="form-group" style="margin-top: 15px">
@@ -123,7 +138,7 @@
 					<div>
 						<button type="button" class="btn btn-primary">Cancel</button>
 						<button class="btn btn-primary" type="reset">Reset</button>
-						<button type="submit" class="btn btn-success add">Submit</button>
+						<button type="button" class="btn btn-success add">Submit</button>
 					</div>
 				</div>
 
@@ -158,7 +173,7 @@
 			singleClasses: "picker_1",
 			"singleDatePicker": true,
 			"locale": {
-				"format": "DD/MM/YYYY",
+				"format": "YYYY-MM-DD",
 			}
 		}, function(start, end, label) {
 		});
@@ -187,24 +202,34 @@
 		$("#file").val("");
 	});
 	//submit add 
-	$("body").on("click",".add1",function(e){
-		var image  = $("#image").val();
-		var name   = $("#name").val();
-		var date   = $("#date").val();
-		var gender = $('input[name=gender]:checked').val();
-		var email  = $("#email").val();
-		var role   = $("#role").val();
-		$.post("{{route('add')}}",
-			{
-				image :image,
-				name  :name,
-				date  :date,
-				gender:gender,
-				email :email,
-				role  :role,
-				_token: '{{csrf_token()}}'
-			},function(data){
-			console.log(data);
+	$("body").on("click",".add",function(e){
+
+		var formData = new FormData($('#form_add')[0]);
+		formData.append("name", $("#name").val());
+		formData.append("image", $('input[type=file]')[0].files[0]);
+		formData.append("date", $("#date").val());
+		formData.append("gender", $('input[name=gender]:checked').val());
+		formData.append("email", $("#email").val());
+		formData.append("role", $("#role").val());
+		formData.append("pass", $("#password").val());
+		$.ajax({
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			contentType: false,
+    		processData: false,
+			url: "{{route('add')}}",
+			data:formData,
+			success: function (result) {
+				console.log(result);
+				if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}') {
+					parent.$('#modal-add').iziModal('close');
+					parent.getList();
+					parent.alert("Add");
+					//call parent and close modal
+				}
+			}
 		});
 	});
 </script>

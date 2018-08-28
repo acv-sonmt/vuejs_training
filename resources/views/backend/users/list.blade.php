@@ -73,17 +73,8 @@
 @endsection
 @push("js")
 <script type="text/javascript">
+	//get list
 	getList();
-	//function getList
-	function getList(){
-		$(document).ready(function(){
-			$.get("{{route('paginate')}}",function(data){
-				console.log(data.data);
-				buildList(data.data);
-				paginate(data.data.last_page);
-			});
-		});
-	}
 	//function add
 	$(document).on('click', '#add', function(event) {
 		$('#modal-add').iziModal('open',event);
@@ -234,6 +225,25 @@
 			});
 		}
 	});
+	//function alert 
+	function alert(type)
+	{
+		$.alert({
+			title: 'Successful!',
+			type          :"green",
+			content: "User Have Been "+type+" Successful!",
+		});
+	}
+	//function getList
+	function getList(){
+		$(document).ready(function(){
+			$.get("{{route('paginate')}}",function(data){
+				console.log(data.data);
+				buildList(data.data);
+				paginate(data.data.last_page);
+			});
+		});
+	}
 	//function builList
 	function buildList(data)
 	{
