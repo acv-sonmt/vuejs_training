@@ -38,6 +38,8 @@ class UserController
     public function addPost(Request $request)
     {   
         $image = $request->file("image");
+        $newImage = Image::make($request->image);
+        dd($image);
         $result =  new DataResultCollection();
         $rule = [
             "image" => "required|mimes:".UploadConst::FILE_IMAGE_UPLOAD_ACCESSED."|image|max:".UploadConst::BACKEND_UPLOAD_IMAGE_MAX,
