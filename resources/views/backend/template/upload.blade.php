@@ -110,7 +110,7 @@
                     data: formData,
                     url: "<?php echo @route('doUpload_template')?>",
                     success: function (result) {
-                        if (result.status == '{{SDBStatusCode::OK}}') {
+                        if (result.status == '{{\App\Core\Common\SDBStatusCode::OK}}') {
                             $.each(result.data, function (key, item) {
                                 var itemImage = $('#image-item-template').find('.image-item').clone();
                                 var img = $(itemImage).find('.img-item');
@@ -143,7 +143,7 @@
                     data: formData,
                     url: "<?php echo @route('doUploadS3_template')?>",
                     success: function (result) {
-                        if (result.status == '{{SDBStatusCode::OK}}') {
+                        if (result.status == '{{\App\Core\Common\SDBStatusCode::OK}}') {
                             $.each(result.data, function (key, item) {
                                 var itemImage = $('#image-item-template').find('.image-item').clone();
                                 var img = $(itemImage).find('.img-item');
