@@ -58,7 +58,6 @@ class UserController
             $result->message = 'An error occured while uploading avatar!';
             $result->data =$error;
         }
-        dd($result);
         if($result->status=="OK"){
             foreach ($result->data as $data){
                 $imageUrl = $data["url"];

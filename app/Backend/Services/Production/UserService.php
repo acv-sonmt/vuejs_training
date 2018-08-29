@@ -39,7 +39,7 @@ class UserService extends BaseService implements UserServiceInterface
         $user = DB::table("users")
                     ->join("users_detail","users.id","=","users_detail.user_id")
                     ->where([["users.is_deleted",0],["users.id",$id]])
-                    ->select("users.*","users_detail.gender","users_detail.birth_date")
+                    ->select("users.*","users_detail.gender","users_detail.birth_date","users_detail.avatar")
                     ->get();
         return $user[0];
     } 

@@ -41,14 +41,13 @@
 			width: 15px;
 			background:black;
 			color:white;
-			border-radius:50px;
-			font-size:0.9em;
-			padding: 0 0.3em 0;
+			border-radius:90px;
+			padding: 2px;
 			text-align:center;
 			cursor:pointer;
 		}
 		.remove_img_preview:before {
-			content:"×";
+			content:"\f057";
 		}
     </style>
 </head>
@@ -191,7 +190,7 @@
 			var reader = new FileReader();
 			this.enabled = false
 			reader.onload = (function (e) {
-				$("#preview").html(['<img class="thumb" src="', e.target.result, '" title="Avatar"/><span class="remove_img_preview" title="remove"></span>'].join(''))
+				$("#preview").html(['<img class="thumb" src="', e.target.result, '" title="Avatar"/><span class="fa remove_img_preview" title="remove"></span>'].join(''))
 			});
 			reader.readAsDataURL(input.files[0]);
 		}

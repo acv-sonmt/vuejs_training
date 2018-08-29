@@ -15,9 +15,32 @@
     	.form{
 			margin-left : auto;
 			margin-right: auto;
-			margin-top: 5%;
+			margin-top  : 5%;
 			float       : none;
     	}
+    	.thumb {
+			width        : 100px;
+			height       : 100px;
+			margin       : 0.2em -0.7em 0 0;
+			border-radius: 50%;
+		}
+		input[type="file"] {
+    		display: none;
+    	}
+    	.remove_img_preview {
+			position:relative;
+			left: 100px;
+			top:-100px;
+			width: 15px;
+			background:black;
+			color:white;
+			border-radius:90px;
+			text-align:center;
+			cursor:pointer;
+		}
+		.remove_img_preview:before {
+			content:"\f057";
+		}
     </style>
 </head>
 <body>
@@ -28,8 +51,15 @@
 			<form class="form-horizontal input_mask" method="POST">
 				<input type="hidden" name="_token" value="{{csrf_token()}}">
 				<div class="form-group">
-					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
-						<p>Image Here</p>
+					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">	
+						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
+							<i class="fa fa-camera"></i> Choose Avatar
+						</label>
+						<input id="file" name="image" type="file" class="form-control" />
+						<div id="preview">
+							<img data-src="{{$user->avatar}}" class="thumb" title="avatar" src="{{$user->avatar}}">
+							<span class="fa remove_img_preview" title="remove"></span>
+						</div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -41,14 +71,9 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<!--Format date-->
-					<?php  
-						$date = date_create($user->birth_date);
-						$date =  date_format($date,"d/m/Y");
-					?>
 					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
 						<label>Date Of Birth </label>
-						<input type="text" class="form-control has-feedback-left" id="date" value="{{$date}}" name="date" aria-describedby="inputSuccess2Status">
+						<input type="text" class="form-control has-feedback-left" id="date" value="{{$user->birth_date}}" name="date" aria-describedby="inputSuccess2Status">
 						<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true">
 						</span>
 						<span id="inputSuccess2Status" class="sr-only">(success)</span>
@@ -94,7 +119,7 @@
 				<div class="form-group">
 					<div class=>
 						<button type="button" class="btn btn-primary">Cancel</button>
-						<button class="btn btn-primary" type="reset">Reset</button>
+						<button id="reset" class="btn btn-primary" type="reset">Reset</button>
 						<button type="submit" class="btn btn-success">Submit</button>
 					</div>
 				</div>
@@ -128,7 +153,7 @@
 			singleClasses: "picker_1",
 			"singleDatePicker": true,
 			"locale": {
-				"format": "DD/MM/YYYY",
+				"format": "YYYY-MM-DD",
 			}
 		}, function(start, end, label) {
 		});
@@ -139,4 +164,26 @@
 		//remove class unckecked
 		$('input[name=gender]:not(:checked)').parent("label").removeClass('btn-primary').addClass("btn-default");
 	});
+	//upload image 
+	function handleFileSelect(event) {
+		var input = this;
+		if (input.files && input.files.length) {
+			var reader = new FileReader();
+			this.enabled = false
+			reader.onload = (function (e) {
+				$(".thumb").attr('src', e.target.result);
+			});
+			reader.readAsDataURL(input.files[0]);
+		}
+	}
+	$('#file').change(handleFileSelect);
+	$('#preview').on('click', '.remove_img_preview', function () {
+		$("#preview").empty()
+		$("#file").val("");
+	});
+	//reset image
+	$("#reset").click(function(){
+		var src = $(".image").data("src");
+		console.log(src);
+	});	
 </script>
