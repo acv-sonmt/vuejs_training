@@ -27,7 +27,20 @@ class UserController
     	return view("backend.users.list");
     }
     public function paginate(){
+        $diskLocalName = 'public';
     	$arrUser = $this->service->getAll();
+        foreach($arrUser as $obj)
+        {
+            if($obj->avatar==NULL){
+                if($obj->gender===1){
+                    $obj->avatar = url('/')."/common_images/male.jpg";
+                }else{
+                    $obj->avatar = url('/')."/common_images/female.jpg";
+                }
+            }else{
+                $obj->avatar = Storage::disk($diskLocalName)->url($obj->avatar);
+            }
+        }
     	return response()->json(["data" => $arrUser]);
     }
     public function add()
@@ -37,10 +50,14 @@ class UserController
     }
     public function addPost(Request $request)
     {   
-        $image = $request->file("image");
+        $image  = $request->file("image");
         $result =  new DataResultCollection();
-        $rule = [
-            "image" => "required|mimes:".UploadConst::FILE_IMAGE_UPLOAD_ACCESSED."|image|max:".UploadConst::BACKEND_UPLOAD_IMAGE_MAX,
+        $rule_image = "";
+        if($image!=NULL){
+            $rule_image = "mimes:".UploadConst::FILE_IMAGE_UPLOAD_ACCESSED."|image|max:".UploadConst::BACKEND_UPLOAD_IMAGE_MAX;
+        }
+        $rule   = [
+            "image" => $rule_image,
             "name"  => "required|min:3|max:32",
             "date"  => "required|date",
             "email" => "required|email|unique:users",
@@ -49,21 +66,29 @@ class UserController
         $message_rule = [
             '*.mimes' => 'Mime not Allowed'
         ];
-        $validator = Validator::make($request->all(), $rule,$message_rule);
+        $validator = Validator::make($request->all(),$rule,$message_rule);
         if (!$validator->fails()) {
-            $result = $this->uploadService->uploadFile(array($image),'public','uploads/avatars','');
+            if($image!=NULL){
+                $result = $this->uploadService->uploadFile(array($image),'public','uploads/avatars','');
+                foreach ($result->data as $data){
+                    $imageUrl = $data["uri"];
+                }
+            } else{
+                $result->status = SDBStatusCode::OK;
+            }
+            
         } else {
-            $error = array($validator->errors());
-            $result->status = SDBStatusCode::ValidateError;
-            $result->message = 'An error occured while uploading avatar!';
-            $result->data =$error;
+            $error           = array($validator->errors());
+            $result->status  = SDBStatusCode::ValidateError;
+            $result->message = 'An error occured while uploading avatar or validate!';
+            $result->data    =$error;
         }
         if($result->status=="OK"){
-            foreach ($result->data as $data){
-                $imageUrl = $data["url"];
+            $obj        = new \stdClass();
+            $obj->image = NULL;
+            if($image!=NULL){
+                $obj->image  = $imageUrl;
             }
-            $obj         = new \stdClass();
-            $obj->image  = $imageUrl;
             $obj->name   = $request->name; 
             $obj->date   = $request->date;
             $obj->gender = $request->gender; 
@@ -75,12 +100,83 @@ class UserController
         return ResponseHelper::JsonDataResult($result);
     }
     public function getById(Request $request){
+        $diskLocalName = "public";
         $user = $this->service->getById($request->id);
         $arrRole = $this->service->getRole();
+        if($user->avatar==NULL){
+                if($user->gender===1){
+                    $user->src = url('/')."/common_images/male.jpg";
+                }else{
+                    $user->src = url('/')."/common_images/female.jpg";
+                }
+            }else{
+                $user->src = Storage::disk($diskLocalName)->url($user->avatar);
+            }
         return view("backend.users.edit",[
             "user" => $user, 
             "arrRole" => $arrRole
         ]);
+    }
+    public function editPost(Request $request)
+    {   
+        $diskLocalName = "public";
+        $image      = $request->file("image");
+        $rule_image = "";
+        $rule_pass  = "";
+        $result     =  new DataResultCollection();
+        if($image!=NULL){
+            $rule_image = "mimes:".UploadConst::FILE_IMAGE_UPLOAD_ACCESSED."|image|max:".UploadConst::BACKEND_UPLOAD_IMAGE_MAX;
+        }
+        if(isset($request->pass)){
+            $rule_pass = "required|min:3|max:32";
+        }
+        $rule = [
+                "image" => $rule_image,
+                "name"  => "required|min:3|max:32",
+                "date"  => "required|date",
+                "email" => "required|email|unique:users,email,".$request->id,
+                "pass"  =>$rule_pass,
+            ];
+        $message_rule = [
+            '*.mimes' => 'Mime not Allowed'
+        ];
+        $validator = Validator::make($request->all(), $rule,$message_rule);
+        if (!$validator->fails()) {
+            //check file image, if have process and save image
+            if($image!=NULL){
+                //delete image
+                Storage::disk($diskLocalName)->delete($request->oldImgSrc);
+                $result = $this->uploadService->uploadFile(array($image),'public','uploads/avatars','');
+            }else{
+                $result->status = SDBStatusCode::OK;
+            }
+        } else {
+            $error = array($validator->errors());
+            $result->status = SDBStatusCode::ValidateError;
+            $result->message = 'An error occured while uploading avatar or validate!';
+            $result->data =$error;
+        }
+        if($result->status=="OK"){
+            $obj         = new \stdClass();
+            if($image!=NULL){
+                foreach ($result->data as $data){
+                    $obj->image = $data["uri"];
+                }
+            }else{
+                $obj->image = NULL;
+            }
+            if(isset($request->pass)){
+                $obj->pass   = md5($request->pass);
+            }
+            $obj->id     = $request->id;
+            $obj->name   = $request->name; 
+            $obj->date   = $request->date;
+            $obj->gender = $request->gender; 
+            $obj->email  = $request->email;
+            $obj->role   = $request->role;
+            $this->service->update($obj);
+        }
+        return ResponseHelper::JsonDataResult($result);
     }
     public function delete(Request $request){
         $this->service->delete($request->id);

@@ -15,5 +15,6 @@ interface UserServiceInterface
     public function getById($id);
     public function getRole();
     public function insert($obj);
+    public function update($obj);
 
 }

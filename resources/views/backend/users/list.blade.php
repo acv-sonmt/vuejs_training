@@ -15,6 +15,10 @@
 	.jconfirm-title{
 		margin-top: 10px;
 	}
+	.img{
+		width: 50px; 
+		height: 50px;
+	}
 </style>
 @endpush
 @extends("layouts.backend")
@@ -51,7 +55,7 @@
                         <th style="text-align: center">
                             <input type="checkbox" id="check-all" class="flat">
                         </th>
-                        <th class="column-title">Id </th>
+                        <th class="column-title">Image </th>
                         <th class="column-title">Name </th>
                         <th class="column-title">Email </th>
                         <th class="column-title">Role </th>
@@ -81,8 +85,11 @@
 	});
 	$('#modal-add').iziModal(
 	{
+		focusInput	   : true,
 		title          : 'User',
 		subtitle       :'Add',
+		width          : 700,
+		iframeHeight   : 600,
 		headerColor    :"#405467",
 		icon           :"fa fa-user",
 		iconColor      :"#ECF0F1",
@@ -113,6 +120,8 @@
 		},
 		title          : 'User',
 		subtitle       :'Edit',
+		width          : 700,
+		iframeHeight   : 600,
 		headerColor    :"#405467",
 		icon           :"fa fa-user",
 		iconColor      :"#ECF0F1",
@@ -235,10 +244,9 @@
 		});
 	}
 	//function getList
-	function getList(){
+	function getList(page){
 		$(document).ready(function(){
-			$.get("{{route('paginate')}}",function(data){
-				console.log(data.data);
+			$.get("{{route('paginate')}}",{page:page},function(data){
 				buildList(data.data);
 				paginate(data.data.last_page);
 			});
@@ -252,7 +260,7 @@
 		data.data.forEach(function(obj) {
 			var row = $("#tr-customer").contents().clone();
 			$(row).find('.check').val(obj.id);
-			$(row).find('.id').html(obj.id);
+			$(row).find('.img').attr('src', obj.avatar);
 		 	$(row).find('.name').html(obj.name);
 		 	$(row).find('.email').html(obj.email);
 		 	$(row).find('.role').html(obj.role);

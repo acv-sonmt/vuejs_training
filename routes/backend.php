@@ -55,9 +55,10 @@
         Route::get("paginate",'UserController@paginate')->name("paginate");
         //add user
         Route::get("add",'UserController@add')->name("add");
-        Route::post("add",'UserController@addPost');
+        Route::post("add",'UserController@addPost')->name("addPost");
         //edit user
         Route::get("edit",'UserController@getById')->name("edit");
+        Route::post("edit",'UserController@editPost')->name("editPost");
         //delete user
         Route::get("delete",'UserController@delete')->name("delete");
         //delete all user

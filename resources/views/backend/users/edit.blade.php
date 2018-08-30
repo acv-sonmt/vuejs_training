@@ -7,10 +7,10 @@
     <!-- Font Awesome -->
     <link href="{{ asset('backend/template1/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/daterangepicker.css')}}" rel="stylesheet">
-    <link href="{{ asset('backend/template1/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
 	<link href="{{ asset('backend/template1/css/prettify.min.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
+    <meta name="csrf-token" content="{{ csrf_token() }}">
     <style type="text/css">
     	.form{
 			margin-left : auto;
@@ -27,6 +27,11 @@
 		input[type="file"] {
     		display: none;
     	}
+    	input[type="checkbox"] {
+    		padding-top: 5px;
+    		height: 20px;
+    		width: 20px;
+    	}
     	.remove_img_preview {
 			position:relative;
 			left: 100px;
@@ -41,6 +46,9 @@
 		.remove_img_preview:before {
 			content:"\f057";
 		}
+		.password{
+			display: none;
+		}
     </style>
 </head>
 <body>
@@ -50,19 +58,20 @@
 			<br>
 			<form class="form-horizontal input_mask" method="POST">
 				<input type="hidden" name="_token" value="{{csrf_token()}}">
+				<input type="hidden" id="id" value="{{$user->id}}">
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">	
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">	
 						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
 							<i class="fa fa-picture-o"></i> Change Avatar
 						</label>
 						<input id="file" name="image" type="file" class="form-control" />
 						<div id="preview">
-							<img data-src="{{$user->avatar}}" class="thumb" title="avatar" src="{{$user->avatar}}">
+							<img data-src="{{$user->src}}" data-path="{{$user->avatar}}" class="thumb" title="avatar" src="{{$user->src}}">
 						</div>
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Name </label>
 						<input type="text" autofocus="" class="form-control has-feedback-left" value="{{$user->name}}" id="name"
 						placeholder="Name">
@@ -70,7 +79,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-4 col-sm-4 col-xs-4 form-group has-feedback">
 						<label>Date Of Birth </label>
 						<input type="text" class="form-control has-feedback-left" id="date" value="{{$user->birth_date}}" name="date" aria-describedby="inputSuccess2Status">
 						<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true">
@@ -79,7 +88,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12">
+					<div class="col-md-8 col-sm-8 col-xs-8">
 						<label>Gender</label>
 						<br>
 						<div id="gender" class="btn-group" data-toggle="buttons">
@@ -93,16 +102,35 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Email </label>
 						<input type="text" class="form-control has-feedback-left" id="email" value="{{$user->email}}" placeholder="Email">
 						<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
+				<div class="form-group">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
+					<input type="checkbox" name="changPass" id="changePass"> <label>Change Password</label>
+					</div>
+				</div>
+				<div class="form-group password">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
+						<label>Password </label>
+						<input type="password" class="form-control has-feedback-left password" id="password" placeholder="Password">
+						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
+					</div>
+				</div>
+				<div class="form-group password">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
+						<label>Re Password </label>
+						<input type="password" class="form-control has-feedback-left" id="re-password" placeholder="Re Password">
+						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
+					</div>
+				</div>
 				<div class="form-group" style="margin-top: 15px">
-					<div class="col-md-8 col-sm-8 col-xs-12">
+					<div class="col-md-8 col-sm-8 col-xs-8">
 						<label>Role </label>
-						<select class="form-control">
+						<select class="form-control" id="role">
 							<option>Choose Role</option>
 							@foreach($arrRole as $role)
 							<option value="{{$role->role_value}}" 
@@ -119,7 +147,7 @@
 					<div class=>
 						<button type="button" class="btn btn-primary">Cancel</button>
 						<button id="reset" class="btn btn-primary" type="reset">Reset</button>
-						<button type="submit" class="btn btn-success">Submit</button>
+						<button type="button" class="btn btn-success edit">Submit</button>
 					</div>
 				</div>
 
@@ -180,5 +208,49 @@
 	$("#reset").click(function(){
 		var src = $("img").data("src");
 		$("img").attr('src', src);
+	});
+	//change Password
+	$("#changePass").click(function(){
+		if($(this).is(":checked")){
+			$(".password").css('display',"block");
+		}else{
+			$(".password").css("display","none");
+		}
+	});
+	//submit edit 
+	$("body").on("click",".edit",function(e){
+
+		var formData = new FormData();
+		formData.append("name", $("#name").val());
+		formData.append("id", $("#id").val());
+		formData.append("image", $('input[type=file]')[0].files[0]);
+		formData.append("oldImgSrc", $("img").data("path"));
+		formData.append("date", $("#date").val());
+		formData.append("gender", $('input[name=gender]:checked').val());
+		formData.append("email", $("#email").val());
+		formData.append("role", $("#role").val());
+		if($("input[type=checkbox]").is(":checked")){
+			formData.append("pass", $("#password").val());
+		}
+		$.ajax({
+			type: 'POST',
+			headers: {
+				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+			},
+			contentType: false,
+    		processData: false,
+			url: "{{route('editPost')}}",
+			data:formData,
+			success: function (result) {
+				console.log(result);
+				if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}') {
+					parent.$('#modal-edit').iziModal('close');
+					var page = parent.$("#pagination-demo").find("li.active").find("a").text();
+					parent.getList(page);
+					parent.alert("Edit");
+					//call parent and close modal
+				}
+			}
+		});
 	});	
 </script>

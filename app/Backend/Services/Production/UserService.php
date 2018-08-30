@@ -12,6 +12,7 @@ use DB;
 use App\Core\Common\SDBStatusCode;
 use App\Backend\Services\Interfaces\UserServiceInterface;
 use Illuminate\Support\Facades\Lang;
+use Illuminate\Support\Facades\Storage;
 class UserService extends BaseService implements UserServiceInterface
 {
     /**
@@ -23,9 +24,10 @@ class UserService extends BaseService implements UserServiceInterface
     {
         $arrUser = DB::table("users")
                         ->join("sys_roles","users.role_value","=","sys_roles.role_value")
+                        ->join("users_detail as dt","users.id","=","dt.user_id")
                         ->where("users.is_deleted",0)
                         ->orderby("users.id","desc")
-                        ->select("users.*","sys_roles.name as role")
+                        ->select("users.*","sys_roles.name as role","dt.avatar","dt.gender")
                         ->paginate(5);
         return $arrUser;
     }
@@ -42,6 +44,45 @@ class UserService extends BaseService implements UserServiceInterface
                     ->select("users.*","users_detail.gender","users_detail.birth_date","users_detail.avatar")
                     ->get();
         return $user[0];
+    }
+    public function update($obj)
+    {
+        //check pass and insert into table users
+        if(isset($obj->pass)){
+            DB::table("users")
+            ->where("id",$obj->id)
+            ->update([
+                "name"       => $obj->name,
+                "email"      => $obj->email,
+                "role_value" => $obj->role,
+                "password"   => $obj->pass
+            ]);
+        }else{
+            DB::table("users")
+            ->where("id",$obj->id)
+            ->update([
+                "name"       => $obj->name,
+                "email"      => $obj->email,
+                "role_value" => $obj->role
+            ]);
+        }
+        //check image and insert into table users_details
+        if($obj->image!=NULL){
+            DB::table("users_detail")
+            ->where("user_id",$obj->id)
+            ->update([
+                "gender"     => $obj->gender,
+                "birth_date" => $obj->date,
+                "avatar"     => $obj->image
+            ]);
+        }else{
+            DB::table("users_detail")
+            ->where("user_id",$obj->id)
+            ->update([
+                "gender"     => $obj->gender,
+                "birth_date" => $obj->date
+            ]);
+        }
     } 
     public function insert($obj)
     {
@@ -61,14 +102,20 @@ class UserService extends BaseService implements UserServiceInterface
     }
     public function delete($id)
     {
-        DB::table("users")->where("id",$id)->update(["is_deleted"=>1]);
-        DB::table("users_detail")->where("user_id",$id)->update(["is_deleted"=>1]);
+        $diskLocalName = "public";
+        $oldImgSrc = DB::table("users_detail")->where("user_id",$id)->select("avatar")->get();
+        Storage::disk($diskLocalName)->delete($oldImgSrc[0]->avatar);
+        DB::table("users")->where("id",$id)->delete();
+        DB::table("users_detail")->where("user_id",$id)->delete();
     }
     public function deleteAll($arrUser)
     {
+        $diskLocalName = "public";
         foreach($arrUser as $id) {
-            DB::table("users")->where("id",$id)->update(["is_deleted"=>1]);
-            DB::table("users_detail")->where("user_id",$id)->update(["is_deleted"=>1]);
+            $oldImgSrc = DB::table("users_detail")->where("user_id",$id)->select("avatar")->get();
+            Storage::disk($diskLocalName)->delete($oldImgSrc[0]->avatar);
+            DB::table("users")->where("id",$id)->delete();
+            DB::table("users_detail")->where("user_id",$id)->delete();
         }
     }
 }

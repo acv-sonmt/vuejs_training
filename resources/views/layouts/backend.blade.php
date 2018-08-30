@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
+    <base href="{{asset('')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/favicon.ico" type="image/ico" />
@@ -97,7 +98,6 @@
                             <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
                                 <ul class="nav child_menu">
                                     <li><a href="{{route('list')}}">List</a></li>
-                                    <li><a href="{{route('backend_template')}}">Add</a></li>
                                 </ul>
                             </li>
                         </ul>

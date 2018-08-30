@@ -7,8 +7,6 @@
     <!-- Font Awesome -->
     <link href="{{ asset('backend/template1/css/font-awesome.min.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/daterangepicker.css')}}" rel="stylesheet">
-    <link href="{{ asset('backend/template1/css/bootstrap-datetimepicker.css')}}" rel="stylesheet">
-	<link href="{{ asset('backend/template1/css/prettify.min.css')}}" rel="stylesheet">
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <!--Modal CSS-->
@@ -26,7 +24,7 @@
     	}
 		.custom-file-upload { 
 			display: inline; 
-			padding: 6px 12px;
+			padding: 8px 12px;
 		}
 		.thumb {
 			width : 100px;
@@ -49,17 +47,23 @@
 		.remove_img_preview:before {
 			content:"\f057";
 		}
+		#success_message{
+			display:none;
+		}
+		.help-block{
+			font-size: 14px;
+		}
     </style>
 </head>
 <body>
-	<div class="col-md-6 col-xs-12 form">
+	<div class="col-md-7 col-xs-12 form">
 		<div class="x_panel">
 			<div class="x_content">
 			<br>
 			<form id="form_add" class="form-horizontal input_mask" method="POST" enctype="multipart/form-data">
 				<input type="hidden" name="_token" value="{{csrf_token('')}}">
 				<div class="form-group">
-					<div class="col-md-6 col-sm-6 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
 							<i class="fa fa-camera"></i> Choose Avatar
 						</label>
@@ -68,7 +72,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Name </label>
 						<input type="text" autofocus="" name="name" class="form-control has-feedback-left" id="name"
 						placeholder="Name">
@@ -76,7 +80,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-4 col-sm-4 col-xs-4 form-group has-feedback">
 						<label>Date Of Birth </label>
 						<input type="text" class="form-control has-feedback-left" id="date" name="date" aria-describedby="inputSuccess2Status">
 						<span class="fa fa-calendar-o form-control-feedback left" aria-hidden="true">
@@ -85,7 +89,7 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12">
+					<div class="col-md-8 col-sm-8 col-xs-8">
 						<label>Gender</label>
 						<br>
 						<div id="gender" class="btn-group" data-toggle="buttons">
@@ -99,31 +103,31 @@
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Email </label>
-						<input type="email" class="form-control has-feedback-left" id="email" placeholder="Email">
+						<input type="email" class="form-control has-feedback-left" id="email" name="email" placeholder="Email">
 						<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Password </label>
-						<input type="password" class="form-control has-feedback-left" id="password" placeholder="Password">
+						<input type="password" class="form-control has-feedback-left" id="password" name="pass" placeholder="Password">
 						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
 				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-12 form-group has-feedback">
+					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Re Password </label>
-						<input type="password" class="form-control has-feedback-left" id="re-password" placeholder="Re Password">
+						<input type="password" class="form-control has-feedback-left" id="re-password" name="confirmPass" placeholder="Re Password">
 						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
 				<div class="form-group" style="margin-top: 15px">
-					<div class="col-md-8 col-sm-8 col-xs-12">
+					<div class="col-md-8 col-sm-8 col-xs-8">
 						<label>Role </label>
-						<select class="form-control" id="role">
-							<option>Choose Role</option>
+						<select class="form-control" id="role" name="role">
+							<option value="">Choose Role</option>
 							@foreach($arrRole as $role)
 							<option value="{{$role->role_value}}">
 								{{$role->name}}
@@ -132,12 +136,14 @@
 						</select>
 					</div>
 				</div>
+				<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i>
+				</div>
 				<div class="ln_solid"></div>
 				<div class="form-group">
 					<div>
 						<button type="button" class="btn btn-primary">Cancel</button>
 						<button class="btn btn-primary" type="reset">Reset</button>
-						<button type="button" class="btn btn-success add">Submit</button>
+						<button type="submit" class="btn btn-success add">Submit</button>
 					</div>
 				</div>
 
@@ -161,6 +167,8 @@
 <script src="{{ asset('backend/template1/js/prettify.js')}}"></script>
 <!--Modal JS-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.js"></script>
+<!--Validate-->
+<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
 <script type="text/javascript">
 	//set gender
 	$(document).ready(function(){
@@ -201,34 +209,100 @@
 		$("#file").val("");
 	});
 	//submit add 
-	$("body").on("click",".add",function(e){
-
-		var formData = new FormData($('#form_add')[0]);
-		formData.append("name", $("#name").val());
-		formData.append("image", $('input[type=file]')[0].files[0]);
-		formData.append("date", $("#date").val());
-		formData.append("gender", $('input[name=gender]:checked').val());
-		formData.append("email", $("#email").val());
-		formData.append("role", $("#role").val());
-		formData.append("pass", $("#password").val());
-		$.ajax({
-			type: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			contentType: false,
-    		processData: false,
-			url: "{{route('add')}}",
-			data:formData,
-			success: function (result) {
-				console.log(result);
-				if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}') {
-					parent.$('#modal-add').iziModal('close');
-					parent.getList();
-					parent.alert("Add");
-					//call parent and close modal
+	$('#form_add').bootstrapValidator({
+		feedbackIcons: {
+			valid: 'glyphicon glyphicon-ok',
+			invalid: 'glyphicon glyphicon-remove',
+			validating: 'glyphicon glyphicon-refresh'
+		},
+		fields: {
+			name: {
+				validators: {
+					notEmpty: {
+						message: '<i class="glyphicon glyphicon-info-sign"></i> Please input name!'
+					}
 				}
+			},
+			date:{
+				validators: {
+					notEmpty: {
+						message: '<i class="glyphicon glyphicon-info-sign"></i> Pleas select date!'
+					}
+				}
+			},
+			email:{
+				validators:{
+					notEmpty:{
+						message:"<i class='glyphicon glyphicon-info-sign'></i> Pleas input email!"
+					},
+					emailAddress: {
+                    	message: "<i class='glyphicon glyphicon-info-sign'></i>Please supply a valid email address"
+                	}       
+				}
+			},
+			pass: {
+				validators: {
+					notEmpty: {
+						message: "<i class='glyphicon glyphicon-info-sign'></i> The password is required and can\'t be empty"
+					},
+					stringLength: {
+						min: 4,
+						max: 30,
+						message: "<i class='glyphicon glyphicon-info-sign'></i> The password must be more than 4 and less than 30 characters long"
+					}
+				}
+			},
+			confirmPass: {
+				validators: {
+					notEmpty: {
+						message: "<i class='glyphicon glyphicon-info-sign'></i> The confirm password is required and can\'t be empty"
+					},
+					identical: {
+						field: 'pass',
+						message: "<i class='glyphicon glyphicon-info-sign'></i> The password and its confirm are not the same"
+					}
+				}
+			},
+			role: {
+				validators: {
+					notEmpty: {
+						message: "<i class='glyphicon glyphicon-info-sign'></i> Please select Role!"
+					}
+				}
+        	}
+        }
+	}).on('success.form.bv', function (e) {
+		$('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ..
+        $("form").submit(function(e){
+        	e.preventDefault();
+    	});
+        var formData = new FormData($('#form_add')[0]);
+        formData.append("name", $("#name").val());
+        formData.append("image", $('input[type=file]')[0].files[0]);
+        formData.append("date", $("#date").val());
+        formData.append("gender", $('input[name=gender]:checked').val());
+        formData.append("email", $("#email").val());
+        formData.append("role", $("#role").val());
+        formData.append("pass", $("#password").val());
+        $.ajax({
+        	type: 'POST',
+        	headers: {
+        		'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+        	},
+        	contentType: false,
+        	processData: false,
+        	url: "{{route('add')}}",
+        	data:formData,
+        	success: function (result) {
+        		console.log(result);
+        		if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}'){
+        			//call parent and close modal
+        			parent.$('#modal-add').iziModal('close');
+        			parent.getList();
+        			parent.alert("Add");
+        		}
 			}
 		});
-	});
+		$('#form_add').data('bootstrapValidator').resetForm();
+    });
 </script>
