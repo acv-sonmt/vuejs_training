@@ -75,7 +75,7 @@ class LoginController extends Controller
         $client = User::where($this->username(), $email)->first();
         $this->incrementLoginAttempts($request);
         // Customization: If client status is inactive (0) return failed_status error.
-        if ($client->is_active === 0) {
+        if (isset($client->is_active) && $client->is_active === 0) {
             return $this->sendFailedLoginResponse($request, 'auth.not_active');
         }
         return $this->sendFailedLoginResponse($request);
