@@ -28,7 +28,7 @@
     <link href="{{ asset('backend/template1/css/backend_common.css')}}" rel="stylesheet">
     <link href="{{ asset('css/common.css')}}" rel="stylesheet">
     <!--Modal CSS-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
+    <link href="{{ asset('backend/template1/modal/css/modal.css')}}" rel="stylesheet">
     <!--Toast CSS-->
     <link href="{{ asset('css/toast.css')}}" rel="stylesheet"">
     <title>{{ config('app.name', 'Laravel') }}</title>
@@ -222,7 +222,7 @@
 <!--Paginate JS-->
 <script src="{{ asset('backend/template1/paginate/jquery.twbsPagination.js')}}"></script>
 <!--Modal JS-->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.js"></script>
+<script src="{{ asset('backend/template1/modal/js/modal.js')}}"></script>
 <!--Toast JS-->
 <script src="{{ asset('js/toast.js')}}"></script>
 <!-- Custom Theme Scripts -->

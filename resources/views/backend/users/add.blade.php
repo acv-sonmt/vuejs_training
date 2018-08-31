@@ -104,13 +104,6 @@
 						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
-				<div class="form-group">
-					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
-						<label>Re Password </label>
-						<input type="password" class="form-control has-feedback-left" id="re-password" name="confirmPass" placeholder="Re Password">
-						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
-					</div>
-				</div>
 				<div class="form-group" style="margin-top: 15px">
 					<div class="col-md-8 col-sm-8 col-xs-8">
 						<label>Role </label>

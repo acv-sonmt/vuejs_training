@@ -112,7 +112,7 @@
 				<div class="form-group password">
 					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Re Password </label>
-						<input type="password" class="form-control has-feedback-left" id="re-password" placeholder="Re Password">
+						<input type="password" class="form-control has-feedback-left" id="password_confirmation" name="password_confirmation" placeholder="Re Password">
 						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
@@ -208,6 +208,7 @@
 			formData.append("changePass",0);
 			if($("input[type=checkbox]").is(":checked")){
 				formData.append("pass", $("#password").val());
+				formData.append("password_confirmation", $("#password_confirmation").val());
 				formData.append("changePass",1);
 			}
 			$.ajax({

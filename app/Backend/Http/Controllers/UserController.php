@@ -57,7 +57,7 @@ class UserController
             "name"  => "required|min:3|max:32",
             "date"  => "required|date",
             "email" => "required|email|unique:users",
-            "pass"  =>"required|min:3|max:32",
+            "pass"  => "required|min:3|max:32",
             "role"  => "required"
         ];
         $message_rule = [
@@ -112,16 +112,18 @@ class UserController
     }
     public function editPost(Request $request)
     {   
-        $diskLocalName = "public";
-        $image      = $request->file("image");
-        $rule_image = "";
-        $rule_pass  = "";
+        $diskLocalName    = "public";
+        $image            = $request->file("image");
+        $rule_image       = "";
+        $rule_pass        = "";
+        $rule_passConfirm = "";
         $result     =  new DataResultCollection();
         if($image!=NULL){
             $rule_image = "mimes:".UploadConst::FILE_IMAGE_UPLOAD_ACCESSED."|image|max:".UploadConst::BACKEND_UPLOAD_IMAGE_MAX;
         }
         if($request->changePass ==="1"){
             $rule_pass = "required|min:4|max:32";
+            $rule_passConfirm = "required|min:4|max:32|confirmed";
         }
         $rule = [
                 "image" => $rule_image,
@@ -129,10 +131,13 @@ class UserController
                 "date"  => "required|date",
                 "email" => "required|email|unique:users,email,".$request->id,
                 "pass"  => $rule_pass,
-                "role"  => "required"
+                "password_confirmation" => $rule_passConfirm,
+                "role"  => "required",
+                "rePass" => "compare:pass"
             ];
         $message_rule = [
-            '*.mimes' => 'Mime not Allowed'
+            '*.mimes' => 'Mime not Allowed',
+            "password_confirmation.confirmed" => "Password does not match the confirm password",  
         ];
         $validator = Validator::make($request->all(), $rule,$message_rule);
         if (!$validator->fails()) {
@@ -178,29 +183,4 @@ class UserController
     public function deleteAll(Request $request){
         $this->service->deleteAll($request->arrUser);
     }
-}
-function resize_image($file, $w, $h, $crop=FALSE) {
-    list($width, $height) = getimagesize($file);
-    $r = $width / $height;
-    if ($crop) {
-        if ($width > $height) {
-            $width = ceil($width-($width*abs($r-$w/$h)));
-        } else {
-            $height = ceil($height-($height*abs($r-$w/$h)));
-        }
-        $newwidth = $w;
-        $newheight = $h;
-    } else {
-        if ($w/$h > $r) {
-            $newwidth = $h*$r;
-            $newheight = $h;
-        } else {
-            $newheight = $w/$r;
-            $newwidth = $w;
-        }
-    }
-    $src = imagecreatefromjpeg($file);
-    $dst = imagecreatetruecolor($newwidth, $newheight);
-    imagecopyresampled($dst, $src, 0, 0, 0, 0, $newwidth, $newheight, $width, $height);
-    return $dst;
 }
