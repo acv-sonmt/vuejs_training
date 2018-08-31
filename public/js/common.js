@@ -2249,9 +2249,9 @@ function _commonShowError(object,areaSelector) {
  */
 function _commonClearError(areaSelector) {
     if(areaSelector){
-            $(areaSelector).find('.input-error')._removeError(value);
+            $(areaSelector).find('.input-error')._removeError();
     }else{
-            $('.input-error')._removeError(value);
+            $('.input-error')._removeError();
     }
 
 }
