@@ -26,7 +26,6 @@ jQuery.fn.extend({
         var message = "";
         var messageArr = [];
         var localtion = 'jp';
-        console.log(_messageTranslation[localtion]);
         if($.isArray(value)){
             $.each(value,function(key,valueItem){
                 message_code = valueItem;
@@ -48,6 +47,7 @@ jQuery.fn.extend({
         return this.each(function() {
             $(this).addClass('input-error');
             $(this).attr('data-original-title',message);
+            $(this).tooltip();
         });
     },
     _removeError: function() {
@@ -2084,7 +2084,7 @@ function padZeroLeft($data, $max) {
         }
         return zero + $data;
     } catch (e) {
-        alert('padZeroLeft' + e.message);
+        console.log('padZeroLeft' + e.message);
     }
 }
 /**
@@ -2110,7 +2110,7 @@ function padZeroRight($data, $max) {
         }
         return $data+zero;
     } catch (e) {
-        alert('padZeroRight' + e.message);
+        console.log('padZeroRight' + e.message);
     }
 }
 /**
@@ -2129,7 +2129,7 @@ function htmlEntities(str) {
         return str.replace(/&amp;/g, '&').replace(/&lt;/g, '<').replace(
             /&gt;/g, '>').replace(/&quot;/g, '"');
     } catch (e) {
-        alert('htmlEntities' + e.message);
+        console.log('htmlEntities' + e.message);
     }
 }
 /**
@@ -2153,7 +2153,7 @@ function calculateAge(dateString) {
         }
         return age;
     } catch (e) {
-        alert('calculate age from birthday' + e.message);
+        console.log('calculate age from birthday' + e.message);
     }
 }
 /**
@@ -2171,7 +2171,7 @@ function priceFormat(val) {
         }
         return (str);
     } catch (e) {
-        alert('priceFormat: ' + e.message);
+        console.log('priceFormat: ' + e.message);
     }
 }
 /**
@@ -2192,7 +2192,7 @@ function unPriceFormat(val) {
         }
         return (res);
     } catch (e) {
-        alert('unPriceFormat: ' + e.message);
+        console.log('unPriceFormat: ' + e.message);
     }
 }
 /**
@@ -2232,12 +2232,10 @@ function _commonShowError(object,areaSelector) {
     if(areaSelector){
         $.each( object, function( key, value ) {
             $(areaSelector).find('[name="'+key+'"]')._addError(value);
-            $(areaSelector).find('[name="'+key+'"]').tooltip();
         });
     }else{
         $.each( object, function( key, value ) {
             $('[name="'+key+'"]')._addError(value);
-            $('[name="'+key+'"]').tooltip();
         });
     }
 
