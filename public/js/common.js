@@ -59,7 +59,7 @@ jQuery.fn.extend({
 });
 $(document).ready(function() {
     try {
-        init();
+        _commonInitEvent();
     } catch (e) {
         console.log('ready' + e.message);
     }
@@ -68,7 +68,7 @@ $(document).ready(function() {
 /**
  *init
  */
-function init() {
+function _commonInitEvent() {
     try {
         //Close popup
         $(document).on('click', '.btn-close-popup', function() {
@@ -2229,6 +2229,7 @@ function pad(n, width, z) {
 }
 
 function _commonShowError(object,areaSelector) {
+    _commonClearError(areaSelector);
     if(areaSelector){
         $.each( object, function( key, value ) {
             $(areaSelector).find('[name="'+key+'"]')._addError(value);
