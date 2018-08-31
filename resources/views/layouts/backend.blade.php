@@ -26,8 +26,11 @@
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/backend_common.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/common.css')}}" rel="stylesheet">
     <!--Modal CSS-->
     <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
+    <!--Toast CSS-->
+    <link href="{{ asset('css/toast.css')}}" rel="stylesheet"">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @stack("css")
 
@@ -220,6 +223,8 @@
 <script src="{{ asset('backend/template1/paginate/jquery.twbsPagination.js')}}"></script>
 <!--Modal JS-->
 <script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.js"></script>
+<!--Toast JS-->
+<script src="{{ asset('js/toast.js')}}"></script>
 <!-- Custom Theme Scripts -->
 @yield('lib_scripts')
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>

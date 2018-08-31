@@ -1,57 +1,46 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Edit</title>
-	<!-- Bootstrap -->
-    <link href="{{ asset('backend/template1/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{ asset('backend/template1/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('backend/template1/css/daterangepicker.css')}}" rel="stylesheet">
-	<link href="{{ asset('backend/template1/css/prettify.min.css')}}" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
-    <style type="text/css">
-    	.form{
-			margin-left : auto;
-			margin-right: auto;
-			margin-top  : 5%;
-			float       : none;
-    	}
-    	.thumb {
-			width        : 100px;
-			height       : 100px;
-			margin       : 0.2em -0.7em 0 0;
-			border-radius: 50%;
-		}
-		input[type="file"] {
-    		display: none;
-    	}
-    	input[type="checkbox"] {
-    		padding-top: 5px;
-    		height: 20px;
-    		width: 20px;
-    	}
-    	.remove_img_preview {
-			position:relative;
-			left: 100px;
-			top:-100px;
-			width: 15px;
-			background:black;
-			color:white;
-			border-radius:90px;
-			text-align:center;
-			cursor:pointer;
-		}
-		.remove_img_preview:before {
-			content:"\f057";
-		}
-		.password{
-			display: none;
-		}
-    </style>
-</head>
-<body>
+@extends("layouts.dialog")
+@push("css")
+	<style type="text/css">
+	    .form{
+	    	margin-left : auto;
+	    	margin-right: auto;
+	    	margin-top  : 5%;
+	    	float       : none;
+	    }
+	    .thumb {
+	    	width        : 100px;
+	    	height       : 100px;
+	    	margin       : 0.2em -0.7em 0 0;
+	    	border-radius: 50%;
+	    }
+	    input[type="file"] {
+	    	display: none;
+	    }
+	    input[type="checkbox"] {
+	    	padding-top: 5px;
+	    	height: 20px;
+	    	width: 20px;
+	    }
+	    .remove_img_preview {
+	    	position:relative;
+	    	left: 100px;
+	    	top:-100px;
+	    	width: 15px;
+	    	background:black;
+	    	color:white;
+	    	border-radius:90px;
+	    	text-align:center;
+	    	cursor:pointer;
+	    }
+	    .remove_img_preview:before {
+	    	content:"\f057";
+	    }
+	    .password{
+	    	display: none;
+	    }
+	</style>
+@endpush
+@section("content")
 	<div class="col-md-8 col-xs-12 form">
 		<div class="x_panel">
 			<div class="x_content">
@@ -61,19 +50,19 @@
 				<input type="hidden" id="id" value="{{$user->id}}">
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">	
-						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
-							<i class="fa fa-picture-o"></i> Change Avatar
-						</label>
 						<input id="file" name="image" type="file" class="form-control" />
 						<div id="preview">
 							<img data-src="{{$user->src}}" data-path="{{$user->avatar}}" class="thumb" title="avatar" src="{{$user->src}}">
 						</div>
+						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
+							<i class="fa fa-picture-o"></i> Change Avatar
+						</label>
 					</div>
 				</div>
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Name </label>
-						<input type="text" autofocus="" class="form-control has-feedback-left" value="{{$user->name}}" id="name"
+						<input type="text" class="form-control has-feedback-left" value="{{$user->name}}" name="name" id="name"
 						placeholder="Name">
 						<span class="fa fa-user form-control-feedback left" aria-hidden="true"></span>
 					</div>
@@ -104,7 +93,7 @@
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Email </label>
-						<input type="text" class="form-control has-feedback-left" id="email" value="{{$user->email}}" placeholder="Email">
+						<input type="text" class="form-control has-feedback-left" id="email" value="{{$user->email}}" placeholder="Email" name="email">
 						<span class="fa fa-envelope form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
@@ -116,7 +105,7 @@
 				<div class="form-group password">
 					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
 						<label>Password </label>
-						<input type="password" class="form-control has-feedback-left password" id="password" placeholder="Password">
+						<input type="password" class="form-control has-feedback-left password" id="password" name="pass" placeholder="Password">
 						<span class="fa fa-lock form-control-feedback left" aria-hidden="true"></span>
 					</div>
 				</div>
@@ -130,8 +119,8 @@
 				<div class="form-group" style="margin-top: 15px">
 					<div class="col-md-8 col-sm-8 col-xs-8">
 						<label>Role </label>
-						<select class="form-control" id="role">
-							<option>Choose Role</option>
+						<select class="form-control" id="role" name="role">
+							<option value="">Choose Role</option>
 							@foreach($arrRole as $role)
 							<option value="{{$role->role_value}}" 
 								@if($role->role_value==$user->role_value) {{"selected"}} 
@@ -145,7 +134,6 @@
 				<div class="ln_solid"></div>
 				<div class="form-group">
 					<div class=>
-						<button type="button" class="btn btn-primary">Cancel</button>
 						<button id="reset" class="btn btn-primary" type="reset">Reset</button>
 						<button type="button" class="btn btn-success edit">Submit</button>
 					</div>
@@ -155,102 +143,95 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>
-<!-- jQuery -->
-<script src="{{ asset('backend/template1/js/jquery.min.js')}}"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('backend/template1/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('backend/template1/js/jquery.autocomplete.min.js')}}"></script>
-<script src="{{ asset('backend/template1/js/moment-with-locales.js')}}"></script>
-<!-- bootstrap-datetimepicker -->
-<script src="{{ asset('backend/template1/js/daterangepicker.js')}}"></script>
-<script src="{{ asset('backend/template1/js/bootstrap-datetimepicker.min.js')}}"></script>
-<!-- Custom Theme Scripts -->
-<script src="{{ asset('backend/template1/js/custom.js')}}"></script>
-<script src="{{ asset('backend/template1/js/prettify.js')}}"></script>
-<script type="text/javascript">
-	//set gender
-	$(document).ready(function(){
-		var label =$('input[name=gender]:checked').parent("label");
-		label.removeClass('btn-default');
-		label.addClass('btn-primary active');
-		//formart date
-		$('#date').daterangepicker({
-			singleClasses: "picker_1",
-			"singleDatePicker": true,
-			"locale": {
-				"format": "YYYY-MM-DD",
-			}
-		}, function(start, end, label) {
-		});
-	});
-	$("body").on("change","input[name=gender]",function(e){
-		//add class checked
-		$(this).parent("label").addClass("btn btn-primary active");
-		//remove class unckecked
-		$('input[name=gender]:not(:checked)').parent("label").removeClass('btn-primary').addClass("btn-default");
-	});
-	//upload image 
-	function handleFileSelect(event) {
-		var input = this;
-		if (input.files && input.files.length) {
-			var reader = new FileReader();
-			this.enabled = false
-			reader.onload = (function (e) {
-				$(".thumb").attr('src', e.target.result);
-			});
-			reader.readAsDataURL(input.files[0]);
-		}
-	}
-	$('#file').change(handleFileSelect);
-	//reset image
-	$("#reset").click(function(){
-		var src = $("img").data("src");
-		$("img").attr('src', src);
-	});
-	//change Password
-	$("#changePass").click(function(){
-		if($(this).is(":checked")){
-			$(".password").css('display',"block");
-		}else{
-			$(".password").css("display","none");
-		}
-	});
-	//submit edit 
-	$("body").on("click",".edit",function(e){
-
-		var formData = new FormData();
-		formData.append("name", $("#name").val());
-		formData.append("id", $("#id").val());
-		formData.append("image", $('input[type=file]')[0].files[0]);
-		formData.append("oldImgSrc", $("img").data("path"));
-		formData.append("date", $("#date").val());
-		formData.append("gender", $('input[name=gender]:checked').val());
-		formData.append("email", $("#email").val());
-		formData.append("role", $("#role").val());
-		if($("input[type=checkbox]").is(":checked")){
-			formData.append("pass", $("#password").val());
-		}
-		$.ajax({
-			type: 'POST',
-			headers: {
-				'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
-			},
-			contentType: false,
-    		processData: false,
-			url: "{{route('editPost')}}",
-			data:formData,
-			success: function (result) {
-				console.log(result);
-				if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}') {
-					parent.$('#modal-edit').iziModal('close');
-					var page = parent.$("#pagination-demo").find("li.active").find("a").text();
-					parent.getList(page);
-					parent.alert("Edit");
-					//call parent and close modal
+@endsection
+@push("js")
+	<script type="text/javascript">
+		//set gender
+		$(document).ready(function(){
+			var label =$('input[name=gender]:checked').parent("label");
+			label.removeClass('btn-default');
+			label.addClass('btn-primary active');
+			//formart date
+			$('#date').daterangepicker({
+				singleClasses: "picker_1",
+				"singleDatePicker": true,
+				"locale": {
+					"format": "YYYY-MM-DD",
 				}
+			}, function(start, end, label) {
+			});
+		});
+		$("body").on("change","input[name=gender]",function(e){
+			//add class checked
+			$(this).parent("label").addClass("btn btn-primary active");
+			//remove class unckecked
+			$('input[name=gender]:not(:checked)').parent("label").removeClass('btn-primary').addClass("btn-default");
+		});
+		//upload image 
+		function handleFileSelect(event) {
+			var input = this;
+			if (input.files && input.files.length) {
+				var reader = new FileReader();
+				this.enabled = false
+				reader.onload = (function (e) {
+					$(".thumb").attr('src', e.target.result);
+				});
+				reader.readAsDataURL(input.files[0]);
+			}
+		}
+		$('#file').change(handleFileSelect);
+		//reset image
+		$("#reset").click(function(){
+			var src = $("img").data("src");
+			$("img").attr('src', src);
+		});
+		//change Password
+		$("#changePass").click(function(){
+			if($(this).is(":checked")){
+				$(".password").css('display',"block");
+			}else{
+				$(".password").css("display","none");
 			}
 		});
-	});	
-</script>
+		//submit edit 
+		$("body").on("click",".edit",function(e){
+
+			var formData = new FormData();
+			formData.append("name", $("#name").val());
+			formData.append("id", $("#id").val());
+			formData.append("image", $('input[type=file]')[0].files[0]);
+			formData.append("oldImgSrc", $("img").data("path"));
+			formData.append("date", $("#date").val());
+			formData.append("gender", $('input[name=gender]:checked').val());
+			formData.append("email", $("#email").val());
+			formData.append("role", $("#role").val());
+			formData.append("changePass",0);
+			if($("input[type=checkbox]").is(":checked")){
+				formData.append("pass", $("#password").val());
+				formData.append("changePass",1);
+			}
+			$.ajax({
+				type: 'POST',
+				headers: {
+					'X-CSRF-TOKEN': $('meta[name="csrf-token"]').attr('content')
+				},
+				contentType: false,
+	    		processData: false,
+				url: "{{route('editPost')}}",
+				data:formData,
+				success: function (result) {
+					console.log(result);
+					if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}') {
+						parent.$('#modal-edit').iziModal('close');
+						var page = parent.$("#pagination-demo").find("li.active").find("a").text();
+						parent.getList(page);
+						parent.alert("Edit");
+						//call parent and close modal
+					}else{
+						_commonShowError(result.data[0]);
+					}
+				}
+			});
+		});	
+	</script>
+@endpush

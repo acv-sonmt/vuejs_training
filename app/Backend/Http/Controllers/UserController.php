@@ -32,11 +32,7 @@ class UserController
         foreach($arrUser as $obj)
         {
             if($obj->avatar==NULL){
-                if($obj->gender===1){
-                    $obj->avatar = url('/')."/common_images/male.jpg";
-                }else{
-                    $obj->avatar = url('/')."/common_images/female.jpg";
-                }
+                $obj->avatar = url('/')."/common_images/no-avatar.png";
             }else{
                 $obj->avatar = Storage::disk($diskLocalName)->url($obj->avatar);
             }
@@ -62,6 +58,7 @@ class UserController
             "date"  => "required|date",
             "email" => "required|email|unique:users",
             "pass"  =>"required|min:3|max:32",
+            "role"  => "required"
         ];
         $message_rule = [
             '*.mimes' => 'Mime not Allowed'
@@ -104,14 +101,10 @@ class UserController
         $user = $this->service->getById($request->id);
         $arrRole = $this->service->getRole();
         if($user->avatar==NULL){
-                if($user->gender===1){
-                    $user->src = url('/')."/common_images/male.jpg";
-                }else{
-                    $user->src = url('/')."/common_images/female.jpg";
-                }
-            }else{
-                $user->src = Storage::disk($diskLocalName)->url($user->avatar);
-            }
+           $user->src = url('/')."/common_images/no-avatar.png"; 
+        }else{
+            $user->src = Storage::disk($diskLocalName)->url($user->avatar);
+        }
         return view("backend.users.edit",[
             "user" => $user, 
             "arrRole" => $arrRole
@@ -127,15 +120,16 @@ class UserController
         if($image!=NULL){
             $rule_image = "mimes:".UploadConst::FILE_IMAGE_UPLOAD_ACCESSED."|image|max:".UploadConst::BACKEND_UPLOAD_IMAGE_MAX;
         }
-        if(isset($request->pass)){
-            $rule_pass = "required|min:3|max:32";
+        if($request->changePass ==="1"){
+            $rule_pass = "required|min:4|max:32";
         }
         $rule = [
                 "image" => $rule_image,
                 "name"  => "required|min:3|max:32",
                 "date"  => "required|date",
                 "email" => "required|email|unique:users,email,".$request->id,
-                "pass"  =>$rule_pass,
+                "pass"  => $rule_pass,
+                "role"  => "required"
             ];
         $message_rule = [
             '*.mimes' => 'Mime not Allowed'

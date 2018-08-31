@@ -2257,6 +2257,7 @@ function _commonClearError(areaSelector) {
         $.each( object, function( key, value ) {
             $('[name="'+key+'"]')._removeError(value);
         });
+
     }
 
 }

@@ -237,10 +237,18 @@
 	//function alert 
 	function alert(type)
 	{
-		$.alert({
-			title: 'Successful!',
-			type          :"green",
-			content: "User Have Been "+type+" Successful!",
+		$.toast({
+		    text: "User Have Been "+type+" Successful!",
+		    heading: 'Successful',
+		    icon: 'success',
+		    showHideTransition: 'plain',
+		    allowToastClose: true,
+		    hideAfter: 2000,
+		    stack: 5,
+		    position: 'top-right',
+		    textAlign: 'left', 
+		    loader: true,
+		    loaderBg: '#9EC600',
 		});
 	}
 	//function getList

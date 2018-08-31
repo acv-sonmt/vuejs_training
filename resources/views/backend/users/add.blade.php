@@ -1,17 +1,5 @@
-<!DOCTYPE html>
-<html>
-<head>
-	<title>Add</title>
-	<!-- Bootstrap -->
-    <link href="{{ asset('backend/template1/css/bootstrap.min.css') }}" rel="stylesheet">
-    <!-- Font Awesome -->
-    <link href="{{ asset('backend/template1/css/font-awesome.min.css')}}" rel="stylesheet">
-    <link href="{{ asset('backend/template1/css/daterangepicker.css')}}" rel="stylesheet">
-    <!-- Custom Theme Style -->
-    <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
-    <!--Modal CSS-->
-    <link rel="stylesheet" type="text/css" href="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/css/iziModal.css">
-    <meta name="csrf-token" content="{{ csrf_token() }}">
+@extends("layouts.dialog")
+@push("css")
     <style type="text/css">
     	.form{
 			margin-left : auto;
@@ -54,8 +42,8 @@
 			font-size: 14px;
 		}
     </style>
-</head>
-<body>
+@endpush
+@section("content")
 	<div class="col-md-7 col-xs-12 form">
 		<div class="x_panel">
 			<div class="x_content">
@@ -64,11 +52,11 @@
 				<input type="hidden" name="_token" value="{{csrf_token('')}}">
 				<div class="form-group">
 					<div class="col-md-8 col-sm-8 col-xs-8 form-group has-feedback">
+						<input id="file" name="image" type="file" class="form-control" />
+						<div id="preview"></div>
 						<label for="file" class="custom-file-upload btn btn-outline-secondary camera">
 							<i class="fa fa-camera"></i> Choose Avatar
 						</label>
-						<input id="file" name="image" type="file" class="form-control" />
-						<div id="preview"></div>
 					</div>
 				</div>
 				<div class="form-group">
@@ -136,14 +124,11 @@
 						</select>
 					</div>
 				</div>
-				<div class="alert alert-success" role="alert" id="success_message">Success <i class="glyphicon glyphicon-thumbs-up"></i>
-				</div>
 				<div class="ln_solid"></div>
 				<div class="form-group">
 					<div>
-						<button type="button" class="btn btn-primary">Cancel</button>
 						<button class="btn btn-primary" type="reset">Reset</button>
-						<button type="submit" class="btn btn-success add">Submit</button>
+						<button type="button" class="btn btn-success add">Submit</button>
 					</div>
 				</div>
 
@@ -151,24 +136,8 @@
 			</div>
 		</div>
 	</div>
-</body>
-</html>
-<!-- jQuery -->
-<script src="{{ asset('backend/template1/js/jquery.min.js')}}"></script>
-<!-- Bootstrap -->
-<script src="{{ asset('backend/template1/js/bootstrap.min.js')}}"></script>
-<script src="{{ asset('backend/template1/js/jquery.autocomplete.min.js')}}"></script>
-<script src="{{ asset('backend/template1/js/moment-with-locales.js')}}"></script>
-<!-- bootstrap-datetimepicker -->
-<script src="{{ asset('backend/template1/js/daterangepicker.js')}}"></script>
-<script src="{{ asset('backend/template1/js/bootstrap-datetimepicker.min.js')}}"></script>
-<!-- Custom Theme Scripts -->
-<script src="{{ asset('backend/template1/js/custom.js')}}"></script>
-<script src="{{ asset('backend/template1/js/prettify.js')}}"></script>
-<!--Modal JS-->
-<script type="text/javascript" src="https://cdnjs.cloudflare.com/ajax/libs/izimodal/1.5.1/js/iziModal.js"></script>
-<!--Validate-->
-<script src="https://cdnjs.cloudflare.com/ajax/libs/bootstrap-validator/0.5.3/js/bootstrapValidator.js"></script>
+@endsection
+@push("js")
 <script type="text/javascript">
 	//set gender
 	$(document).ready(function(){
@@ -209,74 +178,8 @@
 		$("#file").val("");
 	});
 	//submit add 
-	$('#form_add').bootstrapValidator({
-		feedbackIcons: {
-			valid: 'glyphicon glyphicon-ok',
-			invalid: 'glyphicon glyphicon-remove',
-			validating: 'glyphicon glyphicon-refresh'
-		},
-		fields: {
-			name: {
-				validators: {
-					notEmpty: {
-						message: '<i class="glyphicon glyphicon-info-sign"></i> Please input name!'
-					}
-				}
-			},
-			date:{
-				validators: {
-					notEmpty: {
-						message: '<i class="glyphicon glyphicon-info-sign"></i> Pleas select date!'
-					}
-				}
-			},
-			email:{
-				validators:{
-					notEmpty:{
-						message:"<i class='glyphicon glyphicon-info-sign'></i> Pleas input email!"
-					},
-					emailAddress: {
-                    	message: "<i class='glyphicon glyphicon-info-sign'></i>Please supply a valid email address"
-                	}       
-				}
-			},
-			pass: {
-				validators: {
-					notEmpty: {
-						message: "<i class='glyphicon glyphicon-info-sign'></i> The password is required and can\'t be empty"
-					},
-					stringLength: {
-						min: 4,
-						max: 30,
-						message: "<i class='glyphicon glyphicon-info-sign'></i> The password must be more than 4 and less than 30 characters long"
-					}
-				}
-			},
-			confirmPass: {
-				validators: {
-					notEmpty: {
-						message: "<i class='glyphicon glyphicon-info-sign'></i> The confirm password is required and can\'t be empty"
-					},
-					identical: {
-						field: 'pass',
-						message: "<i class='glyphicon glyphicon-info-sign'></i> The password and its confirm are not the same"
-					}
-				}
-			},
-			role: {
-				validators: {
-					notEmpty: {
-						message: "<i class='glyphicon glyphicon-info-sign'></i> Please select Role!"
-					}
-				}
-        	}
-        }
-	}).on('success.form.bv', function (e) {
-		$('#success_message').slideDown({ opacity: "show" }, "slow") // Do something ..
-        $("form").submit(function(e){
-        	e.preventDefault();
-    	});
-        var formData = new FormData($('#form_add')[0]);
+	$(".add").click(function(){
+		var formData = new FormData($('#form_add')[0]);
         formData.append("name", $("#name").val());
         formData.append("image", $('input[type=file]')[0].files[0]);
         formData.append("date", $("#date").val());
@@ -300,9 +203,11 @@
         			parent.$('#modal-add').iziModal('close');
         			parent.getList();
         			parent.alert("Add");
+        		}else{
+        			_commonShowError(result.data[0]);
         		}
 			}
 		});
-		$('#form_add').data('bootstrapValidator').resetForm();
-    });
+	})
 </script>
+@endpush
