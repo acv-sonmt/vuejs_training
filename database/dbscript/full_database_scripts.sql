@@ -328,7 +328,7 @@ DROP TABLE IF EXISTS `view_category_item_level`;
 /*!50001 DROP VIEW IF EXISTS `view_category_item_level`*/;
 SET @saved_cs_client     = @@character_set_client;
 SET character_set_client = utf8;
-/*!50001 CREATE VIEW `view_category_item_level` AS SELECT 
+/*!50001 CREATE VIEW `view_category_item_level` AS SELECT
  1 AS `id`,
  1 AS `name`,
  1 AS `lft`,
@@ -1434,7 +1434,7 @@ BEGIN
 		FROM temp AS TMP;
         CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
     ELSE
-		call sys_show_result(get_error_code(),'{"#trans-code":"trans_exists_code"}');
+		call sys_show_result(get_error_code(),'{"text_code":"trans_exists_code"}');
     END IF;
 
 

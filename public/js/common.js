@@ -17,6 +17,46 @@ var _DELIMITER = '|#$%-|';
  * @version		:	1.0.0
  * ****************************************************************************
  */
+/**
+ * value is array or string
+ */
+jQuery.fn.extend({
+    _addError: function(value) {
+        var message_code = value;
+        var message = "";
+        var messageArr = [];
+        var localtion = 'jp';
+        console.log(_messageTranslation[localtion]);
+        if($.isArray(value)){
+            $.each(value,function(key,valueItem){
+                message_code = valueItem;
+                if(_messageTranslation[localtion].hasOwnProperty(message_code)){
+                    messageArr.push(_messageTranslation[localtion][message_code]);
+                }else{
+                    messageArr.push(message_code);
+                }
+            })
+            message = messageArr.join();
+        }else{
+            if(_messageTranslation[localtion].hasOwnProperty(message_code)){
+                message =_messageTranslation[localtion][message_code];
+            }else{
+                message = message_code;
+            }
+        }
+
+        return this.each(function() {
+            $(this).addClass('input-error');
+            $(this).attr('data-original-title',message);
+        });
+    },
+    _removeError: function() {
+        return this.each(function() {
+            $(this).removeClass('input-error');
+            $(this).removeAttr('data-original-title');
+        });
+    }
+});
 $(document).ready(function() {
     try {
         init();
@@ -1235,97 +1275,7 @@ function init() {
         console.log('initialize' + e.message);
     }
 }
-/**
- * showPopup
- *
- * @author : viettd - 2015/09/15 - create
- * @author :
- * @param :
- *            href,callback
- * @return : null
- * @access : public
- * @see :
- */
-function showPopup(href, callback) {
-    var iwidth	=	'80%';
-    var iheight	=	'80%';
-    if(window.location.href != window.parent.location.href){
-        iwidth	=	'100%';
-        iheight	=	'100%';
-    }
-    var properties = {
-        href : href,
-        open : true,
-        iframe : true,
-        fastIframe : false,
-        opacity : 0.2,
-        escKey : true,
-        overlayClose : false,
-        innerWidth : iwidth,
-        innerHeight : iheight,
-        reposition : true,
-        speed : 0,
-        cbox_load : function() {
-            $('#cboxClose, #cboxTitle').remove();
-        },
-        onClosed : function() {
-            if (callback) {
-                callback();
-            }
-        }
-    };
-    $.colorbox(properties);
-}
-//edit by phonglv 2016/01/15
-function showPopup2(href, callback) {
-    var properties = {
-        href : href,
-        open : true,
-        iframe : true,
-        fastIframe : false,
-        opacity : 0.2,
-        escKey : true,
-        overlayClose : false,
-        innerWidth : '100%',
-        innerHeight : '100%',
-        reposition : true,
-        speed : 0,
-        cbox_load : function() {
-            $('#cboxClose, #cboxTitle').remove();
-        },
-        onClosed : function() {
-            if (callback) {
-                callback();
-            }
-        }
-    };
-    $.colorbox(properties);
-}
-//edit by thanhnv 2016/06/16
-function showPopupReSize(href,width,height, callback) {
-    var properties = {
-        href : href,
-        open : true,
-        iframe : true,
-        fastIframe : false,
-        opacity : 0.2,
-        escKey : true,
-        overlayClose : false,
-        innerWidth : width+'%',
-        innerHeight : height+'%',
-        reposition : true,
-        speed : 0,
-        cbox_load : function() {
-            $('#cboxClose, #cboxTitle').remove();
-        },
-        onClosed : function() {
-            if (callback) {
-                callback();
-            }
-        }
-    };
-    $.colorbox(properties);
-}
+
 /**
  * _autoFormattingDate
  *
@@ -2257,7 +2207,6 @@ function formatNumber (val, num, displayzero) {
         if (!num) {
             num = 0;
         }
-        console.log(val)
         if(!displayzero) {
             displayzero =  true;
         }
@@ -2270,7 +2219,7 @@ function formatNumber (val, num, displayzero) {
         }
 
     } catch (e) {
-        alert('formatNumber: ' + e.message);
+        console.log('formatNumber: ' + e.message);
     }
 }
 function pad(n, width, z) {
@@ -2278,3 +2227,38 @@ function pad(n, width, z) {
     n = n + '';
     return n.length >= width ? n : new Array(width - n.length + 1).join(z) + n;
 }
+
+function _commonShowError(object,areaSelector) {
+    if(areaSelector){
+        $.each( object, function( key, value ) {
+            $(areaSelector).find('[name="'+key+'"]')._addError(value);
+            $(areaSelector).find('[name="'+key+'"]').tooltip();
+        });
+    }else{
+        $.each( object, function( key, value ) {
+            $('[name="'+key+'"]')._addError(value);
+            $('[name="'+key+'"]').tooltip();
+        });
+    }
+
+}
+
+/**
+ *
+ * @param areaSelector : limit area effected
+ * @private
+ */
+function _commonClearError(areaSelector) {
+    if(areaSelector){
+        $.each( object, function( key, value ) {
+            $(areaSelector).find('[name="'+key+'"]')._removeError(value);
+        });
+    }else{
+        $.each( object, function( key, value ) {
+            $('[name="'+key+'"]')._removeError(value);
+        });
+    }
+
+}
+
+

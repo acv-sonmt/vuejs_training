@@ -79,9 +79,18 @@ class DEVDB extends DB
                     //Next, don't exception handler here
                 }
             } while ($stmt->nextRowset());
+            //Stand by responese
             if (isset($results[0])) {
-                $dataResult->data = $results[0];
-                $dataResult->status = SDBStatusCode::OK;
+                if (isset($results[0][0]->code) && $results[0][0]->code==-1){
+                    $dataResult->status = SDBStatusCode::ValidateError;
+                    $dataResult->data = isset($results[0][0]->data)?json_decode($results[0][0]->data):'';
+                }else if(isset($results[0][0]->code) && $results[0][0]->code==1){
+                    $dataResult->status = SDBStatusCode::OK;
+                    $dataResult->data = isset($results[0][0]->data)?json_decode($results[0][0]->data):'';
+                }else{//this case not return status from DB, this is select query
+                    $dataResult->data = $results[0];
+                    $dataResult->status = SDBStatusCode::OK;
+                }
                 $dataResult->message = null;
             }
             else {

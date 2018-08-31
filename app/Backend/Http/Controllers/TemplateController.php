@@ -2,6 +2,7 @@
 
 namespace App\Backend\Http\Controllers;
 
+use App\Core\Dao\SDB;
 use App\Core\Services\Interfaces\UploadServiceInterface;
 use App\Core\Common\SDBStatusCode;
 use App\Core\Common\UploadConst;
@@ -189,7 +190,7 @@ class TemplateController extends Controller
     public function doExports(){
         //import file
          Excel::load(('resources/export_templates/backend/ユーザー.xlsx'), function ($file) {
-            $data = array('data1','data2','data3');
+            $data = array(array('data1','data2','data3'),array('data1','data2','data3'));
 
              // create file name
             Excel::create('ユーザー', function ($excel) use ($data , $file) {
@@ -201,7 +202,18 @@ class TemplateController extends Controller
             })->export('xlsx');
         });
     }
-
+    public function doExportsCommon($type){
+        $data = array(
+            array("header1"=>'data1','header2'=>'data2','header3'=>'data3')
+        ,   array("header1"=>'data4','header2'=>'data5','header3'=>'data6')
+        );
+        Excel::create('Translations', function($excel) use ($data) {
+            $excel->sheet('Translation', function($sheet) use ($data)
+            {
+                $sheet->fromArray($data,null,'A1',true);
+            });
+        })->export($type);
+    }
     public function doImport(){
 
         if(Input::hasFile('imported_file')){

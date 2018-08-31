@@ -254,10 +254,10 @@
                 var code = $(this).data("code");
                 $.confirm({
                     title: '<p class="text-warning">Warning</p>',
-                    Width: '30%',
+                    boxWidth: '500px',
                     useBootstrap: false,
                     closeOnclick: false,
-                    content: "Are you want to delete all? It will delete all language",
+                    content: "Are you want to delete all? It will delete all language with this code",
                     buttons: {
                         Save: {
                             text: 'OK',
@@ -268,7 +268,6 @@
                                     data:{code:code},
                                     url: "<?php echo @route('deleteTranslate')?>",
                                     success: function (result) {
-                                    alert("Done!")
                                         location.reload();
                                     }
                                 });
@@ -308,8 +307,10 @@
                             btnClass: 'btn btn-primary',
                             action: function () {
                                 saveNewTranslateText(this.$content,function(res){
-                                    if(res.status == '{{\App\Core\Common\SDBStatusCode::OK}}'&& res.data[0].code==0){
+                                    if(res.status == '{{\App\Core\Common\SDBStatusCode::OK}}'){
                                         location.reload();
+                                    }else{
+                                        _commonShowError(res.data);
                                     }
                                 });
                                 return false;

@@ -41,7 +41,7 @@ class TranslationController
             ]);
 
         if ($validator->fails()) {
-            $error = array($validator->errors());
+            $error = $validator->errors();
             $dataResult = new DataResultCollection();
             $dataResult->status = SDBStatusCode::WebError;
             $dataResult->data = $error;

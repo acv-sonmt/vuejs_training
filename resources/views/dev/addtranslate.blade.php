@@ -42,7 +42,7 @@
                     <div class="col-md-12 form-row">
                         <div class="col-md-3 form-title">Code</div>
                         <div class="col-md-9">
-                            <input type="text" id="trans-code" class="form-control"/>
+                            <input type="text" id="trans-code" name="text_code" class="form-control"/>
                         </div>
                     </div>
                     <?php if(isset($langList) && count($langList)>0){?>

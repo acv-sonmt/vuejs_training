@@ -5,7 +5,7 @@
 namespace App\Acl\Http\Middleware;
 use App\Core\Helpers\CommonHelper;
 use App\Core\Common\SDBStatusCode;
-use App\Core\Common;
+use App\Core\Common\RoleConst;
 use App\Core\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Auth;
@@ -23,7 +23,7 @@ class Acl
      */
     public function handle($request, Closure $next)
     {
-        $publicRole = \RoleConst::PublicRole;
+        $publicRole = RoleConst::PublicRole;
         $roleId = $publicRole;
         if(Auth::check()){
             $roleId = Auth::user()->role_value;
@@ -53,7 +53,7 @@ class Acl
         $configAcl = Config::get('acl');
         //Allow user has active access or system admin role
         if((isset($configAcl[$roleId])&& isset($configAcl[$roleId][$screenCode]) && $configAcl[$roleId][$screenCode]==1)
-            ||($roleId==\RoleConst::SysAdminRole)){
+            ||($roleId==RoleConst::SysAdminRole)){
             return true;
         }
         return false;

@@ -19,6 +19,7 @@
     <link href="{{ asset('css/lib/jquery-confirm.css') }}" rel="stylesheet">
 
     <link href="{{ asset('css/lib/jquery.dataTables.min.css') }}" rel="stylesheet">
+    <link href="{{ asset('css/common.css') }}" rel="stylesheet">
     <style>
         .navbar-laravel{
             position: fixed;
@@ -107,6 +108,7 @@
     <script src="{{ asset('js/lib/bootstrap.min.js') }}"></script>
     <script src="{{ asset('js/lib/jquery-confirm.js')}}"></script>
     <script src="{{ asset('js/lib/jquery.dataTables.min.js')}}"></script>
+    <script src="{{ asset('js/lang/text.js')}}"></script>
     <script src="{{ asset('js/common.js')}}"></script>
     <!-- Scripts -->
 

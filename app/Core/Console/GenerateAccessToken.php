@@ -4,6 +4,7 @@ namespace App\Core\Console;
 
 use App\Core\Dao\SDB;
 use Illuminate\Console\Command;
+use App\Core\Common\RoleConst;
 use Illuminate\Support\Facades\Auth;
 use App\Auth\Models\User;
 use Illuminate\Support\Facades\Hash;
@@ -51,7 +52,7 @@ class GenerateAccessToken extends Command
                     'name' => 'virtual_'.now()->toDateTimeString(),
                     'email' => $this->argument('email'),
                     'password' =>Hash::make(now()->toDateTimeString()),
-                    'role_value'=>\RoleConst::PartyRole,
+                    'role_value'=>RoleConst::PartyRole,
                     'is_active'=>1
                 ]);
             }

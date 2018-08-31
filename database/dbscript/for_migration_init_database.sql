@@ -1433,7 +1433,7 @@ BEGIN
 		FROM temp AS TMP;
         CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
     ELSE
-		call sys_show_result(get_error_code(),'{"#trans-code":"trans_exists_code"}');
+		call sys_show_result(get_error_code(),'{"text_code":"trans_exists_code"}');
     END IF;
 
 
