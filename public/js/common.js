@@ -2249,13 +2249,13 @@ function _commonShowError(object,areaSelector) {
  */
 function _commonClearError(areaSelector) {
     if(areaSelector){
-        $.each( object, function( key, value ) {
-            $(areaSelector).find('[name="'+key+'"]')._removeError(value);
-        });
+            $(areaSelector).find('.input-error').each(function(){
+                $(this)._removeError(value);
+            });
     }else{
-        $.each( object, function( key, value ) {
-            $('[name="'+key+'"]')._removeError(value);
-        });
+            $('.input-error').each(function(){
+                $(this)._removeError(value);
+            });
     }
 
 }
