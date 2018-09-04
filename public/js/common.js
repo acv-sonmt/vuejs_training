@@ -26,6 +26,7 @@ jQuery.fn.extend({
         var message = "";
         var messageArr = [];
         var localtion = 'jp';
+        //Get message error
         if($.isArray(value)){
             $.each(value,function(key,valueItem){
                 message_code = valueItem;
@@ -45,6 +46,7 @@ jQuery.fn.extend({
         }
 
         return this.each(function() {
+            //Style error
             $(this).addClass('input-error');
             $(this).attr('data-original-title',message);
             $(this).tooltip();
