@@ -190,7 +190,6 @@
         	url: "{{route('add')}}",
         	data:formData,
         	success: function (result) {
-        		console.log(result);
         		if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}'){
         			//call parent and close modal
         			parent.$('#modal-add').iziModal('close');

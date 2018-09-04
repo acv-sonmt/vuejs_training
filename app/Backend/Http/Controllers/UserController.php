@@ -26,6 +26,16 @@ class UserController
     public function getList(){
     	return view("backend.users.list");
     }
+    public function profile(Request $request){
+        $diskLocalName = "public";
+        $user = $this->service->getById($request->id);
+        if($user->avatar==NULL){
+           $user->src = url('/')."/common_images/no-avatar.png"; 
+        }else{
+            $user->src = Storage::disk($diskLocalName)->url($user->avatar);
+        }
+        return view("backend.users.profile",["user" => $user]);
+    }
     public function paginate(){
         $diskLocalName = 'public';
     	$arrUser = $this->service->getAll();

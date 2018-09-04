@@ -221,7 +221,6 @@
 				url: "{{route('editPost')}}",
 				data:formData,
 				success: function (result) {
-					console.log(result);
 					if (result.status == '{{App\Core\Common\SDBStatusCode::OK}}') {
 						parent.$('#modal-edit').iziModal('close');
 						var page = parent.$("#pagination-demo").find("li.active").find("a").text();

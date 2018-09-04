@@ -19,6 +19,9 @@
 		width: 50px; 
 		height: 50px;
 	}
+	.img{
+		cursor: pointer;
+	}
 </style>
 @endpush
 @extends("layouts.backend")
@@ -79,12 +82,48 @@
 <script type="text/javascript">
 	//get list
 	getList();
+	//show profile user
+	$(document).on('click','.img',function(event){
+		$('#modal-profile').iziModal('open',event);
+	});
+	$('#modal-profile').iziModal(
+	{
+		onOpening: function(modal){
+			var id =$(event.target).data("id");//get Id
+			$(".iziModal-iframe").attr("src","{{route('profile')}}?id="+id);
+		},
+		onClosed: function(modal){
+			$(".iziModal-iframe").attr("src","");
+		},
+		focusInput	   : true,
+		title          : 'User',
+		subtitle       :'Profile',
+		width          : 800,
+		timeoutProgressbarColor:"red",
+		iframeHeight   : 300,
+		headerColor    :"#405467",
+		icon           :"fa fa-user",
+		iconColor      :"#ECF0F1",
+		fullscreen     :true,
+		arrowKeys      :true,
+		overlayColor   : 'rgba(0, 0, 0, 0.2)',
+		navigateCaption:true,
+		bodyOverflow   : true,
+		radius         :15,
+		transitionIn   :"bounceInDown",
+		transitionOut  :"bounceOutUp",
+		iframe         : true,
+		iframeURL      :"",
+	});
 	//function add
 	$(document).on('click', '#add', function(event) {
 		$('#modal-add').iziModal('open',event);
 	});
 	$('#modal-add').iziModal(
 	{
+		onClosed: function(modal){
+			$(".iziModal-iframe").attr("src","");
+		},
 		focusInput	   : true,
 		title          : 'User',
 		subtitle       :'Add',
@@ -110,6 +149,7 @@
 	//function edit
 	$(document).on('click', '.edit', function(event) {
 	  	$('#modal-edit').iziModal('open',event);
+	  	$('#modal-profile').iziModal('resetProgress');
 	});
 	$('#modal-edit').iziModal(
 	{
@@ -117,6 +157,9 @@
 			var id =$(event.target).closest("button").data("id");//get Id, get button then get id
 			$(".iziModal-iframe").attr("src","{{route('edit')}}?id="+id);
 			//set url iframe
+		},
+		onClosed: function(modal){
+			$(".iziModal-iframe").attr("src","");
 		},
 		title          : 'User',
 		subtitle       :'Edit',
@@ -127,7 +170,6 @@
 		iconColor      :"#ECF0F1",
 		fullscreen     :true,
 		arrowKeys      :true,
-		pauseOnHover   :true,
 		overlayColor   : 'rgba(0, 0, 0, 0.2)',
 		navigateCaption:true,
 		bodyOverflow   : true,
@@ -158,11 +200,7 @@
 					btnClass: 'btn btn-primary',
 					action  : function (){
 						$.get("{{route('delete')}}",{id:id},function(data){
-							$.alert({
-								title: 'Successful!',
-								type          :"green",
-								content: 'User Have Been Delted',
-							});
+							alert("Delete");
 							$('#pagination-demo').twbsPagination('destroy');
 							getList();
 						});
@@ -214,11 +252,7 @@
 						});
 						$.get("{{route('deleteAll')}}",{arrUser:arrUser},function(data){
 								$("#check-all").prop('checked',false);//set check-all = false
-								$.alert({
-									title: 'Successful!',
-									type          :"green",
-									content: 'Users Have Been Delted',
-								});
+								alert("Delete");
 						$('#pagination-demo').twbsPagination('destroy');
 						getList();
 						});
@@ -269,6 +303,7 @@
 			var row = $("#tr-customer").contents().clone();
 			$(row).find('.check').val(obj.id);
 			$(row).find('.img').attr('src', obj.avatar);
+			$(row).find('.img').data("id",obj.id);
 		 	$(row).find('.name').html(obj.name);
 		 	$(row).find('.email').html(obj.email);
 		 	$(row).find('.role').html(obj.role);
@@ -277,6 +312,8 @@
 		 	}else{
 		 		$(row).find('.active').html("Không");
 		 	}
+		 	//profile
+		 	$(row).find('.profile').data("id",obj.id);
 		 	//edit
 		 	$(row).find('.edit').data("id",obj.id);
 		 	//delete

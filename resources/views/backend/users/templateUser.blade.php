@@ -6,7 +6,7 @@
 				<td align="center" class="check-delete">
 					<input class="check" type="checkbox" name="xoa[]">
 				</td>
-				<td ><img class="img" src="" alt="Avatar"></td>
+				<td><img class="img" src="" alt="Avatar"></td>
 				<td class="name"></td>
 				<td class="email"></td>
 				<td class="role"></td>
