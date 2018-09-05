@@ -33,7 +33,7 @@ img{
                         <h4>{{$user->name}}</h4>
                         <p>
                             <i class="fa fa-male"></i>
-                            <span class="title"> Gender:</span> @if($user->is_active===1) {{"Male"}} @else {{"Female"}} @endif
+                            <span class="title"> Gender:</span> @if($user->gender===1) {{"Male"}} @else {{"Female"}} @endif
                         </p>
                         <p>
                             <i class="glyphicon glyphicon-gift"></i> 
