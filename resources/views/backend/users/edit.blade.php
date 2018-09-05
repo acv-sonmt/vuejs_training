@@ -82,10 +82,10 @@
 						<br>
 						<div id="gender" class="btn-group" data-toggle="buttons">
 							<label class="btn btn-default">
-								<input class="radio-gender" type="radio" name="gender" value="1"@if( $user->gender== 1) {{"checked"}} @endif> &nbsp; Male &nbsp;
+								<input class="radio-gender" type="radio" name="gender" value="1"@if( $user->gender=== 1) {{"checked"}} @endif> &nbsp; Male &nbsp;
 							</label>
 							<label class="btn btn-default">
-								<input type="radio" name="gender" value="0" @if($user->gender==0) {{"checked"}} @endif> Female
+								<input type="radio" name="gender" value="0" @if($user->gender===0) {{"checked"}} @endif> Female
 							</label>
 						</div>
 					</div>

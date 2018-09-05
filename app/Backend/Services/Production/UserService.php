@@ -24,8 +24,7 @@ class UserService extends BaseService implements UserServiceInterface
     {
         $arrUser = DB::table("users")
                         ->join("sys_roles","users.role_value","=","sys_roles.role_value")
-                        ->join("users_detail as dt","users.id","=","dt.user_id")
-                        ->where("users.is_deleted",0)
+                        ->leftJoin("users_detail as dt","users.id","=","dt.user_id")
                         ->orderby("users.id","desc")
                         ->select("users.*","sys_roles.name as role","dt.avatar","dt.gender")
                         ->paginate(5);
@@ -39,9 +38,9 @@ class UserService extends BaseService implements UserServiceInterface
     public function getById($id)
     {
         $user = DB::table("users")
-                    ->join("users_detail","users.id","=","users_detail.user_id")
                     ->join("sys_roles","users.role_value","=","sys_roles.role_value")
-                    ->where([["users.is_deleted",0],["users.id",$id]])
+                    ->leftJoin("users_detail","users.id","=","users_detail.user_id")
+                    ->where([["users.is_deleted","<>",1],["users.id",$id]])
                     ->select("users.*","users_detail.gender","users_detail.birth_date","users_detail.avatar","sys_roles.name as RoleName")
                     ->get();
         return $user[0];
