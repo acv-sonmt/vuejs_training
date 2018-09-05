@@ -6,6 +6,7 @@
     <meta name="csrf-token" content="{{ csrf_token() }}">
     <!-- Meta, title, CSS, favicons, etc. -->
     <meta charset="utf-8">
+    <base href="{{asset('')}}">
     <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1">
     <link rel="icon" href="images/favicon.ico" type="image/ico" />
@@ -25,7 +26,13 @@
     <!-- Custom Theme Style -->
     <link href="{{ asset('backend/template1/css/custom.min.css')}}" rel="stylesheet">
     <link href="{{ asset('backend/template1/css/backend_common.css')}}" rel="stylesheet">
+    <link href="{{ asset('css/common.css')}}" rel="stylesheet">
+    <!--Modal CSS-->
+    <link href="{{ asset('backend/template1/modal/css/modal.css')}}" rel="stylesheet">
+    <!--Toast CSS-->
+    <link href="{{ asset('css/toast.css')}}" rel="stylesheet"">
     <title>{{ config('app.name', 'Laravel') }}</title>
+    @stack("css")
 
 </head>
 
@@ -90,7 +97,12 @@
                                     <li><a href="{{route('table_template')}}">Tables</a></li>
                                 </ul>
                             </li>
-
+                            <!--User-->
+                            <li><a><i class="fa fa-user"></i> User <span class="fa fa-chevron-down"></span></a>
+                                <ul class="nav child_menu">
+                                    <li><a href="{{route('list')}}">List</a></li>
+                                </ul>
+                            </li>
                         </ul>
                     </div>
                 </div>
@@ -207,10 +219,17 @@
 <script src="{{ asset('backend/template1/js/bootstrap-datetimepicker.min.js')}}"></script>
 
 <script src="{{ asset('backend/template1/js/bootstrap-colorpicker.min.js')}}"></script>
+<!--Paginate JS-->
+<script src="{{ asset('backend/template1/paginate/jquery.twbsPagination.js')}}"></script>
+<!--Modal JS-->
+<script src="{{ asset('backend/template1/modal/js/modal.js')}}"></script>
+<!--Toast JS-->
+<script src="{{ asset('js/toast.js')}}"></script>
 <!-- Custom Theme Scripts -->
 @yield('lib_scripts')
 <script src="{{ asset('backend/template1/js/custom.js')}}"></script>
 <script src="{{ asset('js/common.js')}}"></script>
 @yield('form_scripts')
+@stack("js")
 </html>
 

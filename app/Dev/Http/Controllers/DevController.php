@@ -55,7 +55,7 @@ class DevController extends Controller
     {
         $validator =
             Validator::make($request->all(), [
-                'text_code' => ['required', new UpperCaseRule()]
+                'text_code' => ['required',new UpperCaseRule()]
             ]);
         if ($validator->fails()) {
             dd($validator->errors());

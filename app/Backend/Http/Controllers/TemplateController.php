@@ -70,7 +70,6 @@ class TemplateController extends Controller
                 );
             }
         }
-
         return view('backend.template.upload',compact('fileLocalInforList'));
     }
     public function getImageFromS3(){

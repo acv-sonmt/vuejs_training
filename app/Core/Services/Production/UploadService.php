@@ -12,6 +12,7 @@ use App\Core\Services\Interfaces\UploadServiceInterface;
 use App\Core\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Storage;
 use App\Core\Common\SDBStatusCode;
+use Intervention\Image\ImageManagerStatic as Image;
 
 class UploadService extends BaseService implements UploadServiceInterface
 {
@@ -46,10 +47,6 @@ class UploadService extends BaseService implements UploadServiceInterface
         $result->data = array();
         Storage::disk($diskName)->delete($filePath);
         return $result;
-    }
-    public function test()
-    {
-        echo 'upload.test';
     }
 }
 

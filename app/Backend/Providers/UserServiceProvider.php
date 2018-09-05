@@ -1,16 +1,15 @@
 <?php
 /**
- * @author thanhnv
+ * @author namtd
  */
 namespace App\Backend\Providers;
 
 use Illuminate\Support\ServiceProvider;
-use App\Core\Services\Interfaces;
-use App\Core\Services\Production;
-class BackendServiceProvider extends ServiceProvider
+use App\Backend\Services\Interfaces;
+use App\Backend\Services\Production;
+class UserServiceProvider extends ServiceProvider
 {
     protected $services = [
-        Interfaces\UploadServiceInterface::class => Production\UploadService ::class,
         Interfaces\UserServiceInterface::class=>Production\UserService::class,
     ];
     /**

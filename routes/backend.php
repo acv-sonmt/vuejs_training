@@ -49,3 +49,26 @@
     Route::get('/backend/template/doExportsCommon/{type}', 'TemplateController@doExportsCommon')->name('doExportsCommon_template');
 
     Route::post('/backend/template/doImport', 'TemplateController@doImport')->name('doImport_template');
+    //User Controller 
+    Route::group(["prefix" => "backend/user"],function(){
+        //get view user
+        Route::get("list",'UserController@getList')->name("list");
+        //get profile user
+        Route::get("profile",'UserController@profile')->name("profile");
+        //get user and paginate
+        Route::get("paginate",'UserController@paginate')->name("paginate");
+        //add user
+        Route::get("add",'UserController@add')->name("add");
+        Route::post("add",'UserController@addPost')->name("addPost");
+        //edit user
+        Route::get("edit",'UserController@getById')->name("edit");
+        Route::post("edit",'UserController@editPost')->name("editPost");
+        //delete user
+        Route::get("delete",'UserController@delete')->name("delete");
+        //delete all user
+        Route::get("deleteAll",'UserController@deleteAll')->name("deleteAll");
+        //test
+        Route::get("test",function(){
+            return view("backend.users.test");
+        })->name("testAdd");
+    });
