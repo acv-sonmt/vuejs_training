@@ -40,12 +40,16 @@
                                 - Generate all of EntityClass for Dev<br>
                                 - Generation Role Data, insert to DB: get all screen -> insert screen to DB, update DB to set active all for administrator role initialization<br>
                                 - Generation Acl config file : .\config\acl.php<br>
-                                - Import translate file   .\resources\lang\.* to database <br>
-                                <span class="text-warning font-weight-bold">Warning: rewrite file in .\resources\lang\.* to Database, old data in sys_translation will be remove</span>
                             </div>
                             <div class="col-md-2 text-right"><button id="init-role" class="btn-primary btn">Reset & Innitization</button></div>
                         </div>
-
+                        <div class="col-md-12 table-bordered">
+                            <div class="col-md-10">
+                                - Import translate file   .\resources\lang\.* to database <br>
+                                <span class="text-warning font-weight-bold">Warning: rewrite file in .\resources\lang\.* to Database, old data in sys_translation will be remove</span>
+                            </div>
+                            <div class="col-md-2 text-right"><button id="import-trans" class="btn-primary btn">Reset & import translation</button></div>
+                        </div>
                         <div class="clearfix"></div>
                     </div>
                 </div>
@@ -91,6 +95,43 @@
                         alert('OK');
                     }
                 });
+            });
+
+        });
+        $(document).on('click', '#import-trans', function () {
+            $.confirm({
+                title: '<p class="text-warning">Warning</p>',
+                Width: '20%',
+                useBootstrap: false,
+                closeOnclick: false,
+                content: "If you import to database, old data will be remove",
+                buttons: {
+                    Save: {
+                        text: 'OK',
+                        btnClass: 'btn btn-primary',
+                        action: function () {
+                            $.ajax({
+                                method: 'Post',
+                                url: "<?php echo @route('importTranslateToDB')?>",
+                                success: function (result) {
+                                    if(result.status=='{{\App\Core\Common\SDBStatusCode::OK}}'){
+                                        alert('Import OK');
+                                    }else{
+                                        alert('Import Error: '.result.message);
+                                    }
+                                }
+                            });
+                        }
+                    },
+                    cancel: {
+                        text: ' Cancel',
+                        btnClass: 'btn btn-default',
+                        action: function () {
+                        }
+                    }
+                }
+
+
             });
 
         });

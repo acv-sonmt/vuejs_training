@@ -53,8 +53,8 @@
                                 <div class="col-md-4">
                                     <select id="trans-type" class="lang form-control">
                                         <option value="">---</option>
-                                        <?php if(isset($dataComboFilter[1])&& count($dataComboFilter[1])>0) {?>
-                                        <?php foreach ($dataComboFilter[1] as $translateTypeItem){?>
+                                        <?php if(isset($dataComboFilter)&& count($dataComboFilter)>0) {?>
+                                        <?php foreach ($dataComboFilter as $translateTypeItem){?>
                                         <option value="<?php echo $translateTypeItem->code;?>"><?php echo $translateTypeItem->code?></option>
                                         <?php   }
                                         }?>
@@ -78,7 +78,6 @@
 
                     <div class="function col-md-12">
                         <button id="add" class="btn btn-primary pull-left glyphicon-plus" title="Add new text"></button>
-                        <button id="import" class="btn btn-danger pull-right glyphicon glyphicon-oil" style="margin-left: 10px;" title="Import translate file to Database"></button>
                         <button id="generation" class="btn btn-primary pull-right glyphicon glyphicon-save-file" title="Generate to translate file"></button>
                     </div>
                     <div class="card-body">
@@ -89,7 +88,6 @@
                                     <th>Language code</th>
                                     <th>Type</th>
                                     <th>Key</th>
-                                    <th>Type Input</th>
                                     <th style="min-width: 408px;">Text translated</th>
                                     <th>
                                         <span id="edit-all" class="glyphicon glyphicon-edit btn"></span>
@@ -100,20 +98,23 @@
                             <tbody>
                             <?php $index = 0; ?>
                             <?php if(!empty($dataTrans)){
-                            foreach ($dataTrans as $item){
+                            foreach ($dataTrans as $key=>$item){
                             $index++;
+                            $lang = $item['key_list'][0];
+                            $typeOfTrans =  $item['key_list'][1];
+                            unset($item['key_list'][0]);
+                            $code = join(".",$item['key_list']);
                             ?>
                             <tr class="trans-record">
                                 <td class="text-center"><?php echo $index; ?></td>
-                                <td><?php echo $item->lang_code; ?></td>
-                                <td><?php echo $item->translate_type_code; ?></td>
-                                <td><?php echo $item->code; ?></td>
-                                <td><?php echo $item->type_code; ?></td>
-                                <td><span style="display:none;"><?php echo $item->text; ?></span><input class="form-control text-trans" readonly value="<?php echo $item->text; ?>" /></td>
+                                <td><?php echo $lang; ?></td>
+                                <td><?php echo $typeOfTrans; ?></td>
+                                <td><?php echo $code; ?></td>
+                                <td><span style="display:none;"><?php echo $item['value']; ?></span><input class="form-control text-trans" value="<?php echo $item['value']; ?>" readonly /></td>
                                 <td class="text-center" style="vertical-align: middle;">
                                     <span class="edit glyphicon glyphicon-edit"></span>
-                                    <span class="save glyphicon glyphicon-floppy-saved display-none" data-id="<?php echo $item->id; ?>"></span>
-                                    <span class="delete glyphicon glyphicon-trash" data-id="<?php echo $item->id; ?>" data-code={{$item->code}}></span>
+                                    <span class="save glyphicon glyphicon-floppy-saved display-none" data-lang="{{$lang}}" data-code="{{$code}}"></span>
+                                    <span class="delete glyphicon glyphicon-trash" data-lang="{{$lang}}" data-code={{$code}}></span>
                                 </td>
                             </tr>
                             <?php }
@@ -131,7 +132,7 @@
         $(document).ready(function () {
             var table = $('#tbl-trans').DataTable(
                 {
-                    scrollY:        '60vh',
+                    /*scrollY:        '60vh',*/
                     scrollCollapse: true,
                     fixedHeader: true,
                     bJQueryUI: true,
@@ -140,7 +141,7 @@
                     dom: 't',
                     searching: true,
                     "columnDefs": [ {
-                        "targets": 6,
+                        "targets": 5,
                         "orderable": false
                     } ]
                 }
@@ -156,18 +157,8 @@
                 table.column(3).search( this.value ).draw();
             } );
             $('#trans-text-translated').on( 'change', function () {
-                table.column(5).search( this.value ).draw();
+                table.column(4).search( this.value ).draw();
             } );
-            $(document).on('change','#trans-type', function () {
-                var value =  $(this).val();
-                var currentOption =  $(this).find('option[value="'+value+'"]');
-                if($(currentOption).length>0 && 1*$(currentOption).attr('has_input_type')==1){
-                    $('#trans-input-type').prop('disabled',false);
-                }else{
-                    $('#trans-input-type').val("");
-                    $('#trans-input-type').prop('disabled',true);
-                }
-            });
             $(document).on('click', '.edit', function () {
                 var record = $(this).parents('tr.trans-record');
                 $(record).find('.text-trans').prop('readonly', false).select();
@@ -191,8 +182,11 @@
             $(document).on('click', '.save', function () {
                 var record = $(this).parents('tr.trans-record');
                 var text = $(record).find('.text-trans').val();
+                var lang = $(this).attr('data-lang');
+                var code = $(this).attr('data-code');
                 var data = {
-                    id: $(this).data('id'),
+                    lang: lang,
+                    code:code,
                     text: text
                 };
 
@@ -201,9 +195,17 @@
                     data: data,
                     url: "<?php echo @route('updateTranslate')?>",
                     success: function (result) {
-                        $(record).find('.save').addClass('display-none');
-                        $(record).find('.edit').removeClass('display-none');
-                        $(record).find('.text-trans').prop('readonly', true);
+                        if(result.status == '{{\App\Core\Common\SDBStatusCode::OK}}'){
+                            $(record).find('.save').addClass('display-none');
+                            $(record).find('.edit').removeClass('display-none');
+                            $(record).find('.text-trans').prop('readonly', true);
+                            clearError($(record).find('.text-trans'));
+                        }else{
+                            $(record).find('.text-trans').addClass('input-error');
+                            var messageError =  result.message;
+                            showError($(record).find('.text-trans'),messageError);
+                            $(record).find('.text-trans').tooltip();
+                        }
                     }
                 });
             });
@@ -216,42 +218,12 @@
                     }
                 });
             });
-            $(document).on('click', '#import', function () {
-                $.confirm({
-                    title: '<p class="text-warning">Warning</p>',
-                    Width: '20%',
-                    useBootstrap: false,
-                    closeOnclick: false,
-                    content: "If you import to database, old data will be remove",
-                    buttons: {
-                        Save: {
-                            text: 'OK',
-                            btnClass: 'btn btn-primary',
-                            action: function () {
-                                $.ajax({
-                                    method: 'Post',
-                                    url: "<?php echo @route('importTranslateToDB')?>",
-                                    success: function (result) {
-                                        alert('OK');
-                                    }
-                                });
-                            }
-                        },
-                        cancel: {
-                            text: ' Cancel',
-                            btnClass: 'btn btn-default',
-                            action: function () {
-                            }
-                        }
-                    }
 
-
-                });
-
-            });
             // Delete Trans
             $(document).on('click', '.delete', function () {
-                var code = $(this).data("code");
+                var lang = $(this).attr('data-lang');
+                var code = $(this).attr('data-code');
+                var record =  $(this).parents('.trans-record');
                 $.confirm({
                     title: '<p class="text-warning">Warning</p>',
                     boxWidth: '500px',
@@ -265,10 +237,14 @@
                             action: function () {
                                 $.ajax({
                                     method: 'Post',
-                                    data:{code:code},
+                                    data:{code:code,lang:lang},
                                     url: "<?php echo @route('deleteTranslate')?>",
                                     success: function (result) {
-                                        location.reload();
+                                        if(result.status=='{{\App\Core\Common\SDBStatusCode::OK}}'){
+                                           $(record).remove();
+                                        }else{
+                                            alert("Error :"+result.message);
+                                        }
                                     }
                                 });
                             }
@@ -307,6 +283,7 @@
                             btnClass: 'btn btn-primary',
                             action: function () {
                                 saveNewTranslateText(this.$content,function(res){
+                                    console.log(res);
                                     if(res.status == '{{\App\Core\Common\SDBStatusCode::OK}}'){
                                         location.reload();
                                     }else{
@@ -339,7 +316,6 @@
             {
                 _token: $('meta[name="csrf-token"]').attr('content'),
                 trans_type:$(popupContent).find('#trans-type').val(),
-                trans_input_type:$(popupContent).find('#trans-input-type').val(),
                 text_code:$(popupContent).find('#trans-code').val(),
                 text_trans:JSON.stringify(textTrans)
             };
@@ -360,6 +336,14 @@
 
                }
             });
+        }
+        function clearError(input){
+            $(input).removeClass('input-error');
+            $(input).removeAttr('data-original-title');
+        }
+        function showError(input,message){
+            $(input).addClass('input-error');
+            $(input).attr('data-original-title',message);
         }
     </script>
 

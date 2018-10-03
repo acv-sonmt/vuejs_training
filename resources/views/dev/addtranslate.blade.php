@@ -18,22 +18,9 @@
                         <div class="col-md-3 form-title">Translate type</div>
                         <div class="col-md-4">
                             <select id="trans-type" class="form-control">
-                                <?php if(isset($comboList[1]) && count($comboList[1])>0){?>
-                                <?php foreach ($comboList[1] as $transType){?>
-                                <option value="<?php echo $transType->code;?>" has_input_type="<?php echo $transType->has_input_type;?>"><?php echo $transType->code;?></option>
-                                <?php   }
-                                }?>
-                            </select>
-                        </div>
-                    </div>
-                    <div class="col-md-12 form-row">
-                        <div class="col-md-3 form-title">Validate Input Type</div>
-                        <div class="col-md-4">
-                            <select id="trans-input-type" class="form-control">
-                                <option value="">---</option>
-                                <?php if(isset($comboList[0]) && count($comboList[0])>0){?>
-                                <?php foreach ($comboList[0] as $inputType){?>
-                                <option value="<?php echo $inputType->type_code;?>"><?php echo $inputType->type_name;?></option>
+                                <?php if(isset($comboList) && count($comboList)>0){?>
+                                <?php foreach ($comboList as $transType){?>
+                                <option value="<?php echo $transType->code;?>"><?php echo $transType->code;?></option>
                                 <?php   }
                                 }?>
                             </select>
