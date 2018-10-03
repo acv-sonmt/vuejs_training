@@ -32,8 +32,6 @@ class DevController extends Controller
     {
         $this->aclService->initRoleDataToDB();
         $this->aclService->generationAclFile();
-        //generationTranslate validation
-        $this->translateService->generationTransDataToDB();
     }
 
     /**
@@ -82,7 +80,6 @@ class DevController extends Controller
         return view("dev/log");
     }
     public function runSchedules(){
-
     }
     public function test()
     {

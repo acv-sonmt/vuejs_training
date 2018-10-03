@@ -2231,7 +2231,7 @@ function pad(n, width, z) {
 }
 
 function _commonShowError(object,areaSelector) {
-    _commonClearError(areaSelector);
+    // _commonClearError(areaSelector);
     if(areaSelector){
         $.each( object, function( key, value ) {
             $(areaSelector).find('[name="'+key+'"]')._addError(value);

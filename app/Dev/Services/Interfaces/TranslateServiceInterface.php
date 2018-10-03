@@ -16,9 +16,10 @@ interface TranslateServiceInterface
     public function generationTranslateFileAndScript();
     public function generationTranslateFile( $translateType, $fileName);
     public function generationTranslateScript( $fileName);
-    public function generationTransDataToDB();
+    public function generationTransDataToDB():DataResultCollection;
     public function getNewTransComboList();
-    public function deleteTranslate($code);
-    public function updateTranslateText($id,$transText);
-    public function insertTranslationItem($transType,$transInputType,$transTextCode,$textTrans);
+    public function deleteTranslate($lang, $code);
+    public function updateTranslateText($lang,$code, $transText);
+    public function insertTranslationItem($transType,$transTextCode,$textTrans);
+    public function initTranslateType():DataResultCollection;
 }

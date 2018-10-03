@@ -9,6 +9,7 @@
 namespace App\Dev\Http\Controllers;
 
 use App\Core\Common\SDBStatusCode;
+use App\Core\Helpers\CommonHelper;
 use App\Dev\Helpers\ResponseHelper;
 use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Validator;
@@ -29,7 +30,7 @@ class TranslationController
         $langListFromDB = $this->service->getLanguageCodeList();
         $dataTransFromDB = $this->service->getTranslateList('', '');
         $langList = ($langListFromDB->status == SDBStatusCode::OK)?$langListFromDB->data:array();
-        $dataTrans = ($dataTransFromDB->status == SDBStatusCode::OK)?$dataTransFromDB->data:array();
+        $dataTrans = ($dataTransFromDB->status == SDBStatusCode::OK && !empty($dataTransFromDB->data['infor_arr']))?$this->refactorDataTrans(CommonHelper::flatten($dataTransFromDB->data['value_arr'])):array();
         $dataComboFilter = $this->service->getNewTransComboList();
         return view("dev/translation", compact(['dataTrans', 'langList', 'dataComboFilter']));
     }
@@ -49,24 +50,26 @@ class TranslationController
 
         } else {
             $transType = $request->input('trans_type');
-            $transInputType = $request->input('trans_input_type');
             $transTextCode = $request->input('text_code');
             $textTrans = $request->input('text_trans');
-            $dataFromDB = $this->service->insertTranslationItem($transType, $transInputType, $transTextCode, $textTrans);
+            $dataFromDB = $this->service->insertTranslationItem($transType, $transTextCode, $textTrans);
             return ResponseHelper::JsonDataResult($dataFromDB);
         }
     }
     public function deleteTranslate(Request $request)
     {
         $code = $request->code;
-        $this->service->deleteTranslate($code);
+        $lang = $request->lang;
+        $deleteResult = $this->service->deleteTranslate($lang,$code);
+        return ResponseHelper::JsonDataResult($deleteResult);
     }
     public function updateTranslate(Request $request)
     {
-        $id = $request->input('id');
+        $lang = $request->input('lang');
+        $code = $request->input('code');
         $transText = $request->input('text');
-        $this->service->updateTranslateText($id, $transText);
-        return null;
+        $result =  $this->service->updateTranslateText($lang,$code, $transText);
+        return ResponseHelper::JsonDataResult($result);
     }
 
     public function newTextTrans()
@@ -82,6 +85,25 @@ class TranslationController
     }
     public function importTranslateToDB()
     {
-        $this->service->generationTransDataToDB();
+        $result =  new DataResultCollection();
+        $initTransType  = $this->service->initTranslateType();
+        $importTrans = $this->service->generationTransDataToDB();
+        if($initTransType->status == SDBStatusCode::OK && $importTrans->status == SDBStatusCode::OK){
+            $result->status = SDBStatusCode::OK;
+        }else{
+            $result->status = SDBStatusCode::Excep;
+            $result->message = $initTransType->message.",".$importTrans->message;
+        }
+    }
+
+    protected function refactorDataTrans($data){
+        $result=  [];
+        foreach ($data as $key=>$value){
+            $result[$key] = array(
+                'key_list'=>explode('.',$key),
+                'value'=>$value
+            );
+        }
+        return $result;
     }
 }
