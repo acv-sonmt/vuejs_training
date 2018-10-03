@@ -29,8 +29,8 @@
 <p>&nbsp; &nbsp; &nbsp;+ Coding struct like default of Laravel.</p>
 <p><strong>7. Helper</strong></p>
 <p><strong>&nbsp; -</strong> Provide some helper for developer.</p>
-<p>&nbsp;8<strong>. Console: Generate access token key</strong></p>
-<p><strong>&nbsp;&nbsp;</strong>- Ex: php artisan access-token:generate <a href="mailto:your_email@mail.com">your_email@mail.com</a>&nbsp; &nbsp;&nbsp;<br />&nbsp; =&gt; generate a access token key with specific roles, which use to help client access api.</p>
+<p><strong>8. Console: Generate access token key</strong></p>
+<p><strong>&nbsp;&nbsp;</strong>- Ex: php artisan access-token:generate <a href="mailto:your_email@mail.com">your_email@mail.com</a>&nbsp; &nbsp;&nbsp;<br />&nbsp; =&gt; generate a access token key with specific roles, which use to help client access api.<strong><br /><br /></strong></p>
 <p>--------------------------------------------------------------------------------------------------------------------------</p>
 <h2><span style="color: #333399;"><strong>DETAIL</strong></span></h2>
 <p><span style="color: #333399;"><strong>DEV Module.</strong></span></p>
@@ -55,5 +55,10 @@
 <p><span style="color: #333399;"><strong>-&nbsp;</strong><span style="color: #000000;"> Defined rule of <strong>access police&nbsp;</strong></span><span style="color: #000000;">in acl middleware.</span></span></p>
 <p><span style="color: #333399;"><span style="color: #000000;">-&nbsp; Apply for all of action has registed "acl" middleware.</span></span></p>
 <p><span style="color: #333399;"><span style="color: #000000;">&nbsp;</span></span></p>
-<p>&nbsp;</p>
+<h3><strong>NOTE for developer:</strong><br /><br /></h3>
+<p>- Generate migrate script by below steps:</p>
+<p>+ Export script from database.</p>
+<p>+ Remove "DELIMITER;;","DELIMITER;","DEFINER=`root`@`%`" ( inside create store procedure, function command)</p>
+<p>+ Replace "END;;" to "END;"</p>
+<p>+ Remove ";;"</p>
 <p>&nbsp;</p>
