@@ -46,3 +46,11 @@ Route::get('/dev/entityManagement', 'DevController@entityManagement')->name('ent
 Route::post('/dev/generateOneEntity', 'DevController@generateOneEntity')->name('generateOneEntity');
 Route::get('/dev/log', 'DevController@log')->name('logManagement');
 Route::get('/dev/doc', 'DevController@doc')->name('doc');
+
+
+Route::get('/dev/role', 'RoleController@roleManagement')->name('roleManagement');
+Route::get('/dev/getCreateNewRoleItem', 'RoleController@getCreateNewRoleItem')->name('getCreateNewRoleItem');
+Route::post('/dev/createNewRoleItem', 'RoleController@createNewRoleItem')->name('createNewRoleItem');
+Route::get('/dev/getEditRoleItem', 'RoleController@getEditRoleItem')->name('getEditRoleItem');
+Route::post('/dev/updateRole', 'RoleController@updateRole')->name('updateRole');
+Route::post('dev/deleteRole', 'RoleController@deleteRole')->name('deleteRole');
