@@ -94,6 +94,7 @@ class TranslationController
             $result->status = SDBStatusCode::Excep;
             $result->message = $initTransType->message.",".$importTrans->message;
         }
+        return ResponseHelper::JsonDataResult($result);
     }
 
     protected function refactorDataTrans($data){
