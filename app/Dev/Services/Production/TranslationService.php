@@ -80,15 +80,23 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
 
     }
 
-    public function generationTranslateFileAndScript()
+    public function generationTranslateFileAndScript():DataResultCollection
     {
-        $transTypeList = DEVDB::execSPsToDataResultCollection("DEBUG_GET_TRANSLATION_TYPE_LST");
-        if ($transTypeList->status == SDBStatusCode::OK) {
-            foreach ($transTypeList->data as $item) {
-                $this->generationTranslateFile($item->code, $item->code);
+        $result =  new DataResultCollection();
+        try{
+            $transTypeList = DEVDB::execSPsToDataResultCollection("DEBUG_GET_TRANSLATION_TYPE_LST");
+            if ($transTypeList->status == SDBStatusCode::OK) {
+                foreach ($transTypeList->data as $item) {
+                    $this->generationTranslateFile($item->code, $item->code);
+                }
             }
+            $this->generationTranslateScript();
+            $result->status =  SDBStatusCode::OK;
+        }catch (\Exception $e){
+            $result->status =  SDBStatusCode::Excep;
+            $result->message = $e->getMessage();
         }
-        $this->generationTranslateScript();
+        return $result;
     }
 
     public function getNewTransComboList()

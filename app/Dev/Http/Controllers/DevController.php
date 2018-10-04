@@ -102,7 +102,7 @@ class DevController extends Controller
             SDB::table('sys_translate_type')->insert($dataTransTypeInsert);
             SDB::table('sys_translation')->insert($dataTransInsert);
             SDB::commit();
-            $result->status =  SDBStatusCode::OK;
+            $result = $this->translateService->generationTranslateFileAndScript();
         }catch (\Exception $e){
             $result->status = SDBStatusCode::Excep;
             $result->message= $e->getMessage();
