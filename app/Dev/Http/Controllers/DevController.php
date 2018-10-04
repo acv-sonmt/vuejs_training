@@ -4,6 +4,9 @@
  */
 
 namespace App\Dev\Http\Controllers;
+use App\Core\Dao\SDB;
+use App\Dev\Entities\DataResultCollection;
+use App\Dev\Helpers\ResponseHelper;
 use App\Dev\Rules\UpperCaseRule;
 use App\Dev\Services\Interfaces\AclServiceInterface;
 use App\Dev\Services\Interfaces\DevServiceInterface;
@@ -76,6 +79,37 @@ class DevController extends Controller
     public function doc(){
         return view("dev/document");
     }
+    public function importDataTranslationFromTest(){
+        $result =  new DataResultCollection();
+        try{
+            $removeConnection = SDB::connection('mysql_server_remote_translation');
+            //get data remote
+            $dataLangRemote = $removeConnection->table('sys_languages')->get();
+            $dataTransRemote = $removeConnection->table('sys_translation')->get();
+            $dataTransTypeRemote = $removeConnection->table('sys_translate_type')->get();
+
+            $dataLangInsert = json_decode(json_encode($dataLangRemote->toArray(),true),true);
+            $dataTransInsert =  json_decode(json_encode($dataTransRemote->toArray(),true),true);
+            $dataTransTypeInsert = json_decode(json_encode($dataTransTypeRemote->toArray(),true),true);
+            SDB::beginTransaction();
+            //truncate data translation in local
+            SDB::table('sys_languages')->truncate();
+            SDB::table('sys_translate_type')->truncate();
+            SDB::table('sys_translation')->truncate();
+
+            //Import data remove to local
+            SDB::table('sys_languages')->insert($dataLangInsert);
+            SDB::table('sys_translate_type')->insert($dataTransTypeInsert);
+            SDB::table('sys_translation')->insert($dataTransInsert);
+            SDB::commit();
+            $result->status =  SDBStatusCode::OK;
+        }catch (\Exception $e){
+            $result->status = SDBStatusCode::Excep;
+            $result->message= $e->getMessage();
+            SDB::rollBack();
+        }
+        return ResponseHelper::JsonDataResult($result);
+    }
     public function log(){
         return view("dev/log");
     }
@@ -83,10 +117,7 @@ class DevController extends Controller
     }
     public function test()
     {
-        $data=DB::table('sys_translation')->simplePaginate(15,null,'page',4);
-        $this->devService->test();
-        print_r($data);
-       // $this->devService->generationTranslateScript('validation','validation');
+        echo 'test';
     }
 
 }

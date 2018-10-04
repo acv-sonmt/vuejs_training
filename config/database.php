@@ -78,6 +78,21 @@ return [
             'charset' => 'utf8',
             'prefix' => '',
         ],
+        //Use for developer
+        'mysql_server_remote_translation' => [
+            'driver' => 'mysql',
+            'host' => env('IMPORT_TRANS_DB_HOST', ''),
+            'port' => env('IMPORT_TRANS_DB_PORT', ''),
+            'database' => env('IMPORT_TRANS_DB_DATABASE', ''),
+            'username' => env('IMPORT_TRANS_DB_USERNAME', ''),
+            'password' => env('IMPORT_TRANS_DB_PASSWORD', ''),
+            'unix_socket' => env('IMPORT_TRANS_DB_SOCKET', ''),
+            'charset' => 'utf8mb4',
+            'collation' => 'utf8mb4_unicode_ci',
+            'prefix' => '',
+            'strict' => true,
+            'engine' => null,
+        ]
 
     ],
 

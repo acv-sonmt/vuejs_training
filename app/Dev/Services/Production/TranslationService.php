@@ -377,7 +377,6 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
             $typeTranslateList =  array();
             foreach ($langList as $lang){
                 $dir = base_path() . '/resources/lang/' . $lang;
-                $typeTranslateList = array_diff(scandir($dir), array('..', '.'));
                 $typeTranslateList = array_merge($typeTranslateList,array_diff(scandir($dir), array('..', '.')));
             }
             $typeTranslateList = array_unique ($typeTranslateList);

@@ -8,10 +8,10 @@
 Route::get('/dev', 'DevController@index')->name('index');
 Route::get('/dev/test', 'DevController@test')->name('test');
 Route::post('/dev/initProject', 'DevController@initProject')->name('initProject');
-
+Route::post('/dev/importDataTranslationFromTest', 'DevController@importDataTranslationFromTest')->name('importDataTranslationFromTest');
 
 Route::get('/dev/translationManagement', 'TranslationController@translationManagement')->name('translationManagement');
-//Delete translate 
+//Delete translate
 Route::post('/dev/deleteTranslate', 'TranslationController@deleteTranslate')->name('deleteTranslate');
 Route::post('/dev/updateTranslate', 'TranslationController@updateTranslate')->name('updateTranslate');
 Route::post('/dev/generationLanguageFiles', 'TranslationController@generationLanguageFiles')->name('generationLanguageFiles');
