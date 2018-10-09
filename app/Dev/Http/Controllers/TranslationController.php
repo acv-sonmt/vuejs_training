@@ -30,7 +30,12 @@ class TranslationController
         $langListFromDB = $this->service->getLanguageCodeList();
         $dataTransFromDB = $this->service->getTranslateList('', '');
         $langList = ($langListFromDB->status == SDBStatusCode::OK)?$langListFromDB->data:array();
-        $dataTrans = ($dataTransFromDB->status == SDBStatusCode::OK && !empty($dataTransFromDB->data['infor_arr']))?$this->refactorDataTrans(CommonHelper::flatten($dataTransFromDB->data['value_arr'])):array();
+        $dataTransFromDBRef = array();
+        foreach ($dataTransFromDB->data['value_arr'] as $key=> $dataTransFromDBItem){//number of languages
+            $dataTransFromDBRef[$key] = CommonHelper::flatten($dataTransFromDBItem);
+        }
+        $dataTrans = ($dataTransFromDB->status == SDBStatusCode::OK && !empty($dataTransFromDB->data['infor_arr']))?$this->refactorDataTrans($dataTransFromDBRef):array();
+        //dd($dataTrans['auth.failed']);
         $dataComboFilter = $this->service->getNewTransComboList();
         return view("dev/translation", compact(['dataTrans', 'langList', 'dataComboFilter']));
     }
@@ -59,8 +64,7 @@ class TranslationController
     public function deleteTranslate(Request $request)
     {
         $code = $request->code;
-        $lang = $request->lang;
-        $deleteResult = $this->service->deleteTranslate($lang,$code);
+        $deleteResult = $this->service->deleteTranslate($code);
         return ResponseHelper::JsonDataResult($deleteResult);
     }
     public function updateTranslate(Request $request)
@@ -96,15 +100,30 @@ class TranslationController
         }
         return ResponseHelper::JsonDataResult($result);
     }
-
     protected function refactorDataTrans($data){
         $result=  [];
-        foreach ($data as $key=>$value){
-            $result[$key] = array(
-                'key_list'=>explode('.',$key),
-                'value'=>$value
-            );
+        $keyArr = [];
+        foreach ($data as $key=>$value){//lang
+            $keyArr = $keyArr + array_keys($value);
         }
+        $keyArr = array_unique($keyArr);
+        foreach ($keyArr as $value){//each text_code
+            $result[$value]= array(
+                'key_list'=>explode('.',$value),
+                'key_string'=>$value,
+                'data'=>array()
+            );
+            foreach ($data as $lang=>$transInfor){
+                $result[$value]['data'][$lang] = "";
+                foreach ($transInfor as $keyTran=>$valueInfo){
+                    if($value == $keyTran){
+                        $result[$value]['data'][$lang]= $valueInfo;
+                    }
+                }
+
+            }
+        }
+
         return $result;
     }
 }

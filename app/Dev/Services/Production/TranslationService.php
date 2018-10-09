@@ -152,7 +152,12 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
 
     }
 
-    public function deleteTranslate($lang, $code)
+    /**
+     * @param $code (struct multip level : filename.code_level1.code_level2....)
+     * @return DataResultCollection
+     * delete inside all of language
+     */
+    public function deleteTranslate( $code)
     {
         $result = new DataResultCollection();
         try {
@@ -163,26 +168,29 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
             $lastKey = array_pop($keyInfor);
             $keyInsideTextValue = $keyInfor;
             $newText = "";
-            $transEdit = DEVDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ? ", [$lang, $transType])->first();
-            $id = $transEdit->id;
-            $text = $transEdit->text;
-            if (CommonHelper::isJSON($text)) {
-                $textArr = json_decode($text, true);
-                $tmpArr = &$textArr;
-                foreach ($keyInsideTextValue as $key) {
-                    $tmpArr = &$tmpArr[$key];
-                }
-                unset($tmpArr[$lastKey]);
-                $textArr = CommonHelper::array_non_empty_items($textArr);
-                if(!empty($textArr)){
-                    $newText = json_encode($textArr, true);
-                    DEVDB::execSPsToDataResultCollection("DEBUG_TRANSLATE_UPDATE_TEXT_ACT", array($id, $newText));
-                }else{
-                    DEVDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ?  ", [$lang, $transType])->delete();
-                }
+            $transEdit = DEVDB::table('sys_translation')->whereRaw("translate_type = ? ", [$transType])->select()->get()->toArray();
+            foreach ($transEdit as $transEditItem){
+                $lang = $transEditItem->lang_code;
+                $id = $transEditItem->id;
+                $text = $transEditItem->text;
+                if (CommonHelper::isJSON($text)) {
+                    $textArr = json_decode($text, true);
+                    $tmpArr = &$textArr;
+                    foreach ($keyInsideTextValue as $key) {
+                        $tmpArr = &$tmpArr[$key];
+                    }
+                    unset($tmpArr[$lastKey]);
+                    $textArr = CommonHelper::array_non_empty_items($textArr);
+                    if(!empty($textArr)){
+                        $newText = json_encode($textArr, true);
+                        DEVDB::execSPsToDataResultCollection("DEBUG_TRANSLATE_UPDATE_TEXT_ACT", array($id, $newText));
+                    }else{
+                        DEVDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ?  ", [$lang, $transType])->delete();
+                    }
 
-            } else {
-                DEVDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ? ", [$lang, $transType])->delete();
+                } else {
+                    DEVDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ? ", [$lang, $transType])->delete();
+                }
             }
             $result->status = SDBStatusCode::OK;
         } catch (\Exception $e) {
@@ -192,6 +200,12 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         return $result;
     }
 
+    /**
+     * @param $lang : language code ( jp, en, fr....)
+     * @param $code
+     * @param $transText
+     * @return DataResultCollection
+     */
     public function updateTranslateText($lang, $code, $transText)
     {
         $result = new DataResultCollection();
@@ -202,20 +216,45 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
             $keyInsideTextValue = $keyInfor;
             $newText = "";
             $transEdit = SDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ? ", [$lang, $transType])->first();
-            $id = $transEdit->id;
-            $text = $transEdit->text;
-            if (CommonHelper::isJSON($text)) {
-                $textArr = json_decode($text, true);
-                $tmpArr = &$textArr;
-                foreach ($keyInsideTextValue as $key) {
-                    $tmpArr = &$tmpArr[$key];
+            if(empty($transEdit)){
+                $valueArr =  array();
+                $tmpArr = &$valueArr;
+                foreach ($keyInfor as $codeItem){
+                    $tmpArr = &$tmpArr[$codeItem];
                 }
                 $tmpArr = $transText;
-                $newText = json_encode($textArr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
-            } else {
-                $newText = $transText;
+                $data = array(
+                    'lang_code'=>$lang,
+                    'translate_type'=>$transType,
+                    'text'=> json_encode (
+                        $valueArr,JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES
+                    ),
+                    'created_at'=>now()
+                );
+                SDB::table('sys_translation')->insert($data);
+
+            }else{
+                $id = $transEdit->id;
+                $text = $transEdit->text;
+                if (CommonHelper::isJSON($text)) {
+                    $textArr = json_decode($text, true);
+                    $tmpArr = &$textArr;
+                    foreach ($keyInsideTextValue as $key) {
+                        $tmpArr = &$tmpArr[$key];
+                    }
+                    $tmpArr = $transText;
+                    $newText = json_encode($textArr, JSON_UNESCAPED_UNICODE | JSON_UNESCAPED_SLASHES);
+                } else {
+                    $newText = $transText;
+                }
+                SDB::table('sys_translation')->whereRaw("id = ?", [$id])
+                    ->update(
+                        array(
+                            'text'=>$newText,
+                            'updated_at'=>now())
+                    );
             }
-            DEVDB::execSPsToDataResultCollection("DEBUG_TRANSLATE_UPDATE_TEXT_ACT", array($id, $newText));
+
             $result->status = SDBStatusCode::OK;
         } catch (\Exception $e) {
             $result->status = SDBStatusCode::Excep;
@@ -224,10 +263,15 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         return $result;
     }
 
+    /**
+     * @param $transType : validation, label....( file name of lang)
+     * @param $transTextCode : keycode as "validation.password.error..." .... multip level code
+     * @param $textTrans : value text
+     * @return DataResultCollection
+     */
     public function insertTranslationItem($transType, $transTextCode, $textTrans)
     {
         $result =  new DataResultCollection();
-        $data = array();
         $transTextCode = $transType.'.'.$transTextCode;
         $text =  json_decode($textTrans,true);
         foreach ($text as $key=>$value){
@@ -388,18 +432,21 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
                 $typeTranslateList = array_merge($typeTranslateList,array_diff(scandir($dir), array('..', '.')));
             }
             $typeTranslateList = array_unique ($typeTranslateList);
-            $count = count($typeTranslateList);
             $transInsert =  array();
-            for($i = 0;$i<$count;$i++){
-                $typeTranslateList[$i] = str_replace('.php', '', $typeTranslateList[$i]);
-                $transInsert[] = array(
-                    'code'=>$typeTranslateList[$i],
-                    'comment'=>'',
-                    'order_value'=>($i+1)
-                );
+            $i = 0;
+            if(!empty($typeTranslateList)){
+                foreach($typeTranslateList as $key=>$value){
+                    $value = str_replace('.php', '', $value);
+                    $transInsert[] = array(
+                        'code'=>$value,
+                        'comment'=>'',
+                        'order_value'=>($i+1)
+                    );
+                    $i++;
+                }
+                SDB::table('sys_translate_type')->truncate();
+                SDB::table('sys_translate_type')->insert($transInsert);
             }
-            SDB::table('sys_translate_type')->truncate();
-            SDB::table('sys_translate_type')->insert($transInsert);
             $resullt->status = SDBStatusCode::OK;
         }catch (\Exception $e){
             $resullt->status = SDBStatusCode::Excep;

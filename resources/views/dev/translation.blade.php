@@ -2,6 +2,7 @@
 <style>
     .edit, .save,.delete{
         cursor: pointer;
+        padding: 8px 4px 4px 13px;
     }
     .table th{
         text-align: center;
@@ -30,6 +31,18 @@
     legend{
         font-size: 16px !important;
     }
+    .lang-input{
+        display: inline-flex;
+        width: 100%;
+        padding: 2px;
+    }
+    .lang-code{
+        padding: 4px;
+        width: 40px;
+    }
+    .tbl-trans td{
+        vertical-align: middle !important;
+    }
 </style>
 @section('content')
         <div class="row justify-content-center">
@@ -40,15 +53,6 @@
                         <legend>Filter:</legend>
                         <div class="col-md-12 filter">
                             <div class="col-md-12 form-group">
-                                <div class="col-md-2 form-title">Language</div>
-                                <div class="col-md-4">
-                                    <select id="trans-lang" class="lang form-control">
-                                        <option value="">---</option>
-                                        <?php foreach ($langList as $langItem){?>
-                                        <option value="<?php echo $langItem->code;?>"><?php echo $langItem->name?></option>
-                                        <?php   } ?>
-                                    </select>
-                                </div>
                                 <div class="col-md-2 form-title">Translate type</div>
                                 <div class="col-md-4">
                                     <select id="trans-type" class="lang form-control">
@@ -81,17 +85,16 @@
                         <button id="generation" class="btn btn-primary pull-right glyphicon glyphicon-save-file" title="Generate to translate file"></button>
                     </div>
                     <div class="card-body">
-                        <table id="tbl-trans" class="table-bordered table table-hover w-100">
+                        <table id="tbl-trans" class="tbl-trans table-bordered table table-hover w-100">
                             <thead>
                                 <tr>
                                     <th>No</th>
-                                    <th>Language code</th>
-                                    <th>Type</th>
+                                    <th>File</th>
                                     <th>Key</th>
                                     <th style="min-width: 408px;">Text translated</th>
                                     <th>
-                                        <span id="edit-all" class="glyphicon glyphicon-edit btn"></span>
-                                        <span id="save-all" class="glyphicon glyphicon-floppy-saved btn display-none"></span>
+                                        {{--<span id="edit-all" class="glyphicon glyphicon-edit btn"></span>
+                                        <span id="save-all" class="glyphicon glyphicon-floppy-saved btn display-none"></span>--}}
                                     </th>
                                 </tr>
                             </thead>
@@ -100,24 +103,30 @@
                             <?php if(!empty($dataTrans)){
                             foreach ($dataTrans as $key=>$item){
                             $index++;
-                            $lang = $item['key_list'][0];
-                            $typeOfTrans =  $item['key_list'][1];
-                            unset($item['key_list'][0]);
-                            $code = join(".",$item['key_list']);
+                            $typeOfTrans =  $item['key_list'][0];
+                            $code = $item['key_string'];
                             ?>
                             <tr class="trans-record">
                                 <td class="text-center"><?php echo $index; ?></td>
-                                <td><?php echo $lang; ?></td>
                                 <td><?php echo $typeOfTrans; ?></td>
                                 <td><?php echo $code; ?></td>
-                                <td><span style="display:none;"><?php echo $item['value']; ?></span><input class="form-control text-trans" value="<?php echo $item['value']; ?>" readonly /></td>
-                                <td class="text-center" style="vertical-align: middle;">
-                                    <span class="edit glyphicon glyphicon-edit"></span>
-                                    <span class="save glyphicon glyphicon-floppy-saved display-none" data-lang="{{$lang}}" data-code="{{$code}}"></span>
-                                    <span class="delete glyphicon glyphicon-trash" data-lang="{{$lang}}" data-code={{$code}}></span>
+                                <td>
+                                <?php
+                                    foreach ($item['data'] as $langKey=>$itemData){//language ?>
+                                    <div class="lang-input">
+                                        <div class="lang-code"><?php echo $langKey; ?></div>
+                                        <span style="display:none;"><?php echo $itemData; ?></span><input class="form-control text-trans" value="<?php echo $itemData; ?>" readonly />
+                                        <span class="edit glyphicon glyphicon-edit"></span>
+                                        <span class="save glyphicon glyphicon-floppy-saved display-none" data-lang="{{$langKey}}" data-code="{{$code}}"></span>
+                                    </div>
+                                    <?php } ?>
+                                </td>
+                                <td>
+                                        <span class="delete glyphicon glyphicon-trash" data-lang="{{$langKey}}" data-code={{$code}}></span>
                                 </td>
                             </tr>
-                            <?php }
+                            <?php
+                                }
                             }?>
                             </tbody>
                         </table>
@@ -141,31 +150,28 @@
                     dom: 't',
                     searching: true,
                     "columnDefs": [ {
-                        "targets": 5,
+                        "targets": 4,
                         "orderable": false
                     } ]
                 }
             );
 
-            $('#trans-lang').on( 'change', function () {
+            $('#trans-type').on( 'change', function () {
                 table.column(1).search( this.value ).draw();
             } );
-            $('#trans-type').on( 'change', function () {
+            $('#trans-text-code').on( 'change', function () {
                 table.column(2).search( this.value ).draw();
             } );
-            $('#trans-text-code').on( 'change', function () {
+            $('#trans-text-translated').on( 'change', function () {
                 table.column(3).search( this.value ).draw();
             } );
-            $('#trans-text-translated').on( 'change', function () {
-                table.column(4).search( this.value ).draw();
-            } );
             $(document).on('click', '.edit', function () {
-                var record = $(this).parents('tr.trans-record');
+                var record = $(this).parents('.lang-input');
                 $(record).find('.text-trans').prop('readonly', false).select();
                 $(record).find('.save').removeClass('display-none');
                 $(this).addClass('display-none');
             });
-            $(document).on('click', '#edit-all', function () {
+            /*$(document).on('click', '#edit-all', function () {
 
                 if($(this).hasClass('open')){
                     $(this).removeClass('open');
@@ -178,9 +184,9 @@
                     $('.save').removeClass('display-none');
                     $('.edit').addClass('display-none');
                 }
-            });
+            });*/
             $(document).on('click', '.save', function () {
-                var record = $(this).parents('tr.trans-record');
+                var record = $(this).parents('.lang-input');
                 var text = $(record).find('.text-trans').val();
                 var lang = $(this).attr('data-lang');
                 var code = $(this).attr('data-code');
