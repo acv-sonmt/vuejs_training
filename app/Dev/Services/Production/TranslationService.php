@@ -183,7 +183,12 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
                     $textArr = CommonHelper::array_non_empty_items($textArr);
                     if(!empty($textArr)){
                         $newText = json_encode($textArr, true);
-                        DEVDB::execSPsToDataResultCollection("DEBUG_TRANSLATE_UPDATE_TEXT_ACT", array($id, $newText));
+                        SDB::table('sys_translation')->whereRaw("id = ?", [$id])
+                            ->update(
+                                array(
+                                    'text'=>$newText,
+                                    'updated_at'=>now())
+                            );
                     }else{
                         DEVDB::table('sys_translation')->whereRaw("lang_code = ? AND translate_type = ?  ", [$lang, $transType])->delete();
                     }
@@ -303,7 +308,12 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
                     } else {
                         $newText = $value;
                     }
-                    DEVDB::execSPsToDataResultCollection("DEBUG_TRANSLATE_UPDATE_TEXT_ACT", array($id, $newText));
+                    DEVDB::table('sys_translation')->whereRaw("id = ? ",[$id])->update(
+                        array(
+                            'text'=>$newText,
+                            'updated_at' => now()
+                        )
+                    );
                 }else{
                     $valueArr =  array();
                     $tmpArr = &$valueArr;
@@ -335,6 +345,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
 
     public function getLanguageCodeList(): DataResultCollection
     {
+        $result =  new DataResultCollection();
         $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
         return $lang;
     }
