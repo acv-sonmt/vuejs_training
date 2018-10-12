@@ -115,7 +115,7 @@
                                     foreach ($item['data'] as $langKey=>$itemData){//language ?>
                                     <div class="lang-input">
                                         <div class="lang-code"><?php echo $langKey; ?></div>
-                                        <span style="display:none;"><?php echo $itemData; ?></span><input class="form-control text-trans" value="<?php echo $itemData; ?>" readonly />
+                                        <span style="display:none;"><?php echo $itemData; ?></span><textarea class="form-control text-trans" value="<?php echo $itemData; ?>" readonly /><?php echo $itemData; ?></textarea>
                                         <span class="edit glyphicon glyphicon-edit"></span>
                                         <span class="save glyphicon glyphicon-floppy-saved display-none" data-lang="{{$langKey}}" data-code="{{$code}}"></span>
                                     </div>
