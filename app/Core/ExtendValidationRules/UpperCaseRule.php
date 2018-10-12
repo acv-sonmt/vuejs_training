@@ -2,7 +2,7 @@
 /**
  * @author thanhnv
  */
-namespace App\Dev\Rules;
+namespace App\Core\ExtendValidationRules;
 
 use Illuminate\Contracts\Validation\Rule;
 

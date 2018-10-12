@@ -44,11 +44,11 @@
                             <div class="col-md-2 text-right"><button id="init-role" class="btn-primary btn">Reset & Innitization</button></div>
                         </div>
                         <div class="col-md-12 table-bordered">
-                            <div class="col-md-10">
+                            <div class="col-md-9">
                                 - Import translate file   .\resources\lang\.* to database <br>
                                 <span class="text-warning font-weight-bold">Warning: rewrite file in .\resources\lang\.* to Database, old data in sys_translation will be remove</span>
                             </div>
-                            <div class="col-md-2 text-right"><button id="import-trans" class="btn-primary btn">Reset & import translation</button></div>
+                            <div class="col-md-3 text-right"><button id="import-trans" class="btn-primary btn">Reset & import translation</button></div>
                         </div>
                         <div class="col-md-12 table-bordered">
                             <div class="col-md-10">

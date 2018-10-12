@@ -1,15 +1,14 @@
 @extends('layouts.dev')
 
 @section('content')
-    <p><strong>Date: 2018/07/18</strong></p>
+    <p><strong>Date: 2018/10/10</strong></p>
     <p><strong>Required:</strong></p>
     <p><strong>&nbsp;-&nbsp; </strong>Laravel framework 5.6</p>
-    <p><strong>&nbsp;-&nbsp;&nbsp;</strong>MySql version &gt;= 8.0</p>
+    <p><strong>&nbsp;-&nbsp;&nbsp;</strong>MySql version &gt;= 5.7.23</p>
     <p><span style="color: #3366ff;"><strong>Config:</strong></span></p>
     <p>- The first checkout : run composor install.</p>
     <p>- Run migration, migration will run script file&nbsp;<strong>dbscript/for_migration_init_database.sql</strong></p>
     <p><strong>- Provider </strong>of modules must registed in<strong> config/app.</strong></p>
-    <p>&nbsp;</p>
     <p><span style="color: #3366ff;"><strong>CODE:</strong></span></p>
     <p><strong>1.Backend Module.</strong></p>
     <p><strong>&nbsp;- Required:&nbsp;</strong>Core module</p>
@@ -32,14 +31,16 @@
     <p>&nbsp; &nbsp; &nbsp;+ Coding struct like default of Laravel.</p>
     <p><strong>7. Helper</strong></p>
     <p><strong>&nbsp; -</strong> Provide some helper for developer.</p>
-    <p>&nbsp;8<strong>. Console: Generate access token key</strong></p>
-    <p><strong>&nbsp;&nbsp;</strong>- Ex: php artisan access-token:generate <a href="mailto:your_email@mail.com">your_email@mail.com</a>&nbsp; &nbsp;&nbsp;<br />&nbsp; =&gt; generate a access token key with specific roles, which use to help client access api.</p>
+    <p><strong>8. Console: Generate access token key</strong></p>
+    <p><strong>&nbsp;&nbsp;</strong>- Ex: php artisan access-token:generate <a href="mailto:your_email@mail.com">your_email@mail.com</a>&nbsp; &nbsp;&nbsp;<br />&nbsp; =&gt; generate a access token key with specific roles, which use to help client access api.<strong><br /><br /></strong></p>
     <p>--------------------------------------------------------------------------------------------------------------------------</p>
     <h2><span style="color: #333399;"><strong>DETAIL</strong></span></h2>
     <p><span style="color: #333399;"><strong>DEV Module.</strong></span></p>
     <p><strong>Required:</strong>&nbsp;</p>
     <p>&nbsp;- file .env has "DEV_MODE = true" .</p>
-    <p><strong>1. Initialization project</strong><br />&nbsp;- Click button to generate common config (ACL file, Translation file...), import list of action to Database.</p>
+    <p><strong>1. Initialization project</strong><br />&nbsp;- Click button [<strong>Reset &amp; Innitization</strong>] to generate common config (ACL file, Translation file...), import list of action to Database.</p>
+    <p>&nbsp;- Click button [<strong>Reset &amp; import translation</strong>] to innitization translation data ( remove and init data in database).</p>
+    <p>&nbsp;- CLick button <strong>[Import translation]&nbsp;</strong>to&nbsp;Get data translation from Other server, server information has must configed inside .env&nbsp;</p>
     <p><strong>2. Translation</strong></p>
     <p><strong>&nbsp;- Translation page </strong>management&nbsp; based on languages.</p>
     <p>&nbsp;- Add new, Update, Remove text.</p>
@@ -58,7 +59,12 @@
     <p><span style="color: #333399;"><strong>-&nbsp;</strong><span style="color: #000000;"> Defined rule of <strong>access police&nbsp;</strong></span><span style="color: #000000;">in acl middleware.</span></span></p>
     <p><span style="color: #333399;"><span style="color: #000000;">-&nbsp; Apply for all of action has registed "acl" middleware.</span></span></p>
     <p><span style="color: #333399;"><span style="color: #000000;">&nbsp;</span></span></p>
-    <p>&nbsp;</p>
+    <h3><strong>NOTE for developer:</strong><br /><br /></h3>
+    <p>- Generate migrate script by below steps:</p>
+    <p>+ Export script from database.</p>
+    <p>+ Remove "DELIMITER;;","DELIMITER;","DEFINER=`root`@`%`" ( inside create store procedure, function command)</p>
+    <p>+ Replace "END;;" to "END;"</p>
+    <p>+ Remove ";;"</p>
     <p>&nbsp;</p>
 
 @endsection

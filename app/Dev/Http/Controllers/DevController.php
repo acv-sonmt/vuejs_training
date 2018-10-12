@@ -7,7 +7,7 @@ namespace App\Dev\Http\Controllers;
 use App\Core\Dao\SDB;
 use App\Dev\Entities\DataResultCollection;
 use App\Dev\Helpers\ResponseHelper;
-use App\Dev\Rules\UpperCaseRule;
+use App\Core\ExtendValidationRules\UpperCaseRule;
 use App\Dev\Services\Interfaces\AclServiceInterface;
 use App\Dev\Services\Interfaces\DevServiceInterface;
 use App\Dev\Services\Interfaces\TranslateServiceInterface;
