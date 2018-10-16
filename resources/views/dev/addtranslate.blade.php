@@ -37,7 +37,7 @@
                     <div class="col-md-12 form-row">
                         <div class="col-md-3 form-title">Text translate to <?php echo $langItem->name;?></div>
                         <div class="col-md-9">
-                            <input type="text" data-lang="<?php echo $langItem->code;?>" id="trans-text-<?php echo $langItem->code;?>" class="form-control trans-text"/>
+                            <textarea type="text" data-lang="<?php echo $langItem->code;?>" id="trans-text-<?php echo $langItem->code;?>" class="form-control trans-text"></textarea>
                         </div>
                     </div>
                     <?php   }
