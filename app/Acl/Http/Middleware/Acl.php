@@ -3,6 +3,7 @@
  * @author thanhnv
  */
 namespace App\Acl\Http\Middleware;
+use App\Acl\Http\Exceptions\AclException;
 use App\Core\Helpers\CommonHelper;
 use App\Core\Common\SDBStatusCode;
 use App\Core\Common\RoleConst;
@@ -32,14 +33,9 @@ class Acl
 
         if ($this->hasAcl($roleId,$moduleInfor->screenCode)==true ) {
             return $next($request);
+        }else{
+            throw new AclException();
         }
-
-        $result = new DataResultCollection();
-        $result->status = SDBStatusCode::ACLNotPass;
-        $result->data=array('error'=> trans('acl_not_access'));
-        return redirect('/');
-        //return ResponseHelper::JsonDataResult($result);
-
 
     }
 

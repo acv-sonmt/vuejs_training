@@ -2,8 +2,12 @@
 
 namespace App\Core\Exceptions;
 
+use App\Core\Common\SDBStatusCode;
+use App\Core\Entities\DataResultCollection;
 use Exception;
+use Illuminate\Auth\AuthenticationException;
 use Illuminate\Foundation\Exceptions\Handler as ExceptionHandler;
+use Illuminate\Validation\ValidationException;
 
 class Handler extends ExceptionHandler
 {
@@ -47,5 +51,46 @@ class Handler extends ExceptionHandler
     public function render($request, Exception $exception)
     {
         return parent::render($request, $exception);
+    }
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param ValidationException $exception
+     * @return \Illuminate\Http\JsonResponse
+     * Overwrite
+     */
+    protected function invalidJson($request, ValidationException $exception)
+    {
+        $result =  new DataResultCollection();
+        $result->status = SDBStatusCode::ApiError;
+        $result->message = trans('common.title_error');
+        $result->data = $exception->errors();
+        return response()->json($result, 200);
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param ValidationException $exception
+     * @return \Illuminate\Http\Response|void
+     */
+    protected function invalid($request,ValidationException $exception){
+
+    }
+
+    /**
+     * @param \Illuminate\Http\Request $request
+     * @param AuthenticationException $exception
+     * @return \Illuminate\Http\JsonResponse|\Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
+     * not passed authen ( miss token, incorrect token....) return
+     */
+    protected function unauthenticated($request, AuthenticationException $exception)
+    {
+        if ($request->expectsJson()) {
+            $result =  new DataResultCollection();
+            $result->status = SDBStatusCode::ApiError;
+            $result->message = trans('common.unauthenticated');
+            return response()->json($result, 200);
+        }
+
+        return redirect()->route('home');
     }
 }

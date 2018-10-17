@@ -49,7 +49,8 @@ class DevController extends Controller
 
     public function index()
     {
-        return view("dev/index");
+        $readyImportTransFromRemote = true;
+        return view("dev/index",compact('readyImportTransFromRemote'));
     }
 
     public function testCustomValidate(Request $request)
@@ -82,11 +83,11 @@ class DevController extends Controller
     public function importDataTranslationFromTest(){
         $result =  new DataResultCollection();
         try{
-            $removeConnection = SDB::connection('mysql_server_remote_translation');
+            $remoteConnection = SDB::connection('mysql_server_remote_translation');
             //get data remote
-            $dataLangRemote = $removeConnection->table('sys_languages')->get();
-            $dataTransRemote = $removeConnection->table('sys_translation')->get();
-            $dataTransTypeRemote = $removeConnection->table('sys_translate_type')->get();
+            $dataLangRemote = $remoteConnection->table('sys_languages')->get();
+            $dataTransRemote = $remoteConnection->table('sys_translation')->get();
+            $dataTransTypeRemote = $remoteConnection->table('sys_translate_type')->get();
 
             $dataLangInsert = json_decode(json_encode($dataLangRemote->toArray(),true),true);
             $dataTransInsert =  json_decode(json_encode($dataTransRemote->toArray(),true),true);

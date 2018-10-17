@@ -73,7 +73,6 @@ class UserController extends Controller
             $refreshToken = '';// $token->refresh_token;
             $response->status = SDBStatusCode::OK;
             $response->data = array(ApiConst::ApiAccessTokenParamName=>$accessToken,ApiConst::ApiRefreshTokenParamName=>$refreshToken);
-            return ResponseHelper::JsonDataResult($response);
         }else{
             $this->incrementLoginAttempts($request);
             // Customization: If client status is inactive (0) return failed_status error.
