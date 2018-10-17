@@ -1,0 +1,1 @@
+mysqldump --routines --complete-insert -u root -p laravel_sample > C://db_backup.sql
