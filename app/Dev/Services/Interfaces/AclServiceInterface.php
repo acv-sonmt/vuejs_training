@@ -19,6 +19,6 @@ interface AclServiceInterface
     public function getModuleList();
     public function getListUser();
     public function updateUserRole($current_id,$current_role_value);
-    public function generationRoleDataToDB();
+    public function generationRoleDataToDB():DataResultCollection;
     public function initRoleDataToDB();
 }

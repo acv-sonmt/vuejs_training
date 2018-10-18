@@ -2,15 +2,18 @@
 
 namespace App\Api\V1\Http\Controllers\Auth;
 
-use App\Api\V1\Models\User;
 use App\Api\V1\Http\Controllers\Controller;
-use App\Core\Common\SDBStatusCode;
+use App\Api\V1\Http\Requests\RegisterNormalRequest;
+use App\Api\V1\Models\User;
+use App\Api\V1\Services\Interfaces\UserServiceInterface;
 use App\Core\Common\ApiConst;
+use App\Core\Common\SDBStatusCode;
 use App\Core\Entities\DataResultCollection;
 use App\Core\Helpers\ResponseHelper;
 use Illuminate\Foundation\Auth\AuthenticatesUsers;
-use Illuminate\Support\Facades\Auth;
 use Illuminate\Http\Request;
+use Illuminate\Support\Facades\Auth;
+
 class UserController extends Controller
 {
     /*
@@ -31,18 +34,23 @@ class UserController extends Controller
      *
      * @return void
      */
-    public function __construct()
+    protected $userService;
+
+    public function __construct(UserServiceInterface $userService)
     {
+        $this->userService = $userService;
         $this->middleware('guest')->except('logout');
     }
+
     public function username()
     {
         return 'email';
     }
+
     /**
      * Get the needed authorization credentials from the request.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return array
      */
     protected function credentials(Request $request)
@@ -50,10 +58,11 @@ class UserController extends Controller
         $credentials = array('email' => $request->input('email'), 'password' => $request->input('password'), 'is_active' => 1);
         return $credentials;
     }
+
     /**
      * Handle a login request to the application.
      *
-     * @param  \Illuminate\Http\Request  $request
+     * @param  \Illuminate\Http\Request $request
      * @return \Illuminate\Http\RedirectResponse|\Illuminate\Http\Response
      */
     public function login(Request $request)
@@ -67,35 +76,43 @@ class UserController extends Controller
         $client = User::where($this->username(), $email)->first();
         $response = new DataResultCollection();
         if ($this->attemptLogin($request)) {
-            $user=Auth::user();
-            $token =  $user->createToken('By Login from user:'.$user->getAuthIdentifier());
+            $user = Auth::user();
+            $email = isset($user) && isset($user->email) ? $user->email : '';
+            $token = $user->createToken('By Login from user:' . $email);
             $accessToken = $token->accessToken;
             $refreshToken = '';// $token->refresh_token;
             $response->status = SDBStatusCode::OK;
-            $response->data = array(ApiConst::ApiAccessTokenParamName=>$accessToken,ApiConst::ApiRefreshTokenParamName=>$refreshToken);
-        }else{
+            $response->data = array(ApiConst::ApiAccessTokenParamName => $accessToken, ApiConst::ApiRefreshTokenParamName => $refreshToken);
+        } else {
             $this->incrementLoginAttempts($request);
             // Customization: If client status is inactive (0) return failed_status error.
-            if (isset($client->is_active)&& $client->is_active === 0) {
+            if (!isset($client->is_active) || $client->is_active != 1) {
                 $response->status = SDBStatusCode::ApiError;
-                $response->message= trans('auth.not_active');
-            }else{
+                $response->message = trans('auth.not_active');
+            } else {
                 $response->status = SDBStatusCode::ApiError;
-                $response->message= trans('auth.can_not_login');
+                $response->message = trans('auth.can_not_login');
             }
         }
 
         return ResponseHelper::JsonDataResult($response);
     }
 
+    public function registerNormal(RegisterNormalRequest $request)
+    {
+        $result = $this->userService->registerNormal($request->all());
+        return ResponseHelper::JsonDataResult($result);
+    }
+
     /**
      * revoke current token
      * @return \Illuminate\Http\JsonResponse
      */
-    public function logout(){
-        $result  =  new DataResultCollection();
+    public function logout()
+    {
+        $result = new DataResultCollection();
         $result->status = SDBStatusCode::ApiAuthNotPass;
-        if(Auth::check()){
+        if (Auth::check()) {
             $result->status = SDBStatusCode::OK;
             $accessToken = Auth::user()->token();
             $accessToken->revoke();

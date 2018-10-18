@@ -8,8 +8,10 @@
 
 namespace App\Dev\Services\Production;
 
+use App\Core\Common\SDBStatusCode;
 use App\Dev\Dao\DEVDB;
 use App\Core\Common\RoleConst;
+use App\Dev\Entities\DataResultCollection;
 use App\Dev\Services\Interfaces\AclServiceInterface;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
@@ -154,13 +156,23 @@ class AclService extends BaseService implements AclServiceInterface
      * @return array
      * generation screens list, insert role map screen and merger role to database.
      */
-    public function generationRoleDataToDB()
+    public function generationRoleDataToDB():DataResultCollection
     {
+        $result = new DataResultCollection();
         //Insert dev module data
-        $this->importModuleListToDB();
-        $data = $this->getListScreen();
-        DEVDB::execSPs('DEBUG_IMPORT_AND_MERGER_ROLE_ACT',array(json_encode($data)));
-        return true;
+        try{
+            DEVDB::beginTransaction();
+            $this->importModuleListToDB();
+            $data = $this->getListScreen();
+            DEVDB::execSPs('DEBUG_IMPORT_AND_MERGER_ROLE_ACT',array(json_encode($data,JSON_FORCE_OBJECT )));
+            $result->status =  SDBStatusCode::OK;
+            DEVDB::commit();
+        }catch (\Exception $e){
+            DEVDB::rollBack();
+            $result->status =  SDBStatusCode::Excep;
+            $result->message = $e->getMessage();
+        }
+        return $result;
     }
     public function getRoleInfoFromDB()
     {
@@ -186,12 +198,12 @@ class AclService extends BaseService implements AclServiceInterface
 
                 $_namespaces_chunks = explode('\\', $_action[0]);
 
-                $screens[$i]['id'] = $id;
-                $screens[$i]['module'] = $_module;
-                $screens[$i]['controller'] = strtolower(end($_namespaces_chunks));
-                $screens[$i]['action'] = strtolower(end($_action));
-                $screens[$i]['screen_code']=$action['namespace']."\\".$screens[$i]['controller']."\\".$screens[$i]['action'];
-                $screens[$i]['description']=$action['namespace'];
+                $screens["$i"]['id'] = $id;
+                $screens["$i"]['module'] = $_module;
+                $screens["$i"]['controller'] = strtolower(end($_namespaces_chunks));
+                $screens["$i"]['action'] = strtolower(end($_action));
+                $screens["$i"]['screen_code']=$action['namespace']."\\".$screens[$i]['controller']."\\".$screens[$i]['action'];
+                $screens["$i"]['description']=$action['namespace'];
             }
             $i++;
         }

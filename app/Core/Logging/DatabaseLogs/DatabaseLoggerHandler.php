@@ -2,10 +2,8 @@
 
 namespace App\Core\Logging\DatabaseLogs;
 
-use App\Core\Helpers\CommonHelper;
-use App\Dev\Dao\DEVDB;
-use Illuminate\Support\Facades\DB;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use Monolog\Handler\AbstractProcessingHandler;
 
 class DatabaseLoggerHandler extends AbstractProcessingHandler
@@ -27,7 +25,7 @@ class DatabaseLoggerHandler extends AbstractProcessingHandler
             }
             $extention = '.txt';
             $filePath = $logDisk.'/'.$fileName.$extention;
-            $content = now()->toDateTimeString().' '.config('app.timezone').' - Level '.$record['level_name'].':'.$record['message']."\n";
+            $content = now()->toDateTimeString().' '.config('app.timezone').' - IP:'.Request::ip().' - Level '.$record['level_name'].':'.$record['message']."\n";
 
             if(file_exists($filePath)){
                 file_put_contents($filePath, $content, FILE_APPEND | LOCK_EX);

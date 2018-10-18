@@ -2,7 +2,6 @@
 
 namespace App\Core\Logging\DatabaseLogs;
 
-use Monolog\Handler\LogEntriesHandler;
 use Monolog\Logger;
 
 class CreateDatabaseLogger
