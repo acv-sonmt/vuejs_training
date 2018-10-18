@@ -4,6 +4,7 @@ namespace App\Core\Logging\Custom;
 
 use App\Core\Helpers\CommonHelper;
 use Illuminate\Support\Facades\Log;
+use Illuminate\Support\Facades\Request;
 use Monolog\Handler\AbstractProcessingHandler;
 
 class CustomLoggerHandler extends AbstractProcessingHandler
@@ -30,7 +31,7 @@ class CustomLoggerHandler extends AbstractProcessingHandler
             $fileName =  $moduleInfor->module.'-'.$folderName;
             $extention = '.txt';
             $filePath = $logDisk.'/'.$fileName.$extention;
-            $content = now()->toDateTimeString().' '.config('app.timezone').' - Level '.$record['level_name'].':'.$record['message']."\n";
+            $content = now()->toDateTimeString().' '.config('app.timezone').' - Ip:'.Request::ip().' - Level '.$record['level_name'].':'.$record['message']."\n";
 
             if(file_exists($filePath)){
                 file_put_contents($filePath, $content, FILE_APPEND | LOCK_EX);

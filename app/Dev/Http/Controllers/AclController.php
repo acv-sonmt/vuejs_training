@@ -8,6 +8,8 @@
 
 namespace App\Dev\Http\Controllers;
 
+use App\Dev\Entities\DataResultCollection;
+use App\Dev\Helpers\ResponseHelper;
 use App\Dev\Services\Interfaces\AclServiceInterface;
 use Validator;
 use Illuminate\Http\Request;
@@ -37,7 +39,8 @@ class AclController
     }
 
     public function refreshAclDB(){
-        $this->service->generationRoleDataToDB();
+        $result = $this->service->generationRoleDataToDB();
+        return ResponseHelper::JsonDataResult($result);
     }
     public function aclManangement()
     {
