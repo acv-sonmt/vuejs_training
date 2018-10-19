@@ -344,7 +344,7 @@ SET character_set_client = @saved_cs_client;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `get_error_code`() RETURNS int(11)
+CREATE  FUNCTION `get_error_code`() RETURNS int(11)
 BEGIN
 
 
@@ -369,7 +369,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `get_error_message`(code INT, message_code VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
+CREATE  FUNCTION `get_error_message`(code INT, message_code VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
 BEGIN
 
 
@@ -394,7 +394,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `get_success_code`() RETURNS int(11)
+CREATE  FUNCTION `get_success_code`() RETURNS int(11)
 BEGIN
 
 
@@ -419,7 +419,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` FUNCTION `SPLIT_STRING`(
+CREATE  FUNCTION `SPLIT_STRING`(
 
 
 
@@ -472,7 +472,7 @@ RETURN REPLACE(
 
 
 
-) ; 
+) ;
 
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -488,7 +488,7 @@ RETURN REPLACE(
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ACL_GET_MODULES_LST`()
+CREATE  PROCEDURE `ACL_GET_MODULES_LST`()
 BEGIN
 
 
@@ -517,7 +517,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ACL_GET_ROLES_LST`()
+CREATE  PROCEDURE `ACL_GET_ROLES_LST`()
 BEGIN
 
 
@@ -546,7 +546,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ACL_GET_ROLES_MAP_ACTION_LST`()
+CREATE  PROCEDURE `ACL_GET_ROLES_MAP_ACTION_LST`()
 BEGIN
 
 
@@ -695,7 +695,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
+CREATE  PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
 BEGIN
 
 
@@ -744,7 +744,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
+CREATE  PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
 BEGIN
 
 
@@ -785,7 +785,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_ADD_TRANSLATE_COMBO_LST`()
+CREATE  PROCEDURE `DEBUG_ADD_TRANSLATE_COMBO_LST`()
 BEGIN
 
 
@@ -834,7 +834,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_BACKUP_TRANSLATE_ACT`()
+CREATE  PROCEDURE `DEBUG_BACKUP_TRANSLATE_ACT`()
 BEGIN
 
 
@@ -963,7 +963,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
+CREATE  PROCEDURE `DEBUG_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
 
 
@@ -1084,7 +1084,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
+CREATE  PROCEDURE `DEBUG_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
 
 
@@ -1189,7 +1189,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_CATELORY_DELETE_NODE_AND_CHILD`(nodeId INT)
+CREATE  PROCEDURE `DEBUG_CATELORY_DELETE_NODE_AND_CHILD`(nodeId INT)
 BEGIN
 
 
@@ -1270,7 +1270,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
+CREATE  PROCEDURE `DEBUG_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
 BEGIN
 
 
@@ -1303,7 +1303,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_ALL_SP_LST`()
+CREATE  PROCEDURE `DEBUG_GET_ALL_SP_LST`()
 BEGIN
 
 
@@ -1336,7 +1336,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_ALL_TABLE_LST`()
+CREATE  PROCEDURE `DEBUG_GET_ALL_TABLE_LST`()
 BEGIN
 
 
@@ -1365,7 +1365,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_CATEGORY_LST`()
+CREATE  PROCEDURE `DEBUG_GET_CATEGORY_LST`()
 BEGIN
 
 
@@ -1418,7 +1418,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_CATEGORY_WITH_LEVEL_LIST`()
+CREATE  PROCEDURE `DEBUG_GET_CATEGORY_WITH_LEVEL_LIST`()
 BEGIN
 
 
@@ -1451,7 +1451,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_LANGUAGE_CODE_LST`()
+CREATE  PROCEDURE `DEBUG_GET_LANGUAGE_CODE_LST`()
 BEGIN
 
 
@@ -1492,7 +1492,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_MODULES_LST`()
+CREATE  PROCEDURE `DEBUG_GET_MODULES_LST`()
 BEGIN
 
 
@@ -1521,7 +1521,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_PARAM_OF_SPS_LST`(p_procedureName VARCHAR(250) charset utf8)
+CREATE  PROCEDURE `DEBUG_GET_PARAM_OF_SPS_LST`(p_procedureName VARCHAR(250) charset utf8)
 BEGIN
 
 
@@ -1570,7 +1570,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_ROLES_LST`()
+CREATE  PROCEDURE `DEBUG_GET_ROLES_LST`()
 BEGIN
 
 
@@ -1599,7 +1599,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_ROLES_MAP_ACTION_LST`()
+CREATE  PROCEDURE `DEBUG_GET_ROLES_MAP_ACTION_LST`()
 BEGIN
 
 
@@ -1748,7 +1748,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
+CREATE  PROCEDURE `DEBUG_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
 BEGIN
 
 
@@ -1833,7 +1833,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_TRANSLATION_TYPE_LST`()
+CREATE  PROCEDURE `DEBUG_GET_TRANSLATION_TYPE_LST`()
 BEGIN
 
 
@@ -1862,7 +1862,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_VALIDATION_RULES_LST`()
+CREATE  PROCEDURE `DEBUG_GET_VALIDATION_RULES_LST`()
 BEGIN
 
 
@@ -1963,7 +1963,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
+CREATE  PROCEDURE `DEBUG_IMPORT_AND_MERGER_ROLE_ACT`(p_listScreen JSON)
 BEGIN
 
 
@@ -2636,7 +2636,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
+CREATE  PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
 BEGIN
 
 
@@ -2685,7 +2685,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
+CREATE  PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
 BEGIN
 
 
@@ -2726,7 +2726,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_USER_ROLE_GET_LIST_USERS`()
+CREATE  PROCEDURE `DEBUG_USER_ROLE_GET_LIST_USERS`()
 BEGIN
 
 
@@ -2823,7 +2823,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
+CREATE  PROCEDURE `DEBUG_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
 BEGIN
 
 
@@ -2872,7 +2872,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sys_show_message_error`(code INT, dataError JSON)
+CREATE  PROCEDURE `sys_show_message_error`(code INT, dataError JSON)
 BEGIN
 
 
@@ -2897,7 +2897,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sys_show_message_exception`(message_code varchar(500))
+CREATE  PROCEDURE `sys_show_message_exception`(message_code varchar(500))
 BEGIN
 
 
@@ -2922,7 +2922,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sys_show_message_success`()
+CREATE  PROCEDURE `sys_show_message_success`()
 BEGIN
 
 
@@ -2947,7 +2947,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
 
-CREATE DEFINER=`root`@`localhost` PROCEDURE `sys_show_result`(code INT, dataError JSON)
+CREATE  PROCEDURE `sys_show_result`(code INT, dataError JSON)
 BEGIN
 
 
@@ -2975,7 +2975,7 @@ END ;
 /*!50001 SET character_set_results     = utf8 */;
 /*!50001 SET collation_connection      = utf8_general_ci */;
 /*!50001 CREATE ALGORITHM=UNDEFINED */
-/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50013  SQL SECURITY DEFINER */
 /*!50001 VIEW `view_category_item_level` AS select `n`.`id` AS `id`,`n`.`name` AS `name`,`n`.`lft` AS `lft`,`n`.`rgt` AS `rgt`,`n`.`url` AS `url`,`n`.`order_value` AS `order_value`,(count(`p`.`id`) - 1) AS `level_value` from (`catelory` `n` left join `catelory` `p` on((`n`.`lft` between `p`.`lft` and `p`.`rgt`))) group by `n`.`id`,`n`.`name`,`n`.`lft`,`n`.`rgt` */;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
