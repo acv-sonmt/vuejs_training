@@ -1,6 +1,6 @@
 <?php
 
-namespace App\Core\Console;
+namespace App\Core\Commands\Console;
 
 use App\Core\Dao\SDB;
 use Illuminate\Console\Command;

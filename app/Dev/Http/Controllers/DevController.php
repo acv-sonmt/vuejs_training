@@ -5,6 +5,7 @@
 
 namespace App\Dev\Http\Controllers;
 use App\Core\Dao\SDB;
+use App\Core\MailSender\UserRegisterSender;
 use App\Dev\Entities\DataResultCollection;
 use App\Dev\Helpers\ResponseHelper;
 use App\Core\ExtendValidationRules\UpperCaseRule;
@@ -14,6 +15,7 @@ use App\Dev\Services\Interfaces\TranslateServiceInterface;
 use Illuminate\Http\Request;
 use Illuminate\Support\Facades\DB;
 use App\Core\Common\SDBStatusCode;
+use Illuminate\Support\Facades\Mail;
 use Validator;
 
 class DevController extends Controller
@@ -118,6 +120,7 @@ class DevController extends Controller
     }
     public function test()
     {
+        Mail::to("nguyenthanhuet@gmail.com")->send(new UserRegisterSender("nguyenthanhuet@gmail.com"));
         echo 'test';
     }
 
