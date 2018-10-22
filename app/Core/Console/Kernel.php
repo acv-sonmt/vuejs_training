@@ -2,6 +2,7 @@
 
 namespace App\Core\Console;
 
+use App\Core\Commands\Console\GenerateAccessToken;
 use Illuminate\Console\Scheduling\Schedule;
 use Illuminate\Foundation\Console\Kernel as ConsoleKernel;
 use Illuminate\Support\Facades\Storage;
