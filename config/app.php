@@ -192,10 +192,6 @@ return [
         App\Backend\Providers\RouteServiceProvider::class,
         App\Backend\Providers\BackendServiceProvider::class,
         /**
-         * FrontEnd
-         */
-        App\Frontend\Providers\RouteServiceProvider::class,
-        /**
          * ImageResize
          */
         Intervention\Image\ImageServiceProvider::class,

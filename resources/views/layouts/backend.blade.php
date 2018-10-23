@@ -30,7 +30,7 @@
     <!--Modal CSS-->
     <link href="{{ asset('backend/template1/modal/css/modal.css')}}" rel="stylesheet">
     <!--Toast CSS-->
-    <link href="{{ asset('css/toast.css')}}" rel="stylesheet"">
+    <link href="{{ asset('css/toast.css')}}" rel="stylesheet">
     <title>{{ config('app.name', 'Laravel') }}</title>
     @stack("css")
 
