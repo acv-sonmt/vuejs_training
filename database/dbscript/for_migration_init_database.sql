@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: laravel_sample
+-- Host: localhost    Database: laravel_sample_2
 -- ------------------------------------------------------
 -- Server version	5.7.23-log
 
@@ -44,6 +44,173 @@ INSERT INTO `catelory` (`id`, `name`, `lft`, `rgt`, `url`, `order_value`) VALUES
 UNLOCK TABLES;
 
 --
+-- Table structure for table `migrations`
+--
+
+DROP TABLE IF EXISTS `migrations`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `migrations` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `batch` int(11) NOT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `migrations`
+--
+
+LOCK TABLES `migrations` WRITE;
+/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
+INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2016_06_01_000001_create_oauth_auth_codes_table',1),(7,'2016_06_01_000002_create_oauth_access_tokens_table',1),(8,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),(9,'2016_06_01_000004_create_oauth_clients_table',1),(10,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),(11,'2018_08_14_113908_import_sys_init_database',1);
+/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `oauth_access_tokens`
+--
+
+DROP TABLE IF EXISTS `oauth_access_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth_access_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) DEFAULT NULL,
+  `client_id` int(11) NOT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_access_tokens_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oauth_access_tokens`
+--
+
+LOCK TABLES `oauth_access_tokens` WRITE;
+/*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `oauth_auth_codes`
+--
+
+DROP TABLE IF EXISTS `oauth_auth_codes`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth_auth_codes` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `user_id` int(11) NOT NULL,
+  `client_id` int(11) NOT NULL,
+  `scopes` text COLLATE utf8mb4_unicode_ci,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oauth_auth_codes`
+--
+
+LOCK TABLES `oauth_auth_codes` WRITE;
+/*!40000 ALTER TABLE `oauth_auth_codes` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_auth_codes` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `oauth_clients`
+--
+
+DROP TABLE IF EXISTS `oauth_clients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth_clients` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `user_id` int(11) DEFAULT NULL,
+  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `secret` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
+  `personal_access_client` tinyint(1) NOT NULL,
+  `password_client` tinyint(1) NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_clients_user_id_index` (`user_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oauth_clients`
+--
+
+LOCK TABLES `oauth_clients` WRITE;
+/*!40000 ALTER TABLE `oauth_clients` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_clients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `oauth_personal_access_clients`
+--
+
+DROP TABLE IF EXISTS `oauth_personal_access_clients`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth_personal_access_clients` (
+  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
+  `client_id` int(11) NOT NULL,
+  `created_at` timestamp NULL DEFAULT NULL,
+  `updated_at` timestamp NULL DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_personal_access_clients_client_id_index` (`client_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oauth_personal_access_clients`
+--
+
+LOCK TABLES `oauth_personal_access_clients` WRITE;
+/*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_personal_access_clients` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
+-- Table structure for table `oauth_refresh_tokens`
+--
+
+DROP TABLE IF EXISTS `oauth_refresh_tokens`;
+/*!40101 SET @saved_cs_client     = @@character_set_client */;
+/*!40101 SET character_set_client = utf8 */;
+CREATE TABLE `oauth_refresh_tokens` (
+  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
+  `revoked` tinyint(1) NOT NULL,
+  `expires_at` datetime DEFAULT NULL,
+  PRIMARY KEY (`id`),
+  KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`)
+) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
+/*!40101 SET character_set_client = @saved_cs_client */;
+
+--
+-- Dumping data for table `oauth_refresh_tokens`
+--
+
+LOCK TABLES `oauth_refresh_tokens` WRITE;
+/*!40000 ALTER TABLE `oauth_refresh_tokens` DISABLE KEYS */;
+/*!40000 ALTER TABLE `oauth_refresh_tokens` ENABLE KEYS */;
+UNLOCK TABLES;
+
+--
 -- Table structure for table `sys_languages`
 --
 
@@ -84,7 +251,7 @@ CREATE TABLE `sys_modules` (
   `order_value` int(11) DEFAULT NULL,
   `is_skip_acl` tinyint(4) DEFAULT NULL COMMENT 'skips show acl in form, but not affect to action check acl',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,6 +260,7 @@ CREATE TABLE `sys_modules` (
 
 LOCK TABLES `sys_modules` WRITE;
 /*!40000 ALTER TABLE `sys_modules` DISABLE KEYS */;
+INSERT INTO `sys_modules` (`id`, `module_code`, `module_name`, `order_value`, `is_skip_acl`) VALUES (1,'dev','dev',1,1),(2,'laravel','laravel',2,1),(3,'auth','auth',3,0),(4,'acl','acl',4,0),(5,'api','api',5,0),(6,'backend','backend',6,0),(7,'frontend','frontend',7,0);
 /*!40000 ALTER TABLE `sys_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -188,7 +356,7 @@ CREATE TABLE `sys_translate_type` (
   `comment` text CHARACTER SET latin1,
   `order_value` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -197,6 +365,7 @@ CREATE TABLE `sys_translate_type` (
 
 LOCK TABLES `sys_translate_type` WRITE;
 /*!40000 ALTER TABLE `sys_translate_type` DISABLE KEYS */;
+INSERT INTO `sys_translate_type` (`id`, `code`, `comment`, `order_value`) VALUES (1,'admin','',1),(2,'auth','',2),(3,'backend','',3),(4,'card','',4),(5,'common','',5),(6,'masters','',6),(7,'notice','',7),(8,'pagination','',8),(9,'passwords','',9),(10,'profiles','',10),(11,'users','',11),(12,'validation','',12);
 /*!40000 ALTER TABLE `sys_translate_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -332,7 +501,29 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping routines for database 'laravel_sample'
+-- Temporary table structure for view `view_debug_user_role_list_users`
+--
+
+DROP TABLE IF EXISTS `view_debug_user_role_list_users`;
+/*!50001 DROP VIEW IF EXISTS `view_debug_user_role_list_users`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `view_debug_user_role_list_users` AS SELECT
+ 1 AS `user_id`,
+ 1 AS `user_name`,
+ 1 AS `user_email`,
+ 1 AS `user_role_value`,
+ 1 AS `user_active`,
+ 1 AS `role_id`,
+ 1 AS `role_name`,
+ 1 AS `role_value`,
+ 1 AS `role_description`,
+ 1 AS `user_birth_date`,
+ 1 AS `user_gender`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'laravel_sample_2'
 --
 /*!50003 DROP FUNCTION IF EXISTS `get_error_code` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -473,64 +664,6 @@ RETURN REPLACE(
 
 
 ) ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ACL_GET_MODULES_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `ACL_GET_MODULES_LST`()
-BEGIN
-
-
-
-	SELECT * FROM sys_modules ORDER BY order_value;
-
-
-
-
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ACL_GET_ROLES_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `ACL_GET_ROLES_LST`()
-BEGIN
-
-
-
-	SELECT * FROM sys_roles
-
-
-
-    ORDER BY role_value;
-
-
-
-END ;
 
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -685,274 +818,6 @@ END ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ACL_ROLE_UPDATE_ACTIVE_ACT` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
-BEGIN
-
-
-
-	UPDATE sys_role_map_screen
-
-
-
-    SET
-
-
-
-		is_active = isActive
-
-
-
-	WHERE
-
-
-
-		id = roleMapId;
-
-
-
-
-
-
-
-    CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ACL_ROLE_UPDATE_ACTIVE_ALL_ACT` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `ACL_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
-BEGIN
-
-
-
-	UPDATE sys_role_map_screen
-
-
-
-    SET
-
-
-
-		is_active = isActive;
-
-
-
-
-
-
-
-    CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_ADD_TRANSLATE_COMBO_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8mb4 */ ;
-/*!50003 SET character_set_results = utf8mb4 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_ADD_TRANSLATE_COMBO_LST`()
-BEGIN
-
-
-
-
-
-
-
-	SELECT
-
-
-
-		id
-
-
-
-	,	code
-
-
-
-    ,	comment
-
-
-
-    FROM sys_translate_type
-
-
-
-    ORDER BY order_value;
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_BACKUP_TRANSLATE_ACT` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_BACKUP_TRANSLATE_ACT`()
-BEGIN
-
-
-
-
-
-
-
-    TRUNCATE TABLE sys_translate_backup;
-
-
-
-	INSERT INTO sys_translate_backup(
-
-
-
-		id
-
-
-
-	,	lang_code
-
-
-
-    ,	translate_type
-
-
-
-    ,	code
-
-
-
-    ,	text
-
-
-
-    ,	input_type
-
-
-
-    ,	created_At
-
-
-
-    ,	updated_at
-
-
-
-    ,	is_deleted
-
-
-
-
-
-
-
-    )
-
-
-
-    SELECT
-
-
-
-    	id
-
-
-
-	,	lang_code
-
-
-
-    ,	translate_type
-
-
-
-    ,	code
-
-
-
-    ,	text
-
-
-
-    ,	input_type
-
-
-
-    ,	created_At
-
-
-
-    ,	updated_at
-
-
-
-    ,	is_deleted
-
-
-
-    FROM sys_translation;
-
-
-
-
-
-
-
-    CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `DEBUG_CATELORY_ADD_CHILD_IN_LEFT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -961,7 +826,7 @@ END ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 
 CREATE  PROCEDURE `DEBUG_CATELORY_ADD_CHILD_IN_LEFT`(parentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
@@ -1060,7 +925,7 @@ BEGIN
 
 
 
-    CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code","newid":',newId,'}'));
+    CALL sys_show_result(1, CONCAT('{"message_code":"success_code","newid":',newId,'}'));
 
 
 
@@ -1082,7 +947,7 @@ END ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 
 CREATE  PROCEDURE `DEBUG_CATELORY_ADD_SIBLING`(currentNodeId INT, newNodeName VARCHAR(100),newUrl VARCHAR(100))
 BEGIN
@@ -1169,7 +1034,7 @@ BEGIN
 
 
 
-    CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code","newid":',newId,'}'));
+    CALL sys_show_result(1, CONCAT('{"message_code":"success_code","newid":',newId,'}'));
 
 
 
@@ -1268,7 +1133,7 @@ END ;
 /*!50003 SET character_set_results = utf8 */ ;
 /*!50003 SET collation_connection  = utf8_general_ci */ ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
+/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_AUTO_CREATE_USER,NO_ENGINE_SUBSTITUTION' */ ;
 
 CREATE  PROCEDURE `DEBUG_CATELORY_UPDATE`(nodeId INT, pName VARCHAR(100),p_url VARCHAR(100) )
 BEGIN
@@ -1279,7 +1144,7 @@ BEGIN
 
 
 
-    CALL sys_show_result(get_success_code(), CONCAT('{"message_code":"success_code"}'));
+    CALL sys_show_result(1, CONCAT('{"message_code":"success_code"}'));
 
 
 
@@ -1441,76 +1306,6 @@ END ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_LANGUAGE_CODE_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
-
-CREATE  PROCEDURE `DEBUG_GET_LANGUAGE_CODE_LST`()
-BEGIN
-
-
-
-	SELECT
-
-
-
-		id,
-
-
-
-        code,
-
-
-
-        name
-
-
-
-	FROM sys_languages;
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_MODULES_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_GET_MODULES_LST`()
-BEGIN
-
-
-
-	SELECT * FROM sys_modules ORDER BY order_value;
-
-
-
-
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_PARAM_OF_SPS_LST` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -1551,35 +1346,6 @@ BEGIN
 
 
 
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_ROLES_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
-
-CREATE  PROCEDURE `DEBUG_GET_ROLES_LST`()
-BEGIN
-
-
-
-	SELECT * FROM sys_roles
-
-
-
-    ORDER BY role_value;
 
 
 
@@ -1814,136 +1580,6 @@ BEGIN
 
 
 				V.lang_code;
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_TRANSLATION_TYPE_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_GET_TRANSLATION_TYPE_LST`()
-BEGIN
-
-
-
-	SELECT id,code,comment FROM sys_translate_type
-
-
-
-    ORDER BY code;
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_VALIDATION_RULES_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_GET_VALIDATION_RULES_LST`()
-BEGIN
-
-
-
-	SELECT
-
-
-
-		V.id
-
-
-
-	,	V.lang_code
-
-
-
-    ,	V.code
-
-
-
-    ,	VI.type_name
-
-
-
-    ,	V.text
-
-
-
-	FROM sys_translation AS V
-
-
-
-    LEFT JOIN sys_validation_input_type AS VI ON
-
-
-
-		V.input_type = VI.id
-
-
-
-	LEFT JOIN sys_translate_type TT ON
-
-
-
-		V.translate_type= TT.id
-
-
-
-	WHERE
-
-
-
-			V.is_deleted IS NULL
-
-
-
-		OR  V.is_deleted<>1
-
-
-
-		AND TT.code= 'validation'
-
-
-
-	ORDER BY
-
-
-
-			V.lang_code
-
-
-
-		,	V.code
-
-
-
-        ,	VI.type_name;
-
-
-
-
 
 
 
@@ -2626,242 +2262,6 @@ END ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_ROLE_UPDATE_ACTIVE_ACT` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ACT`(roleMapId INT,isActive INT)
-BEGIN
-
-
-
-	UPDATE sys_role_map_screen
-
-
-
-    SET
-
-
-
-		is_active = isActive
-
-
-
-	WHERE
-
-
-
-		id = roleMapId;
-
-
-
-
-
-
-
-    CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT`(isActive INT)
-BEGIN
-
-
-
-	UPDATE sys_role_map_screen
-
-
-
-    SET
-
-
-
-		is_active = isActive;
-
-
-
-
-
-
-
-    CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_USER_ROLE_GET_LIST_USERS` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_USER_ROLE_GET_LIST_USERS`()
-BEGIN
-
-
-
-
-
-
-
-	SELECT
-
-
-
-	us.id AS user_id
-
-
-
-	,	us.name AS user_name
-
-
-
-    ,	us.email AS user_email
-
-
-
-    ,	us.role_value AS user_role_value
-
-
-
-    ,	us.is_active AS user_active
-
-
-
-	,	sr.id AS role_id
-
-
-
-	,	sr.name AS role_name
-
-
-
-    ,	sr.role_value AS role_value
-
-
-
-    ,	sr.description AS role_description
-
-
-
-    ,   ud.birth_date AS user_birth_date
-
-
-
-    ,   ud.gender AS user_gender
-
-
-
-
-
-
-
-    FROM users AS us
-
-
-
-    LEFT JOIN sys_roles AS sr ON
-
-
-
-			us.role_value = sr.role_value
-
-
-
-	LEFT JOIN users_detail AS ud ON
-
-
-
-			us.id = ud.user_id;
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_USER_ROLE_UPDATE_ROLES` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_USER_ROLE_UPDATE_ROLES`( current_id INT,current_role_value INT)
-BEGIN
-
-
-
-	UPDATE users
-
-
-
-    SET
-
-
-
-		role_value = current_role_value
-
-
-
-	WHERE
-
-
-
-		id = current_id;
-
-
-
-
-
-
-
-    CALL sys_show_result(get_success_code(), '{"message_code":"success_code"}');
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `sys_show_message_error` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2980,6 +2380,24 @@ END ;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_debug_user_role_list_users`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_debug_user_role_list_users`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013  SQL SECURITY DEFINER */
+/*!50001 VIEW `view_debug_user_role_list_users` AS select `us`.`id` AS `user_id`,`us`.`name` AS `user_name`,`us`.`email` AS `user_email`,`us`.`role_value` AS `user_role_value`,`us`.`is_active` AS `user_active`,`sr`.`id` AS `role_id`,`sr`.`name` AS `role_name`,`sr`.`role_value` AS `role_value`,`sr`.`description` AS `role_description`,`ud`.`birth_date` AS `user_birth_date`,`ud`.`gender` AS `user_gender` from ((`users` `us` left join `sys_roles` `sr` on((`us`.`role_value` = `sr`.`role_value`))) left join `users_detail` `ud` on((`us`.`id` = `ud`.`user_id`))) */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2990,4 +2408,4 @@ END ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-10  9:58:39
+-- Dump completed on 2018-10-26 11:58:15
