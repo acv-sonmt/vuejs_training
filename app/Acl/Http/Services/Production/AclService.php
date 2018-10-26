@@ -8,8 +8,9 @@
 
 namespace App\Acl\Services\Production;
 
+use App\Core\Common\SDBStatusCode;
 use App\Core\Dao\SDB;
-use App\Core\Common;
+use App\Core\Entities\DataResultCollection;
 use Illuminate\Support\Facades\Config;
 use Illuminate\Support\Facades\Route;
 use App\Acl\Services\Interfaces\AclServiceInterface;
@@ -29,7 +30,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function getRoleMapArray()
     {
         $resultArr = [];
-        $roleInfo = DEVDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
+        $roleInfo = SDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
         if (!empty($roleInfo)) {
             $roles = $roleInfo[0];
             $roleMap = $roleInfo[1];
@@ -111,28 +112,37 @@ class AclService extends BaseService implements AclServiceInterface
 
     public function updateActiveAcl($roleMapId, $isActive)
     {
-        $result = SDB::execSPsToDataResultCollection("ACL_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
-        if($result->status == SDBStatusCode::OK){
-
-           $this->generationAclFile();
+        $result=  new DataResultCollection();
+        try{
+            SDB::table('sys_role_map_screen')->whereRaw("id=? ",[$roleMapId])->update(array('is_active'=>$isActive));
+            $this->generationAclFile();
+            $result->status = SDBStatusCode::OK;
+        }catch (\Exception $e){
+            $result->status = SDBStatusCode::Excep;
+            $result->message = $e->getMessage();
         }
         return $result;
     }
     public function updateActiveAclAll($isActive)
     {
-        $result = SDB::execSPsToDataResultCollection("ACL_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
-        if($result->status==SDBStatusCode::OK){
+        $result=  new DataResultCollection();
+        try{
+            SDB::table('sys_role_map_screen')->update(array('is_active'=>$isActive));
             $this->generationAclFile();
+            $result->status = SDBStatusCode::OK;
+        }catch (\Exception $e){
+            $result->status = SDBStatusCode::Excep;
+            $result->message = $e->getMessage();
         }
         return $result;
     }
 
     public function getRoleList(){
-        $roleList = SDB::execSPs('ACL_GET_ROLES_LST');
+        $roleList = SDB::table('sys_roles')->select()->get();
         return $roleList;
     }
     public function getModuleList(){
-        $moduleList = SDB::execSPs('ACL_GET_MODULES_LST');
+        $moduleList = SDB::table('sys_modules')->select()->get();
         return $moduleList;
     }
     /**
@@ -168,7 +178,6 @@ class AclService extends BaseService implements AclServiceInterface
     protected function getListModulesFromProjectStruct(){
         $moduleList = [];
         $i = 0;
-        $id = 0;
         $listRouter = Route:: getRoutes()->getRoutes();
         foreach ($listRouter as $route) {
             $action = $route->getAction();

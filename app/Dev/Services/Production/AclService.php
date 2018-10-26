@@ -9,6 +9,7 @@
 namespace App\Dev\Services\Production;
 
 use App\Core\Common\SDBStatusCode;
+use App\Core\Dao\SDB;
 use App\Dev\Dao\DEVDB;
 use App\Core\Common\RoleConst;
 use App\Dev\Entities\DataResultCollection;
@@ -63,20 +64,37 @@ class AclService extends BaseService implements AclServiceInterface
         return true;
     }
     public function getRoleList(){
-        $roleList = DEVDB::execSPs('DEBUG_GET_ROLES_LST');
+        $roleList = SDB::table('sys_roles')->select()->get();
         return $roleList;
     }
     public function getModuleList(){
-        $moduleList = DEVDB::execSPs('DEBUG_GET_MODULES_LST');
+        $moduleList = SDB::table('sys_modules')->select()->get();
         return $moduleList;
     }
     public function updateActiveAcl($roleMapId, $isActive)
     {
-        DEVDB::execSPsToDataResultCollection("DEBUG_ROLE_UPDATE_ACTIVE_ACT", array($roleMapId, $isActive));
+        $result=  new DataResultCollection();
+        try{
+            DEVDB::table('sys_role_map_screen')->whereRaw("id=? ",[$roleMapId])->update(array('is_active'=>$isActive));
+            $result->status = SDBStatusCode::OK;
+        }catch (\Exception $e){
+            $result->status = SDBStatusCode::Excep;
+            $result->message = $e->getMessage();
+        }
+        return $result;
+
     }
     public function updateActiveAclAll($isActive)
     {
-        DEVDB::execSPsToDataResultCollection("DEBUG_ROLE_UPDATE_ACTIVE_ALL_ACT", array($isActive));
+        $result=  new DataResultCollection();
+        try{
+            DEVDB::table('sys_role_map_screen')->update(array('is_active'=>$isActive));
+            $result->status = SDBStatusCode::OK;
+        }catch (\Exception $e){
+            $result->status = SDBStatusCode::Excep;
+            $result->message = $e->getMessage();
+        }
+        return $result;
     }
     /**
      * @return array
@@ -250,11 +268,11 @@ class AclService extends BaseService implements AclServiceInterface
         DEVDB::table('sys_modules')->insert($dataModule);
     }
     public function getListUser(){
-        return DEVDB::execSPs('DEBUG_USER_ROLE_GET_LIST_USERS');
+        return DEVDB::table('view_debug_user_role_list_users')->select()->get();
     }
     public function updateUserRole($current_id, $current_role_value)
     {
-        DEVDB::execSPsToDataResultCollection("DEBUG_USER_ROLE_UPDATE_ROLES", array($current_id, $current_role_value));
+        DEVDB::table('users')->whereRaw('id=?',[$current_id])->update(array('role_value'=>$current_role_value));
     }
 
 }

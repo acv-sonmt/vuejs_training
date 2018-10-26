@@ -21,8 +21,10 @@ class DevService extends BaseService implements DevServiceInterface
 {
     public function getLanguageCodeList():DataResultCollection
     {
-        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
-        return $lang;
+        $result= new DataResultCollection();
+        $result->data = DEVDB::table('sys_languages')->select()->get();
+        $result->status =  SDBStatusCode::OK;
+        return $result;
     }
 
     public function getTranslateList($translateType, $lang):DataResultCollection
@@ -38,7 +40,7 @@ class DevService extends BaseService implements DevServiceInterface
     public function getTranslateMessageArray($translateType = '')
     {
         $resuiltArr = [];
-        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
+        $lang = DEVDB::table('sys_languages')->select()->get();
         if ($lang->status==SDBStatusCode::OK) {
 
             foreach ($lang->data as $item) {

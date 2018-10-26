@@ -84,7 +84,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
     {
         $result =  new DataResultCollection();
         try{
-            $transTypeList = DEVDB::execSPsToDataResultCollection("DEBUG_GET_TRANSLATION_TYPE_LST");
+            $transTypeList = DEVDB::table('sys_translate_type')->select(['id','code','comment'])->get();
             if ($transTypeList->status == SDBStatusCode::OK) {
                 foreach ($transTypeList->data as $item) {
                     $this->generationTranslateFile($item->code, $item->code);
@@ -101,7 +101,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
 
     public function getNewTransComboList()
     {
-        return DEVDB::execSPs('DEBUG_ADD_TRANSLATE_COMBO_LST');
+        return DEVDB::table('sys_translate_type')->select(['id','code','comment'])->get();
     }
 
     /**
@@ -115,7 +115,6 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
             $dir = base_path() . '/resources/lang';
             $langList = array_diff(scandir($dir), array('..', '.'));
             $id = 0;
-            DEVDB::execSPsToDataResultCollection('DEBUG_BACKUP_TRANSLATE_ACT');
             DEVDB::table('sys_translation')->truncate();
             if (!empty($langList)) {
                 foreach ($langList as $lang) {
@@ -346,8 +345,9 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
     public function getLanguageCodeList(): DataResultCollection
     {
         $result =  new DataResultCollection();
-        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
-        return $lang;
+        $result->data = DEVDB::table('sys_languages')->select()->get();
+        $result->status = SDBStatusCode::OK;
+        return $result;
     }
 
     public function getTranslateList($translateType, $langCode): DataResultCollection
@@ -355,10 +355,10 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         $result = new DataResultCollection();
         $resuiltArr = [];
         $inforArr = [];
-        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
-        if ($lang->status == SDBStatusCode::OK) {
+        $lang = DEVDB::table('sys_languages')->select()->get();
+        if (!empty($lang)) {
 
-            foreach ($lang->data as $item) {
+            foreach ($lang as $item) {
                 $resuiltArr[$item->code] = array();
             }
             $rules = DEVDB::execSPsToDataResultCollection('DEBUG_GET_TRANSLATION_DATA_LST', array($translateType, $langCode));
@@ -402,10 +402,10 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
     public function getTranslateMessageArray($translateType = '')
     {
         $resuiltArr = [];
-        $lang = DEVDB::execSPsToDataResultCollection('DEBUG_GET_LANGUAGE_CODE_LST');
-        if ($lang->status == SDBStatusCode::OK) {
+        $lang = DEVDB::table('sys_languages')->select()->get();
+        if (!empty($lang)) {
 
-            foreach ($lang->data as $item) {
+            foreach ($lang as $item) {
                 $resuiltArr[$item->code] = array();
             }
             $transData = DEVDB::execSPsToDataResultCollection('DEBUG_GET_TRANSLATION_DATA_LST', array($translateType, ''));
