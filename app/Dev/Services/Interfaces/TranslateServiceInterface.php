@@ -12,7 +12,7 @@ interface TranslateServiceInterface
 {
     public function getLanguageCodeList():DataResultCollection;
     public function getTranslateMessageArray( $translateType);
-    public function getTranslateList($translateType,$lang):DataResultCollection;
+    public function getTranslateList():DataResultCollection;
     public function generationTranslateFileAndScript():DataResultCollection;
     public function generationTranslateFile( $translateType, $fileName);
     public function generationTranslateScript( $fileName);

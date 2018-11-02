@@ -28,7 +28,7 @@ class TranslationController
     {
         //form CRUD translate text
         $langListFromDB = $this->service->getLanguageCodeList();
-        $dataTransFromDB = $this->service->getTranslateList('', '');
+        $dataTransFromDB = $this->service->getTranslateList();
         $langList = ($langListFromDB->status == SDBStatusCode::OK)?$langListFromDB->data:array();
         $dataTransFromDBRef = array();
         foreach ($dataTransFromDB->data['value_arr'] as $key=> $dataTransFromDBItem){//number of languages

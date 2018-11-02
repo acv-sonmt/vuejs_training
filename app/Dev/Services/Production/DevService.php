@@ -27,11 +27,6 @@ class DevService extends BaseService implements DevServiceInterface
         return $result;
     }
 
-    public function getTranslateList($translateType, $lang):DataResultCollection
-    {
-        return DEVDB::execSPsToDataResultCollection('DEBUG_GET_TRANSLATION_DATA_LST', array($translateType, $lang));
-    }
-
     /**
      * @param $translateType
      * @return array

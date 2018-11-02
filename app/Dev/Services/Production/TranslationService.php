@@ -85,8 +85,8 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         $result =  new DataResultCollection();
         try{
             $transTypeList = DEVDB::table('sys_translate_type')->select(['id','code','comment'])->get();
-            if ($transTypeList->status == SDBStatusCode::OK) {
-                foreach ($transTypeList->data as $item) {
+            if (!empty($transTypeList)) {
+                foreach ($transTypeList as $item) {
                     $this->generationTranslateFile($item->code, $item->code);
                 }
             }
@@ -350,7 +350,7 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
         return $result;
     }
 
-    public function getTranslateList($translateType, $langCode): DataResultCollection
+    public function getTranslateList(): DataResultCollection
     {
         $result = new DataResultCollection();
         $resuiltArr = [];
@@ -361,12 +361,11 @@ class TranslationService extends BaseService implements TranslateServiceInterfac
             foreach ($lang as $item) {
                 $resuiltArr[$item->code] = array();
             }
-            $rules = DEVDB::execSPsToDataResultCollection('DEBUG_GET_TRANSLATION_DATA_LST', array($translateType, $langCode));
-
+            $dataTrans = DEVDB::table('view_get_translation_data')->select()->get();
             if (!empty($resuiltArr)) {
                 foreach ($resuiltArr as $itemKey => $itemValue) {
-                    if ($rules->status == SDBStatusCode::OK) {
-                        foreach ($rules->data as $ruleItem) {
+                    if (!empty($dataTrans)) {
+                        foreach ($dataTrans as $ruleItem) {
                             if ($itemKey == $ruleItem->lang_code) {
                                 if (CommonHelper::isJSON($ruleItem->text)) {
                                     $value = json_decode($ruleItem->text, true);

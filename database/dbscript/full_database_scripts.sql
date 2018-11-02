@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: laravel_sample_2
+-- Host: localhost    Database: laravel_sample_3
 -- ------------------------------------------------------
 -- Server version	5.7.23-log
 
@@ -41,173 +41,6 @@ LOCK TABLES `catelory` WRITE;
 /*!40000 ALTER TABLE `catelory` DISABLE KEYS */;
 INSERT INTO `catelory` (`id`, `name`, `lft`, `rgt`, `url`, `order_value`) VALUES (1,'Root',1,16,'https://root.com',NULL);
 /*!40000 ALTER TABLE `catelory` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `migrations`
---
-
-DROP TABLE IF EXISTS `migrations`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `migrations` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `migration` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `batch` int(11) NOT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=12 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `migrations`
---
-
-LOCK TABLES `migrations` WRITE;
-/*!40000 ALTER TABLE `migrations` DISABLE KEYS */;
-INSERT INTO `migrations` (`id`, `migration`, `batch`) VALUES (6,'2016_06_01_000001_create_oauth_auth_codes_table',1),(7,'2016_06_01_000002_create_oauth_access_tokens_table',1),(8,'2016_06_01_000003_create_oauth_refresh_tokens_table',1),(9,'2016_06_01_000004_create_oauth_clients_table',1),(10,'2016_06_01_000005_create_oauth_personal_access_clients_table',1),(11,'2018_08_14_113908_import_sys_init_database',1);
-/*!40000 ALTER TABLE `migrations` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `oauth_access_tokens`
---
-
-DROP TABLE IF EXISTS `oauth_access_tokens`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_access_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(11) DEFAULT NULL,
-  `client_id` int(11) NOT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci DEFAULT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
-  `revoked` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  `expires_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `oauth_access_tokens_user_id_index` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `oauth_access_tokens`
---
-
-LOCK TABLES `oauth_access_tokens` WRITE;
-/*!40000 ALTER TABLE `oauth_access_tokens` DISABLE KEYS */;
-/*!40000 ALTER TABLE `oauth_access_tokens` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `oauth_auth_codes`
---
-
-DROP TABLE IF EXISTS `oauth_auth_codes`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_auth_codes` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `user_id` int(11) NOT NULL,
-  `client_id` int(11) NOT NULL,
-  `scopes` text COLLATE utf8mb4_unicode_ci,
-  `revoked` tinyint(1) NOT NULL,
-  `expires_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `oauth_auth_codes`
---
-
-LOCK TABLES `oauth_auth_codes` WRITE;
-/*!40000 ALTER TABLE `oauth_auth_codes` DISABLE KEYS */;
-/*!40000 ALTER TABLE `oauth_auth_codes` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `oauth_clients`
---
-
-DROP TABLE IF EXISTS `oauth_clients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_clients` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `user_id` int(11) DEFAULT NULL,
-  `name` varchar(255) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `secret` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `redirect` text COLLATE utf8mb4_unicode_ci NOT NULL,
-  `personal_access_client` tinyint(1) NOT NULL,
-  `password_client` tinyint(1) NOT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `oauth_clients_user_id_index` (`user_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `oauth_clients`
---
-
-LOCK TABLES `oauth_clients` WRITE;
-/*!40000 ALTER TABLE `oauth_clients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `oauth_clients` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `oauth_personal_access_clients`
---
-
-DROP TABLE IF EXISTS `oauth_personal_access_clients`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_personal_access_clients` (
-  `id` int(10) unsigned NOT NULL AUTO_INCREMENT,
-  `client_id` int(11) NOT NULL,
-  `created_at` timestamp NULL DEFAULT NULL,
-  `updated_at` timestamp NULL DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `oauth_personal_access_clients_client_id_index` (`client_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `oauth_personal_access_clients`
---
-
-LOCK TABLES `oauth_personal_access_clients` WRITE;
-/*!40000 ALTER TABLE `oauth_personal_access_clients` DISABLE KEYS */;
-/*!40000 ALTER TABLE `oauth_personal_access_clients` ENABLE KEYS */;
-UNLOCK TABLES;
-
---
--- Table structure for table `oauth_refresh_tokens`
---
-
-DROP TABLE IF EXISTS `oauth_refresh_tokens`;
-/*!40101 SET @saved_cs_client     = @@character_set_client */;
-/*!40101 SET character_set_client = utf8 */;
-CREATE TABLE `oauth_refresh_tokens` (
-  `id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `access_token_id` varchar(100) COLLATE utf8mb4_unicode_ci NOT NULL,
-  `revoked` tinyint(1) NOT NULL,
-  `expires_at` datetime DEFAULT NULL,
-  PRIMARY KEY (`id`),
-  KEY `oauth_refresh_tokens_access_token_id_index` (`access_token_id`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_unicode_ci;
-/*!40101 SET character_set_client = @saved_cs_client */;
-
---
--- Dumping data for table `oauth_refresh_tokens`
---
-
-LOCK TABLES `oauth_refresh_tokens` WRITE;
-/*!40000 ALTER TABLE `oauth_refresh_tokens` DISABLE KEYS */;
-/*!40000 ALTER TABLE `oauth_refresh_tokens` ENABLE KEYS */;
 UNLOCK TABLES;
 
 --
@@ -523,7 +356,22 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping routines for database 'laravel_sample_2'
+-- Temporary table structure for view `view_get_translation_data`
+--
+
+DROP TABLE IF EXISTS `view_get_translation_data`;
+/*!50001 DROP VIEW IF EXISTS `view_get_translation_data`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `view_get_translation_data` AS SELECT
+ 1 AS `id`,
+ 1 AS `lang_code`,
+ 1 AS `text`,
+ 1 AS `translate_type_code`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'laravel_sample_3'
 --
 /*!50003 DROP FUNCTION IF EXISTS `get_error_code` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -1504,91 +1352,6 @@ DELIMITER ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
 /*!50003 SET character_set_results = @saved_cs_results */ ;
 /*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_TRANSLATION_DATA_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-DELIMITER ;;
-CREATE DEFINER=`root`@`localhost` PROCEDURE `DEBUG_GET_TRANSLATION_DATA_LST`( p_translate_type_code VARCHAR(50),p_lang VARCHAR(50) )
-BEGIN
-
-
-
-	SELECT
-
-
-
-			V.id
-
-
-
-		,	V.lang_code
-
-
-
-
-
-
-
-		,	V.text
-
-
-
-        ,	TT.code AS translate_type_code
-
-
-
-		FROM sys_translation AS V
-
-
-
-		LEFT JOIN sys_translate_type TT ON
-
-
-
-			V.translate_type= TT.code
-
-
-
-		WHERE
-
-
-
-				(V.is_deleted IS NULL OR  V.is_deleted<>1)
-
-
-
-			AND (	p_translate_type_code IS NULL OR p_translate_type_code = '' OR TT.code= p_translate_type_code)
-
-
-
-			AND (TT.code IS NOT NULL)
-
-
-
-            AND (	p_lang IS NULL OR p_lang = '' OR V.lang_code= p_lang)
-
-
-
-        ORDER BY
-
-
-
-				V.lang_code;
-
-
-
-END ;;
-DELIMITER ;
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
 /*!50003 DROP PROCEDURE IF EXISTS `DEBUG_IMPORT_AND_MERGER_ROLE_ACT` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
 /*!50003 SET @saved_cs_results     = @@character_set_results */ ;
@@ -2398,6 +2161,24 @@ DELIMITER ;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_get_translation_data`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_get_translation_data`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013 DEFINER=`root`@`localhost` SQL SECURITY DEFINER */
+/*!50001 VIEW `view_get_translation_data` AS select `v`.`id` AS `id`,`v`.`lang_code` AS `lang_code`,`v`.`text` AS `text`,`tt`.`code` AS `translate_type_code` from (`sys_translation` `v` left join `sys_translate_type` `tt` on((`v`.`translate_type` = `tt`.`code`))) where ((isnull(`v`.`is_deleted`) or (`v`.`is_deleted` <> 1)) and (`tt`.`code` is not null)) order by `v`.`lang_code` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2408,4 +2189,4 @@ DELIMITER ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-10-26 11:58:15
+-- Dump completed on 2018-11-02 11:49:40

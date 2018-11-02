@@ -108,7 +108,7 @@ class DevController extends Controller
             $result = $this->translateService->generationTranslateFileAndScript();
         }catch (\Exception $e){
             $result->status = SDBStatusCode::Excep;
-            $result->message= $e->getMessage();
+            $result->message="controller:". $e->getMessage();
             SDB::rollBack();
         }
         return ResponseHelper::JsonDataResult($result);
