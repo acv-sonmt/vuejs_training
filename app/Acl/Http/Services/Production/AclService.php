@@ -22,7 +22,7 @@ class AclService extends BaseService implements AclServiceInterface
     {
         $result =  array();
         $roleList = SDB::table('sys_roles')
-            ->select(
+            ->selectRaw(
                 'id AS role_id
                     ,	name AS role_name
                     ,	role_value AS role_value
@@ -41,7 +41,7 @@ class AclService extends BaseService implements AclServiceInterface
     public function getRoleMapArray()
     {
         $resultArr = [];
-        $roleInfo = SDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
+        $roleInfo = $this->getRoleInfoFromDB();
         if (!empty($roleInfo)) {
             $roles = $roleInfo[0];
             $roleMap = $roleInfo[1];
