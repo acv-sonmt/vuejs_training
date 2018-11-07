@@ -1,6 +1,6 @@
 -- MySQL dump 10.13  Distrib 5.7.23, for Win64 (x86_64)
 --
--- Host: localhost    Database: laravel_sample_3
+-- Host: localhost    Database: laravel_sample_2
 -- ------------------------------------------------------
 -- Server version	5.7.23-log
 
@@ -53,7 +53,7 @@ DROP TABLE IF EXISTS `sys_languages`;
 CREATE TABLE `sys_languages` (
   `id` int(11) NOT NULL,
   `code` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `name` varchar(45) CHARACTER SET latin1 DEFAULT NULL,
+  `name` varchar(45) CHARACTER SET utf8 DEFAULT NULL,
   `order` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`),
   UNIQUE KEY `code_UNIQUE` (`code`)
@@ -66,7 +66,6 @@ CREATE TABLE `sys_languages` (
 
 LOCK TABLES `sys_languages` WRITE;
 /*!40000 ALTER TABLE `sys_languages` DISABLE KEYS */;
-INSERT INTO `sys_languages` (`id`, `code`, `name`, `order`) VALUES (1,'jp','Japanese',NULL),(2,'en','English',NULL);
 /*!40000 ALTER TABLE `sys_languages` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -84,7 +83,7 @@ CREATE TABLE `sys_modules` (
   `order_value` int(11) DEFAULT NULL,
   `is_skip_acl` tinyint(4) DEFAULT NULL COMMENT 'skips show acl in form, but not affect to action check acl',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=8 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -93,7 +92,6 @@ CREATE TABLE `sys_modules` (
 
 LOCK TABLES `sys_modules` WRITE;
 /*!40000 ALTER TABLE `sys_modules` DISABLE KEYS */;
-INSERT INTO `sys_modules` (`id`, `module_code`, `module_name`, `order_value`, `is_skip_acl`) VALUES (1,'dev','dev',1,1),(2,'laravel','laravel',2,1),(3,'auth','auth',3,0),(4,'acl','acl',4,0),(5,'api','api',5,0),(6,'backend','backend',6,0),(7,'frontend','frontend',7,0);
 /*!40000 ALTER TABLE `sys_modules` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -110,7 +108,7 @@ CREATE TABLE `sys_role_map_screen` (
   `screen_id` int(11) DEFAULT NULL,
   `is_active` tinyint(4) NOT NULL DEFAULT '0',
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -131,12 +129,12 @@ DROP TABLE IF EXISTS `sys_roles`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_roles` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `name` varchar(45) DEFAULT NULL,
+  `name` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
   `role_value` int(11) DEFAULT NULL,
-  `description` text,
+  `description` text COLLATE utf8_unicode_ci,
   PRIMARY KEY (`id`),
   UNIQUE KEY `value_UNIQUE` (`role_value`)
-) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB AUTO_INCREMENT=6 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -158,13 +156,13 @@ DROP TABLE IF EXISTS `sys_screens`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_screens` (
   `id` int(11) NOT NULL,
-  `module` varchar(45) DEFAULT NULL,
-  `controller` varchar(45) DEFAULT NULL,
-  `action` varchar(45) DEFAULT NULL,
-  `screen_code` varchar(100) DEFAULT NULL,
-  `description` varchar(100) DEFAULT NULL,
+  `module` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `controller` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `action` varchar(45) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `screen_code` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
+  `description` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB DEFAULT CHARSET=latin1;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -186,10 +184,10 @@ DROP TABLE IF EXISTS `sys_translate_type`;
 CREATE TABLE `sys_translate_type` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
   `code` varchar(45) COLLATE utf8_unicode_ci NOT NULL,
-  `comment` text CHARACTER SET latin1,
+  `comment` text CHARACTER SET utf8,
   `order_value` int(11) DEFAULT NULL,
   PRIMARY KEY (`id`)
-) ENGINE=InnoDB AUTO_INCREMENT=13 DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
+) ENGINE=InnoDB DEFAULT CHARSET=utf8 COLLATE=utf8_unicode_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -198,7 +196,6 @@ CREATE TABLE `sys_translate_type` (
 
 LOCK TABLES `sys_translate_type` WRITE;
 /*!40000 ALTER TABLE `sys_translate_type` DISABLE KEYS */;
-INSERT INTO `sys_translate_type` (`id`, `code`, `comment`, `order_value`) VALUES (1,'admin','',1),(2,'auth','',2),(3,'backend','',3),(4,'card','',4),(5,'common','',5),(6,'masters','',6),(7,'notice','',7),(8,'pagination','',8),(9,'passwords','',9),(10,'profiles','',10),(11,'users','',11),(12,'validation','',12);
 /*!40000 ALTER TABLE `sys_translate_type` ENABLE KEYS */;
 UNLOCK TABLES;
 
@@ -211,7 +208,7 @@ DROP TABLE IF EXISTS `sys_translation`;
 /*!40101 SET character_set_client = utf8 */;
 CREATE TABLE `sys_translation` (
   `id` int(11) NOT NULL AUTO_INCREMENT,
-  `lang_code` varchar(20) CHARACTER SET latin1 NOT NULL DEFAULT 'en',
+  `lang_code` varchar(20) CHARACTER SET utf8 NOT NULL DEFAULT 'en',
   `translate_type` varchar(100) COLLATE utf8_unicode_ci DEFAULT NULL,
   `text` longtext COLLATE utf8_unicode_ci,
   `created_at` datetime DEFAULT NULL,
@@ -371,7 +368,28 @@ SET character_set_client = utf8;
 SET character_set_client = @saved_cs_client;
 
 --
--- Dumping routines for database 'laravel_sample_3'
+-- Temporary table structure for view `view_roles_map_action`
+--
+
+DROP TABLE IF EXISTS `view_roles_map_action`;
+/*!50001 DROP VIEW IF EXISTS `view_roles_map_action`*/;
+SET @saved_cs_client     = @@character_set_client;
+SET character_set_client = utf8;
+/*!50001 CREATE VIEW `view_roles_map_action` AS SELECT
+ 1 AS `role_id`,
+ 1 AS `role_map_id`,
+ 1 AS `role_name`,
+ 1 AS `role_value`,
+ 1 AS `role_description`,
+ 1 AS `module`,
+ 1 AS `controller`,
+ 1 AS `action`,
+ 1 AS `is_active`,
+ 1 AS `screen_code`*/;
+SET character_set_client = @saved_cs_client;
+
+--
+-- Dumping routines for database 'laravel_sample_2'
 --
 /*!50003 DROP FUNCTION IF EXISTS `get_error_code` */;
 /*!50003 SET @saved_cs_client      = @@character_set_client */ ;
@@ -408,7 +426,7 @@ END ;
 /*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
 /*!50003 SET sql_mode              = 'NO_AUTO_VALUE_ON_ZERO' */ ;
 
-CREATE  FUNCTION `get_error_message`(code INT, message_code VARCHAR(255)) RETURNS varchar(255) CHARSET latin1
+CREATE  FUNCTION `get_error_message`(code INT, message_code VARCHAR(255)) RETURNS varchar(255) CHARSET utf8
 BEGIN
 
 
@@ -512,155 +530,6 @@ RETURN REPLACE(
 
 
 ) ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `ACL_GET_ROLES_MAP_ACTION_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `ACL_GET_ROLES_MAP_ACTION_LST`()
-BEGIN
-
-
-
-
-
-
-
-	SELECT
-
-
-
-		SR.id AS role_id
-
-
-
-	,	SR.name AS role_name
-
-
-
-    ,	SR.role_value AS role_value
-
-
-
-    ,	SR.description AS role_description
-
-
-
-    FROM sys_roles AS SR
-
-
-
-    ORDER BY SR.role_value;
-
-
-
-
-
-
-
-	SELECT
-
-
-
-		SR.id AS role_id
-
-
-
-	,	RMS.id AS role_map_id
-
-
-
-	,	SR.name AS role_name
-
-
-
-    ,	SR.role_value AS role_value
-
-
-
-    ,	SR.description AS role_description
-
-
-
-    ,	SS.module
-
-
-
-    ,	SS.controller
-
-
-
-    ,	SS.action
-
-
-
-    ,	RMS.is_active AS is_active
-
-
-
-    ,	SS.screen_code AS screen_code
-
-
-
-    FROM sys_roles AS SR
-
-
-
-    LEFT JOIN sys_role_map_screen AS RMS ON
-
-
-
-			SR.role_value = RMS.role_value
-
-
-
-	LEFT JOIN sys_screens AS SS ON
-
-
-
-			RMS.screen_id = SS.id
-
-
-
-	INNER JOIN sys_modules AS DM ON
-
-
-
-			DM.module_code = SS.module
-
-
-
-		AND DM.is_skip_acl <> 1
-
-
-
-	ORDER BY
-
-
-
-		SR.role_value
-
-
-
-	,	RMS.screen_id;
-
-
-
-
-
-
-
-END ;
 
 /*!50003 SET sql_mode              = @saved_sql_mode */ ;
 /*!50003 SET character_set_client  = @saved_cs_client */ ;
@@ -1190,155 +1059,6 @@ BEGIN
 
 
     ;
-
-
-
-
-
-
-
-END ;
-
-/*!50003 SET sql_mode              = @saved_sql_mode */ ;
-/*!50003 SET character_set_client  = @saved_cs_client */ ;
-/*!50003 SET character_set_results = @saved_cs_results */ ;
-/*!50003 SET collation_connection  = @saved_col_connection */ ;
-/*!50003 DROP PROCEDURE IF EXISTS `DEBUG_GET_ROLES_MAP_ACTION_LST` */;
-/*!50003 SET @saved_cs_client      = @@character_set_client */ ;
-/*!50003 SET @saved_cs_results     = @@character_set_results */ ;
-/*!50003 SET @saved_col_connection = @@collation_connection */ ;
-/*!50003 SET character_set_client  = utf8 */ ;
-/*!50003 SET character_set_results = utf8 */ ;
-/*!50003 SET collation_connection  = utf8_general_ci */ ;
-/*!50003 SET @saved_sql_mode       = @@sql_mode */ ;
-/*!50003 SET sql_mode              = 'STRICT_TRANS_TABLES,NO_ENGINE_SUBSTITUTION' */ ;
-
-CREATE  PROCEDURE `DEBUG_GET_ROLES_MAP_ACTION_LST`()
-BEGIN
-
-
-
-
-
-
-
-	SELECT
-
-
-
-		SR.id AS role_id
-
-
-
-	,	SR.name AS role_name
-
-
-
-    ,	SR.role_value AS role_value
-
-
-
-    ,	SR.description AS role_description
-
-
-
-    FROM sys_roles AS SR
-
-
-
-    ORDER BY SR.role_value;
-
-
-
-
-
-
-
-	SELECT
-
-
-
-		SR.id AS role_id
-
-
-
-	,	RMS.id AS role_map_id
-
-
-
-	,	SR.name AS role_name
-
-
-
-    ,	SR.role_value AS role_value
-
-
-
-    ,	SR.description AS role_description
-
-
-
-    ,	SS.module
-
-
-
-    ,	SS.controller
-
-
-
-    ,	SS.action
-
-
-
-    ,	RMS.is_active AS is_active
-
-
-
-    ,	SS.screen_code AS screen_code
-
-
-
-    FROM sys_roles AS SR
-
-
-
-    LEFT JOIN sys_role_map_screen AS RMS ON
-
-
-
-			SR.role_value = RMS.role_value
-
-
-
-	LEFT JOIN sys_screens AS SS ON
-
-
-
-			RMS.screen_id = SS.id
-
-
-
-	INNER JOIN sys_modules AS DM ON
-
-
-
-			DM.module_code = SS.module
-
-
-
-		AND DM.is_skip_acl <> 1
-
-
-
-	ORDER BY
-
-
-
-		SR.role_value
-
-
-
-	,	RMS.screen_id;
 
 
 
@@ -2179,6 +1899,24 @@ END ;
 /*!50001 SET character_set_client      = @saved_cs_client */;
 /*!50001 SET character_set_results     = @saved_cs_results */;
 /*!50001 SET collation_connection      = @saved_col_connection */;
+
+--
+-- Final view structure for view `view_roles_map_action`
+--
+
+/*!50001 DROP VIEW IF EXISTS `view_roles_map_action`*/;
+/*!50001 SET @saved_cs_client          = @@character_set_client */;
+/*!50001 SET @saved_cs_results         = @@character_set_results */;
+/*!50001 SET @saved_col_connection     = @@collation_connection */;
+/*!50001 SET character_set_client      = utf8 */;
+/*!50001 SET character_set_results     = utf8 */;
+/*!50001 SET collation_connection      = utf8_general_ci */;
+/*!50001 CREATE ALGORITHM=UNDEFINED */
+/*!50013  SQL SECURITY DEFINER */
+/*!50001 VIEW `view_roles_map_action` AS select `sr`.`id` AS `role_id`,`rms`.`id` AS `role_map_id`,`sr`.`name` AS `role_name`,`sr`.`role_value` AS `role_value`,`sr`.`description` AS `role_description`,`ss`.`module` AS `module`,`ss`.`controller` AS `controller`,`ss`.`action` AS `action`,`rms`.`is_active` AS `is_active`,`ss`.`screen_code` AS `screen_code` from (((`sys_roles` `sr` left join `sys_role_map_screen` `rms` on((`sr`.`role_value` = (`rms`.`role_value` collate utf8_unicode_ci)))) left join `sys_screens` `ss` on((`rms`.`screen_id` = (`ss`.`id` collate utf8_unicode_ci)))) join `sys_modules` `dm` on(((`dm`.`module_code` = (`ss`.`module` collate utf8_unicode_ci)) and (`dm`.`is_skip_acl` <> 1)))) order by `sr`.`role_value`,`rms`.`screen_id` */;
+/*!50001 SET character_set_client      = @saved_cs_client */;
+/*!50001 SET character_set_results     = @saved_cs_results */;
+/*!50001 SET collation_connection      = @saved_col_connection */;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
 
 /*!40101 SET SQL_MODE=@OLD_SQL_MODE */;
@@ -2189,4 +1927,4 @@ END ;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2018-11-02 11:49:40
+-- Dump completed on 2018-11-07 10:22:44

@@ -20,7 +20,18 @@ class AclService extends BaseService implements AclServiceInterface
 
     public function getRoleInfoFromDB()
     {
-        return SDB::execSPs('ACL_GET_ROLES_MAP_ACTION_LST');
+        $result =  array();
+        $roleList = SDB::table('sys_roles')
+            ->select(
+                'id AS role_id
+                    ,	name AS role_name
+                    ,	role_value AS role_value
+                    ,	description AS role_description')
+            ->get();
+        $roleMapList = SDB::table('view_roles_map_action')->select()->get();
+        $result[] = $roleList;
+        $result[] = $roleMapList;
+        return $result;
     }
 
     /**
