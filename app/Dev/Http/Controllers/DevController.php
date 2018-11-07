@@ -93,7 +93,7 @@ class DevController extends Controller
 
             $dataLangInsert = json_decode(json_encode($dataLangRemote->toArray(),true),true);
             $dataTransInsert =  json_decode(json_encode($dataTransRemote->toArray(),true),true);
-            $dataTransTypeInsert = json_decode(json_encode($dataTransTACL_GET_ROLES_MAP_ACTION_LSTypeRemote->toArray(),true),true);
+            $dataTransTypeInsert = json_decode(json_encode($dataTransTypeRemote->toArray(),true),true);
             SDB::beginTransaction();
             //truncate data translation in local
             SDB::table('sys_languages')->truncate();
