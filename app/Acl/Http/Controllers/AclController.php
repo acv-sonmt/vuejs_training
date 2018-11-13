@@ -5,6 +5,7 @@
 
 namespace App\Acl\Http\Controllers;
 use App\Acl\Services\Interfaces\AclServiceInterface;
+use App\Dev\Helpers\ResponseHelper;
 use Illuminate\Http\Request;
 use App\Core\Helpers\CommonHelper;
 use Validator;
@@ -38,8 +39,7 @@ class AclController extends Controller
             $isActive = 1;
         }
         $result = $this->service->updateActiveAcl($roleMapId, $isActive);
-        print_r($result);die();
-        return CommonHelper::convertVaidateErrorToCommonStruct($result->data);
+        return ResponseHelper::JsonDataResult($result);
     }
     public function updateAclActiveAll(Request $request){
         $active = $request->input('active');
@@ -47,8 +47,8 @@ class AclController extends Controller
         if (isset($active) && strtolower($active) == 'true') {
             $isActive = 1;
         }
-        $this->service->updateActiveAclAll( $isActive);
-        return CommonHelper::convertVaidateErrorToCommonStruct(array());
+        $result= $this->service->updateActiveAclAll( $isActive);
+        return ResponseHelper::JsonDataResult($result);
     }
     public function userAcl(){
         return view("acl/useracl");
@@ -56,9 +56,6 @@ class AclController extends Controller
     public function test()
     {
         $this->service->test();
-
-        echo '<pre>';
-       // $this->devService->generationTranslateScript('validation','validation');
     }
 
 }
