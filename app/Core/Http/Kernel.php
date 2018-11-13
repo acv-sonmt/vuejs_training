@@ -74,7 +74,7 @@ class Kernel extends HttpKernel
             \Illuminate\View\Middleware\ShareErrorsFromSession::class,
             \App\Core\Http\Middleware\VerifyCsrfToken::class,
             \Illuminate\Routing\Middleware\SubstituteBindings::class,
-            \App\Acl\Http\Middleware\Acl::class,//module auth don't register acl check
+            //\App\Acl\Http\Middleware\Acl::class,//module auth don't register acl check
         ],
         'public_group'=>[
             //Not use middleware, pass all filter

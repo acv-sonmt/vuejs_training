@@ -18,4 +18,5 @@ interface AclServiceInterface
     public function updateActiveAcl($roleMapId,$isActive);
     public function updateActiveAclAll($isActive);
     public function getRoleList();
+    public function getModuleList();
 }
