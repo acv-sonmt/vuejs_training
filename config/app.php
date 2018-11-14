@@ -196,6 +196,10 @@ return [
          * ImageResize
          */
         Intervention\Image\ImageServiceProvider::class,
+        /**
+         * Frontend
+         */
+        App\Frontend\Providers\RouteServiceProvider::class,
     ],
 
     /*

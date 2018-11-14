@@ -30,17 +30,14 @@ Vue.component(
     'passport-personal-access-tokens',
     require('./components/passport/PersonalAccessTokens.vue')
 );
+
+//user manager
+Vue.component('user-manager-component', require('./components/UserManagerComponent'));
+
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
 };
 const app = new Vue({
-    el: '#app',
-    state: {
-        user: {
-            userName:'',
-            loggedInStatus: true,
-            authToken: ''
-        }
-    },
+    el: '#app'
 
 });
