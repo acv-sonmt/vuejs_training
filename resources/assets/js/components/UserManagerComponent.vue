@@ -1,9 +1,9 @@
 <template>
     <div>
-        <div class="form-group">
-            <router-link :to="{name: 'createCompany'}" class="btn btn-success">Create User</router-link>
-        </div>
         <div class="panel-body">
+            <div class="form-group">
+                <router-link :to="{name: ''}" class="btn btn-success">Create</router-link>
+            </div>
             <table class="table table-bordered table-striped">
                 <thead>
                 <tr>
@@ -29,7 +29,7 @@
                     <td>{{ user.phone }}</td>
                     <td>{{ user.active }}</td>
                     <td>
-                        <router-link :to="{name: 'editCompany', params: {id: user.id}}"
+                        <router-link :to="{name: '', params: {id: user.id}}"
                                      class="btn btn-xs btn-default">
                             Edit
                         </router-link>
@@ -48,6 +48,7 @@
 
 <script>
     export default {
+        props:['dataUrl'],
         data: function () {
             return {
                 user: []
@@ -55,9 +56,9 @@
         },
         mounted() {
             var app = this;
-            axios.get('user_list')
+            axios({url: this.dataUrl})
                 .then(function (resp) {
-                    console.log(resp);
+                    //console.log(resp.data);
                     app.user = resp.data;
                 })
                 .catch(function (resp) {

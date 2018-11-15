@@ -20,6 +20,13 @@ class UserVueController
         return ($users);
     }
 
+    public function genTable(){
+        $thead = DB::select('select column_name from information_schema.columns where table_schema = "vuejs_test_db" and table_name ="user"');
+        $tbody= DB::table('user')->get();
+        $arr= array('thead'=>$thead, 'tbody'=>$tbody);
+        return $arr;
+    }
+
 //    public function createUser(){
 //        return view get
 //    }

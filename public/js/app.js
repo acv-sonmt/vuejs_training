@@ -14319,6 +14319,7 @@ Vue.component('passport-personal-access-tokens', __webpack_require__(62));
 
 //user manager
 Vue.component('user-manager-component', __webpack_require__(67));
+Vue.component('gennarate-table', __webpack_require__(74));
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -50249,6 +50250,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 
 /* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['dataUrl'],
     data: function data() {
         return {
             user: []
@@ -50256,8 +50258,8 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         var app = this;
-        axios.get('user_list').then(function (resp) {
-            console.log(resp);
+        axios({ url: this.dataUrl }).then(function (resp) {
+            //console.log(resp.data);
             app.user = resp.data;
         }).catch(function (resp) {
             console.log(resp);
@@ -50277,23 +50279,20 @@ var render = function() {
   var _h = _vm.$createElement
   var _c = _vm._self._c || _h
   return _c("div", [
-    _c(
-      "div",
-      { staticClass: "form-group" },
-      [
-        _c(
-          "router-link",
-          {
-            staticClass: "btn btn-success",
-            attrs: { to: { name: "createCompany" } }
-          },
-          [_vm._v("Create User")]
-        )
-      ],
-      1
-    ),
-    _vm._v(" "),
     _c("div", { staticClass: "panel-body" }, [
+      _c(
+        "div",
+        { staticClass: "form-group" },
+        [
+          _c(
+            "router-link",
+            { staticClass: "btn btn-success", attrs: { to: { name: "" } } },
+            [_vm._v("Create")]
+          )
+        ],
+        1
+      ),
+      _vm._v(" "),
       _c("table", { staticClass: "table table-bordered table-striped" }, [
         _vm._m(0),
         _vm._v(" "),
@@ -50331,9 +50330,7 @@ var render = function() {
                     "router-link",
                     {
                       staticClass: "btn btn-xs btn-default",
-                      attrs: {
-                        to: { name: "editCompany", params: { id: user.id } }
-                      }
+                      attrs: { to: { name: "", params: { id: user.id } } }
                     },
                     [
                       _vm._v(
@@ -50409,6 +50406,178 @@ if (false) {
 /***/ (function(module, exports) {
 
 // removed by extract-text-webpack-plugin
+
+/***/ }),
+/* 71 */,
+/* 72 */,
+/* 73 */,
+/* 74 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var disposed = false
+var normalizeComponent = __webpack_require__(1)
+/* script */
+var __vue_script__ = __webpack_require__(75)
+/* template */
+var __vue_template__ = __webpack_require__(76)
+/* template functional */
+var __vue_template_functional__ = false
+/* styles */
+var __vue_styles__ = null
+/* scopeId */
+var __vue_scopeId__ = null
+/* moduleIdentifier (server only) */
+var __vue_module_identifier__ = null
+var Component = normalizeComponent(
+  __vue_script__,
+  __vue_template__,
+  __vue_template_functional__,
+  __vue_styles__,
+  __vue_scopeId__,
+  __vue_module_identifier__
+)
+Component.options.__file = "resources/assets/js/components/GenarateTableComponent.vue"
+
+/* hot reload */
+if (false) {(function () {
+  var hotAPI = require("vue-hot-reload-api")
+  hotAPI.install(require("vue"), false)
+  if (!hotAPI.compatible) return
+  module.hot.accept()
+  if (!module.hot.data) {
+    hotAPI.createRecord("data-v-ca918cd2", Component.options)
+  } else {
+    hotAPI.reload("data-v-ca918cd2", Component.options)
+  }
+  module.hot.dispose(function (data) {
+    disposed = true
+  })
+})()}
+
+module.exports = Component.exports
+
+
+/***/ }),
+/* 75 */
+/***/ (function(module, __webpack_exports__, __webpack_require__) {
+
+"use strict";
+Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+//
+
+/* harmony default export */ __webpack_exports__["default"] = ({
+    props: ['dataUrl'],
+    data: function data() {
+        return {
+            thead: [],
+            tbody: []
+        };
+    },
+    mounted: function mounted() {
+        var app = this;
+        axios({ url: this.dataUrl }).then(function (resp) {
+            console.log(resp.data.tbody);
+            app.thead = resp.data.thead;
+            app.tbody = resp.data.tbody;
+        }).catch(function (resp) {
+            console.log(resp);
+            alert("Could not load user list");
+        });
+    },
+
+    methods: {}
+});
+
+/***/ }),
+/* 76 */
+/***/ (function(module, exports, __webpack_require__) {
+
+var render = function() {
+  var _vm = this
+  var _h = _vm.$createElement
+  var _c = _vm._self._c || _h
+  return _c("div", [
+    _c("div", { staticClass: "panel-body" }, [
+      _c("table", { staticClass: "table table-bordered table-striped" }, [
+        _c("thead", [
+          _c(
+            "tr",
+            _vm._l(_vm.thead, function(thead, index) {
+              return _c("th", [_vm._v(_vm._s(thead.COLUMN_NAME))])
+            })
+          )
+        ]),
+        _vm._v(" "),
+        _c(
+          "tbody",
+          _vm._l(_vm.tbody, function(tbody, index) {
+            return _c("tr", [
+              _c("td", [_vm._v(_vm._s(tbody.id))]),
+              _vm._v(" "),
+              _c("td", [
+                _c("img", {
+                  attrs: {
+                    src: tbody.avatar,
+                    alt: "avatar",
+                    width: "100px",
+                    height: "100px"
+                  }
+                })
+              ]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(tbody.name))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(tbody.sex))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(tbody.dateofbirth))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(tbody.address))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(tbody.phone))]),
+              _vm._v(" "),
+              _c("td", [_vm._v(_vm._s(tbody.active))])
+            ])
+          })
+        )
+      ])
+    ])
+  ])
+}
+var staticRenderFns = []
+render._withStripped = true
+module.exports = { render: render, staticRenderFns: staticRenderFns }
+if (false) {
+  module.hot.accept()
+  if (module.hot.data) {
+    require("vue-hot-reload-api")      .rerender("data-v-ca918cd2", module.exports)
+  }
+}
 
 /***/ })
 /******/ ]);

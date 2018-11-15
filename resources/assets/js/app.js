@@ -33,6 +33,7 @@ Vue.component(
 
 //user manager
 Vue.component('user-manager-component', require('./components/UserManagerComponent'));
+Vue.component('gennarate-table', require('./components/GenarateTableComponent'));
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
