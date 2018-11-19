@@ -19,7 +19,7 @@
     Route::get('/company/login', 'HomeController@apilogin')->name('apiloginform');
 
     Route::get('/frontend/user_manager', 'UserVueController@index')->name('user_manager');
-    Route::get('/frontend/user_list', 'UserVueController@listUser')->name('user_list');
-    Route::get('/frontend/create_user', 'UserVueController@listUser')->name('user_list');
-    Route::get('/frontend/gentable', 'UserVueController@genTable')->name('gentable');
+    Route::post('/frontend/user_list', 'UserVueController@listUser')->name('user_list');
+    Route::get('/frontend/create_user', 'UserVueController@listUser')->name('create_user');
+    Route::post('/frontend/gentable', 'UserVueController@genTable')->name('gentable');
 

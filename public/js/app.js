@@ -14286,7 +14286,7 @@ module.exports = Cancel;
 /***/ (function(module, exports, __webpack_require__) {
 
 __webpack_require__(15);
-module.exports = __webpack_require__(70);
+module.exports = __webpack_require__(73);
 
 
 /***/ }),
@@ -14319,7 +14319,7 @@ Vue.component('passport-personal-access-tokens', __webpack_require__(62));
 
 //user manager
 Vue.component('user-manager-component', __webpack_require__(67));
-Vue.component('gennarate-table', __webpack_require__(74));
+Vue.component('gennarate-table', __webpack_require__(70));
 
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest'
@@ -50235,32 +50235,27 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 //
 //
 //
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
-//
 
 /* harmony default export */ __webpack_exports__["default"] = ({
     props: ['dataUrl'],
     data: function data() {
         return {
-            user: []
+            thead: [],
+            tbody: []
         };
     },
     mounted: function mounted() {
         var app = this;
-        axios({ url: this.dataUrl }).then(function (resp) {
-            //console.log(resp.data);
-            app.user = resp.data;
+        axios({
+            method: 'post',
+            url: this.dataUrl,
+            data: {
+                //
+            }
+        }).then(function (resp) {
+            app.thead = resp.data.thead;
+            app.tbody = resp.data.tbody;
+            console.log(resp.data);
         }).catch(function (resp) {
             console.log(resp);
             alert("Could not load user list");
@@ -50280,89 +50275,57 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "panel-body" }, [
-      _c(
-        "div",
-        { staticClass: "form-group" },
-        [
-          _c(
-            "router-link",
-            { staticClass: "btn btn-success", attrs: { to: { name: "" } } },
-            [_vm._v("Create")]
-          )
-        ],
-        1
-      ),
+      _vm._m(0),
       _vm._v(" "),
-      _c("table", { staticClass: "table table-bordered table-striped" }, [
-        _vm._m(0),
-        _vm._v(" "),
-        _c(
-          "tbody",
-          _vm._l(_vm.user, function(user, index) {
-            return _c("tr", [
+      _c(
+        "table",
+        { staticClass: "table table-bordered table-striped" },
+        [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _vm._l(_vm.thead, function(thead) {
+                  return _c("th", [_vm._v(_vm._s(thead))])
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("Hành động")])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
+          _vm._l(_vm.tbody, function(tbody, index) {
+            return _c("tbody", [
               _c("td", [
                 _c("img", {
                   attrs: {
-                    src: user.avatar,
-                    alt: "avatar",
+                    src: tbody.avatar,
+                    alt: "Ảnh đại diện",
                     width: "100px",
                     height: "100px"
                   }
                 })
               ]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.name))]),
+              _c("td", [_vm._v(_vm._s(tbody.name))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.sex))]),
+              _c("td", [_vm._v(_vm._s(tbody.sex))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.dateofbirth))]),
+              _c("td", [_vm._v(_vm._s(tbody.dateofbirth))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.address))]),
+              _c("td", [_vm._v(_vm._s(tbody.address))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.phone))]),
+              _c("td", [_vm._v(_vm._s(tbody.phone))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(user.active))]),
+              _c("td", [_vm._v(_vm._s(tbody.active))]),
               _vm._v(" "),
-              _c(
-                "td",
-                [
-                  _c(
-                    "router-link",
-                    {
-                      staticClass: "btn btn-xs btn-default",
-                      attrs: { to: { name: "", params: { id: user.id } } }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Edit\n                    "
-                      )
-                    ]
-                  ),
-                  _vm._v(" "),
-                  _c(
-                    "a",
-                    {
-                      staticClass: "btn btn-xs btn-danger",
-                      attrs: { href: "#" },
-                      on: {
-                        click: function($event) {
-                          _vm.deleteEntry(user.id, index)
-                        }
-                      }
-                    },
-                    [
-                      _vm._v(
-                        "\n                        Delete\n                    "
-                      )
-                    ]
-                  )
-                ],
-                1
-              )
+              _vm._m(1, true)
             ])
           })
-        )
-      ])
+        ],
+        2
+      )
     ])
   ])
 }
@@ -50371,23 +50334,21 @@ var staticRenderFns = [
     var _vm = this
     var _h = _vm.$createElement
     var _c = _vm._self._c || _h
-    return _c("thead", [
-      _c("tr", [
-        _c("th", [_vm._v("Avatar")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Name")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Sex")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Date of Birth")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Address")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Phone")]),
-        _vm._v(" "),
-        _c("th", [_vm._v("Active")]),
-        _vm._v(" "),
-        _c("th", { attrs: { width: "100" } }, [_vm._v("Action")])
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Create")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("button", { staticClass: "btn btn-xs btn-default" }, [
+        _vm._v("\n                    Edit\n                ")
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-xs btn-danger", attrs: { href: "#" } }, [
+        _vm._v("\n                    Delete\n                ")
       ])
     ])
   }
@@ -50403,23 +50364,14 @@ if (false) {
 
 /***/ }),
 /* 70 */
-/***/ (function(module, exports) {
-
-// removed by extract-text-webpack-plugin
-
-/***/ }),
-/* 71 */,
-/* 72 */,
-/* 73 */,
-/* 74 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var disposed = false
 var normalizeComponent = __webpack_require__(1)
 /* script */
-var __vue_script__ = __webpack_require__(75)
+var __vue_script__ = __webpack_require__(71)
 /* template */
-var __vue_template__ = __webpack_require__(76)
+var __vue_template__ = __webpack_require__(72)
 /* template functional */
 var __vue_template_functional__ = false
 /* styles */
@@ -50458,11 +50410,19 @@ module.exports = Component.exports
 
 
 /***/ }),
-/* 75 */
+/* 71 */
 /***/ (function(module, __webpack_exports__, __webpack_require__) {
 
 "use strict";
 Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
+//
+//
+//
+//
+//
+//
+//
+//
 //
 //
 //
@@ -50501,10 +50461,16 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
     },
     mounted: function mounted() {
         var app = this;
-        axios({ url: this.dataUrl }).then(function (resp) {
-            console.log(resp.data.tbody);
+        axios({
+            method: 'post',
+            url: this.dataUrl,
+            data: {
+                //
+            }
+        }).then(function (resp) {
             app.thead = resp.data.thead;
             app.tbody = resp.data.tbody;
+            console.log(resp.data);
         }).catch(function (resp) {
             console.log(resp);
             alert("Could not load user list");
@@ -50515,7 +50481,7 @@ Object.defineProperty(__webpack_exports__, "__esModule", { value: true });
 });
 
 /***/ }),
-/* 76 */
+/* 72 */
 /***/ (function(module, exports, __webpack_require__) {
 
 var render = function() {
@@ -50524,27 +50490,33 @@ var render = function() {
   var _c = _vm._self._c || _h
   return _c("div", [
     _c("div", { staticClass: "panel-body" }, [
-      _c("table", { staticClass: "table table-bordered table-striped" }, [
-        _c("thead", [
-          _c(
-            "tr",
-            _vm._l(_vm.thead, function(thead, index) {
-              return _c("th", [_vm._v(_vm._s(thead.COLUMN_NAME))])
-            })
-          )
-        ]),
-        _vm._v(" "),
-        _c(
-          "tbody",
+      _vm._m(0),
+      _vm._v(" "),
+      _c(
+        "table",
+        { staticClass: "table table-bordered table-striped" },
+        [
+          _c("thead", [
+            _c(
+              "tr",
+              [
+                _vm._l(_vm.thead, function(thead) {
+                  return _c("th", [_vm._v(_vm._s(thead))])
+                }),
+                _vm._v(" "),
+                _c("th", [_vm._v("Hành động")])
+              ],
+              2
+            )
+          ]),
+          _vm._v(" "),
           _vm._l(_vm.tbody, function(tbody, index) {
-            return _c("tr", [
-              _c("td", [_vm._v(_vm._s(tbody.id))]),
-              _vm._v(" "),
+            return _c("tbody", [
               _c("td", [
                 _c("img", {
                   attrs: {
                     src: tbody.avatar,
-                    alt: "avatar",
+                    alt: "Ảnh đại diện",
                     width: "100px",
                     height: "100px"
                   }
@@ -50561,15 +50533,41 @@ var render = function() {
               _vm._v(" "),
               _c("td", [_vm._v(_vm._s(tbody.phone))]),
               _vm._v(" "),
-              _c("td", [_vm._v(_vm._s(tbody.active))])
+              _c("td", [_vm._v(_vm._s(tbody.active))]),
+              _vm._v(" "),
+              _vm._m(1, true)
             ])
           })
-        )
-      ])
+        ],
+        2
+      )
     ])
   ])
 }
-var staticRenderFns = []
+var staticRenderFns = [
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("div", { staticClass: "form-group" }, [
+      _c("button", { staticClass: "btn btn-success" }, [_vm._v("Create")])
+    ])
+  },
+  function() {
+    var _vm = this
+    var _h = _vm.$createElement
+    var _c = _vm._self._c || _h
+    return _c("td", [
+      _c("button", { staticClass: "btn btn-xs btn-default" }, [
+        _vm._v("\n                        Edit\n                    ")
+      ]),
+      _vm._v(" "),
+      _c("a", { staticClass: "btn btn-xs btn-danger", attrs: { href: "#" } }, [
+        _vm._v("\n                        Delete\n                    ")
+      ])
+    ])
+  }
+]
 render._withStripped = true
 module.exports = { render: render, staticRenderFns: staticRenderFns }
 if (false) {
@@ -50578,6 +50576,12 @@ if (false) {
     require("vue-hot-reload-api")      .rerender("data-v-ca918cd2", module.exports)
   }
 }
+
+/***/ }),
+/* 73 */
+/***/ (function(module, exports) {
+
+// removed by extract-text-webpack-plugin
 
 /***/ })
 /******/ ]);

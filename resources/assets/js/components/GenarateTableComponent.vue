@@ -1,24 +1,32 @@
 <template>
     <div>
         <div class="panel-body">
-
+            <div class="form-group">
+                <button class="btn btn-success">Create</button>
+            </div>
             <table class="table table-bordered table-striped">
                 <thead>
-                <tr >
-                    <th v-for="thead, index in thead">{{thead.COLUMN_NAME}}</th>
+                <tr>
+                    <th v-for="thead in thead">{{thead}}</th>
+                    <th>Hành động</th>
                 </tr>
                 </thead>
-                <tbody>
-                <tr v-for="tbody, index in tbody">
-                    <td>{{tbody.id}}</td>
-                    <td><img :src="tbody.avatar" alt="avatar" width="100px" height="100px"></td>
+                <tbody v-for="tbody, index in tbody">
+                    <td><img :src="tbody.avatar" alt="Ảnh đại diện" width="100px" height="100px"></td>
                     <td>{{tbody.name}}</td>
                     <td>{{tbody.sex}}</td>
                     <td>{{tbody.dateofbirth}}</td>
                     <td>{{tbody.address}}</td>
                     <td>{{tbody.phone}}</td>
                     <td>{{tbody.active}}</td>
-                </tr>
+                    <td>
+                        <button class="btn btn-xs btn-default">
+                            Edit
+                        </button>
+                        <a href="#" class="btn btn-xs btn-danger">
+                            Delete
+                        </a>
+                    </td>
                 </tbody>
             </table>
         </div>
@@ -27,20 +35,26 @@
 
 <script>
     export default {
-        props:['dataUrl'],
+        props: ['dataUrl'],
         data: function () {
             return {
                 thead: [],
-                tbody:[]
+                tbody: [],
             }
         },
         mounted() {
             var app = this;
-            axios({url: this.dataUrl})
+            axios({
+                method: 'post',
+                url: this.dataUrl,
+                data: {
+                    //
+                }
+            })
                 .then(function (resp) {
-                    console.log(resp.data.tbody);
                     app.thead = resp.data.thead;
                     app.tbody = resp.data.tbody;
+                    console.log(resp.data);
                 })
                 .catch(function (resp) {
                     console.log(resp);
