@@ -31,18 +31,19 @@ class UserVueController
         return ['tbody'=>$data, 'thead'=>array_values($header)];
     }
 
-//    public function genTable(Request $request){
-//        $header = [
-//            'avatar'=>'Ảnh',
-//            'name'=>'Họ Tên',
-//            'sex'=>'GT',
-//            'dateofbirth'=>'Ngày sinh',
-//            'address'=>'Địa chỉ',
-//            'phone'=>'SĐT',
-//            'active'=>'Trạng thái',
-//        ];
-//        $data = DB::table('user')->select(array_keys($header))->get();
-//        return ['tbody'=>$data, 'thead'=>array_values($header)];
-//    }
+    //gen ra 1 table
+    public function genTable(Request $request){
+        $header = [
+            'avatar'=>'Ảnh',
+            'name'=>'Họ Tên',
+            'sex'=>'GT',
+            'dateofbirth'=>'Ngày sinh',
+            'address'=>'Địa chỉ',
+            'phone'=>'SĐT',
+            'active'=>'Trạng thái',
+        ];
+        $data = DB::table('user')->select(array_keys($header))->get();
+        return ['tbody'=>$data, 'thead'=>array_values($header)];
+    }
 
 }

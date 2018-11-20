@@ -7,6 +7,10 @@
 
 require('./bootstrap');
 window.Vue = require('vue');
+
+import VueRouter from 'vue-router'
+
+Vue.use(VueRouter)
 /**
  * Next, we will create a fresh Vue application instance and attach it to
  * the page. Then, you may begin adding components to this application
@@ -35,10 +39,24 @@ Vue.component(
 Vue.component('user-manager-component', require('./components/UserManagerComponent'));
 Vue.component('gennarate-table', require('./components/GenarateTableComponent'));
 
+//role
+Vue.component('role-component', require('./components/RoleComponent'));
+
+const routes = [
+    { path: '/user',name: 'user', component: require('./components/UserManagerComponent') },
+    { path: '/role',name: 'role', component: require('./components/RoleComponent') }
+]
+///////////////router
+const router = new VueRouter({
+    routes
+})
+
+
 window.axios.defaults.headers.common = {
     'X-Requested-With': 'XMLHttpRequest',
 };
 const app = new Vue({
-    el: '#app'
+    el: '#app',
+    router : router,
 
 });

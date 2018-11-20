@@ -8,8 +8,18 @@
 
 namespace App\Frontend\Http\Controllers;
 
+use Illuminate\Support\Facades\DB;
+
 
 class RoleController
 {
+    public function listRoles(){
+        $header = [
+            'name'=>'Tên quyền',
+            'description'=>'Mô tả',
+        ];
+        $data = DB::table('roles')->select(array_keys($header))->get();
+        return ['tbody'=>$data, 'thead'=>array_values($header)];
+    }
 
 }

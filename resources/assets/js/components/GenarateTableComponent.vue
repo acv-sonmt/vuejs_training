@@ -54,7 +54,6 @@
                 .then(function (resp) {
                     app.thead = resp.data.thead;
                     app.tbody = resp.data.tbody;
-                    console.log(resp.data);
                 })
                 .catch(function (resp) {
                     console.log(resp);

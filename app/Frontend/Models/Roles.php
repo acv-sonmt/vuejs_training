@@ -11,5 +11,6 @@ namespace App\Frontend\Models;
 
 class Roles
 {
+    protected $table = "roles";
 
 }
