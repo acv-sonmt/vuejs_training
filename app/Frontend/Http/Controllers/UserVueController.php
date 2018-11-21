@@ -28,7 +28,12 @@ class UserVueController
             'active'=>'Trạng thái',
         ];
         $data = DB::table('user')->select(array_keys($header))->get();
-        return ['tbody'=>$data, 'thead'=>array_values($header)];
+//        foreach ($data as $items){
+//            foreach ($items as $prop)
+//            dd($data[1]);
+//        }
+
+        return ['items'=>$data, 'headers'=>array_values($header)];
     }
 
     //gen ra 1 table
@@ -43,7 +48,7 @@ class UserVueController
             'active'=>'Trạng thái',
         ];
         $data = DB::table('user')->select(array_keys($header))->get();
-        return ['tbody'=>$data, 'thead'=>array_values($header)];
+        return ['items'=>$data, 'headers'=>array_values($header)];
     }
 
 }

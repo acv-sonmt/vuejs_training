@@ -200,6 +200,15 @@ return [
          * Frontend
          */
         App\Frontend\Providers\RouteServiceProvider::class,
+
+        /**
+         * Admin
+         */
+        App\Admin\Providers\RouteServiceProvider::class,
+
+
+
+
     ],
 
     /*
